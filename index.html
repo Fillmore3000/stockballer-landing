@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StockBaller - Invest in Athletes You Believe In</title>
+    <title>StockBaller - The Stock Market for Professional Football</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link
@@ -20,7 +20,7 @@
 
         body {
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #0d2758;
+            background: rgba(13, 39, 88, 0.5);
             color: #fff;
             line-height: 1.6;
             overflow-x: hidden;
@@ -42,7 +42,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #0d2758;
+            background: rgba(13, 39, 88, 1);
             z-index: -1;
         }
 
@@ -87,6 +87,7 @@
             border: none;
             border-radius: 8px;
             color: #0d2758;
+            font-family: 'DM Sans', sans-serif;
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
@@ -104,6 +105,7 @@
             display: flex;
             align-items: center;
             padding: 120px 0 80px;
+            background: linear-gradient(180deg, #0d2758 0%, #0d51d8 80%);
         }
 
         .hero-content {
@@ -165,6 +167,7 @@
             border: none;
             border-radius: 12px;
             color: #0d2758;
+            font-family: 'DM Sans', sans-serif;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
@@ -184,6 +187,7 @@
             border: 2px solid rgba(255, 255, 255, 0.4);
             border-radius: 12px;
             color: #fff;
+            font-family: 'DM Sans', sans-serif;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
@@ -202,7 +206,7 @@
         }
 
         .athlete-card-preview {
-            background: linear-gradient(145deg, #0d51d8 0%, #0528f3 100%);
+            background: linear-gradient(145deg, #0d51d8 0%, #181818ab 150%);
             border: 2px solid rgba(245, 203, 63, 0.3);
             border-radius: 24px;
             padding: 32px;
@@ -402,14 +406,14 @@
         }
 
         .performer-card:hover {
-            background: #0d2758;
+            background: rgba(13, 39, 88, 0.5);
             border-color: #F5CB3F;
             transform: translateY(-4px);
         }
 
         .performer-card.selected {
             border-color: #F5CB3F;
-            background: #0d2758;
+            background: rgba(13, 39, 88, 0.5);
         }
 
         .performer-header {
@@ -490,7 +494,7 @@
 
         /* Investment Calculator */
         .calculator-section {
-            background: #0d2758;
+            background: rgba(13, 39, 88, 0.5);
         }
 
         .calculator-container {
@@ -532,7 +536,7 @@
         .calc-input {
             width: 100%;
             padding: 16px;
-            background: #0d2758;
+            background: rgba(13, 39, 88, 0.5);
             border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 12px;
             color: #fff;
@@ -572,7 +576,7 @@
 
         .athlete-option {
             padding: 12px;
-            background: #0d2758;
+            background: rgba(13, 39, 88, 0.5);
             border: 2px solid transparent;
             border-radius: 12px;
             cursor: pointer;
@@ -628,7 +632,7 @@
         .calc-summary {
             margin-top: 20px;
             padding: 16px;
-            background: rgba(245, 203, 63, 0.1);
+            background: rgba(13, 39, 88, 0.5);
             border-radius: 12px;
             font-size: 0.95rem;
             color: rgba(255, 255, 255, 0.9);
@@ -698,7 +702,7 @@
         .trust-card {
             text-align: center;
             padding: 32px 24px;
-            background: #0d2758;
+            background: rgba(13, 39, 88, 0.5);
             border: 2px solid #0528f3;
             border-radius: 20px;
             transition: transform 0.3s, border-color 0.3s;
@@ -857,7 +861,7 @@
         .cta-input {
             flex: 1;
             padding: 18px 24px;
-            background: #0d2758;
+            background: rgba(13, 39, 88, 0.5);
             border: 2px solid rgba(255, 255, 255, 0.3);
             border-radius: 12px;
             color: #fff;
@@ -880,6 +884,7 @@
             border: none;
             border-radius: 12px;
             color: #0d2758;
+            font-family: 'DM Sans', sans-serif;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
@@ -921,7 +926,7 @@
         /* Footer */
         footer {
             padding: 40px 0;
-            background: #0d2758;
+            background: rgba(13, 39, 88, 0.5);
             border-top: 3px solid #0528F3;
             text-align: center;
             color: rgba(255, 255, 255, 0.5);
@@ -1056,9 +1061,9 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1>Invest in Athletes<br><span>You Believe In</span></h1>
-                    <p>Turn your sports knowledge into investment gains. Buy tokens tied to real athlete performance and
-                        earn when they score, assist, and win.</p>
+                    <h1>The Stock Market for<br><span>Professional Football.</span></h1>
+                    <p>Turn your football knowledge into a portfolio. Buy player tokens, track their real-time
+                        performance, and trade on the global market.</p>
 
                     <div class="hero-stats">
                         <div class="hero-stat">
@@ -1657,13 +1662,13 @@
                         y: {
                             grid: { color: 'rgba(255,255,255,0.05)' },
                             ticks: {
-                                color: '#666',
+                                color: '#fff',
                                 callback: (v) => v + '%'
                             }
                         },
                         x: {
                             grid: { display: false },
-                            ticks: { color: '#666', maxRotation: 45 }
+                            ticks: { color: '#fff', maxRotation: 45 }
                         }
                     }
                 }
