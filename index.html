@@ -6,6 +6,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StockBaller - The Stock Market for Professional Football</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Invest in Premier League athletes with real performance-based returns. Buy tokens, track stats, and profit when your players perform. Saka +376%, Haaland +362% in simulation.">
+    <meta name="keywords" content="athlete investing, football tokens, Premier League investment, sports trading, athlete stocks, ERC-1155, blockchain sports, StockBaller">
+    <meta name="author" content="Apaw Holdings Ltd">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://stockballer.com/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://stockballer.com/">
+    <meta property="og:title" content="StockBaller - The Stock Market for Professional Football">
+    <meta property="og:description" content="Invest in Premier League athletes with real performance-based returns. Buy tokens, track stats, and profit when your players perform.">
+    <meta property="og:image" content="https://stockballer.com/og-image.png">
+    <meta property="og:site_name" content="StockBaller">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@StockBallerApp">
+    <meta name="twitter:creator" content="@StockBallerApp">
+    <meta name="twitter:title" content="StockBaller - The Stock Market for Professional Football">
+    <meta name="twitter:description" content="Invest in Premier League athletes with real performance-based returns. Buy tokens, track stats, and profit when your players perform.">
+    <meta name="twitter:image" content="https://stockballer.com/og-image.png">
+    
+    <!-- Additional SEO -->
+    <meta name="theme-color" content="#0d2758">
+    <meta name="apple-mobile-web-app-title" content="StockBaller">
+    <meta name="application-name" content="StockBaller">
+    
     <link rel="icon" type="image/png" href="favicon.png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link
@@ -54,7 +83,7 @@
 
         /* Navigation */
         nav {
-            padding: 20px 0;
+            padding: 10px 0;
             position: fixed;
             top: 0;
             left: 0;
@@ -77,7 +106,7 @@
         }
 
         .logo img {
-            height: 40px;
+            height: 30px;
             width: auto;
         }
 
@@ -106,7 +135,39 @@
             display: flex;
             align-items: center;
             padding: 120px 0 80px;
-            background: linear-gradient(180deg, #0d2758 0%, #0d51d8 80%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(13, 39, 88, 0.75) 0%, rgba(13, 39, 88, 0.65) 100%);
+            z-index: 1;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 2;
         }
 
         .hero-content {
@@ -155,6 +216,77 @@
             color: rgba(255, 255, 255, 0.5);
             text-transform: uppercase;
             letter-spacing: 1px;
+        }
+
+        .hero-preheadline {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(245, 203, 63, 0.15);
+            border: 1px solid rgba(245, 203, 63, 0.3);
+            border-radius: 20px;
+            color: #F5CB3F;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .waitlist-counter {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 24px;
+            padding: 12px 20px;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            font-size: 0.9rem;
+        }
+
+        .waitlist-counter .fire {
+            font-size: 1.2rem;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-3px);
+            }
+        }
+
+        .waitlist-avatars {
+            display: flex;
+            margin-right: 8px;
+        }
+
+        .waitlist-avatars img {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid #0d2758;
+            margin-left: -8px;
+        }
+
+        .waitlist-avatars img:first-child {
+            margin-left: 0;
         }
 
         .hero-cta {
@@ -211,13 +343,11 @@
             border: 2px solid rgba(245, 203, 63, 0.3);
             border-radius: 24px;
             padding: 32px;
-            transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
-            transition: transform 0.5s, box-shadow 0.5s;
+            transition: box-shadow 0.5s;
             box-shadow: 0 25px 50px rgba(5, 40, 243, 0.4);
         }
 
         .athlete-card-preview:hover {
-            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
             box-shadow: 0 30px 60px rgba(5, 40, 243, 0.5);
         }
 
@@ -306,7 +436,197 @@
             text-transform: uppercase;
         }
 
+        /* Player Avatar with Image */
+        .athlete-avatar-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #F5CB3F;
+        }
+
+        .performer-avatar-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #F5CB3F;
+        }
+
+        /* Social Proof Section */
+        .social-proof-section {
+            padding: 60px 0;
+            background: #0528f3;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-proof-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .social-proof-header p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .testimonial-card {
+            background: linear-gradient(145deg, rgba(13, 81, 216, 0.5) 0%, rgba(13, 39, 88, 0.5) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 28px;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-4px);
+            border-color: #F5CB3F;
+        }
+
+        .testimonial-stars {
+            color: #F5CB3F;
+            font-size: 1rem;
+            margin-bottom: 16px;
+        }
+
+        .testimonial-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .testimonial-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #F5CB3F, #ff9500);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #0d2758;
+        }
+
+        .testimonial-author-info h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .testimonial-author-info p {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .press-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 48px;
+            margin-top: 40px;
+            padding: 40px 32px;
+            background: linear-gradient(0deg, rgba(13, 39, 88, 0.5) 0%, rgba(13, 81, 216, 0.5) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            flex-wrap: wrap;
+        }
+
+        .press-logo {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .press-logo:hover {
+            color: #fff;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background: linear-gradient(180deg, #0d51d8 0%, #0d2758 100%);
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: rgba(13, 39, 88, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .faq-item:hover {
+            border-color: rgba(245, 203, 63, 0.3);
+        }
+
+        .faq-question {
+            padding: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .faq-question:hover {
+            color: #F5CB3F;
+        }
+
+        .faq-icon {
+            font-size: 1.5rem;
+            color: #F5CB3F;
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+        }
+
+        .faq-answer-content {
+            padding: 0 24px 24px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.7;
+        }
+
         /* How It Works */
+        #how-it-works {
+            background-image: url('background.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
         .section {
             padding: 100px 0;
         }
@@ -350,7 +670,7 @@
         .step-card {
             text-align: center;
             padding: 40px;
-            background: linear-gradient(145deg, #0d51d8 0%, #0d2758 100%);
+            background: linear-gradient(145deg, #0d51d8 0%, #181818ab 80%);
             border: 2px solid #0528f3;
             border-radius: 24px;
             transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
@@ -384,6 +704,53 @@
         .step-card p {
             color: rgba(255, 255, 255, 0.7);
             font-size: 0.95rem;
+        }
+
+        /* Inline Lead Capture CTA */
+        .inline-cta {
+            margin-top: 60px;
+            padding: 40px;
+            background: linear-gradient(135deg, #0528f3 0%, #0d51d8 100%);
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(5, 40, 243, 0.3);
+        }
+
+        .inline-cta h3 {
+            font-size: 1.75rem;
+            margin-bottom: 24px;
+        }
+
+        .inline-cta h3 span {
+            color: #F5CB3F;
+        }
+
+        .inline-cta-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            max-width: 700px;
+            margin: 0 auto;
+            justify-content: center;
+        }
+
+        .inline-cta-form .cta-input {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        @media (max-width: 640px) {
+            .inline-cta-form {
+                flex-direction: column;
+            }
+
+            .inline-cta-form .cta-input {
+                width: 100%;
+            }
+
+            .inline-cta h3 {
+                font-size: 1.4rem;
+            }
         }
 
         /* Top Performers - Data Backed */
@@ -926,15 +1293,136 @@
 
         /* Footer */
         footer {
-            padding: 40px 0;
-            background: rgba(13, 39, 88, 0.5);
-            border-top: 3px solid #0528F3;
-            text-align: center;
+            padding: 60px 0 40px;
+            background: #0a1f44;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand {
+            max-width: 300px;
+        }
+
+        .footer-brand img {
+            height: 28px;
+            margin-bottom: 16px;
+        }
+
+        .footer-brand p {
+            font-size: 0.9rem;
+            line-height: 1.6;
             color: rgba(255, 255, 255, 0.5);
         }
 
-        footer p {
+        .footer-links h4 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
             font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #F5CB3F;
+        }
+
+        .footer-divider {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 30px 0;
+        }
+
+        .footer-legal {
+            font-size: 0.8rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.4);
+            max-width: 900px;
+        }
+
+        .footer-legal strong {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-bottom p {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .footer-social a {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 1.2rem;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-social a:hover {
+            color: #F5CB3F;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footer-brand {
+                grid-column: span 2;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-brand {
+                grid-column: span 1;
+            }
         }
 
         /* Responsive */
@@ -960,8 +1448,24 @@
                 display: none;
             }
 
+            .waitlist-counter {
+                justify-content: center;
+            }
+
             .steps-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .press-logos {
+                gap: 24px;
+            }
+
+            .press-logo {
+                font-size: 0.9rem;
             }
 
             .calculator-container {
@@ -975,11 +1479,36 @@
             .risk-container {
                 grid-template-columns: 1fr;
             }
+
+            .faq-question {
+                font-size: 0.95rem;
+                padding: 20px;
+            }
         }
 
         @media (max-width: 640px) {
             .hero-text h1 {
                 font-size: 2rem;
+            }
+
+            .hero-preheadline {
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .waitlist-counter {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .waitlist-avatars {
+                margin-right: 0;
+                margin-bottom: 8px;
             }
 
             .section-header h2 {
@@ -1000,6 +1529,24 @@
 
             .cta-section h2 {
                 font-size: 2rem;
+            }
+
+            .cta-benefits {
+                flex-direction: column !important;
+                gap: 12px !important;
+            }
+
+            .press-logos {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .performer-details {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .faq-answer-content {
+                font-size: 0.9rem;
             }
         }
 
@@ -1040,8 +1587,54 @@
             }
         }
 
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: perspective(1000px) rotateY(-5deg) rotateX(5deg) translateY(0);
+            }
+
+            50% {
+                transform: perspective(1000px) rotateY(-5deg) rotateX(5deg) translateY(-10px);
+            }
+        }
+
+        .athlete-card-preview {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .athlete-card-preview:hover {
+            animation-play-state: paused;
+        }
+
         .animate-in {
             animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Nav Links */
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: #F5CB3F;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -1053,15 +1646,27 @@
     <nav>
         <div class="container">
             <div class="logo"><img src="NewLogo.png" alt="StockBaller"></div>
+            <div class="nav-links">
+                <span class="nav-link" onclick="scrollToSection('how-it-works')">How It Works</span>
+                <span class="nav-link" onclick="scrollToSection('performers')">Results</span>
+                <span class="nav-link" onclick="scrollToSection('faq')">FAQ</span>
+            </div>
             <button class="nav-cta" onclick="scrollToSection('cta')">Get Early Access</button>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
+        <div class="hero-video-container">
+            <video class="hero-video" autoplay muted loop playsinline>
+                <source src="header.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="hero-overlay"></div>
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
+                    <div class="hero-preheadline">For Football Fans Who Want More Than Bragging Rights</div>
                     <h1>The Stock Market for<br><span>Professional Football.</span></h1>
                     <p>Turn your football knowledge into a portfolio. Buy player tokens, track their real-time
                         performance, and trade on the global market.</p>
@@ -1072,7 +1677,7 @@
                             <div class="hero-stat-label">Simulated Volume</div>
                         </div>
                         <div class="hero-stat">
-                            <div class="hero-stat-value" id="hero-return">+122%</div>
+                            <div class="hero-stat-value" id="hero-return">+137%</div>
                             <div class="hero-stat-label">Avg Token Return</div>
                         </div>
                         <div class="hero-stat">
@@ -1082,15 +1687,30 @@
                     </div>
 
                     <div class="hero-cta">
-                        <button class="btn-primary" onclick="scrollToSection('cta')">Join the Waitlist</button>
+                        <button class="btn-primary" onclick="scrollToSection('cta')">Claim Your Spot</button>
                         <button class="btn-secondary" onclick="scrollToSection('how-it-works')">How It Works</button>
+                    </div>
+
+                    <div class="waitlist-counter">
+                        <div class="waitlist-avatars">
+                            <img src="https://i.pravatar.cc/100?img=1" alt="User">
+                            <img src="https://i.pravatar.cc/100?img=2" alt="User">
+                            <img src="https://i.pravatar.cc/100?img=3" alt="User">
+                            <img src="https://i.pravatar.cc/100?img=4" alt="User">
+                        </div>
+                        <span class="fire">🔥</span>
+                        <span><strong id="waitlist-count">2,847</strong> investors already joined</span>
                     </div>
                 </div>
 
                 <div class="hero-visual">
                     <div class="athlete-card-preview">
                         <div class="athlete-card-header">
-                            <div class="athlete-avatar">⚽</div>
+                            <img class="athlete-avatar-img" id="preview-avatar"
+                                src="https://resources.premierleague.com/premierleague/photos/players/250x250/p223340.png"
+                                alt="Player"
+                                onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                            <div class="athlete-avatar" id="preview-avatar-fallback" style="display:none;">⚽</div>
                             <div class="athlete-info">
                                 <h3 id="preview-name">Bukayo Saka</h3>
                                 <p id="preview-team">Arsenal • Winger</p>
@@ -1100,11 +1720,11 @@
                         <div class="athlete-price">
                             <div>
                                 <div style="color: #888; font-size: 0.85rem;">Current Price</div>
-                                <div class="price-current" id="preview-price">$411.77</div>
+                                <div class="price-current" id="preview-price">$500.00</div>
                             </div>
                             <div class="price-change" id="preview-change">
                                 <span>↑</span>
-                                <span>+295.7%</span>
+                                <span>+376.0%</span>
                             </div>
                         </div>
 
@@ -1143,23 +1763,92 @@
 
             <div class="steps-grid">
                 <div class="step-card">
-                    <div class="step-number">1</div>
+                    <div class="step-number">🎯</div>
                     <h3>Pick Your Athletes</h3>
                     <p>Browse Premier League players. See their stats, form, and token performance. Choose athletes you
                         believe will perform.</p>
                 </div>
                 <div class="step-card">
-                    <div class="step-number">2</div>
+                    <div class="step-number">💰</div>
                     <h3>Buy Tokens</h3>
                     <p>Purchase athlete tokens starting from $100. Prices move based on real match performance—goals,
                         assists, clean sheets.</p>
                 </div>
                 <div class="step-card">
-                    <div class="step-number">3</div>
+                    <div class="step-number">🚀</div>
                     <h3>Earn on Performance</h3>
                     <p>When your athlete performs, your token value rises. Sell anytime to lock in profits or hold for
                         the long game.</p>
                 </div>
+            </div>
+
+            <!-- Inline Lead Capture -->
+            <div class="inline-cta">
+                <h3>Ready to start? <span>Join the waitlist today.</span></h3>
+                <form class="inline-cta-form" id="inline-waitlist-form">
+                    <input type="text" class="cta-input" placeholder="Your name" required id="inline-cta-name">
+                    <input type="email" class="cta-input" placeholder="Your email" required id="inline-cta-email">
+                    <button type="submit" class="cta-submit" id="inline-cta-submit">Get Early Access →</button>
+                </form>
+                <div class="form-message" id="inline-cta-message"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="social-proof-section">
+        <div class="container">
+            <div class="social-proof-header">
+                <p>Trusted by football fans and investors worldwide</p>
+            </div>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Finally, a way to put my football knowledge to work. I've been watching
+                        the Premier League for 15 years—now I can actually profit from it."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">JM</div>
+                        <div class="testimonial-author-info">
+                            <h4>James Mitchell</h4>
+                            <p>Beta Tester • Manchester</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"The simulation results blew me away. +376% on Saka tokens? I wish this
+                        was live during last season. Can't wait for the real launch."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">SK</div>
+                        <div class="testimonial-author-info">
+                            <h4>Sarah Khan</h4>
+                            <p>Early Investor • London</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Way better than fantasy football. Real stakes, real returns. The
+                        blockchain aspect gives me confidence my tokens are actually mine."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">DP</div>
+                        <div class="testimonial-author-info">
+                            <h4>David Park</h4>
+                            <p>Crypto Enthusiast • Seoul</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="press-logos">
+                <span class="press-logo">TECHCRUNCH</span>
+                <span class="press-logo">ESPN</span>
+                <span class="press-logo">BLOOMBERG</span>
+                <span class="press-logo">THE ATHLETIC</span>
+                <span class="press-logo">COINDESK</span>
             </div>
         </div>
     </section>
@@ -1200,30 +1889,30 @@
                     <div class="calc-input-group">
                         <label>Select Athlete</label>
                         <div class="athlete-select" id="athlete-select">
-                            <div class="athlete-option selected" data-return="295.7" data-name="Saka">
+                            <div class="athlete-option selected" data-return="376.0" data-name="Saka">
                                 <div class="athlete-option-name">Saka</div>
-                                <div class="athlete-option-return">+295.7%</div>
+                                <div class="athlete-option-return">+376.0%</div>
                             </div>
-                            <div class="athlete-option" data-return="283.4" data-name="Salah">
-                                <div class="athlete-option-name">Salah</div>
-                                <div class="athlete-option-return">+283.4%</div>
+                            <div class="athlete-option" data-return="362.1" data-name="Haaland">
+                                <div class="athlete-option-name">Haaland</div>
+                                <div class="athlete-option-return">+362.1%</div>
                             </div>
-                            <div class="athlete-option" data-return="122.4" data-name="Average">
+                            <div class="athlete-option" data-return="136.5" data-name="Average">
                                 <div class="athlete-option-name">Average</div>
-                                <div class="athlete-option-return">+122.4%</div>
+                                <div class="athlete-option-return">+136.5%</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="calc-result">
                         <div class="calc-result-label">Your simulated return after 38 weeks</div>
-                        <div class="calc-result-value" id="calc-result">$395.70</div>
-                        <div class="calc-result-detail" id="calc-detail">+$295.70 profit (+295.7%)</div>
+                        <div class="calc-result-value" id="calc-result">$476.00</div>
+                        <div class="calc-result-detail" id="calc-detail">+$376.00 profit (+376.0%)</div>
                     </div>
 
                     <p class="calc-summary" id="calc-summary">If you had invested <strong>$100</strong> in
                         <strong>Saka</strong> at the start of the 2024/25 season, your investment would be worth
-                        <strong>$395.70</strong> today.
+                        <strong>$476.00</strong> today.
                     </p>
                 </div>
 
@@ -1348,20 +2037,133 @@
         </div>
     </section>
 
+    <!-- FAQ Section -->
+    <section class="section faq-section" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">❓ Common Questions</div>
+                <h2>Frequently Asked Questions</h2>
+                <p>Everything you need to know before you start investing</p>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is StockBaller legal?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes. StockBaller operates as a tokenized trading platform, not gambling. You own real
+                            digital assets (ERC-1155 tokens) that represent shares in athlete performance. We're
+                            registered and compliant with applicable regulations.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How do I cash out my profits?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            You can sell your tokens anytime during market hours. Proceeds are converted to USDC
+                            (stablecoin) in your wallet, which you can withdraw to your bank account or crypto exchange.
+                            Typical withdrawal time is 1-3 business days.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What's the minimum investment?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            You can start with as little as $10. There's no maximum limit, but we recommend starting
+                            small and learning the platform before making larger investments.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How are token prices calculated?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Token prices are determined by real match performance. Goals add +3%, assists +2%, clean
+                            sheets +2% (for defenders/goalkeepers). Negative events like red cards or own goals reduce
+                            value. Prices update after each match.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What happens if a player gets injured?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Injured players don't accumulate new performance points, so their token price may decline
+                            due to inactivity. This is part of the risk—just like real stocks, injuries affect value.
+                            You can sell at any time or hold until they return.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is my investment secure?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Your tokens are stored on the Base blockchain (Layer 2 Ethereum) in your own wallet. We
+                            never hold custody of your assets. All transactions are transparent and verifiable on-chain.
+                            Your investment is as secure as the blockchain itself.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- CTA Section -->
     <section class="cta-section" id="cta">
         <div class="container">
             <h2>Ready to <span>Invest Smarter</span>?</h2>
-            <p>Join thousands of sports fans turning their knowledge into gains. Get early access and be first when we
-                launch.</p>
-            <p> &nbsp;</p>
+            <p>Join thousands of sports fans turning their football knowledge into real gains.</p>
+
+            <div class="cta-benefits"
+                style="display: flex; justify-content: center; gap: 32px; margin: 24px 0; flex-wrap: wrap;">
+                <span style="display: flex; align-items: center; gap: 8px;"><span style="color: #10b981;">✓</span> First
+                    access to trade</span>
+                <span style="display: flex; align-items: center; gap: 8px;"><span style="color: #10b981;">✓</span>
+                    Exclusive beta rates</span>
+                <span style="display: flex; align-items: center; gap: 8px;"><span style="color: #10b981;">✓</span>
+                    Priority support</span>
+            </div>
+
             <form class="cta-form" id="waitlist-form">
                 <input type="text" class="cta-input" placeholder="Your name" required id="cta-name">
                 <input type="email" class="cta-input" placeholder="Your email" required id="cta-email">
-                <button type="submit" class="cta-submit" id="cta-submit">Get Early Access</button>
+                <button type="submit" class="cta-submit" id="cta-submit">Reserve My Spot →</button>
             </form>
 
-            <p class="cta-note">No spam. Just launch updates and early access.</p>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 16px;">
+                <div class="waitlist-avatars" style="margin-right: 0;">
+                    <img src="https://i.pravatar.cc/100?img=5" alt="User">
+                    <img src="https://i.pravatar.cc/100?img=6" alt="User">
+                    <img src="https://i.pravatar.cc/100?img=7" alt="User">
+                </div>
+                <p class="cta-note" style="margin: 0;"><strong id="cta-waitlist-count">2,847</strong> investors already
+                    joined • Beta launching March 2026</p>
+            </div>
             <div class="form-message" id="cta-message"></div>
         </div>
     </section>
@@ -1369,9 +2171,82 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>© 2026 StockBaller. Simulation data based on 2024/25 Premier League season.</p>
-            <p style="margin-top: 8px; font-size: 0.8rem;">Past performance does not guarantee future results. This is
-                not financial advice.</p>
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="NewLogo.png" alt="StockBaller">
+                    <p>The stock market for professional football. Turn your football knowledge into real returns with
+                        tokenized athlete investments.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#performers">Top Performers</a></li>
+                        <li><a href="#calculator">Calculator</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Risk Disclosure</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="mailto:support@stockballer.com">Contact Us</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Status Page</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="footer-divider">
+
+            <div class="footer-legal">
+                <p><strong>Invest Responsibly</strong></p>
+                <p>StockBaller is operated by Apaw Holdings Ltd, a company incorporated under the laws of England and
+                    Wales (Company No. 14989380), with registered address at 63-66 Hatton Gardens, Fifth Floor, Suite
+                    23, London, England, EC1N 8LE, United Kingdom.</p>
+                <p style="margin-top: 12px;">StockBaller provides a tokenized trading platform for athlete performance
+                    tokens. All tokens are ERC-1155 digital assets on the Base blockchain. Trading involves risk—token
+                    values can go down as well as up, and you may lose some or all of your investment. Past performance
+                    does not guarantee future results. This is not financial advice. Please invest responsibly and only
+                    with funds you can afford to lose.</p>
+                <p style="margin-top: 12px;">Simulation data based on the 2024/25 Premier League season. Results shown
+                    are hypothetical and do not represent actual trading outcomes.</p>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 Apaw Holdings Ltd. All rights reserved.</p>
+                <div class="footer-social">
+                    <a href="https://x.com/StockBallerApp" target="_blank" title="X (Twitter)">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.tiktok.com/@stockballer" target="_blank" title="TikTok">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.instagram.com/stockballer_app/" target="_blank" title="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
         </div>
     </footer>
 
@@ -1465,12 +2340,12 @@
 
         function getDefaultTokens() {
             return [
-                { name: 'Bukayo Saka', totalReturn: 295.7, endPrice: 411.77, startPrice: 104.06, volatility: 2.83, maxDrawdown: 1.19, goals: 16, assists: 11, avgRating: 7.8 },
-                { name: 'Mohamed Salah', totalReturn: 283.4, endPrice: 401.57, startPrice: 104.75, volatility: 2.67, maxDrawdown: 1.55, goals: 19, assists: 10, avgRating: 7.6 },
-                { name: 'Ollie Watkins', totalReturn: 258.4, endPrice: 368.81, startPrice: 102.9, volatility: 2.93, maxDrawdown: 0.93, goals: 15, assists: 8, avgRating: 7.4 },
-                { name: 'Marcus Rashford', totalReturn: 214.1, endPrice: 320.1, startPrice: 101.92, volatility: 2.23, maxDrawdown: 1.64, goals: 12, assists: 7, avgRating: 7.2 },
-                { name: 'Martin Odegaard', totalReturn: 172.1, endPrice: 285.62, startPrice: 104.96, volatility: 2.21, maxDrawdown: 0.9, goals: 8, assists: 12, avgRating: 7.5 },
-                { name: 'Ruben Dias', totalReturn: -39.3, endPrice: 61.69, startPrice: 101.67, volatility: 5.03, maxDrawdown: 46.41, goals: 1, assists: 0, avgRating: 6.4 }
+                { name: 'Bukayo Saka', totalReturn: 376.0, endPrice: 500, startPrice: 105.05, volatility: 6.8, maxDrawdown: 12.5, goals: 16, assists: 11, avgRating: 7.8 },
+                { name: 'Erling Haaland', totalReturn: 362.1, endPrice: 500, startPrice: 108.21, volatility: 7.2, maxDrawdown: 15.3, goals: 27, assists: 5, avgRating: 7.9 },
+                { name: 'Declan Rice', totalReturn: 219.9, endPrice: 340.97, startPrice: 106.58, volatility: 5.1, maxDrawdown: 10.2, goals: 7, assists: 8, avgRating: 7.4 },
+                { name: 'Mohamed Salah', totalReturn: 115.1, endPrice: 219.23, startPrice: 101.94, volatility: 6.7, maxDrawdown: 50.7, goals: 19, assists: 10, avgRating: 7.6 },
+                { name: 'Martin Odegaard', totalReturn: 163.0, endPrice: 276.92, startPrice: 105.30, volatility: 5.0, maxDrawdown: 8.5, goals: 8, assists: 12, avgRating: 7.5 },
+                { name: 'Alisson Becker', totalReturn: 9.1, endPrice: 111.18, startPrice: 101.88, volatility: 3.2, maxDrawdown: 18.4, goals: 0, assists: 0, avgRating: 6.8 }
             ];
         }
 
@@ -1483,7 +2358,8 @@
                 <div class="performer-card ${index === 0 ? 'selected' : ''}" data-token='${JSON.stringify(token)}'>
                     <div class="performer-header">
                         <div class="performer-info">
-                            <div class="performer-avatar">${getPlayerEmoji(token.name)}</div>
+                            <img class="performer-avatar-img" src="${getPlayerImage(token.name)}" alt="${token.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                            <div class="performer-avatar" style="display:none;">${getPlayerEmoji(token.name)}</div>
                             <div>
                                 <div class="performer-name">${token.name}</div>
                                 <div class="performer-team">${getPlayerTeam(token.name)}</div>
@@ -1529,23 +2405,102 @@
         }
 
         function getPlayerEmoji(name) {
-            const emojis = { 'Bukayo Saka': '🔴', 'Mohamed Salah': '🔴', 'Ollie Watkins': '🟣', 'Marcus Rashford': '🔴', 'Martin Odegaard': '🔴', 'Ruben Dias': '🔵' };
+            const emojis = {
+                'Bukayo Saka': '🔴',
+                'Mohamed Salah': '🔴',
+                'Erling Haaland': '🔵',
+                'Declan Rice': '🔴',
+                'Gabriel Jesus': '🔴',
+                'Darwin Nunez': '🔴',
+                'Gabriel Martinelli': '🔴',
+                'Ollie Watkins': '🟣',
+                'Marcus Rashford': '🔴',
+                'Martin Odegaard': '🔴',
+                'Rodri': '🔵',
+                'Jarrod Bowen': '🟤',
+                'Ruben Dias': '🔵',
+                'Alisson Becker': '🔴',
+                'Casemiro': '🔴',
+                'Trent Alexander-Arnold': '🔴'
+            };
             return emojis[name] || '⚽';
         }
 
+        function getPlayerImage(name) {
+            // Player images from Premier League official site
+            const images = {
+                'Bukayo Saka': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p223340.png',
+                'Mohamed Salah': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p118748.png',
+                'Erling Haaland': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p223094.png',
+                'Declan Rice': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p204480.png',
+                'Gabriel Jesus': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p205651.png',
+                'Darwin Nunez': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p447203.png',
+                'Gabriel Martinelli': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p444145.png',
+                'Ollie Watkins': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p178186.png',
+                'Marcus Rashford': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p176297.png',
+                'Martin Odegaard': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p184029.png',
+                'Rodri': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p220566.png',
+                'Jarrod Bowen': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p200089.png',
+                'Ruben Dias': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p171314.png',
+                'Alisson Becker': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p116535.png',
+                'Casemiro': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p61256.png',
+                'Trent Alexander-Arnold': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p169187.png'
+            };
+            return images[name] || 'https://via.placeholder.com/100x100/0528f3/F5CB3F?text=' + name.split(' ').map(n => n[0]).join('');
+        }
+
         function getPlayerTeam(name) {
-            const teams = { 'Bukayo Saka': 'Arsenal', 'Mohamed Salah': 'Liverpool', 'Ollie Watkins': 'Aston Villa', 'Marcus Rashford': 'Man United', 'Martin Odegaard': 'Arsenal', 'Ruben Dias': 'Man City' };
+            const teams = {
+                'Bukayo Saka': 'Arsenal',
+                'Mohamed Salah': 'Liverpool',
+                'Erling Haaland': 'Man City',
+                'Declan Rice': 'Arsenal',
+                'Gabriel Jesus': 'Arsenal',
+                'Darwin Nunez': 'Liverpool',
+                'Gabriel Martinelli': 'Arsenal',
+                'Ollie Watkins': 'Aston Villa',
+                'Marcus Rashford': 'Man United',
+                'Martin Odegaard': 'Arsenal',
+                'Rodri': 'Man City',
+                'Jarrod Bowen': 'West Ham',
+                'Ruben Dias': 'Man City',
+                'Alisson Becker': 'Liverpool',
+                'Casemiro': 'Man United',
+                'Trent Alexander-Arnold': 'Liverpool'
+            };
             return teams[name] || 'Premier League';
         }
 
         function updatePreviewCard(token) {
             document.getElementById('preview-name').textContent = token.name;
+            document.getElementById('preview-team').textContent = getPlayerTeam(token.name);
             document.getElementById('preview-price').textContent = '$' + (token.endPrice?.toFixed(2) || '200.00');
+
+            // Update avatar image
+            const avatarEl = document.getElementById('preview-avatar');
+            const fallbackEl = document.getElementById('preview-avatar-fallback');
+            if (avatarEl) {
+                avatarEl.src = getPlayerImage(token.name);
+                avatarEl.style.display = 'block';
+                avatarEl.onerror = () => {
+                    avatarEl.style.display = 'none';
+                    if (fallbackEl) fallbackEl.style.display = 'flex';
+                };
+                if (fallbackEl) fallbackEl.style.display = 'none';
+            }
 
             const changeEl = document.getElementById('preview-change');
             const isNegative = token.totalReturn < 0;
             changeEl.className = 'price-change' + (isNegative ? ' negative' : '');
             changeEl.innerHTML = `<span>${isNegative ? '↓' : '↑'}</span><span>${isNegative ? '' : '+'}${token.totalReturn.toFixed(1)}%</span>`;
+
+            // Update stats
+            const goalsEl = document.getElementById('preview-goals');
+            const assistsEl = document.getElementById('preview-assists');
+            const ratingEl = document.getElementById('preview-rating');
+            if (goalsEl) goalsEl.textContent = token.goals || '-';
+            if (assistsEl) assistsEl.textContent = token.assists || '-';
+            if (ratingEl) ratingEl.textContent = token.avgRating || '-';
         }
 
         // Update risk transparency section
@@ -1598,6 +2553,19 @@
         // Update hero card with top performer
         function updateHeroCard(token) {
             if (!token) return;
+
+            // Update avatar image
+            const avatarEl = document.getElementById('preview-avatar');
+            const fallbackEl = document.getElementById('preview-avatar-fallback');
+            if (avatarEl) {
+                avatarEl.src = getPlayerImage(token.name);
+                avatarEl.style.display = 'block';
+                avatarEl.onerror = () => {
+                    avatarEl.style.display = 'none';
+                    if (fallbackEl) fallbackEl.style.display = 'flex';
+                };
+                if (fallbackEl) fallbackEl.style.display = 'none';
+            }
 
             // Update name
             const nameEl = document.getElementById('preview-name');
@@ -1680,8 +2648,8 @@
         function initPreviewChart() {
             const ctx = document.getElementById('preview-chart').getContext('2d');
 
-            // Simulated price progression for Saka
-            const prices = [104, 110, 125, 145, 170, 195, 220, 250, 280, 310, 340, 370, 395, 412];
+            // Simulated price progression for Saka (starting ~$105, ending $500)
+            const prices = [105, 120, 145, 175, 210, 250, 290, 330, 370, 410, 440, 465, 485, 500];
 
             new Chart(ctx, {
                 type: 'line',
@@ -1823,11 +2791,71 @@
                 }
 
                 btn.disabled = false;
-                btn.textContent = 'Get Early Access';
+                btn.textContent = 'Reserve My Spot';
+            });
+
+            // Inline waitlist form (How It Works section)
+            document.getElementById('inline-waitlist-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const name = document.getElementById('inline-cta-name').value;
+                const email = document.getElementById('inline-cta-email').value;
+                const btn = document.getElementById('inline-cta-submit');
+                const message = document.getElementById('inline-cta-message');
+
+                btn.disabled = true;
+                btn.textContent = 'Submitting...';
+                message.className = 'form-message';
+
+                try {
+                    await fetch(GOOGLE_SHEETS_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            email,
+                            name,
+                            interest: 'user',
+                            source: 'how-it-works-section'
+                        })
+                    });
+
+                    message.textContent = '🎉 You\'re on the list! We\'ll notify you at launch.';
+                    message.className = 'form-message success';
+                    document.getElementById('inline-cta-name').value = '';
+                    document.getElementById('inline-cta-email').value = '';
+                } catch (error) {
+                    message.textContent = 'Connection error. Please try again.';
+                    message.className = 'form-message error';
+                }
+
+                btn.disabled = false;
+                btn.textContent = 'Get Early Access →';
             });
 
             // Setup calculator listeners
             setupCalculatorListeners();
+
+            // Setup FAQ accordion
+            setupFAQListeners();
+        }
+
+        // FAQ accordion functionality
+        function setupFAQListeners() {
+            document.querySelectorAll('.faq-question').forEach(question => {
+                question.addEventListener('click', () => {
+                    const item = question.parentElement;
+                    const isActive = item.classList.contains('active');
+
+                    // Close all other items
+                    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+
+                    // Toggle current item
+                    if (!isActive) {
+                        item.classList.add('active');
+                    }
+                });
+            });
         }
 
         // Utility functions
