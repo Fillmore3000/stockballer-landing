@@ -495,6 +495,7 @@ function generatePostHtml(post) {
 function generateIndexHtml(posts) {
     const postCards = posts.map(post => `
                 <a href="blog-posts/${post.slug}.html" class="blog-card">
+                    ${post.image ? `<div class="blog-card-image" style="background-image: url('${post.image}')"></div>` : ''}
                     <div class="blog-card-content">
                         <time datetime="${post.date}">${formatDate(post.date)}</time>
                         <h2>${post.title}</h2>
@@ -671,6 +672,14 @@ function generateIndexHtml(posts) {
             border-color: rgba(245, 203, 63, 0.3);
         }
 
+        .blog-card-image {
+            width: 100%;
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
         .blog-card-content {
             padding: 24px;
         }
@@ -842,12 +851,21 @@ function buildBlog() {
         const slug = getSlug(file);
         const htmlContent = markdownToHtml(markdown);
         
+        // Extract first image from markdown content if no image in front matter
+        let thumbnail = data.image || '';
+        if (!thumbnail) {
+            const imgMatch = markdown.match(/!\[.*?\]\((https?:\/\/[^)]+)\)/);
+            if (imgMatch) {
+                thumbnail = imgMatch[1];
+            }
+        }
+        
         const post = {
             slug,
             title: data.title || slug.replace(/-/g, ' '),
             date: data.date || new Date().toISOString().split('T')[0],
             description: data.description || '',
-            image: data.image || '',
+            image: thumbnail,
             htmlContent
         };
         
