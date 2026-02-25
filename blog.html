@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insights - StockBaller</title>
+
+    <meta name="description" content="Insights on athlete investing, Premier League performance analysis, and the future of sports tokenization.">
+    <meta name="author" content="StockBaller">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://stockballer.app/blog.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://stockballer.app/blog.html">
+    <meta property="og:title" content="StockBaller Insights - Athlete Investing">
+    <meta property="og:description" content="Insights on athlete investing, Premier League performance analysis, and the future of sports tokenization.">
+    <meta property="og:image" content="https://stockballer.app/og-image.png">
+    <meta property="og:site_name" content="StockBaller">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@StockBallerApp">
+    <meta name="twitter:title" content="StockBaller Insights - Athlete Investing">
+    <meta name="twitter:description" content="Insights on athlete investing, Premier League performance analysis, and the future of sports tokenization.">
+    <meta name="twitter:image" content="https://stockballer.app/og-image.png">
+
+    <meta name="theme-color" content="#0d2758">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Blinker:wght@400;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: rgba(13, 39, 88, 1);
+            color: #fff;
+            line-height: 1.7;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Blinker', sans-serif;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation */
+        nav {
+            padding: 10px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: #0528F3;
+            box-shadow: 0 4px 20px rgba(5, 40, 243, 0.3);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 30px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #F5CB3F;
+        }
+
+        .nav-cta {
+            padding: 10px 24px;
+            background: #F5CB3F;
+            border: none;
+            border-radius: 8px;
+            color: #0d2758;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(245, 203, 63, 0.5);
+            background: #fff;
+        }
+
+        /* Blog Header */
+        .blog-header {
+            padding: 140px 0 60px;
+            text-align: center;
+        }
+
+        .blog-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .blog-header h1 span {
+            color: #F5CB3F;
+        }
+
+        .blog-header p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Blog Grid */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            padding-bottom: 80px;
+        }
+
+        .blog-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(245, 203, 63, 0.3);
+        }
+
+        .blog-card-content {
+            padding: 24px;
+        }
+
+        .blog-card time {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .blog-card h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 12px 0;
+            color: #fff;
+            line-height: 1.3;
+        }
+
+        .blog-card p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .blog-card .read-more {
+            color: #F5CB3F;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .no-posts {
+            text-align: center;
+            padding: 60px 24px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .no-posts h2 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        footer .container {
+            max-width: 1200px;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            margin: 0 12px;
+        }
+
+        footer a:hover {
+            color: #F5CB3F;
+        }
+
+        .footer-links {
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .blog-header h1 {
+                font-size: 2rem;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="NewLogo.png" alt="StockBaller">
+            </a>
+            <div class="nav-links">
+                <a href="blog.html">Insights</a>
+                <a href="index.html#how-it-works">How It Works</a>
+                <a href="index.html#faq">FAQ</a>
+            </div>
+            <a href="index.html#waitlist" class="nav-cta">Join Waitlist</a>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <header class="blog-header">
+                <h1>The <span>StockBaller</span> Insights</h1>
+                <p>Insights on athlete investing, Premier League performance analysis, and the future of sports tokenization.</p>
+            </header>
+
+            <div class="blog-grid">
+
+                <a href="blog-posts/7-mistakes-your-making-with-football-player-tokens.html" class="blog-card">
+                    <div class="blog-card-content">
+                        <time datetime="2026-02-25">25 February 2026</time>
+                        <h2>7 mistakes your making with football player tokens</h2>
+                        <p></p>
+                        <span class="read-more">Read more →</span>
+                    </div>
+                </a>
+
+                <a href="blog-posts/diversification-101-building-a-balanced-athlete-token-portfolio.html" class="blog-card">
+                    <div class="blog-card-content">
+                        <time datetime="2026-02-25">25 February 2026</time>
+                        <h2>diversification 101 building a balanced athlete token portfolio</h2>
+                        <p></p>
+                        <span class="read-more">Read more →</span>
+                    </div>
+                </a>
+
+                <a href="blog-posts/forget-betting-why-player-tokens-are-the-future-of-sports-finance.html" class="blog-card">
+                    <div class="blog-card-content">
+                        <time datetime="2026-02-25">25 February 2026</time>
+                        <h2>forget betting why player tokens are the future of sports finance</h2>
+                        <p></p>
+                        <span class="read-more">Read more →</span>
+                    </div>
+                </a>
+
+                <a href="blog-posts/is-erling-haaland-overvalued-analyzing-ROI-vs-performance-data.html" class="blog-card">
+                    <div class="blog-card-content">
+                        <time datetime="2026-02-25">25 February 2026</time>
+                        <h2>is erling haaland overvalued analyzing ROI vs performance data</h2>
+                        <p></p>
+                        <span class="read-more">Read more →</span>
+                    </div>
+                </a>
+
+                <a href="blog-posts/the-beginners-quick-start-guide-to-athlete-tokenization.html" class="blog-card">
+                    <div class="blog-card-content">
+                        <time datetime="2026-02-25">25 February 2026</time>
+                        <h2>the beginners quick start guide to athlete tokenization</h2>
+                        <p></p>
+                        <span class="read-more">Read more →</span>
+                    </div>
+                </a>
+
+                <a href="blog-posts/the-injury-ledger-how-physical-health-impacts-token-market-value.html" class="blog-card">
+                    <div class="blog-card-content">
+                        <time datetime="2026-02-25">25 February 2026</time>
+                        <h2>the injury ledger how physical health impacts token market value</h2>
+                        <p></p>
+                        <span class="read-more">Read more →</span>
+                    </div>
+                </a>
+
+                <a href="blog-posts/the-WC26-arbitrage-strategy-bridging-your-portfolio-for-the-World-Cup.html" class="blog-card">
+                    <div class="blog-card-content">
+                        <time datetime="2026-02-25">25 February 2026</time>
+                        <h2>the WC26 arbitrage strategy bridging your portfolio for the World Cup</h2>
+                        <p></p>
+                        <span class="read-more">Read more →</span>
+                    </div>
+                </a>
+
+                <a href="blog-posts/transfer-window-volatility-capitalizing-on-summer-market-movements.html" class="blog-card">
+                    <div class="blog-card-content">
+                        <time datetime="2026-02-25">25 February 2026</time>
+                        <h2>transfer window volatility capitalizing on summer market movements</h2>
+                        <p></p>
+                        <span class="read-more">Read more →</span>
+                    </div>
+                </a>
+
+                <a href="blog-posts/WC26-biggest-missed-trade-lamine-yamal-was-the-buy-you-didnt-take.html" class="blog-card">
+                    <div class="blog-card-content">
+                        <time datetime="2026-02-25">25 February 2026</time>
+                        <h2>WC26 biggest missed trade lamine yamal was the buy you didnt take</h2>
+                        <p></p>
+                        <span class="read-more">Read more →</span>
+                    </div>
+                </a>
+
+                <a href="blog-posts/why-athlete-tokens-are-revolutionizing-sports-investment.html" class="blog-card">
+                    <div class="blog-card-content">
+                        <time datetime="2026-02-25">25 February 2026</time>
+                        <h2>why athlete tokens are revolutionizing sports investment</h2>
+                        <p></p>
+                        <span class="read-more">Read more →</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="blog.html">Insights</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="mailto:support@stockballer.app">Contact</a>
+            </div>
+            <p>© 2026 Apaw Holdings Ltd. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+</html>
