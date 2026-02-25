@@ -2331,7 +2331,8 @@
     </footer>
 
     <script>
-        // Configuration
+        // Configuration - use localhost for testing, Railway for production
+        // const API_BASE = 'http://localhost:3001/api';
         const API_BASE = 'https://stockballer-api-production.up.railway.app/api';
 
         let simulationData = null;
@@ -2347,20 +2348,24 @@
         async function loadSimulationData() {
             try {
                 const response = await fetch(`${API_BASE}/simulation/results`);
+                if (!response.ok) throw new Error(`API returned ${response.status}`);
                 const data = await response.json();
 
                 if (data.hasResult && data.result) {
                     simulationData = data.result;
                     updatePageWithData();
+                } else {
+                    throw new Error('No simulation results available');
                 }
             } catch (error) {
-                console.log('Using fallback data');
-                // Use hardcoded fallback for demo
-                const defaultTokens = getDefaultTokens();
-                renderPerformers(defaultTokens);
-                renderRiskChart(defaultTokens);
-                updateRiskSection(defaultTokens);
-                updateHeroCard(defaultTokens[0]);
+                console.error('API Error:', error);
+                document.getElementById('performers-grid').innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #ef4444;">
+                        <p style="font-size: 1.2rem; margin-bottom: 8px;">Failed to load live data</p>
+                        <p style="color: #888;">${error.message}</p>
+                        <p style="color: #666; margin-top: 12px; font-size: 0.9rem;">API: ${API_BASE}</p>
+                    </div>
+                `;
             }
         }
 
@@ -2420,12 +2425,12 @@
 
         function getDefaultTokens() {
             return [
-                { name: 'Bukayo Saka', totalReturn: 376.0, endPrice: 500, startPrice: 105.05, volatility: 6.8, maxDrawdown: 12.5, goals: 16, assists: 11, avgRating: 7.8 },
-                { name: 'Erling Haaland', totalReturn: 362.1, endPrice: 500, startPrice: 108.21, volatility: 7.2, maxDrawdown: 15.3, goals: 27, assists: 5, avgRating: 7.9 },
-                { name: 'Declan Rice', totalReturn: 219.9, endPrice: 340.97, startPrice: 106.58, volatility: 5.1, maxDrawdown: 10.2, goals: 7, assists: 8, avgRating: 7.4 },
-                { name: 'Mohamed Salah', totalReturn: 115.1, endPrice: 219.23, startPrice: 101.94, volatility: 6.7, maxDrawdown: 50.7, goals: 19, assists: 10, avgRating: 7.6 },
-                { name: 'Martin Odegaard', totalReturn: 163.0, endPrice: 276.92, startPrice: 105.30, volatility: 5.0, maxDrawdown: 8.5, goals: 8, assists: 12, avgRating: 7.5 },
-                { name: 'Alisson Becker', totalReturn: 9.1, endPrice: 111.18, startPrice: 101.88, volatility: 3.2, maxDrawdown: 18.4, goals: 0, assists: 0, avgRating: 6.8 }
+                { name: 'Bukayo Saka', totalReturn: 378.2, endPrice: 500, startPrice: 104.55, volatility: 3.5, maxDrawdown: 1.1, goals: 50, assists: 28, avgRating: 9.5 },
+                { name: 'Kevin De Bruyne', totalReturn: 239.9, endPrice: 355.81, startPrice: 104.69, volatility: 2.4, maxDrawdown: 0.1, goals: 14, assists: 23, avgRating: 9.1 },
+                { name: 'Erling Haaland', totalReturn: 236.8, endPrice: 360.42, startPrice: 107, volatility: 5.9, maxDrawdown: 42.0, goals: 36, assists: 20, avgRating: 9.9 },
+                { name: 'Son Heung-min', totalReturn: 184.0, endPrice: 297.3, startPrice: 104.68, volatility: 4.6, maxDrawdown: 22.9, goals: 27, assists: 12, avgRating: 8.7 },
+                { name: 'Phil Foden', totalReturn: 178.9, endPrice: 272.61, startPrice: 97.75, volatility: 2.7, maxDrawdown: 1.4, goals: 24, assists: 15, avgRating: 7.9 },
+                { name: 'Gabriel Jesus', totalReturn: 166.5, endPrice: 278.81, startPrice: 104.6, volatility: 2.7, maxDrawdown: 2.2, goals: 25, assists: 15, avgRating: 8.1 }
             ];
         }
 
@@ -2438,7 +2443,7 @@
                 <div class="performer-card ${index === 0 ? 'selected' : ''}" data-token='${JSON.stringify(token)}'>
                     <div class="performer-header">
                         <div class="performer-info">
-                            <img class="performer-avatar-img" src="${getPlayerImage(token.name)}" alt="${token.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                            <img class="performer-avatar-img" src="${getPlayerImage(token.name, token.imageId)}" alt="${token.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
                             <div class="performer-avatar" style="display:none;">${getPlayerEmoji(token.name)}</div>
                             <div>
                                 <div class="performer-name">${token.name}</div>
@@ -2487,66 +2492,76 @@
         function getPlayerEmoji(name) {
             const emojis = {
                 'Bukayo Saka': '🔴',
-                'Mohamed Salah': '🔴',
                 'Erling Haaland': '🔵',
+                'Kevin De Bruyne': '🔵',
+                'Son Heung-min': '⚪',
                 'Declan Rice': '🔴',
                 'Gabriel Jesus': '🔴',
-                'Darwin Nunez': '🔴',
                 'Gabriel Martinelli': '🔴',
                 'Ollie Watkins': '🟣',
                 'Marcus Rashford': '🔴',
                 'Martin Odegaard': '🔴',
                 'Rodri': '🔵',
-                'Jarrod Bowen': '🟤',
                 'Ruben Dias': '🔵',
-                'Alisson Becker': '🔴',
                 'Casemiro': '🔴',
-                'Trent Alexander-Arnold': '🔴'
+                'Trent Alexander-Arnold': '🔴',
+                'Phil Foden': '🔵',
+                'Bruno Fernandes': '🔴',
+                'Cole Palmer': '🔵',
+                'Ederson': '🔵'
             };
             return emojis[name] || '⚽';
         }
 
-        function getPlayerImage(name) {
-            // Player images from Premier League official site
+        function getPlayerImage(name, imageId) {
+            // Use imageId from API if available
+            if (imageId) {
+                return `https://resources.premierleague.com/premierleague/photos/players/250x250/${imageId}.png`;
+            }
+            // Fallback to name-based lookup
             const images = {
                 'Bukayo Saka': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p223340.png',
-                'Mohamed Salah': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p118748.png',
                 'Erling Haaland': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p223094.png',
+                'Kevin De Bruyne': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p61366.png',
+                'Son Heung-min': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p85971.png',
                 'Declan Rice': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p204480.png',
                 'Gabriel Jesus': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p205651.png',
-                'Darwin Nunez': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p447203.png',
                 'Gabriel Martinelli': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p444145.png',
-                'Ollie Watkins': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p178186.png',
+                'Ollie Watkins': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p178301.png',
                 'Marcus Rashford': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p176297.png',
                 'Martin Odegaard': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p184029.png',
                 'Rodri': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p220566.png',
-                'Jarrod Bowen': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p200089.png',
                 'Ruben Dias': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p171314.png',
-                'Alisson Becker': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p116535.png',
                 'Casemiro': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p61256.png',
-                'Trent Alexander-Arnold': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p169187.png'
+                'Trent Alexander-Arnold': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p169187.png',
+                'Phil Foden': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p209244.png',
+                'Bruno Fernandes': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p141746.png',
+                'Cole Palmer': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p244851.png',
+                'Ederson': 'https://resources.premierleague.com/premierleague/photos/players/250x250/p121160.png'
             };
-            return images[name] || 'https://via.placeholder.com/100x100/0528f3/F5CB3F?text=' + name.split(' ').map(n => n[0]).join('');
+            return images[name] || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(name) + '&background=0528f3&color=F5CB3F&size=250&bold=true';
         }
 
         function getPlayerTeam(name) {
             const teams = {
                 'Bukayo Saka': 'Arsenal',
-                'Mohamed Salah': 'Liverpool',
                 'Erling Haaland': 'Man City',
+                'Kevin De Bruyne': 'Man City',
+                'Son Heung-min': 'Tottenham',
                 'Declan Rice': 'Arsenal',
                 'Gabriel Jesus': 'Arsenal',
-                'Darwin Nunez': 'Liverpool',
                 'Gabriel Martinelli': 'Arsenal',
                 'Ollie Watkins': 'Aston Villa',
                 'Marcus Rashford': 'Man United',
                 'Martin Odegaard': 'Arsenal',
                 'Rodri': 'Man City',
-                'Jarrod Bowen': 'West Ham',
                 'Ruben Dias': 'Man City',
-                'Alisson Becker': 'Liverpool',
                 'Casemiro': 'Man United',
-                'Trent Alexander-Arnold': 'Liverpool'
+                'Trent Alexander-Arnold': 'Liverpool',
+                'Phil Foden': 'Man City',
+                'Bruno Fernandes': 'Man United',
+                'Cole Palmer': 'Chelsea',
+                'Ederson': 'Man City'
             };
             return teams[name] || 'Premier League';
         }
@@ -2560,7 +2575,7 @@
             const avatarEl = document.getElementById('preview-avatar');
             const fallbackEl = document.getElementById('preview-avatar-fallback');
             if (avatarEl) {
-                avatarEl.src = getPlayerImage(token.name);
+                avatarEl.src = getPlayerImage(token.name, token.imageId);
                 avatarEl.style.display = 'block';
                 avatarEl.onerror = () => {
                     avatarEl.style.display = 'none';
@@ -2638,7 +2653,7 @@
             const avatarEl = document.getElementById('preview-avatar');
             const fallbackEl = document.getElementById('preview-avatar-fallback');
             if (avatarEl) {
-                avatarEl.src = getPlayerImage(token.name);
+                avatarEl.src = getPlayerImage(token.name, token.imageId);
                 avatarEl.style.display = 'block';
                 avatarEl.onerror = () => {
                     avatarEl.style.display = 'none';
