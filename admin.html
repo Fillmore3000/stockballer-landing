@@ -923,6 +923,122 @@
             color: rgba(255,255,255,0.4);
             font-size: 14px;
         }
+
+        /* Users Panel Styles */
+        .users-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 16px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .user-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.2s ease;
+        }
+
+        .user-card:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(0,170,255,0.3);
+        }
+
+        .user-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0088ff 0%, #00aaff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .user-wallet {
+            font-family: monospace;
+            font-size: 13px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .user-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .user-stat {
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            padding: 8px 12px;
+        }
+
+        .user-stat-label {
+            font-size: 10px;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+        }
+
+        .user-stat-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .user-stat-value.positive { color: #00ff88; }
+        .user-stat-value.negative { color: #ff6666; }
+
+        .users-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .users-summary-card {
+            background: rgba(0,136,255,0.1);
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+            border: 1px solid rgba(0,136,255,0.2);
+        }
+
+        .users-summary-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #00aaff;
+        }
+
+        .users-summary-label {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+            margin-top: 4px;
+        }
+
+        .no-users-message {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255,255,255,0.4);
+            font-size: 14px;
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 768px) {
+            .users-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
     </style>
 </head>
 <body>
@@ -1103,6 +1219,41 @@
             </div>
         </div>
 
+        <!-- Real Users Panel -->
+        <div class="panel full-panel">
+            <div class="panel-title" style="display: flex; justify-content: space-between; align-items: center;">
+                <span>👥 Real Users (Non-Bots)</span>
+                <span id="users-count" style="font-size: 12px; color: rgba(255,255,255,0.6);"></span>
+            </div>
+            
+            <!-- Users Summary -->
+            <div class="users-summary" id="users-summary">
+                <div class="users-summary-card">
+                    <div class="users-summary-value" id="total-users">--</div>
+                    <div class="users-summary-label">Total Users</div>
+                </div>
+                <div class="users-summary-card">
+                    <div class="users-summary-value" id="active-users">--</div>
+                    <div class="users-summary-label">Active Users</div>
+                </div>
+                <div class="users-summary-card">
+                    <div class="users-summary-value" id="users-portfolio">$--</div>
+                    <div class="users-summary-label">Total Portfolio</div>
+                </div>
+                <div class="users-summary-card">
+                    <div class="users-summary-value" id="users-balance">$--</div>
+                    <div class="users-summary-label">Total USDC</div>
+                </div>
+            </div>
+            
+            <!-- Users Grid -->
+            <div class="users-grid" id="users-grid">
+                <div class="loading">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+
         <!-- Activity Feed Panel -->
         <div class="panels-grid">
             <div class="panel">
@@ -1218,7 +1369,8 @@
                 await Promise.all([
                     loadStats(),
                     loadBots(),
-                    loadBlockchainInfo()
+                    loadBlockchainInfo(),
+                    loadUsers()
                 ]);
                 updateApiStatus(true);
             } catch (error) {
@@ -1547,6 +1699,95 @@
                 console.error('Blockchain info error:', error);
                 document.getElementById('vault-address').textContent = 'Error loading';
                 document.getElementById('trading-mode').textContent = 'Error';
+            }
+        }
+
+        // Load real users (non-bots)
+        async function loadUsers() {
+            try {
+                const response = await fetch(`${API_BASE}/trading/users`);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                const data = await response.json();
+                const { summary, users } = data;
+
+                // Update summary cards
+                document.getElementById('total-users').textContent = summary.totalUsers || 0;
+                document.getElementById('active-users').textContent = summary.activeUsers || 0;
+                document.getElementById('users-portfolio').textContent = `$${(summary.totalPortfolioValue || 0).toLocaleString()}`;
+                document.getElementById('users-balance').textContent = `$${(summary.totalUsdcBalance || 0).toLocaleString()}`;
+                document.getElementById('users-count').textContent = `${users.length} users`;
+
+                // Render users grid
+                const grid = document.getElementById('users-grid');
+                
+                if (users.length === 0) {
+                    grid.innerHTML = `
+                        <div class="no-users-message">
+                            <div style="font-size: 48px; margin-bottom: 16px;">👤</div>
+                            <div>No real users yet</div>
+                            <div style="margin-top: 8px; font-size: 12px;">Users will appear here when they connect their wallets and start trading</div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                grid.innerHTML = users.map(user => {
+                    const walletShort = truncateAddress(user.walletAddress);
+                    const avatar = user.walletAddress.slice(2, 4).toUpperCase();
+                    const plClass = user.profitLoss >= 0 ? 'positive' : 'negative';
+                    const plPrefix = user.profitLoss >= 0 ? '+' : '';
+                    
+                    return `
+                        <div class="user-card">
+                            <div class="user-card-header">
+                                <div class="user-avatar">${avatar}</div>
+                                <div>
+                                    <div class="user-wallet">${walletShort}</div>
+                                    <div style="font-size: 11px; color: rgba(255,255,255,0.4);">Joined ${formatTime(user.createdAt)}</div>
+                                </div>
+                            </div>
+                            <div class="user-stats">
+                                <div class="user-stat">
+                                    <div class="user-stat-label">Portfolio</div>
+                                    <div class="user-stat-value">$${user.portfolioValue.toLocaleString()}</div>
+                                </div>
+                                <div class="user-stat">
+                                    <div class="user-stat-label">P&L</div>
+                                    <div class="user-stat-value ${plClass}">${plPrefix}$${Math.abs(user.profitLoss).toFixed(2)}</div>
+                                </div>
+                                <div class="user-stat">
+                                    <div class="user-stat-label">Holdings</div>
+                                    <div class="user-stat-value">${user.holdingsCount} tokens</div>
+                                </div>
+                                <div class="user-stat">
+                                    <div class="user-stat-label">Bets</div>
+                                    <div class="user-stat-value">${user.totalBets}</div>
+                                </div>
+                            </div>
+                            ${user.holdings.length > 0 ? `
+                                <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1);">
+                                    <div style="font-size: 11px; color: rgba(255,255,255,0.5); margin-bottom: 6px;">Holdings:</div>
+                                    <div style="font-size: 12px; color: rgba(255,255,255,0.7);">
+                                        ${user.holdings.slice(0, 3).map(h => `${h.quantity}x ${h.playerName}`).join(', ')}
+                                        ${user.holdings.length > 3 ? ` +${user.holdings.length - 3} more` : ''}
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                }).join('');
+
+            } catch (error) {
+                console.error('Users load error:', error);
+                document.getElementById('users-grid').innerHTML = `
+                    <div class="no-users-message">
+                        <div style="font-size: 48px; margin-bottom: 16px;">⚠️</div>
+                        <div>Error loading users</div>
+                        <div style="margin-top: 8px; font-size: 12px;">${error.message}</div>
+                    </div>
+                `;
             }
         }
 
