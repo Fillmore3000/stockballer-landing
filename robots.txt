@@ -1,0 +1,33 @@
+# StockBaller robots.txt
+# https://stockballer.app
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://stockballer.app/sitemap.xml
+
+# Disallow admin
+Disallow: /admin.html
+Disallow: /admin
+
+# Allow all crawlers to index key pages
+User-agent: Googlebot
+Allow: /
+Allow: /blog.html
+Allow: /blog-posts/
+
+User-agent: Bingbot
+Allow: /
+Allow: /blog.html
+Allow: /blog-posts/
+
+# Social media crawlers for rich previews
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /

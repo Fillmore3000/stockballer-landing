@@ -1,9 +1,51 @@
 <!DOCTYPE html>
-<!-- v1.0.1 -->
+<!-- v1.0.2 -->
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-M5NCP3V6');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYMWEJ8837"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        // Default to denied until consent given
+        gtag('consent', 'default', {
+            'analytics_storage': 'denied',
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied'
+        });
+        gtag('js', new Date());
+        gtag('config', 'G-PYMWEJ8837', { 'anonymize_ip': true });
+    </script>
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('consent', 'revoke');
+    fbq('init', '951628244105805');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.net/tr?id=951628244105805&ev=PageView&noscript=1"/></noscript>
+    <!-- End Meta Pixel Code -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StockBaller - The Stock Market for Professional Football</title>
 
@@ -40,6 +82,42 @@
     <meta name="application-name" content="StockBaller">
 
     <link rel="icon" type="image/png" href="favicon.png">
+
+    <!-- Structured Data - Organization -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "StockBaller",
+        "url": "https://stockballer.app",
+        "logo": "https://stockballer.app/NewLogo.png",
+        "description": "The first marketplace for tokenized athlete performance. Trade Premier League stars with real performance-based returns.",
+        "sameAs": [
+            "https://twitter.com/StockBallerApp"
+        ],
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "support@stockballer.app",
+            "contactType": "customer support"
+        }
+    }
+    </script>
+
+    <!-- Structured Data - WebSite -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "StockBaller",
+        "url": "https://stockballer.app",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://stockballer.app/blog?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Blinker:wght@400;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap"
@@ -3212,7 +3290,139 @@
         function scrollToSection(id) {
             document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
         }
+
+        // ============================================
+        // COOKIE CONSENT MANAGEMENT
+        // ============================================
+        (function() {
+            const CONSENT_KEY = 'sb_cookie_consent';
+            const consent = localStorage.getItem(CONSENT_KEY);
+
+            // If already consented, grant permissions
+            if (consent === 'accepted') {
+                grantConsent();
+            } else if (consent !== 'rejected') {
+                // Show banner if no decision made
+                showCookieBanner();
+            }
+
+            function grantConsent() {
+                gtag('consent', 'update', {
+                    'analytics_storage': 'granted',
+                    'ad_storage': 'granted',
+                    'ad_user_data': 'granted',
+                    'ad_personalization': 'granted'
+                });
+                if (typeof fbq !== 'undefined') {
+                    fbq('consent', 'grant');
+                }
+            }
+
+            function showCookieBanner() {
+                const banner = document.createElement('div');
+                banner.id = 'cookie-banner';
+                banner.innerHTML = `
+                    <div class="cookie-content">
+                        <p><strong>🍪 We use cookies</strong> to analyze traffic, personalize content, and serve targeted ads. By clicking "Accept", you consent to our use of cookies. <a href="/privacy.html#cookies" style="color: #F5CB3F;">Learn more</a></p>
+                        <div class="cookie-buttons">
+                            <button id="cookie-reject" class="cookie-btn cookie-btn-secondary">Reject</button>
+                            <button id="cookie-accept" class="cookie-btn cookie-btn-primary">Accept</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(banner);
+
+                document.getElementById('cookie-accept').addEventListener('click', function() {
+                    localStorage.setItem(CONSENT_KEY, 'accepted');
+                    grantConsent();
+                    banner.remove();
+                });
+
+                document.getElementById('cookie-reject').addEventListener('click', function() {
+                    localStorage.setItem(CONSENT_KEY, 'rejected');
+                    banner.remove();
+                });
+            }
+        })();
     </script>
+
+    <!-- Cookie Banner Styles -->
+    <style>
+        #cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(13, 39, 88, 0.98);
+            border-top: 2px solid #F5CB3F;
+            padding: 20px;
+            z-index: 9999;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+        }
+        .cookie-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .cookie-content p {
+            flex: 1;
+            min-width: 300px;
+            margin: 0;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .cookie-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        .cookie-btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+        }
+        .cookie-btn-primary {
+            background: #F5CB3F;
+            color: #0d2758;
+            border: none;
+        }
+        .cookie-btn-primary:hover {
+            background: #fff;
+            transform: translateY(-2px);
+        }
+        .cookie-btn-secondary {
+            background: transparent;
+            color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .cookie-btn-secondary:hover {
+            border-color: #F5CB3F;
+            color: #F5CB3F;
+        }
+        @media (max-width: 640px) {
+            .cookie-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .cookie-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M5NCP3V6"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
 </body>
 
 </html>
