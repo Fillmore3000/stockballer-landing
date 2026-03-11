@@ -3815,6 +3815,8 @@
         // ============================================
         // FORM SUBMISSIONS (unified handler)
         // ============================================
+        const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxP-16uUqf5YTAR61MCU9UIy6IyU95JL-A28wGZfRMDJhxvVeEKRMqv1znITBOU3w/exec';
+        
         function handleFormSubmit(formId, emailId, successMsg) {
             const form = document.getElementById(formId);
             const emailInput = document.getElementById(emailId);
@@ -3841,8 +3843,18 @@
                         fbq('track', 'Lead', { content_name: formId });
                     }
                     
-                    // Submit to backend (or show success for now)
-                    await new Promise(r => setTimeout(r, 500));
+                    // Submit to Google Sheets
+                    await fetch(SHEETS_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            email,
+                            name: '',
+                            interest: 'user',
+                            source: formId
+                        })
+                    });
                     
                     if (btn) btn.textContent = '✓ Success!';
                     emailInput.value = '';
