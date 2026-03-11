@@ -3296,34 +3296,34 @@
         // ============================================
         (function() {
             const CONSENT_KEY = 'sb_cookie_consent';
-            const consent = localStorage.getItem(CONSENT_KEY);
-
-            // If already consented, grant permissions
-            if (consent === 'accepted') {
-                grantConsent();
-            } else if (consent !== 'rejected') {
-                // Show banner if no decision made
-                showCookieBanner();
-            }
-
+            
             function grantConsent() {
-                gtag('consent', 'update', {
-                    'analytics_storage': 'granted',
-                    'ad_storage': 'granted',
-                    'ad_user_data': 'granted',
-                    'ad_personalization': 'granted'
-                });
-                if (typeof fbq !== 'undefined') {
-                    fbq('consent', 'grant');
+                try {
+                    if (typeof gtag === 'function') {
+                        gtag('consent', 'update', {
+                            'analytics_storage': 'granted',
+                            'ad_storage': 'granted',
+                            'ad_user_data': 'granted',
+                            'ad_personalization': 'granted'
+                        });
+                    }
+                    if (typeof fbq === 'function') {
+                        fbq('consent', 'grant');
+                    }
+                } catch (e) {
+                    console.warn('Cookie consent: Analytics unavailable', e);
                 }
             }
 
             function showCookieBanner() {
+                // Don't show if banner already exists
+                if (document.getElementById('cookie-banner')) return;
+                
                 const banner = document.createElement('div');
                 banner.id = 'cookie-banner';
                 banner.innerHTML = `
                     <div class="cookie-content">
-                        <p><strong>🍪 We use cookies</strong> to analyze traffic, personalize content, and serve targeted ads. By clicking "Accept", you consent to our use of cookies. <a href="/privacy.html#cookies" style="color: #F5CB3F;">Learn more</a></p>
+                        <p><strong>&#127850; We use cookies</strong> to analyze traffic, personalize content, and serve targeted ads. By clicking "Accept", you consent to our use of cookies. <a href="/privacy.html#cookies" style="color: #F5CB3F;">Learn more</a></p>
                         <div class="cookie-buttons">
                             <button id="cookie-reject" class="cookie-btn cookie-btn-secondary">Reject</button>
                             <button id="cookie-accept" class="cookie-btn cookie-btn-primary">Accept</button>
@@ -3342,6 +3342,27 @@
                     localStorage.setItem(CONSENT_KEY, 'rejected');
                     banner.remove();
                 });
+            }
+            
+            function initCookieConsent() {
+                try {
+                    const consent = localStorage.getItem(CONSENT_KEY);
+                    if (consent === 'accepted') {
+                        grantConsent();
+                    } else if (consent !== 'rejected') {
+                        showCookieBanner();
+                    }
+                } catch (e) {
+                    // localStorage unavailable (private mode, etc.)
+                    showCookieBanner();
+                }
+            }
+            
+            // Wait for DOM to be ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initCookieConsent);
+            } else {
+                initCookieConsent();
             }
         })();
     </script>

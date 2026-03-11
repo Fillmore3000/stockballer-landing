@@ -515,34 +515,30 @@
     <script>
         (function() {
             const CONSENT_KEY = 'sb_cookie_consent';
-            const consent = localStorage.getItem(CONSENT_KEY);
-            if (consent === 'accepted') {
-                gtag('consent', 'update', {
-                    'analytics_storage': 'granted',
-                    'ad_storage': 'granted',
-                    'ad_user_data': 'granted',
-                    'ad_personalization': 'granted'
-                });
-                if (typeof fbq !== 'undefined') fbq('consent', 'grant');
-            } else if (consent !== 'rejected') {
-                showCookieBanner();
+            function grantConsent() {
+                try {
+                    if (typeof gtag === 'function') gtag('consent', 'update', { 'analytics_storage': 'granted', 'ad_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
+                    if (typeof fbq === 'function') fbq('consent', 'grant');
+                } catch (e) { console.warn('Cookie consent: Analytics unavailable', e); }
             }
             function showCookieBanner() {
+                if (document.getElementById('cookie-banner')) return;
                 const banner = document.createElement('div');
                 banner.id = 'cookie-banner';
-                banner.innerHTML = '<div class="cookie-content"><p><strong>🍪 We use cookies</strong> to analyze traffic and serve targeted ads. <a href="../privacy.html#cookies" style="color: #F5CB3F;">Learn more</a></p><div class="cookie-buttons"><button id="cookie-reject" class="cookie-btn cookie-btn-secondary">Reject</button><button id="cookie-accept" class="cookie-btn cookie-btn-primary">Accept</button></div></div>';
+                banner.innerHTML = '<div class="cookie-content"><p><strong>&#127850; We use cookies</strong> to analyze traffic and serve targeted ads. <a href="../privacy.html#cookies" style="color: #F5CB3F;">Learn more</a></p><div class="cookie-buttons"><button id="cookie-reject" class="cookie-btn cookie-btn-secondary">Reject</button><button id="cookie-accept" class="cookie-btn cookie-btn-primary">Accept</button></div></div>';
                 document.body.appendChild(banner);
-                document.getElementById('cookie-accept').addEventListener('click', function() {
-                    localStorage.setItem(CONSENT_KEY, 'accepted');
-                    gtag('consent', 'update', { 'analytics_storage': 'granted', 'ad_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted' });
-                    if (typeof fbq !== 'undefined') fbq('consent', 'grant');
-                    banner.remove();
-                });
-                document.getElementById('cookie-reject').addEventListener('click', function() {
-                    localStorage.setItem(CONSENT_KEY, 'rejected');
-                    banner.remove();
-                });
+                document.getElementById('cookie-accept').addEventListener('click', function() { localStorage.setItem(CONSENT_KEY, 'accepted'); grantConsent(); banner.remove(); });
+                document.getElementById('cookie-reject').addEventListener('click', function() { localStorage.setItem(CONSENT_KEY, 'rejected'); banner.remove(); });
             }
+            function initCookieConsent() {
+                try {
+                    const consent = localStorage.getItem(CONSENT_KEY);
+                    if (consent === 'accepted') grantConsent();
+                    else if (consent !== 'rejected') showCookieBanner();
+                } catch (e) { showCookieBanner(); }
+            }
+            if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initCookieConsent);
+            else initCookieConsent();
         })();
     </script>
 
