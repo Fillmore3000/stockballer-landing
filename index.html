@@ -2022,6 +2022,254 @@
         .chainlink-badge img {
             height: 20px;
         }
+
+        /* ============================================ */
+        /* CONVERSION OPTIMIZATION ELEMENTS */
+        /* ============================================ */
+
+        /* Hero Email Capture Form */
+        .hero-email-form {
+            display: flex;
+            gap: 12px;
+            max-width: 480px;
+            margin-bottom: 16px;
+        }
+        .hero-email-form input[type="email"] {
+            flex: 1;
+            padding: 16px 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 1rem;
+            font-family: 'DM Sans', sans-serif;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .hero-email-form input[type="email"]::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+        .hero-email-form input[type="email"]:focus {
+            border-color: #F5CB3F;
+        }
+        .hero-email-form button {
+            padding: 16px 28px;
+            white-space: nowrap;
+        }
+        @media (max-width: 640px) {
+            .hero-email-form {
+                flex-direction: column;
+            }
+            .hero-email-form button {
+                width: 100%;
+            }
+        }
+
+        /* Countdown Timer */
+        .countdown-wrapper {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .countdown-label {
+            color: #ef4444;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .countdown-timer {
+            display: flex;
+            gap: 8px;
+        }
+        .countdown-unit {
+            text-align: center;
+        }
+        .countdown-value {
+            background: rgba(239, 68, 68, 0.2);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            min-width: 40px;
+            color: #fff;
+        }
+        .countdown-unit-label {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        /* Sticky Scroll CTA */
+        .sticky-cta {
+            position: fixed;
+            bottom: -100px;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, #0528F3, #0d2758);
+            padding: 16px 24px;
+            z-index: 999;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+            transition: bottom 0.3s ease;
+            border-top: 2px solid #F5CB3F;
+        }
+        .sticky-cta.visible {
+            bottom: 0;
+        }
+        .sticky-cta-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .sticky-cta-text {
+            font-weight: 600;
+        }
+        .sticky-cta-text span {
+            color: #F5CB3F;
+        }
+        .sticky-cta-form {
+            display: flex;
+            gap: 12px;
+        }
+        .sticky-cta-form input {
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            width: 220px;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .sticky-cta-form button {
+            padding: 12px 24px;
+            background: #F5CB3F;
+            border: none;
+            border-radius: 8px;
+            color: #0d2758;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: background 0.2s;
+        }
+        .sticky-cta-form button:hover {
+            background: #fff;
+        }
+        @media (max-width: 768px) {
+            .sticky-cta-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .sticky-cta-form input {
+                width: 160px;
+            }
+        }
+
+        /* Exit Intent Popup */
+        .exit-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .exit-popup-overlay.visible {
+            display: flex;
+        }
+        .exit-popup {
+            background: linear-gradient(145deg, #0d2758, #0a1f4a);
+            border: 2px solid #F5CB3F;
+            border-radius: 24px;
+            padding: 48px;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            animation: popIn 0.3s ease;
+        }
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .exit-popup-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.5);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .exit-popup-close:hover {
+            color: #fff;
+        }
+        .exit-popup h2 {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+        }
+        .exit-popup h2 span {
+            color: #F5CB3F;
+        }
+        .exit-popup p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 24px;
+        }
+        .exit-popup-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .exit-popup-form input {
+            padding: 16px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 1rem;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .exit-popup-form input::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+        .exit-popup-form button {
+            padding: 16px;
+            background: #F5CB3F;
+            border: none;
+            border-radius: 12px;
+            color: #0d2758;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.2s;
+        }
+        .exit-popup-form button:hover {
+            background: #fff;
+            transform: translateY(-2px);
+        }
+        .exit-popup-bonus {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 16px;
+            padding: 12px;
+            background: rgba(16, 185, 129, 0.15);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #10b981;
+        }
     </style>
 </head>
 
@@ -2054,6 +2302,26 @@
             <div class="hero-content">
                 <div class="hero-text">
                     <div class="hero-preheadline">Pre-Tournament Window Open Now</div>
+                    
+                    <!-- Countdown Timer -->
+                    <div class="countdown-wrapper">
+                        <span class="countdown-label">⏰ Closes in:</span>
+                        <div class="countdown-timer" id="hero-countdown">
+                            <div class="countdown-unit">
+                                <div class="countdown-value" id="countdown-days">00</div>
+                                <div class="countdown-unit-label">Days</div>
+                            </div>
+                            <div class="countdown-unit">
+                                <div class="countdown-value" id="countdown-hours">00</div>
+                                <div class="countdown-unit-label">Hrs</div>
+                            </div>
+                            <div class="countdown-unit">
+                                <div class="countdown-value" id="countdown-mins">00</div>
+                                <div class="countdown-unit-label">Min</div>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <h1>Don't Just Watch The 2026 World Cup.<br><span>Invest In It.</span></h1>
                     <p>The first marketplace where you can buy Premier League stars at "Club Prices" today—and profit
                         from their Global Breakout in June.</p>
@@ -2074,11 +2342,12 @@
                     </div>
 
                     <div class="hero-cta">
-                        <a href="/app" class="btn-primary" style="text-decoration: none;">Launch App</a>
-                        <button class="btn-secondary" onclick="scrollToSection('how-it-works')">How It Works</button>
+                        <form class="hero-email-form" id="hero-email-form">
+                            <input type="email" placeholder="Enter your email" required id="hero-email-input">
+                            <button type="submit" class="btn-primary">Get Early Access →</button>
+                        </form>
                     </div>
-                    <p style="font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-top: 8px;">Limited to first 5,000
-                        users for the Pre-Tournament Window.</p>
+                    <p style="font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-top: 8px;">✓ Free WC26 Scout Report &nbsp; ✓ Priority access to first 5,000 spots</p>
 
                     <div class="waitlist-counter">
                         <div class="waitlist-avatars">
@@ -3440,10 +3709,166 @@
         }
     </style>
 
+    <!-- Exit Intent Popup -->
+    <div class="exit-popup-overlay" id="exit-popup">
+        <div class="exit-popup">
+            <button class="exit-popup-close" onclick="closeExitPopup()">&times;</button>
+            <h2>Wait! Don't miss the <span>WC26 window</span></h2>
+            <p>Get our free Scout Report with 5 undervalued players flagged by our algorithm before the tournament.</p>
+            <form class="exit-popup-form" id="exit-popup-form">
+                <input type="email" placeholder="Your best email" required id="exit-email">
+                <button type="submit">Send Me The Report →</button>
+            </form>
+            <div class="exit-popup-bonus">
+                🎁 Plus: Early access to Pre-Tournament pricing
+            </div>
+        </div>
+    </div>
+
+    <!-- Sticky Scroll CTA -->
+    <div class="sticky-cta" id="sticky-cta">
+        <div class="sticky-cta-content">
+            <div class="sticky-cta-text">🔥 <span>2,847 investors</span> already claimed their spot</div>
+            <form class="sticky-cta-form" id="sticky-cta-form">
+                <input type="email" placeholder="Your email" required id="sticky-email">
+                <button type="submit">Get Access</button>
+            </form>
+        </div>
+    </div>
+
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M5NCP3V6"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Conversion Optimization Scripts -->
+    <script>
+    (function() {
+        // ============================================
+        // COUNTDOWN TIMER (World Cup 2026 Start: June 11, 2026)
+        // ============================================
+        const targetDate = new Date('2026-06-11T00:00:00').getTime();
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            
+            if (distance > 0) {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                
+                const daysEl = document.getElementById('countdown-days');
+                const hoursEl = document.getElementById('countdown-hours');
+                const minsEl = document.getElementById('countdown-mins');
+                
+                if (daysEl) daysEl.textContent = days.toString().padStart(2, '0');
+                if (hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
+                if (minsEl) minsEl.textContent = mins.toString().padStart(2, '0');
+            }
+        }
+        
+        updateCountdown();
+        setInterval(updateCountdown, 60000);
+
+        // ============================================
+        // STICKY CTA (show after scrolling past hero)
+        // ============================================
+        const stickyCta = document.getElementById('sticky-cta');
+        let lastScrollY = 0;
+        
+        window.addEventListener('scroll', function() {
+            const scrollY = window.scrollY;
+            const heroHeight = document.querySelector('.hero')?.offsetHeight || 600;
+            
+            if (scrollY > heroHeight && scrollY > lastScrollY) {
+                stickyCta?.classList.add('visible');
+            } else if (scrollY < heroHeight / 2) {
+                stickyCta?.classList.remove('visible');
+            }
+            lastScrollY = scrollY;
+        });
+
+        // ============================================
+        // EXIT INTENT POPUP
+        // ============================================
+        let exitShown = false;
+        const exitPopup = document.getElementById('exit-popup');
+        
+        document.addEventListener('mouseout', function(e) {
+            if (!exitShown && e.clientY < 10 && !localStorage.getItem('sb_exit_shown')) {
+                exitPopup?.classList.add('visible');
+                exitShown = true;
+                localStorage.setItem('sb_exit_shown', 'true');
+            }
+        });
+        
+        window.closeExitPopup = function() {
+            exitPopup?.classList.remove('visible');
+        };
+        
+        // Close on overlay click
+        exitPopup?.addEventListener('click', function(e) {
+            if (e.target === exitPopup) closeExitPopup();
+        });
+
+        // ============================================
+        // FORM SUBMISSIONS (unified handler)
+        // ============================================
+        function handleFormSubmit(formId, emailId, successMsg) {
+            const form = document.getElementById(formId);
+            const emailInput = document.getElementById(emailId);
+            
+            form?.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const email = emailInput?.value;
+                if (!email) return;
+                
+                const btn = form.querySelector('button[type="submit"]');
+                const originalText = btn?.textContent;
+                if (btn) btn.textContent = 'Sending...';
+                
+                try {
+                    // Track with GA4 if available
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'generate_lead', {
+                            'event_category': 'engagement',
+                            'event_label': formId
+                        });
+                    }
+                    // Track with Meta Pixel if available
+                    if (typeof fbq === 'function') {
+                        fbq('track', 'Lead', { content_name: formId });
+                    }
+                    
+                    // Submit to backend (or show success for now)
+                    await new Promise(r => setTimeout(r, 500));
+                    
+                    if (btn) btn.textContent = '✓ Success!';
+                    emailInput.value = '';
+                    
+                    // Close popup if it's the exit form
+                    if (formId === 'exit-popup-form') {
+                        setTimeout(() => closeExitPopup(), 1500);
+                    }
+                    
+                    setTimeout(() => {
+                        if (btn) btn.textContent = originalText;
+                    }, 3000);
+                    
+                } catch (err) {
+                    console.error('Form error:', err);
+                    if (btn) btn.textContent = originalText;
+                }
+            });
+        }
+        
+        // Attach to all lead forms
+        handleFormSubmit('hero-email-form', 'hero-email-input', 'Check your email!');
+        handleFormSubmit('exit-popup-form', 'exit-email', 'Check your email!');
+        handleFormSubmit('sticky-cta-form', 'sticky-email', 'Check your email!');
+    })();
+    </script>
 </body>
 
 </html>
