@@ -136,6 +136,23 @@ function getSlug(filename) {
     return path.basename(filename, '.md');
 }
 
+function extractPrimaryHeading(markdown) {
+    const lines = markdown.split('\n');
+    const headingIndex = lines.findIndex(line => /^#\s+.+/.test(line.trim()));
+
+    if (headingIndex === -1) {
+        return { title: '', markdownWithoutPrimaryH1: markdown };
+    }
+
+    const title = lines[headingIndex].trim().replace(/^#\s+/, '').trim();
+    const markdownWithoutPrimaryH1 = [
+        ...lines.slice(0, headingIndex),
+        ...lines.slice(headingIndex + 1)
+    ].join('\n');
+
+    return { title, markdownWithoutPrimaryH1 };
+}
+
 // Blog post HTML template
 function generatePostHtml(post) {
     return `<!DOCTYPE html>
@@ -186,38 +203,38 @@ function generatePostHtml(post) {
     <!-- End Meta Pixel Code -->
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>\${post.title} - StockBaller Insights</title>
+    <title>${post.title} - StockBaller Insights</title>
 
-    <meta name="description" content="\${post.description || post.title}">
+    <meta name="description" content="${post.description || post.title}">
     <meta name="author" content="StockBaller">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://stockballer.app/blog-posts/\${post.slug}.html">
+    <link rel="canonical" href="https://stockballer.app/blog-posts/${post.slug}.html">
 
     <!-- Open Graph -->
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://stockballer.app/blog-posts/\${post.slug}.html">
-    <meta property="og:title" content="\${post.title}">
-    <meta property="og:description" content="\${post.description || post.title}">
-    <meta property="og:image" content="\${post.image || 'https://stockballer.app/og-image.png'}">
+    <meta property="og:url" content="https://stockballer.app/blog-posts/${post.slug}.html">
+    <meta property="og:title" content="${post.title}">
+    <meta property="og:description" content="${post.description || post.title}">
+    <meta property="og:image" content="${post.image || 'https://stockballer.app/og-image.png'}">
     <meta property="og:site_name" content="StockBaller">
-    <meta property="article:published_time" content="\${post.date}">
+    <meta property="article:published_time" content="${post.date}">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@StockBallerApp">
-    <meta name="twitter:title" content="\${post.title}">
-    <meta name="twitter:description" content="\${post.description || post.title}">
-    <meta name="twitter:image" content="\${post.image || 'https://stockballer.app/og-image.png'}">
+    <meta name="twitter:title" content="${post.title}">
+    <meta name="twitter:description" content="${post.description || post.title}">
+    <meta name="twitter:image" content="${post.image || 'https://stockballer.app/og-image.png'}">
 
     <!-- Structured Data - Article -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "Article",
-        "headline": "\${post.title}",
-        "description": "\${post.description || post.title}",
-        "image": "\${post.image || 'https://stockballer.app/og-image.png'}",
-        "datePublished": "\${post.date}",
+        "headline": "${post.title}",
+        "description": "${post.description || post.title}",
+        "image": "${post.image || 'https://stockballer.app/og-image.png'}",
+        "datePublished": "${post.date}",
         "author": {
             "@type": "Organization",
             "name": "StockBaller"
@@ -232,7 +249,7 @@ function generatePostHtml(post) {
         },
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https://stockballer.app/blog-posts/\${post.slug}.html"
+            "@id": "https://stockballer.app/blog-posts/${post.slug}.html"
         }
     }
     </script>
@@ -1047,9 +1064,10 @@ function buildBlog() {
         const filePath = path.join(blogDir, file);
         const content = fs.readFileSync(filePath, 'utf-8');
         const { data, content: markdown } = parseFrontMatter(content);
+        const { title: markdownTitle, markdownWithoutPrimaryH1 } = extractPrimaryHeading(markdown);
         
         const slug = getSlug(file);
-        const htmlContent = markdownToHtml(markdown);
+        const htmlContent = markdownToHtml(markdownWithoutPrimaryH1);
         
         // Extract first image from markdown content if no image in front matter
         let thumbnail = data.image || '';
@@ -1062,7 +1080,7 @@ function buildBlog() {
         
         const post = {
             slug,
-            title: data.title || slug.replace(/-/g, ' '),
+            title: data.title || markdownTitle || slug.replace(/-/g, ' '),
             date: data.date || new Date().toISOString().split('T')[0],
             description: data.description || '',
             image: thumbnail,
