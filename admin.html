@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StockBaller Admin Dashboard - Bot & System Monitor</title>
     <link rel="icon" type="image/png" href="favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Blinker:wght@400;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Blinker:wght@400;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * {
@@ -22,7 +25,12 @@
             min-height: 100vh;
         }
 
-        h1, h2, h3, h4, h5, h6 {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
             font-family: 'Blinker', sans-serif;
         }
 
@@ -33,7 +41,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .logo {
@@ -74,7 +82,7 @@
             align-items: center;
             gap: 8px;
             padding: 8px 16px;
-            background: rgba(0,255,136,0.1);
+            background: rgba(0, 255, 136, 0.1);
             border-radius: 20px;
             font-size: 14px;
         }
@@ -93,13 +101,20 @@
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
         }
 
         .refresh-btn {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: white;
             padding: 8px 16px;
             border-radius: 8px;
@@ -109,7 +124,7 @@
         }
 
         .refresh-btn:hover {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         /* Dashboard Container */
@@ -128,8 +143,8 @@
         }
 
         .stat-card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
             padding: 24px;
             transition: all 0.3s;
@@ -137,26 +152,26 @@
 
         .stat-card:hover {
             transform: translateY(-2px);
-            border-color: rgba(255,255,255,0.2);
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
         .stat-card.highlight {
-            background: linear-gradient(135deg, rgba(0,255,136,0.1) 0%, rgba(0,255,136,0.02) 100%);
-            border-color: rgba(0,255,136,0.3);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 255, 136, 0.02) 100%);
+            border-color: rgba(0, 255, 136, 0.3);
         }
 
         .stat-card.warning {
-            background: linear-gradient(135deg, rgba(255,170,0,0.1) 0%, rgba(255,170,0,0.02) 100%);
-            border-color: rgba(255,170,0,0.3);
+            background: linear-gradient(135deg, rgba(255, 170, 0, 0.1) 0%, rgba(255, 170, 0, 0.02) 100%);
+            border-color: rgba(255, 170, 0, 0.3);
         }
 
         .stat-card.danger {
-            background: linear-gradient(135deg, rgba(255,68,68,0.1) 0%, rgba(255,68,68,0.02) 100%);
-            border-color: rgba(255,68,68,0.3);
+            background: linear-gradient(135deg, rgba(255, 68, 68, 0.1) 0%, rgba(255, 68, 68, 0.02) 100%);
+            border-color: rgba(255, 68, 68, 0.3);
         }
 
         .stat-label {
-            color: rgba(255,255,255,0.6);
+            color: rgba(255, 255, 255, 0.6);
             font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -178,8 +193,13 @@
             gap: 4px;
         }
 
-        .stat-change.positive { color: #00ff88; }
-        .stat-change.negative { color: #ff4444; }
+        .stat-change.positive {
+            color: #00ff88;
+        }
+
+        .stat-change.negative {
+            color: #ff4444;
+        }
 
         /* Section Headers */
         .section-header {
@@ -204,8 +224,8 @@
         }
 
         .panel {
-            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
             padding: 24px;
         }
@@ -213,10 +233,10 @@
         .panel-title {
             font-size: 16px;
             font-weight: 600;
-            color: rgba(255,255,255,0.9);
+            color: rgba(255, 255, 255, 0.9);
             margin-bottom: 20px;
             padding-bottom: 12px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         /* Bot Table */
@@ -229,21 +249,21 @@
             text-align: left;
             padding: 12px;
             font-weight: 600;
-            color: rgba(255,255,255,0.6);
+            color: rgba(255, 255, 255, 0.6);
             font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .bot-table td {
             padding: 12px;
             font-size: 14px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .bot-table tr:hover {
-            background: rgba(255,255,255,0.02);
+            background: rgba(255, 255, 255, 0.02);
         }
 
         .strategy-badge {
@@ -255,10 +275,25 @@
             text-transform: uppercase;
         }
 
-        .strategy-badge.value-investor { background: rgba(0,136,255,0.2); color: #00aaff; }
-        .strategy-badge.day-trader { background: rgba(255,136,0,0.2); color: #ff8800; }
-        .strategy-badge.momentum { background: rgba(136,0,255,0.2); color: #aa66ff; }
-        .strategy-badge.random { background: rgba(136,136,136,0.2); color: #aaa; }
+        .strategy-badge.value-investor {
+            background: rgba(0, 136, 255, 0.2);
+            color: #00aaff;
+        }
+
+        .strategy-badge.day-trader {
+            background: rgba(255, 136, 0, 0.2);
+            color: #ff8800;
+        }
+
+        .strategy-badge.momentum {
+            background: rgba(136, 0, 255, 0.2);
+            color: #aa66ff;
+        }
+
+        .strategy-badge.random {
+            background: rgba(136, 136, 136, 0.2);
+            color: #aaa;
+        }
 
         .status-badge {
             display: inline-flex;
@@ -271,12 +306,12 @@
         }
 
         .status-badge.active {
-            background: rgba(0,255,136,0.15);
+            background: rgba(0, 255, 136, 0.15);
             color: #00ff88;
         }
 
         .status-badge.inactive {
-            background: rgba(255,68,68,0.15);
+            background: rgba(255, 68, 68, 0.15);
             color: #ff6666;
         }
 
@@ -290,7 +325,7 @@
             display: flex;
             gap: 12px;
             padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .activity-icon {
@@ -304,9 +339,20 @@
             flex-shrink: 0;
         }
 
-        .activity-icon.buy { background: rgba(0,255,136,0.15); color: #00ff88; }
-        .activity-icon.sell { background: rgba(255,68,68,0.15); color: #ff6666; }
-        .activity-icon.bet { background: rgba(255,170,0,0.15); color: #ffaa00; }
+        .activity-icon.buy {
+            background: rgba(0, 255, 136, 0.15);
+            color: #00ff88;
+        }
+
+        .activity-icon.sell {
+            background: rgba(255, 68, 68, 0.15);
+            color: #ff6666;
+        }
+
+        .activity-icon.bet {
+            background: rgba(255, 170, 0, 0.15);
+            color: #ffaa00;
+        }
 
         .activity-content {
             flex: 1;
@@ -320,7 +366,7 @@
 
         .activity-meta {
             font-size: 12px;
-            color: rgba(255,255,255,0.5);
+            color: rgba(255, 255, 255, 0.5);
         }
 
         .activity-amount {
@@ -340,12 +386,12 @@
             justify-content: space-between;
             align-items: center;
             padding: 12px 16px;
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 10px;
         }
 
         .chain-label {
-            color: rgba(255,255,255,0.6);
+            color: rgba(255, 255, 255, 0.6);
             font-size: 13px;
         }
 
@@ -357,7 +403,7 @@
         .chain-value.mono {
             font-family: 'DM Sans', monospace;
             font-size: 13px;
-            color: rgba(255,255,255,0.8);
+            color: rgba(255, 255, 255, 0.8);
         }
 
         /* Charts */
@@ -386,27 +432,27 @@
         }
 
         .holdings-grid::-webkit-scrollbar-thumb {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 4px;
         }
 
         .holding-card {
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 12px;
             padding: 16px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
         .holding-card:hover {
-            background: rgba(255,255,255,0.08);
-            border-color: rgba(0,255,136,0.3);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(0, 255, 136, 0.3);
             transform: translateY(-2px);
         }
 
         .holding-card.expanded {
-            border-color: rgba(0,255,136,0.5);
+            border-color: rgba(0, 255, 136, 0.5);
         }
 
         .holding-card-header {
@@ -420,8 +466,8 @@
             height: 56px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .player-info {
@@ -441,7 +487,7 @@
 
         .player-meta {
             font-size: 11px;
-            color: rgba(255,255,255,0.5);
+            color: rgba(255, 255, 255, 0.5);
         }
 
         .holding-value {
@@ -456,7 +502,7 @@
 
         .holding-qty {
             font-size: 11px;
-            color: rgba(255,255,255,0.5);
+            color: rgba(255, 255, 255, 0.5);
         }
 
         .holding-pl {
@@ -469,7 +515,7 @@
             display: none;
             margin-top: 16px;
             padding-top: 16px;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .holding-card.expanded .holding-details {
@@ -484,7 +530,7 @@
         }
 
         .detail-label {
-            color: rgba(255,255,255,0.5);
+            color: rgba(255, 255, 255, 0.5);
         }
 
         .detail-value {
@@ -495,14 +541,14 @@
         .holders-list {
             margin-top: 12px;
             padding: 8px 12px;
-            background: rgba(0,0,0,0.2);
+            background: rgba(0, 0, 0, 0.2);
             border-radius: 8px;
             font-size: 12px;
-            color: rgba(255,255,255,0.6);
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .holders-label {
-            color: rgba(255,255,255,0.4);
+            color: rgba(255, 255, 255, 0.4);
             font-size: 10px;
             text-transform: uppercase;
             margin-bottom: 4px;
@@ -512,7 +558,7 @@
             grid-column: 1 / -1;
             text-align: center;
             padding: 60px 20px;
-            color: rgba(255,255,255,0.4);
+            color: rgba(255, 255, 255, 0.4);
         }
 
         /* Action Buttons */
@@ -532,9 +578,9 @@
         }
 
         .action-btn.danger {
-            background: rgba(255,68,68,0.15);
+            background: rgba(255, 68, 68, 0.15);
             color: #ff6666;
-            border: 1px solid rgba(255,68,68,0.3);
+            border: 1px solid rgba(255, 68, 68, 0.3);
         }
 
         .action-btn:hover {
@@ -547,20 +593,22 @@
             justify-content: center;
             align-items: center;
             height: 200px;
-            color: rgba(255,255,255,0.5);
+            color: rgba(255, 255, 255, 0.5);
         }
 
         .spinner {
             width: 40px;
             height: 40px;
-            border: 3px solid rgba(255,255,255,0.1);
+            border: 3px solid rgba(255, 255, 255, 0.1);
             border-top-color: #00ff88;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         /* Responsive */
@@ -595,7 +643,7 @@
         }
 
         .toast {
-            background: rgba(0,0,0,0.9);
+            background: rgba(0, 0, 0, 0.9);
             color: white;
             padding: 12px 20px;
             border-radius: 8px;
@@ -608,8 +656,15 @@
         }
 
         @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
         /* Login Overlay */
@@ -631,8 +686,8 @@
         }
 
         .login-box {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
             padding: 48px;
             width: 100%;
@@ -655,7 +710,7 @@
         }
 
         .login-subtitle {
-            color: rgba(255,255,255,0.5);
+            color: rgba(255, 255, 255, 0.5);
             font-size: 14px;
             margin-bottom: 32px;
         }
@@ -663,8 +718,8 @@
         .login-input {
             width: 100%;
             padding: 14px 16px;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 8px;
             color: white;
             font-size: 16px;
@@ -678,7 +733,7 @@
         }
 
         .login-input::placeholder {
-            color: rgba(255,255,255,0.3);
+            color: rgba(255, 255, 255, 0.3);
         }
 
         .login-btn {
@@ -696,7 +751,7 @@
 
         .login-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(0,255,136,0.3);
+            box-shadow: 0 4px 20px rgba(0, 255, 136, 0.3);
         }
 
         .login-error {
@@ -723,8 +778,8 @@
             flex: 1;
             min-width: 200px;
             padding: 10px 14px;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 8px;
             color: white;
             font-size: 14px;
@@ -738,7 +793,7 @@
         .fleet-tabs {
             display: flex;
             gap: 4px;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0, 0, 0, 0.3);
             padding: 4px;
             border-radius: 8px;
         }
@@ -747,7 +802,7 @@
             padding: 8px 14px;
             border: none;
             background: transparent;
-            color: rgba(255,255,255,0.6);
+            color: rgba(255, 255, 255, 0.6);
             font-size: 12px;
             font-weight: 600;
             cursor: pointer;
@@ -756,7 +811,7 @@
         }
 
         .fleet-tab.active {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             color: white;
         }
 
@@ -772,7 +827,7 @@
         }
 
         .fleet-summary-card {
-            background: rgba(0,0,0,0.2);
+            background: rgba(0, 0, 0, 0.2);
             padding: 12px;
             border-radius: 8px;
             text-align: center;
@@ -786,7 +841,7 @@
 
         .fleet-summary-label {
             font-size: 11px;
-            color: rgba(255,255,255,0.5);
+            color: rgba(255, 255, 255, 0.5);
             text-transform: uppercase;
         }
 
@@ -804,13 +859,13 @@
         }
 
         .bot-grid::-webkit-scrollbar-thumb {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 3px;
         }
 
         .bot-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 10px;
             padding: 14px;
             cursor: pointer;
@@ -818,8 +873,8 @@
         }
 
         .bot-card:hover {
-            background: rgba(255,255,255,0.06);
-            border-color: rgba(0,255,136,0.3);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(0, 255, 136, 0.3);
         }
 
         .bot-card-header {
@@ -859,10 +914,25 @@
             margin-bottom: 10px;
         }
 
-        .bot-card-strategy.value-investor { background: rgba(0,200,255,0.15); color: #00c8ff; }
-        .bot-card-strategy.day-trader { background: rgba(255,100,100,0.15); color: #ff6464; }
-        .bot-card-strategy.momentum { background: rgba(255,200,0,0.15); color: #ffc800; }
-        .bot-card-strategy.random { background: rgba(150,150,150,0.15); color: #999; }
+        .bot-card-strategy.value-investor {
+            background: rgba(0, 200, 255, 0.15);
+            color: #00c8ff;
+        }
+
+        .bot-card-strategy.day-trader {
+            background: rgba(255, 100, 100, 0.15);
+            color: #ff6464;
+        }
+
+        .bot-card-strategy.momentum {
+            background: rgba(255, 200, 0, 0.15);
+            color: #ffc800;
+        }
+
+        .bot-card-strategy.random {
+            background: rgba(150, 150, 150, 0.15);
+            color: #999;
+        }
 
         .bot-card-stats {
             display: grid;
@@ -881,7 +951,7 @@
 
         .bot-card-stat-label {
             font-size: 10px;
-            color: rgba(255,255,255,0.4);
+            color: rgba(255, 255, 255, 0.4);
         }
 
         .pagination {
@@ -894,7 +964,7 @@
 
         .pagination-btn {
             padding: 8px 14px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             border: none;
             border-radius: 6px;
             color: white;
@@ -904,7 +974,7 @@
         }
 
         .pagination-btn:hover:not(:disabled) {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .pagination-btn:disabled {
@@ -914,13 +984,13 @@
 
         .pagination-info {
             font-size: 13px;
-            color: rgba(255,255,255,0.6);
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .no-bots-message {
             text-align: center;
             padding: 40px;
-            color: rgba(255,255,255,0.4);
+            color: rgba(255, 255, 255, 0.4);
             font-size: 14px;
         }
 
@@ -931,19 +1001,22 @@
             gap: 16px;
             max-height: 500px;
             overflow-y: auto;
+            padding-right: 4px;
         }
 
         .user-card {
-            background: rgba(255,255,255,0.05);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.03) 100%);
             border-radius: 12px;
             padding: 16px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             transition: all 0.2s ease;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
         }
 
         .user-card:hover {
-            background: rgba(255,255,255,0.08);
-            border-color: rgba(0,170,255,0.3);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border-color: rgba(0, 170, 255, 0.35);
+            transform: translateY(-1px);
         }
 
         .user-card-header {
@@ -969,24 +1042,26 @@
         .user-wallet {
             font-family: monospace;
             font-size: 13px;
-            color: rgba(255,255,255,0.7);
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .user-stats {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 8px;
+            margin-top: 2px;
         }
 
         .user-stat {
-            background: rgba(0,0,0,0.2);
+            background: rgba(0, 0, 0, 0.24);
             border-radius: 8px;
             padding: 8px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .user-stat-label {
             font-size: 10px;
-            color: rgba(255,255,255,0.5);
+            color: rgba(255, 255, 255, 0.5);
             text-transform: uppercase;
         }
 
@@ -996,8 +1071,13 @@
             color: white;
         }
 
-        .user-stat-value.positive { color: #00ff88; }
-        .user-stat-value.negative { color: #ff6666; }
+        .user-stat-value.positive {
+            color: #00ff88;
+        }
+
+        .user-stat-value.negative {
+            color: #ff6666;
+        }
 
         .users-summary {
             display: grid;
@@ -1007,11 +1087,57 @@
         }
 
         .users-summary-card {
-            background: rgba(0,136,255,0.1);
+            background: rgba(0, 136, 255, 0.1);
             border-radius: 10px;
             padding: 16px;
             text-align: center;
-            border: 1px solid rgba(0,136,255,0.2);
+            border: 1px solid rgba(0, 136, 255, 0.2);
+        }
+
+        .audit-table-wrap {
+            overflow: auto;
+            max-height: 500px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.16);
+        }
+
+        .audit-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        .audit-table thead {
+            position: sticky;
+            top: 0;
+            background: rgba(10, 10, 16, 0.97);
+            z-index: 1;
+        }
+
+        .audit-table th {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.66);
+            letter-spacing: 0.25px;
+        }
+
+        .audit-toolbar {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 8px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .audit-search {
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.03);
+            color: rgba(255, 255, 255, 0.92);
+            padding: 0 12px;
         }
 
         .users-summary-value {
@@ -1022,14 +1148,14 @@
 
         .users-summary-label {
             font-size: 12px;
-            color: rgba(255,255,255,0.6);
+            color: rgba(255, 255, 255, 0.6);
             margin-top: 4px;
         }
 
         .no-users-message {
             text-align: center;
             padding: 40px;
-            color: rgba(255,255,255,0.4);
+            color: rgba(255, 255, 255, 0.4);
             font-size: 14px;
             grid-column: 1 / -1;
         }
@@ -1039,8 +1165,135 @@
                 grid-template-columns: repeat(2, 1fr);
             }
         }
+
+        /* ============= MODE SWITCHER STYLES ============= */
+        .mode-switcher {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mode-selector {
+            display: flex;
+            gap: 4px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 4px;
+            border-radius: 8px;
+        }
+
+        .mode-btn {
+            padding: 10px 16px;
+            border: none;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(135deg, #0088ff 0%, #00aaff 100%);
+            color: white;
+        }
+
+        .mode-btn:hover:not(.active) {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Data Source Badges */
+        .data-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .data-badge.live {
+            background: rgba(0, 255, 136, 0.2);
+            color: #00ff88;
+        }
+
+        .data-badge.simulated {
+            background: rgba(255, 170, 0, 0.2);
+            color: #ffaa00;
+        }
+
+        /* Mode-Conditional Panels */
+        [data-panel-mode] {
+            display: none;
+        }
+
+        [data-panel-mode].visible {
+            display: block;
+        }
+
+        /* Live Mode Panel Styles */
+        .live-data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .live-panel {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .live-panel-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Economics Panel Grid */
+        .economics-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .economics-stat {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .economics-label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .economics-value {
+            font-size: 16px;
+            font-weight: 700;
+            font-family: 'Blinker', sans-serif;
+        }
+
+        .economics-meta {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 4px;
+        }
     </style>
 </head>
+
 <body>
     <!-- Login Overlay -->
     <div class="login-overlay" id="login-overlay">
@@ -1049,7 +1302,8 @@
             <h1 class="login-title">Admin Dashboard</h1>
             <p class="login-subtitle">Enter password to access the control panel</p>
             <form onsubmit="return handleLogin(event)">
-                <input type="password" class="login-input" id="login-password" placeholder="Enter admin password" autofocus>
+                <input type="password" class="login-input" id="login-password" placeholder="Enter admin password"
+                    autofocus>
                 <button type="submit" class="login-btn">🔓 Unlock Dashboard</button>
             </form>
             <p class="login-error" id="login-error">Incorrect password. Please try again.</p>
@@ -1109,15 +1363,166 @@
             </div>
         </div>
 
+        <!-- MODE SWITCHER -->
+        <div class="mode-switcher">
+            <div style="flex: 1; display: flex; align-items: center; gap: 12px;">
+                <span style="font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.7);">Operating Mode:</span>
+                <div class="mode-selector">
+                    <button class="mode-btn active" data-mode="LIVE" data-mode-toggle onclick="switchMode('LIVE')">
+                        ⚡ LIVE (Real-Time)
+                    </button>
+                    <button class="mode-btn" data-mode="SIMULATION" data-mode-toggle onclick="switchMode('SIMULATION')">
+                        🔄 SIMULATION (Matchday)
+                    </button>
+                </div>
+            </div>
+            <div style="color: rgba(255,255,255,0.5); font-size: 12px; display: flex; align-items: center;">
+                Current: <span id="current-mode-label" style="margin-left: 4px; color: #00ff88; font-weight: 600;">⚡
+                    LIVE</span>
+            </div>
+        </div>
+
+        <!-- ============== LIVE MODE PANELS ============== -->
+        <div data-panel-mode="LIVE" style="display: block;">
+            <div class="live-data-grid">
+                <!-- Live Match Context -->
+                <div class="live-panel">
+                    <div class="live-panel-title">📅 Live Match Context <span class="data-badge live">LIVE</span></div>
+                    <div id="live-match-context">
+                        <div style="padding: 20px; text-align: center; color: rgba(255,255,255,0.5);">Loading...</div>
+                    </div>
+                </div>
+
+                <!-- Live Token Board -->
+                <div class="live-panel">
+                    <div class="live-panel-title">📊 Live Token Board <span class="data-badge live">LIVE</span></div>
+                    <div id="live-token-board">
+                        <div style="padding: 20px; text-align: center; color: rgba(255,255,255,0.5);">Loading...</div>
+                    </div>
+                </div>
+
+                <!-- Live Economics -->
+                <div class="live-panel" style="grid-column: 1 / -1;">
+                    <div class="live-panel-title">💰 Live Economics <span class="data-badge live">LIVE</span></div>
+                    <div id="live-economics">
+                        <div style="padding: 20px; text-align: center; color: rgba(255,255,255,0.5);">Loading...</div>
+                    </div>
+                </div>
+
+                <!-- Live Game Flow Health -->
+                <div class="live-panel" style="grid-column: 1 / -1;">
+                    <div class="live-panel-title">🎯 Game Flow Health <span class="data-badge live">LIVE</span></div>
+                    <div id="live-game-health">
+                        <div style="padding: 20px; text-align: center; color: rgba(255,255,255,0.5);">Loading...</div>
+                    </div>
+                </div>
+
+                <!-- Live Bot Activity -->
+                <div class="live-panel" style="grid-column: 1 / -1;">
+                    <div class="live-panel-title">🤖 Live Bot Activity <span class="data-badge live">LIVE</span></div>
+                    <div id="live-activity" style="max-height: 300px; overflow-y: auto;">
+                        <div style="padding: 20px; text-align: center; color: rgba(255,255,255,0.5);">Loading...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============== SIMULATION MODE PANELS ============== -->
+        <div data-panel-mode="SIMULATION" style="display: none;">
+            <div class="live-data-grid">
+                <!-- Season Controls -->
+                <div class="live-panel">
+                    <div class="live-panel-title">🗓️ Season Controls <span
+                            class="data-badge simulated">SIMULATED</span></div>
+                    <div style="display: grid; gap: 10px; margin-bottom: 12px;">
+                        <button class="action-btn"
+                            style="background: rgba(5,40,243,0.2); color: #8fa1ff; border: 1px solid rgba(5,40,243,0.45); text-align: center;"
+                            onclick="createSeasonRun()">
+                            🚀 Create Run
+                        </button>
+                        <button class="action-btn"
+                            style="background: rgba(0,170,255,0.15); color: #00c8ff; border: 1px solid rgba(0,170,255,0.4); text-align: center;"
+                            onclick="stepSeasonRun()">
+                            ⏭️ Step Matchday
+                        </button>
+                        <button class="action-btn"
+                            style="background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.2); text-align: center;"
+                            onclick="loadSeasonRunStatus()">
+                            🔄 Refresh
+                        </button>
+                        <button class="action-btn danger" onclick="resetSeasonRun()">
+                            ♻️ Reset
+                        </button>
+                    </div>
+                    <div data-season-status
+                        style="font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.5; padding: 12px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                        No season run active
+                    </div>
+                </div>
+
+                <!-- Matchday Snapshot -->
+                <div class="live-panel">
+                    <div class="live-panel-title">📌 Matchday Snapshot <span
+                            class="data-badge simulated">SIMULATED</span></div>
+                    <div id="simulation-matchday">
+                        <div style="padding: 20px; text-align: center; color: rgba(255,255,255,0.5);">Create a season
+                            run to begin</div>
+                    </div>
+                </div>
+
+                <!-- Simulated Token Path -->
+                <div class="live-panel" style="grid-column: 1 / -1;">
+                    <div class="live-panel-title">📈 Simulated Token Evolution <span
+                            class="data-badge simulated">SIMULATED</span></div>
+                    <div id="simulation-token-path">
+                        <div style="padding: 40px; text-align: center; color: rgba(255,255,255,0.5);">
+                            <div style="font-size: 32px; margin-bottom: 8px;">📊</div>
+                            <div>Price history tracking across matchdays</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Simulated Bot Portfolio -->
+                <div class="live-panel" style="grid-column: 1 / -1;">
+                    <div class="live-panel-title">🤖 Simulated Bot Portfolio <span
+                            class="data-badge simulated">SIMULATED</span></div>
+                    <div id="simulation-bot-portfolio">
+                        <div style="padding: 20px; text-align: center; color: rgba(255,255,255,0.5);">Run simulation to
+                            see portfolio rebalancing</div>
+                    </div>
+                </div>
+
+                <!-- Simulation Leaderboards -->
+                <div class="live-panel" style="grid-column: 1 / -1;">
+                    <div class="live-panel-title">🏆 Simulation Leaderboards <span
+                            class="data-badge simulated">SIMULATED</span></div>
+                    <div id="simulation-leaderboards">
+                        <div style="padding: 20px; text-align: center; color: rgba(255,255,255,0.5);">Leaderboards will
+                            appear after matchday steps</div>
+                    </div>
+                </div>
+
+                <!-- Simulated Economics -->
+                <div class="live-panel" style="grid-column: 1 / -1;">
+                    <div class="live-panel-title">💰 Simulated Economics <span
+                            class="data-badge simulated">SIMULATED</span></div>
+                    <div id="simulation-economics">
+                        <div style="padding: 20px; text-align: center; color: rgba(255,255,255,0.5);">Running simulation
+                            to calculate...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Panels Grid -->
         <div class="panels-grid">
             <!-- Bot Fleet Overview - Grid View -->
-            <div class="panel">
+            <div class="panel" data-live-only>
                 <div class="panel-title" style="display: flex; justify-content: space-between; align-items: center;">
                     <span>🤖 Bot Fleet Overview</span>
                     <span id="fleet-count" style="font-size: 12px; color: rgba(255,255,255,0.5);"></span>
                 </div>
-                
+
                 <!-- Fleet Summary -->
                 <div class="fleet-summary" id="fleet-summary">
                     <div class="fleet-summary-card">
@@ -1140,19 +1545,27 @@
 
                 <!-- Controls -->
                 <div class="fleet-controls">
-                    <input type="text" class="fleet-search" id="bot-search" placeholder="🔍 Search bots..." oninput="filterBots()">
+                    <input type="text" class="fleet-search" id="bot-search" placeholder="🔍 Search bots..."
+                        oninput="filterBots()">
                     <div class="fleet-tabs" id="strategy-tabs">
-                        <button class="fleet-tab active" data-strategy="all" onclick="setStrategyFilter('all')">All</button>
-                        <button class="fleet-tab" data-strategy="VALUE_INVESTOR" onclick="setStrategyFilter('VALUE_INVESTOR')">Value</button>
-                        <button class="fleet-tab" data-strategy="DAY_TRADER" onclick="setStrategyFilter('DAY_TRADER')">Day</button>
-                        <button class="fleet-tab" data-strategy="MOMENTUM" onclick="setStrategyFilter('MOMENTUM')">Mom.</button>
-                        <button class="fleet-tab" data-strategy="RANDOM" onclick="setStrategyFilter('RANDOM')">Rand.</button>
+                        <button class="fleet-tab active" data-strategy="all"
+                            onclick="setStrategyFilter('all')">All</button>
+                        <button class="fleet-tab" data-strategy="VALUE_INVESTOR"
+                            onclick="setStrategyFilter('VALUE_INVESTOR')">Value</button>
+                        <button class="fleet-tab" data-strategy="DAY_TRADER"
+                            onclick="setStrategyFilter('DAY_TRADER')">Day</button>
+                        <button class="fleet-tab" data-strategy="MOMENTUM"
+                            onclick="setStrategyFilter('MOMENTUM')">Mom.</button>
+                        <button class="fleet-tab" data-strategy="RANDOM"
+                            onclick="setStrategyFilter('RANDOM')">Rand.</button>
                     </div>
                 </div>
 
                 <!-- Bot Grid -->
                 <div class="bot-grid" id="bot-grid">
-                    <div class="loading"><div class="spinner"></div></div>
+                    <div class="loading">
+                        <div class="spinner"></div>
+                    </div>
                 </div>
 
                 <!-- Pagination -->
@@ -1207,7 +1620,7 @@
         </div>
 
         <!-- Portfolio Holdings Panel - Card Grid with Dropdowns -->
-        <div class="panel full-panel">
+        <div class="panel full-panel" data-live-only>
             <div class="panel-title" style="display: flex; justify-content: space-between; align-items: center;">
                 <span>📦 Bot Portfolio Holdings (All Bots Combined)</span>
                 <span id="holdings-count" style="font-size: 12px; color: rgba(255,255,255,0.6);"></span>
@@ -1220,12 +1633,12 @@
         </div>
 
         <!-- Real Users Panel -->
-        <div class="panel full-panel">
+        <div class="panel full-panel" data-live-only>
             <div class="panel-title" style="display: flex; justify-content: space-between; align-items: center;">
                 <span>👥 Real Users (Non-Bots)</span>
                 <span id="users-count" style="font-size: 12px; color: rgba(255,255,255,0.6);"></span>
             </div>
-            
+
             <!-- Users Summary -->
             <div class="users-summary" id="users-summary">
                 <div class="users-summary-card">
@@ -1245,7 +1658,7 @@
                     <div class="users-summary-label">Total USDC</div>
                 </div>
             </div>
-            
+
             <!-- Users Grid -->
             <div class="users-grid" id="users-grid">
                 <div class="loading">
@@ -1254,9 +1667,346 @@
             </div>
         </div>
 
+        <!-- User Action Monitoring Panel -->
+        <div class="panel full-panel" data-live-only>
+            <div class="panel-title"
+                style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+                <span>🛰️ User Action Monitoring (Live + Agents + Bots)</span>
+                <span id="action-monitor-source-badge"
+                    style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.45);">source:
+                    --</span>
+                <div class="fleet-tabs" id="action-monitor-tabs">
+                    <button class="fleet-tab active" data-action-filter="all"
+                        onclick="setActionMonitorFilter('all')">All</button>
+                    <button class="fleet-tab" data-action-filter="live"
+                        onclick="setActionMonitorFilter('live')">Live</button>
+                    <button class="fleet-tab" data-action-filter="agent"
+                        onclick="setActionMonitorFilter('agent')">Agents</button>
+                    <button class="fleet-tab" data-action-filter="bot"
+                        onclick="setActionMonitorFilter('bot')">Bots</button>
+                </div>
+            </div>
+
+            <div
+                style="display:grid; grid-template-columns: 1fr auto auto; gap: 8px; margin-bottom: 10px; align-items: center;">
+                <input id="action-monitor-search" type="text" placeholder="Search wallet/session/persona/event"
+                    oninput="setActionMonitorSearchTerm(this.value)"
+                    style="height: 36px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.03); color: rgba(255,255,255,0.9); padding: 0 12px;" />
+                <div class="fleet-tabs" id="action-monitor-window-tabs">
+                    <button class="fleet-tab" data-action-window="5" onclick="setActionMonitorWindow(5)">5m</button>
+                    <button class="fleet-tab" data-action-window="15" onclick="setActionMonitorWindow(15)">15m</button>
+                    <button class="fleet-tab active" data-action-window="60"
+                        onclick="setActionMonitorWindow(60)">60m</button>
+                </div>
+                <button class="action-btn" id="action-monitor-pause-btn"
+                    style="height: 36px; padding: 0 12px; background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.2);"
+                    onclick="toggleActionMonitorPause()">⏸ Pause</button>
+            </div>
+
+            <div class="users-summary" style="margin-bottom: 12px; grid-template-columns: repeat(4, 1fr);">
+                <div class="users-summary-card">
+                    <div class="users-summary-value" id="monitor-actions-per-minute">--</div>
+                    <div class="users-summary-label">Actions / Min (5m)</div>
+                </div>
+                <div class="users-summary-card">
+                    <div class="users-summary-value" id="monitor-active-actors">--</div>
+                    <div class="users-summary-label">Active Actors (1h)</div>
+                </div>
+                <div class="users-summary-card">
+                    <div class="users-summary-value" id="monitor-trades-today">--</div>
+                    <div class="users-summary-label">Executed Trades Today</div>
+                </div>
+                <div class="users-summary-card">
+                    <div class="users-summary-value" id="monitor-alerts">--</div>
+                    <div class="users-summary-label">Anomaly Flags (10m)</div>
+                </div>
+                <div class="users-summary-card"
+                    style="border-color: rgba(0,255,136,0.25); background: rgba(0,255,136,0.07);">
+                    <div class="users-summary-value" id="monitor-success-rate" style="color: #00ff88;">--</div>
+                    <div class="users-summary-label">Success Rate (60m)</div>
+                </div>
+                <div class="users-summary-card"
+                    style="border-color: rgba(255,100,100,0.25); background: rgba(255,100,100,0.07);">
+                    <div class="users-summary-value" id="monitor-failure-rate" style="color: #ff6666;">--</div>
+                    <div class="users-summary-label">Failure Rate (60m)</div>
+                </div>
+                <div class="users-summary-card"
+                    style="border-color: rgba(255,170,0,0.25); background: rgba(255,170,0,0.07);">
+                    <div class="users-summary-value" id="monitor-rejection-rate" style="color: #ffaa00;">--</div>
+                    <div class="users-summary-label">Rejection Rate (60m)</div>
+                </div>
+            </div>
+
+            <div class="users-summary"
+                style="margin-bottom: 12px; grid-template-columns: repeat(2, minmax(280px, 1fr)); gap: 12px;">
+                <div class="users-summary-card" id="agent-runtime-card"
+                    style="text-align: left; border-color: rgba(0,255,136,0.25); background: rgba(0,255,136,0.07);">
+                    <div
+                        style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; gap:8px;">
+                        <div style="font-size:12px; font-weight:700; color:rgba(255,255,255,0.9);">Frontend-Agent
+                            Runtime Health</div>
+                        <span id="agent-runtime-state"
+                            style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:rgba(0,255,136,0.14);color:#00ff88;text-transform:uppercase;">healthy</span>
+                    </div>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+                        <div style="background: rgba(0,0,0,0.24); border-radius: 8px; padding: 8px 10px;">
+                            <div class="users-summary-label" style="margin-top:0;">Enabled</div>
+                            <div style="font-size:14px; font-weight:700; color:#fff;" id="agent-runtime-enabled">--
+                            </div>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.24); border-radius: 8px; padding: 8px 10px;">
+                            <div class="users-summary-label" style="margin-top:0;">Active Agents</div>
+                            <div style="font-size:14px; font-weight:700; color:#fff;" id="agent-runtime-active-agents">
+                                --</div>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.24); border-radius: 8px; padding: 8px 10px;">
+                            <div class="users-summary-label" style="margin-top:0;">Review Mode</div>
+                            <div style="font-size:14px; font-weight:700; color:#fff;" id="agent-runtime-review-mode">--
+                            </div>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.24); border-radius: 8px; padding: 8px 10px;">
+                            <div class="users-summary-label" style="margin-top:0;">Tick Count</div>
+                            <div style="font-size:14px; font-weight:700; color:#fff;" id="agent-runtime-tick-count">--
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top:8px; font-size:11px; color:rgba(255,255,255,0.7);"
+                        id="agent-runtime-last-tick-summary">Last tick: --</div>
+                    <div style="margin-top:4px; font-size:11px; color:rgba(255,255,255,0.55);"
+                        id="agent-runtime-last-tick-at">Last tick at: --</div>
+                    <div style="display:flex; gap:8px; margin-top:8px; flex-wrap: wrap;">
+                        <button class="action-btn"
+                            style="height:30px; padding:0 12px; font-size:11px; background: rgba(0,200,120,0.2); color:#7fffd4; border:1px solid rgba(0,255,136,0.35);"
+                            onclick="startFrontendAgentsRuntime()">Start Runtime</button>
+                        <button class="action-btn"
+                            style="height:30px; padding:0 12px; font-size:11px; background: rgba(255,100,100,0.18); color:#ff9a9a; border:1px solid rgba(255,100,100,0.38);"
+                            onclick="stopFrontendAgentsRuntime()">Stop Runtime</button>
+                        <button class="action-btn"
+                            style="height:30px; padding:0 12px; font-size:11px; background: rgba(0,170,255,0.16); color:#7dd3fc; border:1px solid rgba(0,170,255,0.38);"
+                            onclick="manualFrontendAgentsTick()">Manual Tick</button>
+                    </div>
+                    <div style="margin-top:6px; font-size:11px; color:rgba(255,255,255,0.65);" id="agent-runtime-note">
+                        Runtime monitor not loaded yet.</div>
+                </div>
+
+                <div class="users-summary-card" id="agent-activity-proof-card"
+                    style="text-align: left; border-color: rgba(0,170,255,0.30); background: rgba(0,170,255,0.08);">
+                    <div
+                        style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; gap:8px;">
+                        <div style="font-size:12px; font-weight:700; color:rgba(255,255,255,0.9);">Agent Activity Proof
+                            (60m)</div>
+                        <span id="agent-activity-proof-state"
+                            style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:rgba(0,170,255,0.18);color:#7dd3fc;text-transform:uppercase;">active</span>
+                    </div>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+                        <div style="background: rgba(0,0,0,0.24); border-radius: 8px; padding: 8px 10px;">
+                            <div class="users-summary-label" style="margin-top:0;">Event Count</div>
+                            <div style="font-size:14px; font-weight:700; color:#fff;" id="agent-proof-event-count">--
+                            </div>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.24); border-radius: 8px; padding: 8px 10px;">
+                            <div class="users-summary-label" style="margin-top:0;">Unique Actors</div>
+                            <div style="font-size:14px; font-weight:700; color:#fff;" id="agent-proof-unique-actors">--
+                            </div>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.24); border-radius: 8px; padding: 8px 10px;">
+                            <div class="users-summary-label" style="margin-top:0;">Success Rate</div>
+                            <div style="font-size:14px; font-weight:700; color:#00ff88;" id="agent-proof-success-rate">
+                                --</div>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.24); border-radius: 8px; padding: 8px 10px;">
+                            <div class="users-summary-label" style="margin-top:0;">Failure / Rejection</div>
+                            <div style="font-size:14px; font-weight:700; color:#ffcf77;" id="agent-proof-fail-reject">--
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top:8px; font-size:11px; color:rgba(255,255,255,0.65);" id="agent-proof-note">
+                        Source: /activity/events/stats?userType=agent&windowMinutes=60</div>
+                    <div style="margin-top:6px; font-size:11px; color:#ffb347; display:none;" id="agent-proof-warning">
+                        Runtime enabled but no agent events detected in last 60m.</div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div
+                    style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 12px;">
+                    <div style="font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.85); margin-bottom: 8px;">
+                        Top Action Actors (15m)</div>
+                    <div id="monitor-top-actors" style="font-size: 12px; color: rgba(255,255,255,0.65);">Loading...
+                    </div>
+                </div>
+                <div
+                    style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 12px;">
+                    <div style="font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.85); margin-bottom: 8px;">
+                        Action Funnel (Event-backed)</div>
+                    <div id="monitor-funnel" style="font-size: 12px; color: rgba(255,255,255,0.65);">Loading...</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 10px; font-size: 11px; color: rgba(255,255,255,0.5);" id="monitor-coverage-note">
+                Coverage: trade execution events are live; pre-submit UI events require dedicated telemetry ingestion.
+            </div>
+
+            <div style="display:grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-top: 12px;">
+                <div
+                    style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 12px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <div style="font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.85);">Event Stream
+                            Console</div>
+                        <div id="monitor-stream-summary" style="font-size: 11px; color: rgba(255,255,255,0.55);">--
+                        </div>
+                    </div>
+                    <div
+                        style="overflow:auto; max-height: 340px; border: 1px solid rgba(255,255,255,0.06); border-radius: 8px;">
+                        <table style="width:100%; border-collapse: collapse; font-size: 11px;">
+                            <thead style="position: sticky; top: 0; background: rgba(10,10,16,0.95); z-index: 1;">
+                                <tr>
+                                    <th
+                                        style="text-align:left; padding:8px; border-bottom: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.65);">
+                                        Time</th>
+                                    <th
+                                        style="text-align:left; padding:8px; border-bottom: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.65);">
+                                        Actor</th>
+                                    <th
+                                        style="text-align:left; padding:8px; border-bottom: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.65);">
+                                        Event</th>
+                                    <th
+                                        style="text-align:left; padding:8px; border-bottom: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.65);">
+                                        Result</th>
+                                    <th
+                                        style="text-align:left; padding:8px; border-bottom: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.65);">
+                                        Latency</th>
+                                </tr>
+                            </thead>
+                            <tbody id="monitor-event-stream-table"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div
+                    style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 12px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <div style="font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.85);">Actor Inspector
+                        </div>
+                        <button class="action-btn"
+                            style="height: 28px; padding: 0 10px; font-size:11px; background: rgba(255,255,255,0.08); color:#fff; border:1px solid rgba(255,255,255,0.16);"
+                            onclick="clearActionMonitorActorSelection()">Clear</button>
+                    </div>
+                    <div id="monitor-actor-inspector"
+                        style="font-size: 11px; color: rgba(255,255,255,0.65); min-height: 318px; max-height: 318px; overflow:auto;">
+                        Select an actor from stream rows to inspect timeline.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Audit Trail Panel -->
+        <div class="panel full-panel" data-live-only>
+            <div class="panel-title"
+                style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+                <span>📊 Audit Trail (Bot & Agent Actions)</span>
+                <span id="audit-trail-source-badge"
+                    style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(0,255,136,0.1);color:#00ff88;">live
+                    tracking</span>
+                <div class="fleet-tabs" id="audit-trail-filter-tabs">
+                    <button class="fleet-tab active" data-audit-filter="all"
+                        onclick="setAuditTrailFilter('all')">All</button>
+                    <button class="fleet-tab" data-audit-filter="BUY" onclick="setAuditTrailFilter('BUY')">Buys</button>
+                    <button class="fleet-tab" data-audit-filter="SELL"
+                        onclick="setAuditTrailFilter('SELL')">Sells</button>
+                </div>
+                <div class="fleet-tabs" id="audit-trail-status-tabs">
+                    <button class="fleet-tab active" data-audit-status="all" onclick="setAuditTrailStatus('all')">All
+                        Status</button>
+                    <button class="fleet-tab" data-audit-status="WON" onclick="setAuditTrailStatus('WON')">Won</button>
+                    <button class="fleet-tab" data-audit-status="LOST"
+                        onclick="setAuditTrailStatus('LOST')">Lost</button>
+                    <button class="fleet-tab" data-audit-status="SETTLED"
+                        onclick="setAuditTrailStatus('SETTLED')">Settled</button>
+                </div>
+                <div class="fleet-tabs" id="audit-trail-gametype-tabs">
+                    <button class="fleet-tab active" data-audit-gametype="all"
+                        onclick="setAuditTrailGameType('all')">All Types</button>
+                    <button class="fleet-tab" data-audit-gametype="TRADE"
+                        onclick="setAuditTrailGameType('TRADE')">Trade</button>
+                    <button class="fleet-tab" data-audit-gametype="H2H"
+                        onclick="setAuditTrailGameType('H2H')">H2H</button>
+                    <button class="fleet-tab" data-audit-gametype="CONTEST"
+                        onclick="setAuditTrailGameType('CONTEST')">Contest</button>
+                    <button class="fleet-tab" data-audit-gametype="PREDICTION"
+                        onclick="setAuditTrailGameType('PREDICTION')">Prediction</button>
+                </div>
+            </div>
+
+            <div class="audit-toolbar">
+                <input id="audit-trail-search" class="audit-search" type="text"
+                    placeholder="Search actor, player, event" oninput="setAuditTrailSearchTerm(this.value)" />
+                <div class="fleet-tabs" id="audit-trail-window-tabs">
+                    <button class="fleet-tab" data-audit-window="15" onclick="setAuditTrailWindow(15)">15m</button>
+                    <button class="fleet-tab" data-audit-window="60" onclick="setAuditTrailWindow(60)">1h</button>
+                    <button class="fleet-tab active" data-audit-window="1440"
+                        onclick="setAuditTrailWindow(1440)">24h</button>
+                </div>
+            </div>
+
+            <div class="users-summary" style="margin-bottom: 12px; grid-template-columns: repeat(5, 1fr);">
+                <div class="users-summary-card">
+                    <div class="users-summary-value" id="audit-total-trades">--</div>
+                    <div class="users-summary-label">Total Actions</div>
+                </div>
+                <div class="users-summary-card"
+                    style="border-color: rgba(0,255,136,0.25); background: rgba(0,255,136,0.07);">
+                    <div class="users-summary-value" id="audit-wins" style="color: #00ff88;">--</div>
+                    <div class="users-summary-label">Winner Count</div>
+                </div>
+                <div class="users-summary-card"
+                    style="border-color: rgba(255,68,68,0.25); background: rgba(255,68,68,0.07);">
+                    <div class="users-summary-value" id="audit-losses" style="color: #ff6666;">--</div>
+                    <div class="users-summary-label">Losses</div>
+                </div>
+                <div class="users-summary-card">
+                    <div class="users-summary-value" id="audit-total-volume">$--</div>
+                    <div class="users-summary-label">Volume (Budget)</div>
+                </div>
+                <div class="users-summary-card">
+                    <div class="users-summary-value" id="audit-net-pnl" style="color: #00ff88;">$--</div>
+                    <div class="users-summary-label">Net P&L</div>
+                </div>
+            </div>
+
+            <div class="audit-table-wrap">
+                <table class="audit-table">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Actor</th>
+                            <th style="text-align:center;">Type</th>
+                            <th style="text-align:center;">Action</th>
+                            <th>Player</th>
+                            <th style="text-align:right;">Budget</th>
+                            <th style="text-align:right;">Outcome</th>
+                            <th style="text-align:right;">P&L</th>
+                            <th style="text-align:center;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="audit-trail-table" style="font-size: 11px;"></tbody>
+                </table>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;">
+                <div style="font-size: 11px; color: rgba(255,255,255,0.5);" id="audit-trail-info">--</div>
+                <div class="pagination" id="audit-trail-pagination" style="gap: 4px;">
+                    <button class="pagination-btn" id="audit-prev-page" onclick="auditTrailPrevPage()"
+                        style="padding: 6px 10px; font-size: 11px;">← Prev</button>
+                    <span class="pagination-info" id="audit-page-info" style="font-size: 11px;">Page 1 of 1</span>
+                    <button class="pagination-btn" id="audit-next-page" onclick="auditTrailNextPage()"
+                        style="padding: 6px 10px; font-size: 11px;">Next →</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Activity Feed Panel -->
         <div class="panels-grid">
-            <div class="panel">
+            <div class="panel" data-live-only>
                 <div class="panel-title">🔄 Recent Activity</div>
                 <div class="activity-feed" id="activity-feed">
                     <div class="loading">
@@ -1269,8 +2019,10 @@
             <div class="panel">
                 <div class="panel-title">⚡ Quick Actions</div>
                 <div style="display: grid; gap: 12px;">
-                    <button class="action-btn" id="create-fleet-btn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white;" onclick="createBotFleet()">
-                        ➕ Create Bot Fleet (40 bots)
+                    <button class="action-btn" id="create-fleet-btn"
+                        style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white;"
+                        onclick="createBotFleet()">
+                        ➕ Create Bot Fleet (100 bots)
                     </button>
                     <button class="action-btn primary" onclick="activateAllBots()">
                         ▶️ Activate All Bots
@@ -1278,16 +2030,49 @@
                     <button class="action-btn danger" onclick="deactivateAllBots()">
                         ⏸️ Deactivate All Bots
                     </button>
-                    <button class="action-btn" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2);" onclick="triggerTrades()">
+                    <button class="action-btn"
+                        style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2);"
+                        onclick="triggerTrades()">
                         🔀 Trigger Random Trades
                     </button>
-                    <button class="action-btn" style="background: rgba(255,170,0,0.15); color: #ffaa00; border: 1px solid rgba(255,170,0,0.3);" onclick="triggerPredictionBets()">
+                    <button class="action-btn"
+                        style="background: rgba(255,170,0,0.15); color: #ffaa00; border: 1px solid rgba(255,170,0,0.3);"
+                        onclick="triggerPredictionBets()">
                         🎯 Trigger Prediction Bets
                     </button>
                 </div>
                 <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <div class="panel-title" style="font-size: 14px;">🗓️ Simulated Season (Matchday Step)</div>
+                    <div style="display: grid; gap: 8px;">
+                        <button class="action-btn"
+                            style="background: rgba(5,40,243,0.2); color: #8fa1ff; border: 1px solid rgba(5,40,243,0.45);"
+                            onclick="createSeasonRun()">
+                            🚀 Create Season Run
+                        </button>
+                        <button class="action-btn"
+                            style="background: rgba(0,170,255,0.15); color: #00c8ff; border: 1px solid rgba(0,170,255,0.4);"
+                            onclick="stepSeasonRun()">
+                            ⏭️ Advance One Matchday
+                        </button>
+                        <button class="action-btn"
+                            style="background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.2);"
+                            onclick="loadSeasonRunStatus()">
+                            🔎 Refresh Season Status
+                        </button>
+                        <button class="action-btn danger" onclick="resetSeasonRun()">
+                            ♻️ Reset Season Run
+                        </button>
+                    </div>
+                    <div data-season-status
+                        style="margin-top: 10px; font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.5;">
+                        No season run active
+                    </div>
+                </div>
+                <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1);">
                     <div class="panel-title" style="font-size: 14px;">💰 Blockchain Funding</div>
-                    <button class="action-btn" id="fund-all-btn" style="width: 100%; margin-top: 8px; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: white;" onclick="fundAllBots()">
+                    <button class="action-btn" id="fund-all-btn"
+                        style="width: 100%; margin-top: 8px; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: white;"
+                        onclick="fundAllBots()">
                         ⛽ Fund All Bots (ETH + USDC)
                     </button>
                     <p style="font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 8px; text-align: center;">
@@ -1309,17 +2094,105 @@
 
     <script>
         // Configuration
-        const API_BASE = 'https://stockballer-api-production.up.railway.app/api';
-        const ADMIN_PASSWORD = 'stockballer2026'; // Change this!
+        let API_BASE = '';
+        // Do not hardcode plaintext admin password in source.
+        // Provide a SHA-256 hex hash at runtime via either:
+        // 1) window.__ADMIN_PASSWORD_HASH (preferred when serving), or
+        // 2) localStorage['stockballer_admin_password_hash'] (local dev override)
+        const ADMIN_PASSWORD_HASH = (
+            window.__ADMIN_PASSWORD_HASH ||
+            localStorage.getItem('stockballer_admin_password_hash') ||
+            ''
+        ).trim().toLowerCase();
         let refreshInterval;
         let strategyChart;
-        
+        let activeSeasonRunId = null;
+        window.activeSeasonRunId = null;
+
         // Bot fleet state
         let allBots = [];
         let filteredBots = [];
         let currentPage = 1;
         let currentStrategy = 'all';
+        let actionMonitorFilter = 'all';
+        let actionMonitorWindowMinutes = 60;
+        let actionMonitorSearchTerm = '';
+        let actionMonitorPaused = false;
+        let selectedActionMonitorActor = null;
+        let actionMonitorSnapshotFeed = [];
+        let latestActionFeed = [];
+        let frontendAgentRuntimeStatus = null;
+        let frontendAgentStats = null;
+        const CANONICAL_ACTOR_TYPES = new Set(['live', 'agent', 'bot']);
+        const CANONICAL_MIN_EVENTS_5M = 10;
         const BOTS_PER_PAGE = 24;
+
+        function setActiveSeasonRunId(runId) {
+            activeSeasonRunId = runId || null;
+            window.activeSeasonRunId = activeSeasonRunId;
+        }
+
+        // Resolve API base dynamically for local development.
+        function getApiCandidates() {
+            const host = window.location.hostname || 'localhost';
+            const protocol = window.location.protocol === 'https:' ? 'https' : 'http';
+
+            return [
+                `${protocol}://${host}:3001/api`,
+                `${protocol}://${host}:8080/api`,
+                'http://localhost:3001/api',
+                'http://127.0.0.1:3001/api',
+                'https://stockballer-api-production.up.railway.app/api'
+            ];
+        }
+
+        async function resolveApiBase() {
+            const params = new URLSearchParams(window.location.search);
+            const apiFromQuery = params.get('api');
+            const apiFromStorage = localStorage.getItem('stockballer_admin_api_base');
+            const localPage = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
+            const setApiBase = (base) => {
+                API_BASE = base.replace(/\/$/, '');
+                localStorage.setItem('stockballer_admin_api_base', API_BASE);
+                window.API_BASE = API_BASE;
+            };
+
+            // Highest priority: explicit query override.
+            if (apiFromQuery) {
+                setApiBase(apiFromQuery);
+                console.log('[Admin] API base from query:', API_BASE);
+                return;
+            }
+
+            // Second priority: persisted manual override.
+            if (apiFromStorage) {
+                setApiBase(apiFromStorage);
+                console.log('[Admin] API base from storage:', API_BASE);
+                return;
+            }
+
+            // Default behavior: local page uses local API first, then fallback list.
+            const candidates = getApiCandidates();
+            const ordered = localPage ? candidates : [candidates[candidates.length - 1], ...candidates.slice(0, -1)];
+
+            for (const candidate of ordered) {
+                try {
+                    const res = await fetch(`${candidate}/health`, { method: 'GET' });
+                    if (res.ok) {
+                        setApiBase(candidate);
+                        console.log('[Admin] API base auto-selected:', API_BASE);
+                        return;
+                    }
+                } catch (err) {
+                    // Try next candidate.
+                }
+            }
+
+            // Last fallback to local dev API.
+            setApiBase('http://localhost:3001/api');
+            console.warn('[Admin] Could not verify API candidate. Falling back to', API_BASE);
+        }
 
         // Check login status on load
         document.addEventListener('DOMContentLoaded', () => {
@@ -1330,7 +2203,7 @@
         function checkAuth() {
             const isAuthenticated = sessionStorage.getItem('admin_auth') === 'true';
             const overlay = document.getElementById('login-overlay');
-            
+
             if (isAuthenticated) {
                 overlay.classList.add('hidden');
                 initDashboard();
@@ -1339,25 +2212,53 @@
             }
         }
 
-        function handleLogin(e) {
+        async function sha256Hex(value) {
+            if (!window.crypto || !window.crypto.subtle) {
+                throw new Error('Web Crypto API unavailable in this browser context');
+            }
+            const encoded = new TextEncoder().encode(value);
+            const digest = await window.crypto.subtle.digest('SHA-256', encoded);
+            return Array.from(new Uint8Array(digest))
+                .map((b) => b.toString(16).padStart(2, '0'))
+                .join('');
+        }
+
+        async function handleLogin(e) {
             e.preventDefault();
             const password = document.getElementById('login-password').value;
             const errorEl = document.getElementById('login-error');
-            
-            if (password === ADMIN_PASSWORD) {
-                sessionStorage.setItem('admin_auth', 'true');
-                document.getElementById('login-overlay').classList.add('hidden');
-                errorEl.classList.remove('show');
-                initDashboard();
-            } else {
+
+            if (!ADMIN_PASSWORD_HASH) {
+                errorEl.textContent = 'Admin password is not configured on this deployment.';
                 errorEl.classList.add('show');
                 document.getElementById('login-password').value = '';
                 document.getElementById('login-password').focus();
+                return false;
+            }
+
+            try {
+                const candidateHash = await sha256Hex(password);
+                if (candidateHash === ADMIN_PASSWORD_HASH) {
+                    sessionStorage.setItem('admin_auth', 'true');
+                    document.getElementById('login-overlay').classList.add('hidden');
+                    errorEl.textContent = 'Incorrect password. Please try again.';
+                    errorEl.classList.remove('show');
+                    initDashboard();
+                    return false;
+                }
+                errorEl.textContent = 'Incorrect password. Please try again.';
+                errorEl.classList.add('show');
+                document.getElementById('login-password').value = '';
+                document.getElementById('login-password').focus();
+            } catch (err) {
+                errorEl.textContent = 'Login check unavailable in this browser context.';
+                errorEl.classList.add('show');
             }
             return false;
         }
 
-        function initDashboard() {
+        async function initDashboard() {
+            await resolveApiBase();
             loadDashboard();
             // Auto-refresh every 30 seconds
             refreshInterval = setInterval(loadDashboard, 30000);
@@ -1370,9 +2271,17 @@
                     loadStats(),
                     loadBots(),
                     loadBlockchainInfo(),
-                    loadUsers()
+                    loadUsers(),
+                    loadUserActionMonitoring(),
+                    typeof loadAuditTrail === 'function' ? loadAuditTrail() : Promise.resolve(),
+                    loadSeasonRunStatus()
                 ]);
                 updateApiStatus(true);
+
+                // Load mode-specific data
+                if (typeof loadModeData === 'function') {
+                    await loadModeData();
+                }
             } catch (error) {
                 console.error('Dashboard load error:', error);
                 updateApiStatus(false);
@@ -1388,17 +2297,20 @@
                 }
                 const stats = await response.json();
 
+                // Store stats in window for mode switcher access
+                window.lastStats = stats;
+
                 // Safe accessors with defaults
                 document.getElementById('active-bots').textContent = stats.activeBots || 0;
                 document.getElementById('active-bots-detail').textContent = `of ${stats.totalBots || 0} total`;
                 document.getElementById('total-trades').textContent = stats.totalTrades || 0;
                 document.getElementById('trades-detail').textContent = `${stats.totalBuys || 0} buys, ${stats.totalSells || 0} sells`;
                 document.getElementById('fees-collected').textContent = `$${(stats.totalFeesPaid || 0).toFixed(2)}`;
-                
+
                 const predictions = stats.predictions || { totalBets: 0, totalStaked: 0 };
                 document.getElementById('prediction-bets').textContent = predictions.totalBets || 0;
                 document.getElementById('bets-detail').textContent = `$${(predictions.totalStaked || 0).toFixed(2)} staked`;
-                
+
                 const pnl = stats.totalProfitLoss || 0;
                 const pnlEl = document.getElementById('total-pnl');
                 pnlEl.textContent = `$${Math.abs(pnl).toFixed(2)}`;
@@ -1427,10 +2339,10 @@
             try {
                 const response = await fetch(`${API_BASE}/bots`);
                 allBots = await response.json();
-                
+
                 // Update fleet summary
                 updateFleetSummary();
-                
+
                 // Apply filters and render
                 filterBots();
 
@@ -1447,7 +2359,7 @@
             const totalTrades = allBots.reduce((sum, b) => sum + b.totalTrades, 0);
             const totalPnl = allBots.reduce((sum, b) => sum + b.profitLoss, 0);
             const totalBalance = allBots.reduce((sum, b) => sum + b.usdcBalance, 0);
-            
+
             document.getElementById('fleet-count').textContent = `${allBots.length} bots`;
             document.getElementById('fleet-active').textContent = active;
             document.getElementById('fleet-trades').textContent = totalTrades;
@@ -1459,24 +2371,24 @@
         function setStrategyFilter(strategy) {
             currentStrategy = strategy;
             currentPage = 1;
-            
+
             // Update tabs
             document.querySelectorAll('.fleet-tab').forEach(tab => {
                 tab.classList.toggle('active', tab.dataset.strategy === strategy);
             });
-            
+
             filterBots();
         }
 
         function filterBots() {
             const searchTerm = document.getElementById('bot-search').value.toLowerCase();
-            
+
             filteredBots = allBots.filter(bot => {
                 const matchesStrategy = currentStrategy === 'all' || bot.strategy === currentStrategy;
                 const matchesSearch = bot.name.toLowerCase().includes(searchTerm);
                 return matchesStrategy && matchesSearch;
             });
-            
+
             renderBotGrid();
         }
 
@@ -1485,17 +2397,17 @@
             const totalPages = Math.ceil(filteredBots.length / BOTS_PER_PAGE);
             const startIdx = (currentPage - 1) * BOTS_PER_PAGE;
             const pageBots = filteredBots.slice(startIdx, startIdx + BOTS_PER_PAGE);
-            
+
             if (pageBots.length === 0) {
                 grid.innerHTML = '<div class="no-bots-message">No bots match your search</div>';
                 document.getElementById('pagination').style.display = 'none';
                 return;
             }
-            
+
             grid.innerHTML = pageBots.map(bot => {
                 const strategyClass = bot.strategy.toLowerCase().replace('_', '-');
                 const pnlColor = bot.profitLoss >= 0 ? '#00ff88' : '#ff6666';
-                
+
                 return `
                     <div class="bot-card" onclick="showBotDetails('${bot.id}')">
                         <div class="bot-card-header">
@@ -1524,7 +2436,7 @@
                     </div>
                 `;
             }).join('');
-            
+
             // Update pagination
             const pagination = document.getElementById('pagination');
             pagination.style.display = totalPages <= 1 ? 'none' : 'flex';
@@ -1542,7 +2454,7 @@
         function showBotDetails(botId) {
             const bot = allBots.find(b => b.id === botId);
             if (!bot) return;
-            
+
             // For now, show an alert. Could expand to a modal later.
             alert(`${bot.name}\n\nStrategy: ${bot.strategy}\nBalance: $${bot.usdcBalance.toFixed(2)}\nTrades: ${bot.totalTrades}\nP/L: $${bot.profitLoss.toFixed(2)}\nHoldings: ${bot.holdings?.length || 0}\nPrediction Bets: ${bot.predictionBets?.length || 0}`);
         }
@@ -1551,7 +2463,7 @@
         async function updateHoldingsTable(bots) {
             // Aggregate holdings across all bots
             const holdingsMap = new Map();
-            
+
             bots.forEach(bot => {
                 if (bot.holdings && bot.holdings.length > 0) {
                     bot.holdings.forEach(holding => {
@@ -1585,7 +2497,7 @@
                 const result = await playersRes.json();
                 const players = result.data || result;
                 const playerMap = new Map(players.map(p => [p.tokenId, p]));
-                
+
                 holdingsMap.forEach((holding, tokenId) => {
                     const playerData = playerMap.get(tokenId);
                     if (playerData) {
@@ -1603,7 +2515,7 @@
             const holdings = Array.from(holdingsMap.values());
             const grid = document.getElementById('holdings-grid');
             const countEl = document.getElementById('holdings-count');
-            
+
             // Update count
             const totalValue = holdings.reduce((sum, h) => sum + (h.totalQty * h.currentPrice), 0);
             countEl.textContent = `${holdings.length} assets • Total: $${totalValue.toFixed(2)}`;
@@ -1624,7 +2536,7 @@
                 const plSign = unrealizedPL >= 0 ? '+' : '';
                 const plPercent = avgPrice > 0 ? ((h.currentPrice - avgPrice) / avgPrice * 100).toFixed(1) : '0.0';
                 const photoSrc = h.photoUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(h.playerName)}&background=333&color=fff&size=56`;
-                
+
                 return `
                     <div class="holding-card" onclick="toggleHoldingCard(${idx})">
                         <div class="holding-card-header">
@@ -1685,7 +2597,7 @@
 
                 const tradingModeEl = document.getElementById('trading-mode');
                 const tradingModeItem = document.getElementById('trading-mode-item');
-                
+
                 if (status.blockchainTradingEnabled) {
                     tradingModeEl.textContent = '⚡ REAL (On-Chain)';
                     tradingModeEl.style.color = '#00ff88';
@@ -1721,7 +2633,7 @@
 
                 // Render users grid
                 const grid = document.getElementById('users-grid');
-                
+
                 if (users.length === 0) {
                     grid.innerHTML = `
                         <div class="no-users-message">
@@ -1738,7 +2650,7 @@
                     const avatar = user.walletAddress.slice(2, 4).toUpperCase();
                     const plClass = user.profitLoss >= 0 ? 'positive' : 'negative';
                     const plPrefix = user.profitLoss >= 0 ? '+' : '';
-                    
+
                     return `
                         <div class="user-card">
                             <div class="user-card-header">
@@ -1791,11 +2703,806 @@
             }
         }
 
+        function setActionMonitorFilter(filter) {
+            actionMonitorFilter = filter;
+            document.querySelectorAll('[data-action-filter]').forEach((tab) => {
+                tab.classList.toggle('active', tab.dataset.actionFilter === filter);
+            });
+            renderUserActionMonitoring();
+        }
+
+        function setActionMonitorWindow(minutes) {
+            actionMonitorWindowMinutes = Number(minutes) || 60;
+            document.querySelectorAll('[data-action-window]').forEach((tab) => {
+                tab.classList.toggle('active', Number(tab.dataset.actionWindow) === actionMonitorWindowMinutes);
+            });
+            loadUserActionMonitoring();
+        }
+
+        function setActionMonitorSearchTerm(term) {
+            actionMonitorSearchTerm = String(term || '').toLowerCase().trim();
+            renderUserActionMonitoring();
+        }
+
+        function toggleActionMonitorPause() {
+            actionMonitorPaused = !actionMonitorPaused;
+            const button = document.getElementById('action-monitor-pause-btn');
+            if (button) {
+                button.textContent = actionMonitorPaused ? '▶ Resume' : '⏸ Pause';
+                button.style.borderColor = actionMonitorPaused ? 'rgba(255,170,0,0.55)' : 'rgba(255,255,255,0.2)';
+                button.style.color = actionMonitorPaused ? '#ffaa00' : '#fff';
+            }
+            renderUserActionMonitoring();
+        }
+
+        function deriveActionMonitorActorKey(item) {
+            return item?.walletHash || item?.walletAddress || item?.sessionId || item?.personaId || 'unknown';
+        }
+
+        function selectActionMonitorActor(actorKey) {
+            selectedActionMonitorActor = actorKey || null;
+            renderUserActionMonitoring();
+        }
+
+        function clearActionMonitorActorSelection() {
+            selectedActionMonitorActor = null;
+            renderUserActionMonitoring();
+        }
+
+        function normalizeCanonicalActorType(item) {
+            const eventUserType = String(item?.userType || '').toLowerCase();
+            const metadata = item?.metadata || {};
+
+            if (CANONICAL_ACTOR_TYPES.has(eventUserType)) {
+                return eventUserType;
+            }
+
+            if (
+                metadata.runtime === 'backend-bot' ||
+                typeof metadata.botId === 'string' ||
+                typeof metadata.strategy === 'string'
+            ) {
+                return 'bot';
+            }
+
+            return 'live';
+        }
+
+        function updateActionMonitorSourceBadge(source) {
+            const badge = document.getElementById('action-monitor-source-badge');
+            if (!badge) return;
+
+            if (source === 'canonical') {
+                badge.textContent = '✦ canonical';
+                badge.style.background = 'rgba(16,185,129,0.15)';
+                badge.style.color = '#34d399';
+                return;
+            }
+
+            if (source === 'canonical-low') {
+                badge.textContent = '✦ canonical (low vol)';
+                badge.style.background = 'rgba(245,158,11,0.12)';
+                badge.style.color = '#fbbf24';
+                return;
+            }
+
+            if (source === 'fallback') {
+                badge.textContent = '↺ fallback';
+                badge.style.background = 'rgba(245,158,11,0.16)';
+                badge.style.color = '#fbbf24';
+                return;
+            }
+
+            badge.textContent = '✕ offline';
+            badge.style.background = 'rgba(239,68,68,0.12)';
+            badge.style.color = '#f87171';
+        }
+
+        function formatPercentRate(value) {
+            if (typeof value !== 'number' || Number.isNaN(value)) {
+                return '--';
+            }
+            return `${(value * 100).toFixed(1)}%`;
+        }
+
+        function formatTickSummary(summary) {
+            if (!summary || typeof summary !== 'object') {
+                return 'Last tick: --';
+            }
+            const attempted = Number(summary.attempted || 0);
+            const succeeded = Number(summary.succeeded || 0);
+            const failed = Number(summary.failed || 0);
+            const skipped = Number(summary.skipped || 0);
+            return `Last tick: attempted ${attempted}, success ${succeeded}, failed ${failed}, skipped ${skipped}`;
+        }
+
+        function formatActionMonitorEventLabel(eventType) {
+            const raw = String(eventType || '').trim();
+            if (!raw) return '--';
+
+            const labels = {
+                trade_buy_submitted: 'Trade Buy',
+                trade_sell_submitted: 'Trade Sell',
+                challenge_created: 'H2H Created',
+                challenge_accepted: 'H2H Accepted',
+                contest_view: 'Contest Viewed',
+                contest_enter_click: 'Contest Enter Click',
+                contest_entry_submitted: 'Contest Entered',
+                prediction_bet_placed: 'Prediction Bet',
+                screen_view: 'Screen Viewed',
+            };
+
+            if (labels[raw]) {
+                return labels[raw];
+            }
+
+            return raw
+                .split('_')
+                .filter(Boolean)
+                .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+                .join(' ');
+        }
+
+        function formatActionMonitorEventContext(item) {
+            if (!item || typeof item !== 'object') {
+                return '';
+            }
+
+            const metadata = item.metadata || {};
+            const eventType = String(item.eventType || '');
+
+            if (eventType === 'challenge_created' || eventType === 'challenge_accepted') {
+                if (item.entityId) return `Challenge ${String(item.entityId).slice(0, 8)}`;
+                return 'H2H flow';
+            }
+
+            if (eventType === 'contest_entry_submitted' || eventType === 'prediction_bet_placed') {
+                return item.entityId || metadata.predictionId || 'Parlay contest';
+            }
+
+            if (eventType === 'contest_view' || eventType === 'contest_enter_click') {
+                return item.entityId || item.screen || 'Contest flow';
+            }
+
+            if (eventType === 'trade_buy_submitted' || eventType === 'trade_sell_submitted') {
+                return item.entityId || metadata.tokenId || metadata.playerId || 'Player trade';
+            }
+
+            return item.entityId || item.screen || '';
+        }
+
+        function renderFrontendAgentRuntimeCard(runtime, errorMessage) {
+            const card = document.getElementById('agent-runtime-card');
+            const stateEl = document.getElementById('agent-runtime-state');
+            const enabledEl = document.getElementById('agent-runtime-enabled');
+            const activeAgentsEl = document.getElementById('agent-runtime-active-agents');
+            const reviewModeEl = document.getElementById('agent-runtime-review-mode');
+            const tickCountEl = document.getElementById('agent-runtime-tick-count');
+            const summaryEl = document.getElementById('agent-runtime-last-tick-summary');
+            const lastTickAtEl = document.getElementById('agent-runtime-last-tick-at');
+            const noteEl = document.getElementById('agent-runtime-note');
+
+            if (!stateEl || !enabledEl || !activeAgentsEl || !reviewModeEl || !tickCountEl || !summaryEl || !lastTickAtEl || !noteEl || !card) {
+                return;
+            }
+
+            if (!runtime) {
+                stateEl.textContent = 'offline';
+                stateEl.style.background = 'rgba(239,68,68,0.14)';
+                stateEl.style.color = '#f87171';
+                enabledEl.textContent = '--';
+                activeAgentsEl.textContent = '--';
+                reviewModeEl.textContent = '--';
+                tickCountEl.textContent = '--';
+                summaryEl.textContent = 'Last tick: --';
+                lastTickAtEl.textContent = 'Last tick at: --';
+                noteEl.textContent = `Runtime status unavailable${errorMessage ? ` (${errorMessage})` : ''}.`;
+                card.style.borderColor = 'rgba(239,68,68,0.30)';
+                card.style.background = 'rgba(239,68,68,0.08)';
+                return;
+            }
+
+            const enabled = Boolean(runtime.enabled);
+            const activeAgents = Number(runtime.activeAgents || 0);
+            const reviewMode = Boolean(runtime.reviewMode);
+            const tickCount = Number(runtime.tickCount || 0);
+            const tickIntervalMs = Number(runtime.tickIntervalMs || 30000);
+            const lastTickAtMs = runtime.lastTickAt ? new Date(runtime.lastTickAt).getTime() : 0;
+            const staleThresholdMs = Math.max(tickIntervalMs * 2, 90000);
+            const tickAgeMs = lastTickAtMs > 0 ? Date.now() - lastTickAtMs : Number.POSITIVE_INFINITY;
+            const stale = enabled && tickAgeMs > staleThresholdMs;
+
+            enabledEl.textContent = enabled ? 'YES' : 'NO';
+            activeAgentsEl.textContent = String(activeAgents);
+            reviewModeEl.textContent = reviewMode ? 'ON' : 'OFF';
+            tickCountEl.textContent = String(tickCount);
+            summaryEl.textContent = formatTickSummary(runtime.lastTickSummary);
+            lastTickAtEl.textContent = `Last tick at: ${runtime.lastTickAt ? new Date(runtime.lastTickAt).toLocaleString() : '--'}`;
+
+            if (!enabled) {
+                stateEl.textContent = 'disabled';
+                stateEl.style.background = 'rgba(107,114,128,0.22)';
+                stateEl.style.color = '#d1d5db';
+                noteEl.textContent = 'Runtime is disabled. No frontend-agent ticks are expected.';
+                card.style.borderColor = 'rgba(156,163,175,0.35)';
+                card.style.background = 'rgba(107,114,128,0.10)';
+            } else if (stale) {
+                stateEl.textContent = 'stale';
+                stateEl.style.background = 'rgba(245,158,11,0.20)';
+                stateEl.style.color = '#fbbf24';
+                noteEl.textContent = `Runtime enabled, but last tick is stale (${Math.floor(tickAgeMs / 1000)}s ago).`;
+                card.style.borderColor = 'rgba(245,158,11,0.40)';
+                card.style.background = 'rgba(245,158,11,0.10)';
+            } else {
+                stateEl.textContent = 'healthy';
+                stateEl.style.background = 'rgba(0,255,136,0.14)';
+                stateEl.style.color = '#00ff88';
+                noteEl.textContent = runtime.lastRuntimeError
+                    ? `Runtime healthy with warning: ${runtime.lastRuntimeError}`
+                    : 'Runtime healthy: ticks and roster evidence are current.';
+                card.style.borderColor = 'rgba(0,255,136,0.30)';
+                card.style.background = 'rgba(0,255,136,0.07)';
+            }
+        }
+
+        function renderAgentActivityProofCard(stats, runtime, errorMessage) {
+            const card = document.getElementById('agent-activity-proof-card');
+            const stateEl = document.getElementById('agent-activity-proof-state');
+            const eventCountEl = document.getElementById('agent-proof-event-count');
+            const uniqueActorsEl = document.getElementById('agent-proof-unique-actors');
+            const successRateEl = document.getElementById('agent-proof-success-rate');
+            const failRejectEl = document.getElementById('agent-proof-fail-reject');
+            const noteEl = document.getElementById('agent-proof-note');
+            const warningEl = document.getElementById('agent-proof-warning');
+
+            if (!card || !stateEl || !eventCountEl || !uniqueActorsEl || !successRateEl || !failRejectEl || !noteEl || !warningEl) {
+                return;
+            }
+
+            if (!stats) {
+                stateEl.textContent = 'offline';
+                stateEl.style.background = 'rgba(239,68,68,0.14)';
+                stateEl.style.color = '#f87171';
+                eventCountEl.textContent = '--';
+                uniqueActorsEl.textContent = '--';
+                successRateEl.textContent = '--';
+                failRejectEl.textContent = '--';
+                noteEl.textContent = `Stats unavailable${errorMessage ? ` (${errorMessage})` : ''}.`;
+                warningEl.style.display = 'none';
+                card.style.borderColor = 'rgba(239,68,68,0.30)';
+                card.style.background = 'rgba(239,68,68,0.08)';
+                return;
+            }
+
+            const eventCount = Number(stats.eventCount || 0);
+            const uniqueActors = Number(stats.uniqueActors || 0);
+            const successRate = formatPercentRate(stats.successRate);
+            const failureRate = formatPercentRate(stats.failureRate);
+            const rejectionRate = formatPercentRate(stats.rejectionRate);
+            const runtimeEnabled = Boolean(runtime?.enabled);
+
+            eventCountEl.textContent = String(eventCount);
+            uniqueActorsEl.textContent = String(uniqueActors);
+            successRateEl.textContent = successRate;
+            failRejectEl.textContent = `${failureRate} / ${rejectionRate}`;
+            noteEl.textContent = `Window: ${Number(stats.windowMinutes || 60)}m • UserType: ${String(stats.userType || 'agent')} • Latest: ${stats.latestEventAt ? new Date(stats.latestEventAt).toLocaleTimeString() : 'none'}`;
+
+            if (runtimeEnabled && eventCount === 0) {
+                stateEl.textContent = 'warning';
+                stateEl.style.background = 'rgba(245,158,11,0.20)';
+                stateEl.style.color = '#fbbf24';
+                warningEl.style.display = 'block';
+                card.style.borderColor = 'rgba(245,158,11,0.40)';
+                card.style.background = 'rgba(245,158,11,0.10)';
+            } else {
+                stateEl.textContent = eventCount > 0 ? 'active' : 'idle';
+                stateEl.style.background = eventCount > 0 ? 'rgba(0,170,255,0.18)' : 'rgba(107,114,128,0.22)';
+                stateEl.style.color = eventCount > 0 ? '#7dd3fc' : '#d1d5db';
+                warningEl.style.display = 'none';
+                card.style.borderColor = eventCount > 0 ? 'rgba(0,170,255,0.30)' : 'rgba(156,163,175,0.35)';
+                card.style.background = eventCount > 0 ? 'rgba(0,170,255,0.08)' : 'rgba(107,114,128,0.10)';
+            }
+        }
+
+        async function fetchFrontendAgentRuntimeStatus() {
+            const response = await fetch(`${API_BASE}/frontend-agents/status`);
+            if (!response.ok) {
+                throw new Error(`frontend-agents/status HTTP ${response.status}`);
+            }
+            return response.json();
+        }
+
+        async function invokeFrontendAgentRuntimeControl(action) {
+            const noteEl = document.getElementById('agent-runtime-note');
+            const actionLabel = String(action || '').toUpperCase();
+
+            if (noteEl) {
+                noteEl.textContent = `Sending ${actionLabel} command...`;
+            }
+
+            const response = await fetch(`${API_BASE}/frontend-agents/${action}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`frontend-agents/${action} HTTP ${response.status}`);
+            }
+
+            if (noteEl) {
+                noteEl.textContent = `Runtime ${actionLabel} command accepted (${new Date().toLocaleTimeString()}).`;
+            }
+
+            await loadUserActionMonitoring();
+            if (typeof window.loadLiveData === 'function') {
+                await window.loadLiveData();
+            }
+        }
+
+        async function startFrontendAgentsRuntime() {
+            try {
+                await invokeFrontendAgentRuntimeControl('start');
+            } catch (error) {
+                console.error('Failed to start frontend-agent runtime:', error);
+                const noteEl = document.getElementById('agent-runtime-note');
+                if (noteEl) noteEl.textContent = `Failed to start runtime: ${error?.message || error}`;
+            }
+        }
+
+        async function stopFrontendAgentsRuntime() {
+            try {
+                await invokeFrontendAgentRuntimeControl('stop');
+            } catch (error) {
+                console.error('Failed to stop frontend-agent runtime:', error);
+                const noteEl = document.getElementById('agent-runtime-note');
+                if (noteEl) noteEl.textContent = `Failed to stop runtime: ${error?.message || error}`;
+            }
+        }
+
+        async function manualFrontendAgentsTick() {
+            try {
+                await invokeFrontendAgentRuntimeControl('tick');
+            } catch (error) {
+                console.error('Failed to trigger frontend-agent tick:', error);
+                const noteEl = document.getElementById('agent-runtime-note');
+                if (noteEl) noteEl.textContent = `Failed to tick runtime: ${error?.message || error}`;
+            }
+        }
+
+        async function fetchAgentActivityStats() {
+            const response = await fetch(`${API_BASE}/activity/events/stats?userType=agent&windowMinutes=60`);
+            if (!response.ok) {
+                throw new Error(`activity/events/stats(agent) HTTP ${response.status}`);
+            }
+            return response.json();
+        }
+
+        async function fetchLegacyActivityFeed() {
+            const response = await fetch(`${API_BASE}/bots`);
+            if (!response.ok) {
+                throw new Error(`Legacy feed unavailable (HTTP ${response.status})`);
+            }
+
+            const bots = await response.json();
+            const events = [];
+
+            (Array.isArray(bots) ? bots : []).forEach((bot) => {
+                (bot.trades || []).forEach((trade) => {
+                    const tradeType = String(trade?.type || '').toUpperCase();
+                    const eventType = tradeType === 'BUY' ? 'trade_buy_submitted' : 'trade_sell_submitted';
+
+                    events.push({
+                        eventId: `legacy-${bot.id || 'bot'}-${trade.id || trade.createdAt || Math.random()}`,
+                        timestamp: trade.createdAt || new Date().toISOString(),
+                        userType: 'bot',
+                        eventType,
+                        type: tradeType,
+                        result: 'success',
+                        walletHash: bot?.walletAddress || bot?.id || 'legacy-bot',
+                        walletAddress: bot?.walletAddress || null,
+                        metadata: {
+                            runtime: 'legacy-bot-feed',
+                            botId: bot?.id || null,
+                            strategy: bot?.strategy || null,
+                            tokenId: trade?.tokenId || null,
+                            quantity: trade?.quantity || null,
+                        },
+                    });
+                });
+            });
+
+            return events
+                .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+                .slice(0, 500);
+        }
+
+        async function fetchActivitySource() {
+            try {
+                const [stats5mResponse, statsWindowResponse, eventsResponse] = await Promise.all([
+                    fetch(`${API_BASE}/activity/events/stats?userType=all&windowMinutes=5`),
+                    fetch(`${API_BASE}/activity/events/stats?userType=all&windowMinutes=${actionMonitorWindowMinutes}`),
+                    fetch(`${API_BASE}/activity/events?userType=all&limit=500&offset=0`),
+                ]);
+
+                if (!stats5mResponse.ok || !statsWindowResponse.ok || !eventsResponse.ok) {
+                    throw new Error('Canonical activity endpoints unavailable');
+                }
+
+                const stats5m = await stats5mResponse.json();
+                const statsWindow = await statsWindowResponse.json();
+                const eventsPayload = await eventsResponse.json();
+                const canonicalEvents = Array.isArray(eventsPayload?.items) ? eventsPayload.items : [];
+                const canonicalEventCount5m = Number(stats5m?.eventCount || 0);
+
+                const meetsThreshold = canonicalEventCount5m >= CANONICAL_MIN_EVENTS_5M;
+                if (canonicalEvents.length > 0) {
+                    window.actionMonitorSource = meetsThreshold ? 'canonical' : 'canonical-low';
+                    window.actionMonitorStats = statsWindow;
+                    window.actionMonitorSourceMeta = {
+                        canonicalEventCount5m,
+                        threshold: CANONICAL_MIN_EVENTS_5M,
+                        belowThreshold: !meetsThreshold,
+                    };
+                    updateActionMonitorSourceBadge(meetsThreshold ? 'canonical' : 'canonical-low');
+                    return canonicalEvents;
+                }
+
+                throw new Error(`Canonical feed empty (${canonicalEventCount5m}/${CANONICAL_MIN_EVENTS_5M} in 5m)`);
+            } catch (canonicalError) {
+                console.warn('Canonical feed fallback triggered:', canonicalError?.message || canonicalError);
+
+                try {
+                    const fallbackEvents = await fetchLegacyActivityFeed();
+                    window.actionMonitorSource = 'fallback';
+                    window.actionMonitorStats = null;
+                    window.actionMonitorSourceMeta = {
+                        reason: canonicalError?.message || 'canonical_unavailable',
+                        threshold: CANONICAL_MIN_EVENTS_5M,
+                    };
+                    updateActionMonitorSourceBadge('fallback');
+                    return fallbackEvents;
+                } catch (fallbackError) {
+                    console.error('Legacy fallback load error:', fallbackError);
+                    window.actionMonitorSource = 'offline';
+                    window.actionMonitorStats = null;
+                    window.actionMonitorSourceMeta = {
+                        reason: fallbackError?.message || 'fallback_unavailable',
+                        threshold: CANONICAL_MIN_EVENTS_5M,
+                    };
+                    updateActionMonitorSourceBadge('offline');
+                    return [];
+                }
+            }
+        }
+
+        async function loadUserActionMonitoring() {
+            const [feedResult, runtimeResult, statsResult] = await Promise.allSettled([
+                fetchActivitySource(),
+                fetchFrontendAgentRuntimeStatus(),
+                fetchAgentActivityStats(),
+            ]);
+
+            if (feedResult.status === 'fulfilled') {
+                latestActionFeed = feedResult.value;
+            } else {
+                const feedError = feedResult.reason;
+                console.error('User action monitor feed load error:', feedError);
+                window.actionMonitorStats = null;
+                window.actionMonitorSource = 'offline';
+                window.actionMonitorSourceMeta = {
+                    reason: feedError?.message || 'monitor_feed_load_error',
+                    threshold: CANONICAL_MIN_EVENTS_5M,
+                };
+                updateActionMonitorSourceBadge('offline');
+                latestActionFeed = [];
+            }
+
+            if (runtimeResult.status === 'fulfilled') {
+                frontendAgentRuntimeStatus = runtimeResult.value;
+                renderFrontendAgentRuntimeCard(frontendAgentRuntimeStatus, null);
+            } else {
+                frontendAgentRuntimeStatus = null;
+                renderFrontendAgentRuntimeCard(null, runtimeResult.reason?.message || 'load_error');
+            }
+
+            if (statsResult.status === 'fulfilled') {
+                frontendAgentStats = statsResult.value;
+                renderAgentActivityProofCard(frontendAgentStats, frontendAgentRuntimeStatus, null);
+            } else {
+                frontendAgentStats = null;
+                renderAgentActivityProofCard(null, frontendAgentRuntimeStatus, statsResult.reason?.message || 'load_error');
+            }
+
+            renderUserActionMonitoring();
+        }
+
+        function renderUserActionMonitoring() {
+            const source = window.actionMonitorSource || 'offline';
+
+            const normalizedFeed = (latestActionFeed || []).filter((item) => {
+                if (!item) return false;
+
+                const itemUserType = normalizeCanonicalActorType(item);
+                if (actionMonitorFilter === 'live') return itemUserType === 'live';
+                if (actionMonitorFilter === 'agent') return itemUserType === 'agent';
+                if (actionMonitorFilter === 'bot') return itemUserType === 'bot';
+                return true;
+            });
+
+            if (!actionMonitorPaused) {
+                actionMonitorSnapshotFeed = normalizedFeed;
+            }
+
+            const baseFeed = actionMonitorPaused ? actionMonitorSnapshotFeed : normalizedFeed;
+            const searchedFeed = !actionMonitorSearchTerm
+                ? baseFeed
+                : baseFeed.filter((item) => {
+                    const actorKey = String(deriveActionMonitorActorKey(item)).toLowerCase();
+                    const eventType = String(item?.eventType || '').toLowerCase();
+                    const screen = String(item?.screen || '').toLowerCase();
+                    const sessionId = String(item?.sessionId || '').toLowerCase();
+                    const personaId = String(item?.personaId || '').toLowerCase();
+                    const eventId = String(item?.eventId || '').toLowerCase();
+                    return actorKey.includes(actionMonitorSearchTerm)
+                        || eventType.includes(actionMonitorSearchTerm)
+                        || screen.includes(actionMonitorSearchTerm)
+                        || sessionId.includes(actionMonitorSearchTerm)
+                        || personaId.includes(actionMonitorSearchTerm)
+                        || eventId.includes(actionMonitorSearchTerm);
+                });
+
+            const now = Date.now();
+            const window5m = searchedFeed.filter((item) => now - new Date(item.timestamp).getTime() <= 5 * 60 * 1000);
+            const window10m = searchedFeed.filter((item) => now - new Date(item.timestamp).getTime() <= 10 * 60 * 1000);
+            const window15m = searchedFeed.filter((item) => now - new Date(item.timestamp).getTime() <= 15 * 60 * 1000);
+            const monitorWindowMs = actionMonitorWindowMinutes * 60 * 1000;
+            const monitorWindowFeed = searchedFeed.filter((item) => now - new Date(item.timestamp).getTime() <= monitorWindowMs);
+            const window1h = searchedFeed.filter((item) => now - new Date(item.timestamp).getTime() <= 60 * 60 * 1000);
+
+            const actorCounts10m = new Map();
+            const actorCounts15m = new Map();
+            const actionCounts1h = { BUY: 0, SELL: 0 };
+
+            window10m.forEach((item) => {
+                const actor = item?.walletHash || item?.walletAddress || item?.trader?.walletAddress || item?.sessionId || 'unknown';
+                actorCounts10m.set(actor, (actorCounts10m.get(actor) || 0) + 1);
+            });
+
+            window15m.forEach((item) => {
+                const actor = item?.walletHash || item?.walletAddress || item?.trader?.walletAddress || item?.sessionId || 'unknown';
+                actorCounts15m.set(actor, (actorCounts15m.get(actor) || 0) + 1);
+            });
+
+            window1h.forEach((item) => {
+                if (item?.type === 'BUY' || item?.eventType === 'trade_buy_submitted') actionCounts1h.BUY += 1;
+                if (item?.type === 'SELL' || item?.eventType === 'trade_sell_submitted') actionCounts1h.SELL += 1;
+            });
+
+            const activeActors = new Set(window1h.map((item) => item?.walletHash || item?.walletAddress || item?.trader?.walletAddress || item?.sessionId || 'unknown')).size;
+            const actionsPerMinute = window5m.length / 5;
+            const anomalyFlags = Array.from(actorCounts10m.values()).filter((count) => count >= 8).length;
+
+            const stats = window.actionMonitorStats || {};
+            const startOfDay = new Date();
+            startOfDay.setHours(0, 0, 0, 0);
+            const tradesToday = searchedFeed.filter((item) => {
+                if (!item?.timestamp) return false;
+                const eventTime = new Date(item.timestamp).getTime();
+                if (Number.isNaN(eventTime)) return false;
+                const isTradeEvent = item?.eventType === 'trade_buy_submitted' || item?.eventType === 'trade_sell_submitted';
+                return isTradeEvent && eventTime >= startOfDay.getTime();
+            }).length;
+
+            const topActors = Array.from(actorCounts15m.entries())
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 5);
+
+            const topActorsEl = document.getElementById('monitor-top-actors');
+            if (topActorsEl) {
+                if (topActors.length === 0) {
+                    topActorsEl.innerHTML = 'No recent tracked actions in this filter window.';
+                } else {
+                    topActorsEl.innerHTML = topActors
+                        .map(([wallet, count], idx) => {
+                            const shortWallet = truncateAddress(wallet);
+                            return `<div style="display:flex; justify-content:space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.06);"><span>${idx + 1}. ${shortWallet}</span><span style="font-weight:700; color:#00aaff;">${count} actions</span></div>`;
+                        })
+                        .join('');
+                }
+            }
+
+            const funnelEl = document.getElementById('monitor-funnel');
+            if (funnelEl) {
+                const participants = activeActors;
+                const actionRecords = window1h.length;
+
+                if (source === 'canonical' || source === 'canonical-low') {
+                    const views = window1h.filter((item) => item?.eventType === 'screen_view' || item?.eventType === 'contest_view').length;
+                    const clicks = window1h.filter((item) => item?.eventType === 'contest_enter_click').length;
+                    const submits = window1h.filter((item) => (
+                        item?.eventType === 'contest_entry_submitted' ||
+                        item?.eventType === 'challenge_created' ||
+                        item?.eventType === 'challenge_accepted' ||
+                        item?.eventType === 'trade_buy_submitted' ||
+                        item?.eventType === 'trade_sell_submitted'
+                    )).length;
+                    const successful = window1h.filter((item) => item?.result === 'success').length;
+
+                    funnelEl.innerHTML = [
+                        `Participants (1h): <strong style="color:#fff;">${participants}</strong>`,
+                        `Views (1h): <strong style="color:#fff;">${views}</strong>`,
+                        `Clicks (1h): <strong style="color:#fff;">${clicks}</strong>`,
+                        `Submits (1h): <strong style="color:#fff;">${submits}</strong>`,
+                        `Success (1h): <strong style="color:#00ff88;">${successful}</strong>`,
+                    ].map((row) => `<div style="padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.06);">${row}</div>`).join('');
+                } else {
+                    const executedTrades = actionCounts1h.BUY + actionCounts1h.SELL;
+                    funnelEl.innerHTML = [
+                        `Participants (1h): <strong style="color:#fff;">${participants}</strong>`,
+                        `Action records (1h): <strong style="color:#fff;">${actionRecords}</strong>`,
+                        `Executed trades (1h): <strong style="color:#fff;">${executedTrades}</strong>`,
+                        `BUY vs SELL (1h): <strong style="color:#00ff88;">${actionCounts1h.BUY}</strong> / <strong style="color:#ff6666;">${actionCounts1h.SELL}</strong>`,
+                    ].map((row) => `<div style="padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.06);">${row}</div>`).join('');
+                }
+            }
+
+            const setText = (id, value) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = value;
+            };
+
+            setText('monitor-actions-per-minute', actionsPerMinute.toFixed(2));
+            setText('monitor-active-actors', String(activeActors));
+            setText('monitor-trades-today', String(tradesToday));
+            setText('monitor-alerts', String(anomalyFlags));
+
+            if (source === 'canonical' || source === 'canonical-low') {
+                const successCount = window1h.filter((item) => item?.result === 'success').length;
+                const failureCount = window1h.filter((item) => item?.result === 'failed').length;
+                const rejectionCount = window1h.filter((item) => item?.result === 'rejected').length;
+                const denominator = Math.max(window1h.length, 1);
+
+                setText('monitor-success-rate', ((successCount / denominator) * 100).toFixed(1) + '%');
+                setText('monitor-failure-rate', ((failureCount / denominator) * 100).toFixed(1) + '%');
+                setText('monitor-rejection-rate', ((rejectionCount / denominator) * 100).toFixed(1) + '%');
+            } else {
+                setText('monitor-success-rate', '--');
+                setText('monitor-failure-rate', '--');
+                setText('monitor-rejection-rate', '--');
+            }
+
+            const note = document.getElementById('monitor-coverage-note');
+            if (note) {
+                if (source === 'canonical') {
+                    const eventCount = Number(stats.eventCount || 0);
+                    const uniqueActors = Number(stats.uniqueActors || 0);
+                    const pauseState = actionMonitorPaused ? 'PAUSED' : 'LIVE';
+                    note.textContent = `Filter: ${actionMonitorFilter.toUpperCase()} • Window: ${actionMonitorWindowMinutes}m • Source: canonical /activity/events • ${actionMonitorWindowMinutes}m events: ${eventCount} • ${actionMonitorWindowMinutes}m unique actors: ${uniqueActors} • Stream: ${pauseState}.`;
+                } else if (source === 'canonical-low') {
+                    const eventCount = Number(stats.eventCount || 0);
+                    const uniqueActors = Number(stats.uniqueActors || 0);
+                    const eventCount5m = Number(window.actionMonitorSourceMeta?.canonicalEventCount5m || 0);
+                    const pauseState = actionMonitorPaused ? 'PAUSED' : 'LIVE';
+                    note.textContent = `Filter: ${actionMonitorFilter.toUpperCase()} • Window: ${actionMonitorWindowMinutes}m • Source: canonical /activity/events (low volume ${eventCount5m}/${CANONICAL_MIN_EVENTS_5M} in 5m) • ${actionMonitorWindowMinutes}m events: ${eventCount} • ${actionMonitorWindowMinutes}m unique actors: ${uniqueActors} • Stream: ${pauseState}.`;
+                } else if (source === 'fallback') {
+                    const pauseState = actionMonitorPaused ? 'PAUSED' : 'LIVE';
+                    note.textContent = `Filter: ${actionMonitorFilter.toUpperCase()} • Window: ${actionMonitorWindowMinutes}m • Source: fallback /bots (canonical unavailable or empty) • Stream: ${pauseState}.`;
+                } else {
+                    note.textContent = `Filter: ${actionMonitorFilter.toUpperCase()} • Event source unavailable • Monitoring feed is temporarily offline.`;
+                }
+            }
+
+            renderActionMonitorEventStream(monitorWindowFeed);
+            renderActionMonitorActorInspector(monitorWindowFeed);
+        }
+
+        function renderActionMonitorEventStream(items) {
+            const table = document.getElementById('monitor-event-stream-table');
+            const summary = document.getElementById('monitor-stream-summary');
+            if (!table) return;
+
+            const rows = Array.isArray(items)
+                ? [...items].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()).slice(0, 120)
+                : [];
+
+            if (summary) {
+                summary.textContent = `${rows.length} rows • ${actionMonitorWindowMinutes}m window`;
+            }
+
+            if (rows.length === 0) {
+                table.innerHTML = '<tr><td colspan="5" style="padding: 12px; color: rgba(255,255,255,0.45);">No events match current filter/window.</td></tr>';
+                return;
+            }
+
+            table.innerHTML = rows.map((item) => {
+                const actorKey = deriveActionMonitorActorKey(item);
+                const actorType = normalizeCanonicalActorType(item);
+                const latency = Number(item?.latencyMs || 0);
+                const result = String(item?.result || 'unknown');
+                const resultColor = result === 'success'
+                    ? '#00ff88'
+                    : result === 'failed'
+                        ? '#ff6666'
+                        : result === 'rejected'
+                            ? '#ffaa00'
+                            : 'rgba(255,255,255,0.55)';
+                const selected = selectedActionMonitorActor && String(selectedActionMonitorActor) === String(actorKey);
+                const timestamp = item?.timestamp ? new Date(item.timestamp).toLocaleTimeString() : '--';
+                const actorDisplay = truncateAddress(String(actorKey));
+                const latencyDisplay = latency > 0 ? `${latency}ms` : '--';
+                const eventLabel = formatActionMonitorEventLabel(item?.eventType);
+                const eventContext = formatActionMonitorEventContext(item);
+                const eventDisplay = eventContext ? `${eventLabel} • ${eventContext}` : eventLabel;
+
+                return `<tr onclick="selectActionMonitorActor('${String(actorKey).replace(/'/g, "\\'")}')" style="cursor:pointer; background:${selected ? 'rgba(5,40,243,0.16)' : 'transparent'};">
+                    <td style="padding:8px; border-bottom:1px solid rgba(255,255,255,0.06); color:rgba(255,255,255,0.8);">${timestamp}</td>
+                    <td style="padding:8px; border-bottom:1px solid rgba(255,255,255,0.06);"><span style="padding:2px 6px; border-radius:999px; background:rgba(255,255,255,0.08); color:#fff; margin-right:6px; font-size:10px; text-transform:uppercase;">${actorType}</span><span style="color:rgba(255,255,255,0.75);">${actorDisplay}</span></td>
+                    <td style="padding:8px; border-bottom:1px solid rgba(255,255,255,0.06); color:rgba(255,255,255,0.88);">${eventDisplay}</td>
+                    <td style="padding:8px; border-bottom:1px solid rgba(255,255,255,0.06); color:${resultColor}; font-weight:600; text-transform:uppercase;">${result}</td>
+                    <td style="padding:8px; border-bottom:1px solid rgba(255,255,255,0.06); color:rgba(255,255,255,0.8);">${latencyDisplay}</td>
+                </tr>`;
+            }).join('');
+        }
+
+        function renderActionMonitorActorInspector(items) {
+            const inspector = document.getElementById('monitor-actor-inspector');
+            if (!inspector) return;
+
+            if (!selectedActionMonitorActor) {
+                inspector.textContent = 'Select an actor from stream rows to inspect timeline.';
+                return;
+            }
+
+            const actorEvents = (Array.isArray(items) ? items : [])
+                .filter((item) => String(deriveActionMonitorActorKey(item)) === String(selectedActionMonitorActor))
+                .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+
+            if (actorEvents.length === 0) {
+                inspector.textContent = 'No events for selected actor in current window/filter.';
+                return;
+            }
+
+            const successCount = actorEvents.filter((item) => item?.result === 'success').length;
+            const failureCount = actorEvents.filter((item) => item?.result === 'failed').length;
+            const rejectionCount = actorEvents.filter((item) => item?.result === 'rejected').length;
+            const latencyValues = actorEvents.map((item) => Number(item?.latencyMs || 0)).filter((v) => v > 0).sort((a, b) => a - b);
+            const p50 = latencyValues.length ? latencyValues[Math.floor(0.5 * (latencyValues.length - 1))] : 0;
+            const p95 = latencyValues.length ? latencyValues[Math.floor(0.95 * (latencyValues.length - 1))] : 0;
+
+            inspector.innerHTML = `
+                <div style="margin-bottom:10px; padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.08);">
+                    <div style="font-weight:700; color:#fff; margin-bottom:4px;">${truncateAddress(String(selectedActionMonitorActor))}</div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; font-size:11px; color:rgba(255,255,255,0.7);">
+                        <div>Events: <strong style="color:#fff;">${actorEvents.length}</strong></div>
+                        <div>Success: <strong style="color:#00ff88;">${successCount}</strong></div>
+                        <div>Failed: <strong style="color:#ff6666;">${failureCount}</strong></div>
+                        <div>Rejected: <strong style="color:#ffaa00;">${rejectionCount}</strong></div>
+                        <div>p50: <strong style="color:#fff;">${p50 || '--'}${p50 ? 'ms' : ''}</strong></div>
+                        <div>p95: <strong style="color:#fff;">${p95 || '--'}${p95 ? 'ms' : ''}</strong></div>
+                    </div>
+                </div>
+                <div>${actorEvents.slice(-20).map((item) => {
+                const time = item?.timestamp ? new Date(item.timestamp).toLocaleTimeString() : '--';
+                const result = String(item?.result || 'unknown');
+                const resultColor = result === 'success' ? '#00ff88' : result === 'failed' ? '#ff6666' : result === 'rejected' ? '#ffaa00' : 'rgba(255,255,255,0.6)';
+                const latency = Number(item?.latencyMs || 0);
+                const latencyLabel = latency > 0 ? ` • ${latency}ms` : '';
+                const eventLabel = formatActionMonitorEventLabel(item?.eventType);
+                const eventContext = formatActionMonitorEventContext(item);
+                const event = eventContext ? `${eventLabel} • ${eventContext}` : eventLabel;
+                const screen = item?.screen ? ` (${item.screen})` : '';
+                return `<div style="padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.06);"><span style="color:rgba(255,255,255,0.55);">${time}</span> <span style="color:#fff;">${event}${screen}</span> <span style="color:${resultColor}; text-transform:uppercase; font-weight:600;">${result}</span><span style="color:rgba(255,255,255,0.55);">${latencyLabel}</span></div>`;
+            }).join('')}</div>
+            `;
+        }
+
         // Update activity feed from bot trades
         function updateActivityFeed(bots) {
             // Collect all recent trades
             const activities = [];
-            
+
             bots.forEach(bot => {
                 if (bot.trades) {
                     bot.trades.slice(0, 3).forEach(trade => {
@@ -1846,7 +3553,7 @@
         // Update strategy chart
         function updateStrategyChart(byStrategy) {
             const ctx = document.getElementById('strategy-chart').getContext('2d');
-            
+
             if (strategyChart) {
                 strategyChart.destroy();
             }
@@ -1910,20 +3617,20 @@
             try {
                 document.getElementById('create-fleet-btn').disabled = true;
                 document.getElementById('create-fleet-btn').textContent = '⏳ Creating...';
-                
-                const response = await fetch(`${API_BASE}/bots/fleet`, { 
+
+                const response = await fetch(`${API_BASE}/bots/fleet`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ count: 40, startingBalance: 5000 })
+                    body: JSON.stringify({ count: 100, startingBalance: 5000 })
                 });
                 const bots = await response.json();
-                showToast(`✅ Created ${bots.length || 40} bots with $5,000 each`);
+                showToast(`✅ Created ${bots.length || 100} bots with $5,000 each`);
                 loadDashboard();
             } catch (error) {
                 showToast('❌ Failed to create bots: ' + error.message, 'error');
             } finally {
                 document.getElementById('create-fleet-btn').disabled = false;
-                document.getElementById('create-fleet-btn').textContent = '➕ Create Bot Fleet (40 bots)';
+                document.getElementById('create-fleet-btn').textContent = '➕ Create Bot Fleet (100 bots)';
             }
         }
 
@@ -1932,7 +3639,7 @@
                 const response = await fetch(`${API_BASE}/bots`);
                 const bots = await response.json();
                 const activeBots = bots.filter(b => b.isActive).slice(0, 5);
-                
+
                 let triggered = 0;
                 for (const bot of activeBots) {
                     await fetch(`${API_BASE}/bots/${bot.id}/trade`, { method: 'POST' });
@@ -1950,7 +3657,7 @@
                 const response = await fetch(`${API_BASE}/bots`);
                 const bots = await response.json();
                 const activeBots = bots.filter(b => b.isActive).slice(0, 5);
-                
+
                 let triggered = 0;
                 for (const bot of activeBots) {
                     await fetch(`${API_BASE}/bots/${bot.id}/prediction-bet`, { method: 'POST' });
@@ -1980,10 +3687,10 @@
             const btn = document.getElementById('fund-all-btn');
             btn.disabled = true;
             btn.textContent = '⏳ Funding bots...';
-            
+
             try {
                 showToast('⏳ Funding all bots with ETH + USDC. This may take a minute...');
-                
+
                 const response = await fetch(`${API_BASE}/bots/fund-all`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -1992,16 +3699,16 @@
                         usdcAmount: 5000
                     })
                 });
-                
+
                 const result = await response.json();
-                
+
                 if (result.funded > 0) {
                     showToast(`✅ Funded ${result.funded}/${result.total} bots with ETH + USDC!`);
                 } else {
                     showToast('⚠️ No bots were funded. Check console for errors.', 'error');
                     console.log('Fund all result:', result);
                 }
-                
+
                 loadDashboard();
             } catch (error) {
                 console.error('Fund all error:', error);
@@ -2010,6 +3717,130 @@
                 btn.disabled = false;
                 btn.textContent = '⛽ Fund All Bots (ETH + USDC)';
             }
+        }
+
+        async function createSeasonRun() {
+            try {
+                const response = await fetch(`${API_BASE}/simulation/season/create`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({})
+                });
+                const payload = await response.json();
+
+                if (!payload.run || !payload.run.runId) {
+                    throw new Error(payload.message || 'Failed to create season run');
+                }
+
+                setActiveSeasonRunId(payload.run.runId);
+                showToast(`✅ Season run created (${activeSeasonRunId.slice(0, 8)}...)`);
+                updateSeasonStatusText(`Run created: ${activeSeasonRunId} | Matchday 0/${payload.run.totalMatchdays}`);
+                await loadDashboard();
+            } catch (error) {
+                showToast(`❌ ${error.message}`, 'error');
+            }
+        }
+
+        async function stepSeasonRun() {
+            try {
+                if (!activeSeasonRunId) {
+                    await loadSeasonRunStatus();
+                }
+                if (!activeSeasonRunId) {
+                    showToast('⚠️ Create or load a season run first', 'error');
+                    return;
+                }
+
+                const response = await fetch(`${API_BASE}/simulation/season/${activeSeasonRunId}/step`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ runBots: true, runPersonas: true })
+                });
+                const payload = await response.json();
+
+                if (!payload.result) {
+                    throw new Error(payload.message || 'Could not advance matchday');
+                }
+
+                const result = payload.result;
+                updateSeasonStatusText(
+                    `Run: ${result.runId} | Matchday ${result.currentMatchday}/${result.totalMatchdays} | ` +
+                    `Fees: $${(result.weeklyFees || 0).toFixed(2)} | Volume: $${(result.weeklyVolume || 0).toFixed(2)}`
+                );
+                showToast(`⏭️ Advanced to matchday ${result.currentMatchday}`);
+                await loadDashboard();
+            } catch (error) {
+                showToast(`❌ ${error.message}`, 'error');
+            }
+        }
+
+        async function loadSeasonRunStatus() {
+            try {
+                const runsResponse = await fetch(`${API_BASE}/simulation/season/runs`);
+                if (!runsResponse.ok) {
+                    return;
+                }
+                const runsPayload = await runsResponse.json();
+                const runs = runsPayload.runs || [];
+
+                if (!activeSeasonRunId && runs.length > 0) {
+                    const latest = [...runs].sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))[0];
+                    setActiveSeasonRunId(latest.runId);
+                }
+
+                if (!activeSeasonRunId) {
+                    updateSeasonStatusText('No season run active');
+                    return;
+                }
+
+                const statusResponse = await fetch(`${API_BASE}/simulation/season/${activeSeasonRunId}/status`);
+                const statusPayload = await statusResponse.json();
+
+                if (!statusPayload.found) {
+                    setActiveSeasonRunId(null);
+                    updateSeasonStatusText('No season run active');
+                    return;
+                }
+
+                const status = statusPayload.status;
+                updateSeasonStatusText(
+                    `Run: ${status.runId} | Matchday ${status.currentMatchday}/${status.totalMatchdays} | ` +
+                    `${status.completed ? 'Completed' : 'In Progress'} | Snapshots: ${status.snapshots}`
+                );
+            } catch (error) {
+                console.error('Season status load error:', error);
+            }
+        }
+
+        async function resetSeasonRun() {
+            try {
+                if (!activeSeasonRunId) {
+                    showToast('⚠️ No active season run to reset', 'error');
+                    return;
+                }
+
+                const response = await fetch(`${API_BASE}/simulation/season/${activeSeasonRunId}/reset`, {
+                    method: 'POST'
+                });
+                const payload = await response.json();
+
+                if (!payload.message || payload.message.includes('not found')) {
+                    throw new Error(payload.message || 'Could not reset season run');
+                }
+
+                showToast('♻️ Season run reset');
+                setActiveSeasonRunId(null);
+                updateSeasonStatusText('No season run active');
+                await loadDashboard();
+            } catch (error) {
+                showToast(`❌ ${error.message}`, 'error');
+            }
+        }
+
+        function updateSeasonStatusText(message) {
+            document.querySelectorAll('[data-season-status]').forEach((el) => {
+                el.textContent = message;
+            });
         }
 
         function refreshAll() {
@@ -2060,5 +3891,10 @@
             setTimeout(() => toast.remove(), 3000);
         }
     </script>
+
+    <!-- Mode Switcher & Economics Engine -->
+    <script src="admin-mode-switcher.js"></script>
+    <script src="audit-trail.js"></script>
 </body>
+
 </html>
