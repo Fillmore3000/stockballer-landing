@@ -1,0 +1,2 @@
+# Don't ignore anything - we need all files including nested node_modules in app/
+!app/assets/node_modules
