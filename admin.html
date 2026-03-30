@@ -2095,15 +2095,6 @@
     <script>
         // Configuration
         let API_BASE = '';
-        // Do not hardcode plaintext admin password in source.
-        // Provide a SHA-256 hex hash at runtime via either:
-        // 1) window.__ADMIN_PASSWORD_HASH (preferred when serving), or
-        // 2) localStorage['stockballer_admin_password_hash'] (local dev override)
-        const ADMIN_PASSWORD_HASH = (
-            window.__ADMIN_PASSWORD_HASH ||
-            localStorage.getItem('stockballer_admin_password_hash') ||
-            ''
-        ).trim().toLowerCase();
         let refreshInterval;
         let strategyChart;
         let activeSeasonRunId = null;
@@ -2199,7 +2190,9 @@
             checkAuth();
         });
 
-        // Authentication
+        // Authentication - Simple password: "stockballer2026"
+        const ADMIN_PASSWORD = 'stockballer2026';
+
         function checkAuth() {
             const isAuthenticated = sessionStorage.getItem('admin_auth') === 'true';
             const overlay = document.getElementById('login-overlay');
@@ -2212,48 +2205,23 @@
             }
         }
 
-        async function sha256Hex(value) {
-            if (!window.crypto || !window.crypto.subtle) {
-                throw new Error('Web Crypto API unavailable in this browser context');
-            }
-            const encoded = new TextEncoder().encode(value);
-            const digest = await window.crypto.subtle.digest('SHA-256', encoded);
-            return Array.from(new Uint8Array(digest))
-                .map((b) => b.toString(16).padStart(2, '0'))
-                .join('');
-        }
-
         async function handleLogin(e) {
             e.preventDefault();
             const password = document.getElementById('login-password').value;
             const errorEl = document.getElementById('login-error');
 
-            if (!ADMIN_PASSWORD_HASH) {
-                errorEl.textContent = 'Admin password is not configured on this deployment.';
-                errorEl.classList.add('show');
-                document.getElementById('login-password').value = '';
-                document.getElementById('login-password').focus();
+            if (password === ADMIN_PASSWORD) {
+                sessionStorage.setItem('admin_auth', 'true');
+                document.getElementById('login-overlay').classList.add('hidden');
+                errorEl.classList.remove('show');
+                initDashboard();
                 return false;
             }
-
-            try {
-                const candidateHash = await sha256Hex(password);
-                if (candidateHash === ADMIN_PASSWORD_HASH) {
-                    sessionStorage.setItem('admin_auth', 'true');
-                    document.getElementById('login-overlay').classList.add('hidden');
-                    errorEl.textContent = 'Incorrect password. Please try again.';
-                    errorEl.classList.remove('show');
-                    initDashboard();
-                    return false;
-                }
-                errorEl.textContent = 'Incorrect password. Please try again.';
-                errorEl.classList.add('show');
-                document.getElementById('login-password').value = '';
-                document.getElementById('login-password').focus();
-            } catch (err) {
-                errorEl.textContent = 'Login check unavailable in this browser context.';
-                errorEl.classList.add('show');
-            }
+            
+            errorEl.textContent = 'Incorrect password. Please try again.';
+            errorEl.classList.add('show');
+            document.getElementById('login-password').value = '';
+            document.getElementById('login-password').focus();
             return false;
         }
 
