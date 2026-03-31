@@ -1,4 +1,4 @@
-# The Injury Ledger: How Physical Health Impacts Token Market Value
+# How Injuries Impact Athlete Token Market Value
 
 ![[HERO] The Injury Ledger: How Physical Health Impacts Token Market Value](https://cdn.marblism.com/h6ALwHY_CPs.webp)
 

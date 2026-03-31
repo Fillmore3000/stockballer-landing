@@ -1,4 +1,4 @@
-# 7 Mistakes You're Making with Football Player Tokens (and How to Fix Them)
+# 7 Football Player Token Mistakes (And How to Fix Them)
 
 ![[HERO] 7 Mistakes You're Making with Football Player Tokens (and How to Fix Them)](https://cdn.marblism.com/6pYLVjw3r53.webp)
 

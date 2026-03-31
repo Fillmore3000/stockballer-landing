@@ -1,4 +1,4 @@
-# WC26’s Biggest Missed Trade: Lamine Yamal Was the Buy You Didn’t Take
+# Lamine Yamal: The WC26 Trade Opportunity You Missed
 
 ![[HERO] WC26’s Biggest Missed Trade: Lamine Yamal Was the Buy You Didn’t Take](https://cdn.marblism.com/kJmKRjeIqtk.webp)
 

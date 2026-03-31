@@ -1,4 +1,4 @@
-# The WC26 Arbitrage Strategy: Bridging Your Portfolio for the World Cup
+# WC26 Arbitrage: Optimize Your Token Portfolio
 
 ![[HERO] The WC26 Arbitrage Strategy: Bridging Your Portfolio for the World Cup](https://cdn.marblism.com/IRIwn43ONvA.webp)
 

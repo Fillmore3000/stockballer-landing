@@ -203,7 +203,7 @@ function generatePostHtml(post) {
     <!-- End Meta Pixel Code -->
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${post.title} - StockBaller Insights</title>
+    <title>${post.title} | StockBaller</title>
 
     <meta name="description" content="${post.description || post.title}">
     <meta name="author" content="StockBaller">
@@ -614,9 +614,7 @@ function generatePostHtml(post) {
         .cookie-btn-secondary { background: transparent; color: rgba(255, 255, 255, 0.8); border: 1px solid rgba(255, 255, 255, 0.3); }
         @media (max-width: 640px) { .cookie-content { flex-direction: column; text-align: center; } .cookie-buttons { width: 100%; justify-content: center; } }
     </style>
-
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M5NCP3V6" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript></body>
+</body>
 
 </html>`;
 }
@@ -1029,9 +1027,6 @@ ${posts.length > 0 ? postCards : `
         .cookie-btn-secondary { background: transparent; color: rgba(255, 255, 255, 0.8); border: 1px solid rgba(255, 255, 255, 0.3); }
         @media (max-width: 640px) { .cookie-content { flex-direction: column; text-align: center; } .cookie-buttons { width: 100%; justify-content: center; } }
     </style>
-
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M5NCP3V6" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </body>
 
 </html>`;

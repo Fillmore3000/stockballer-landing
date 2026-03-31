@@ -1,4 +1,4 @@
-# Is Erling Haaland Overvalued? Analyzing ROI vs. Performance Data
+# Is Haaland Overvalued? A Token ROI Analysis
 
 ![[HERO] Is Erling Haaland Overvalued? Analyzing ROI vs. Performance Data](https://cdn.marblism.com/U0j1s4crXvg.webp)
 
