@@ -1,5 +1,9 @@
 ---
 date: 2026-03-31
+related:
+  - is-haaland-overvalued
+  - diversification-101
+  - transfer-window
 ---
 
 # How Injuries Impact Athlete Token Market Value
@@ -105,3 +109,8 @@ The market is emotional. The Injury Ledger is objective. Use the data to strip t
 
 **Ready to capitalize on the next market correction?**
 [Build your portfolio on Stockballer today.](https://www.stockballer.app)
+
+**Related Reading:**
+- [Is Haaland Overvalued? A Token ROI Analysis](https://stockballer.app/blog-posts/is-erling-haaland-overvalued-analyzing-ROI-vs-performance-data.html)
+- [How to Build a Balanced Athlete Token Portfolio](https://stockballer.app/blog-posts/diversification-101-building-a-balanced-athlete-token-portfolio.html)
+- [Transfer Window: Capitalize on Token Volatility](https://stockballer.app/blog-posts/transfer-window-volatility-capitalizing-on-summer-market-movements.html)

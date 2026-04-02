@@ -1,5 +1,9 @@
 ---
 date: 2026-03-31
+related:
+  - wc26-arbitrage
+  - is-haaland-overvalued
+  - institutional-pivot
 ---
 
 # Lamine Yamal: The WC26 Trade Opportunity You Missed
@@ -131,3 +135,8 @@ You can trade your tokens back into the liquid pool on the platform at any time.
 **Disclaimer:** *Sports investment carries inherent risks. Past performance (like Yamal’s insane 2025 season) is not a 100% guarantee of future results. Only invest what you can afford to lose. But remember: the biggest risk is not taking one at all.*
 
 **Check out our [sitemap](https://www.stockballer.app/sitemap.xml) for more Scout Reports and Strategy Lab deep-dives.**
+
+**Related Reading:**
+- [WC26 Arbitrage: Optimize Your Token Portfolio](https://stockballer.app/blog-posts/the-WC26-arbitrage-strategy-bridging-your-portfolio-for-the-World-Cup.html)
+- [Is Haaland Overvalued? A Token ROI Analysis](https://stockballer.app/blog-posts/is-erling-haaland-overvalued-analyzing-ROI-vs-performance-data.html)
+- [2026: The Year of Institutional Athlete Investing](https://stockballer.app/blog-posts/the-institutional-pivot-why-2026-is-the-year-of-liquid-athlete-assets.html)

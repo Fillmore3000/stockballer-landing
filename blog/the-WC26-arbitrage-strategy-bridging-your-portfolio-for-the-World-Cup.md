@@ -1,5 +1,9 @@
 ---
 date: 2026-03-31
+related:
+  - yamal-missed-trade
+  - institutional-pivot
+  - diversification-101
 ---
 
 # WC26 Arbitrage: Optimize Your Token Portfolio
@@ -123,3 +127,8 @@ Stop betting. Start investing. The era of athlete tokenization is here, and the 
 
 ---
 *For a full breakdown of token mechanics and technical specs, visit our [sitemap](https://www.stockballer.app/sitemap.xml) or join the conversation in the Scout Academy.*
+
+**Related Reading:**
+- [Lamine Yamal: The WC26 Trade Opportunity You Missed](https://stockballer.app/blog-posts/WC26-biggest-missed-trade-lamine-yamal-was-the-buy-you-didnt-take.html)
+- [2026: The Year of Institutional Athlete Investing](https://stockballer.app/blog-posts/the-institutional-pivot-why-2026-is-the-year-of-liquid-athlete-assets.html)
+- [How to Build a Balanced Athlete Token Portfolio](https://stockballer.app/blog-posts/diversification-101-building-a-balanced-athlete-token-portfolio.html)

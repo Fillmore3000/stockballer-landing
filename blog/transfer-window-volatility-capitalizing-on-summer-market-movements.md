@@ -1,5 +1,9 @@
 ---
 date: 2026-03-31
+related:
+  - wc26-arbitrage
+  - diversification-101
+  - 7-mistakes
 ---
 
 # Transfer Window: Capitalize on Token Volatility
@@ -118,3 +122,8 @@ Stop being a spectator. Start being the house. Use the data, track the premia, a
 ***
 
 *Disclaimer: Sports investment involves risk. Token values can fluctuate based on real-world performance, injuries, and market sentiment. Always conduct your own due diligence before allocating capital.*
+
+**Related Reading:**
+- [WC26 Arbitrage: Optimize Your Token Portfolio](https://stockballer.app/blog-posts/the-WC26-arbitrage-strategy-bridging-your-portfolio-for-the-World-Cup.html)
+- [How to Build a Balanced Athlete Token Portfolio](https://stockballer.app/blog-posts/diversification-101-building-a-balanced-athlete-token-portfolio.html)
+- [7 Football Player Token Mistakes (And How to Fix Them)](https://stockballer.app/blog-posts/7-mistakes-your-making-with-football-player-tokens.html)

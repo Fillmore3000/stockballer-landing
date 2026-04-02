@@ -113,6 +113,11 @@ Don't be the person who "knew about him first" but didn't make a penny. Be the p
 **Ready to fix your mistakes?**
 [Explore the Stockballer Ecosystem](https://www.stockballer.app) and see the data for yourself.
 
+**Related Reading:**
+- [How to Build a Balanced Athlete Token Portfolio](https://stockballer.app/blog-posts/diversification-101-building-a-balanced-athlete-token-portfolio.html)
+- [The Beginner's Quick-Start Guide to Athlete Tokenization](https://stockballer.app/blog-posts/the-beginners-quick-start-guide-to-athlete-tokenization.html)
+- [How Injuries Impact Athlete Token Market Value](https://stockballer.app/blog-posts/the-injury-ledger-how-physical-health-impacts-token-market-value.html)
+
 ---
 
 ### Summary Table: Amateur vs. Baller

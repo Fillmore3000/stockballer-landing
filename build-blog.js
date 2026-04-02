@@ -209,6 +209,7 @@ function generatePostHtml(post) {
 
     <meta name="description" content="${post.description || post.title}">
     <meta name="author" content="StockBaller">
+    <meta name="keywords" content="RWA, TokenizedAssets, web3, defi, AthleteTokenization, sportsbetting, igaming, predictionbetting, player tokens, sports investing">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://stockballer.app/blog-posts/${post.slug}.html">
 
@@ -220,6 +221,14 @@ function generatePostHtml(post) {
     <meta property="og:image" content="${post.image || 'https://stockballer.app/og-image.png'}">
     <meta property="og:site_name" content="StockBaller">
     <meta property="article:published_time" content="${post.date}">
+    <meta property="article:tag" content="RWA">
+    <meta property="article:tag" content="TokenizedAssets">
+    <meta property="article:tag" content="web3">
+    <meta property="article:tag" content="defi">
+    <meta property="article:tag" content="AthleteTokenization">
+    <meta property="article:tag" content="sportsbetting">
+    <meta property="article:tag" content="igaming">
+    <meta property="article:tag" content="predictionbetting">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">

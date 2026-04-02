@@ -1,5 +1,9 @@
 ---
 date: 2026-03-31
+related:
+  - diversification-101
+  - transfer-window-volatility
+  - 7-mistakes
 ---
 
 # Is Haaland Overvalued? A Token ROI Analysis
@@ -94,6 +98,11 @@ The numbers don't lie. A **22-goal season** is legendary, but a **4.2% ROI** is 
 The window to maximize your ROI is closing. Don't just watch the game. Own it.
 
 **Scout. Hold. Profit.**
+
+**Related Reading:**
+- [How to Build a Balanced Athlete Token Portfolio](https://stockballer.app/blog-posts/diversification-101-building-a-balanced-athlete-token-portfolio.html)
+- [Transfer Window: Capitalize on Token Volatility](https://stockballer.app/blog-posts/transfer-window-volatility-capitalizing-on-summer-market-movements.html)
+- [7 Football Player Token Mistakes (And How to Fix Them)](https://stockballer.app/blog-posts/7-mistakes-your-making-with-football-player-tokens.html)
 
 ---
 *Disclaimer: Sports investment involves risk. Data based on Stockballer simulation and real-world 2025/26 Premier League statistics. Past performance is not indicative of future results.*
