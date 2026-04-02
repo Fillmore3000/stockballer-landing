@@ -1,3 +1,7 @@
+---
+date: 2026-03-31
+---
+
 # How to Build a Balanced Athlete Token Portfolio
 
 ![[HERO] Diversification 101: Building a Balanced Athlete Token Portfolio](https://cdn.marblism.com/XvwngLyNTCS.webp)

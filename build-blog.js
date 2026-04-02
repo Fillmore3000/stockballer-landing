@@ -3,6 +3,8 @@ const path = require('path');
 
 // Simple front matter parser (no external dependencies)
 function parseFrontMatter(content) {
+    // Normalize line endings to \n for consistent parsing
+    content = content.replace(/\r\n/g, '\n');
     const frontMatterRegex = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/;
     const match = content.match(frontMatterRegex);
     

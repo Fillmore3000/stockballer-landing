@@ -1,3 +1,7 @@
+---
+date: 2026-03-31
+---
+
 # Why Player Tokens Beat Traditional Sports Betting
 
 ![[HERO] Forget Betting: Why Player Tokens are the Future of Sports Finance](https://cdn.marblism.com/fcrcz8_jGd6.webp)

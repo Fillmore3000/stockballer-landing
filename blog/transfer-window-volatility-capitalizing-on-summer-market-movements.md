@@ -1,3 +1,7 @@
+---
+date: 2026-03-31
+---
+
 # Transfer Window: Capitalize on Token Volatility
 
 ![[HERO] Transfer Window Volatility: Capitalizing on Summer Market Movements](https://cdn.marblism.com/n6f0y7BH4u5.webp)

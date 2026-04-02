@@ -1,3 +1,7 @@
+---
+date: 2026-03-31
+---
+
 # The Beginner's Quick-Start Guide to Athlete Tokenization
 
 ![[HERO] The Beginner's Quick-Start Guide to Athlete Tokenization](https://cdn.marblism.com/Q-nyQkj3cRO.webp)

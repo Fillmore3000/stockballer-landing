@@ -1,3 +1,7 @@
+---
+date: 2026-03-31
+---
+
 # How Injuries Impact Athlete Token Market Value
 
 ![[HERO] The Injury Ledger: How Physical Health Impacts Token Market Value](https://cdn.marblism.com/h6ALwHY_CPs.webp)
