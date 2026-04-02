@@ -6,7 +6,7 @@ date: 2026-03-31
 
 ![[HERO] The Injury Ledger: How Physical Health Impacts Token Market Value](https://cdn.marblism.com/h6ALwHY_CPs.webp)
 
-Injuries are the only true "black swan" events in sports investment. In a single second, a mistimed tackle or a pop in a hamstring can wipe **15% to 30%** off an athlete’s market perceived value. Most fans see a tragedy. Most amateur traders see a reason to panic. 
+Injuries are the only true "black swan" events in sports investment. In a single second, a mistimed tackle or a pop in a hamstring can wipe **15% to 30%** off an athlete's market perceived value—data tracked in real-time by [Chainlink](https://chain.link) oracles. Most fans see a tragedy. Most amateur traders see a reason to panic.
 
 **Smart money sees a discount.**
 

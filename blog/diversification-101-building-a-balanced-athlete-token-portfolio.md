@@ -16,7 +16,7 @@ Welcome to **The Strategy Lab**. Stop using the eye test. Use structure. Build a
 
 ## The Mathematical Edge: Lock In the **3.5% Average Volatility** Baseline
 
-Before you build anything, set your baseline. Our **Stockballer simulations** (built on historical player performance data across Europe’s top five leagues) surface one number you need to respect:
+Before you build anything, set your baseline. Our **Stockballer simulations** (built on historical player performance data across [Europe's top five leagues](https://www.fifa.com)) surface one number you need to respect:
 
 **3.5%** = the **average weekly price volatility** for a diversified basket of top-tier athlete tokens.
 
@@ -113,7 +113,7 @@ You are no longer a spectator; you are a fund manager. You aren't "betting" on a
 *   ✅ **Multi-League Exposure:** Don't get trapped in one country's ecosystem.
 *   ✅ **Strict Rebalancing:** Take profits from the moonshots to feed the anchors.
 
-The sports market is evolving. The $500B traditional fantasy and betting markets are being disrupted by the realization that athletes are assets. 
+The sports market is evolving. The $500B traditional fantasy and betting markets—dominated by platforms like [FanDuel](https://www.fanduel.com) and [DraftKings](https://www.draftkings.com)—are being disrupted by the realization that athletes are assets. 
 
 **Don't just watch the game. Own the players.**
 

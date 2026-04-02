@@ -6,7 +6,7 @@
 
 The old fan token era is finished. The old fantasy model is capped. The old betting flow is one-dimensional. If you’re still limited to lineups, odds slips, and dead-end outcomes, you’re playing a smaller game than you should be.
 
-In **2026**, athlete tokenization is becoming the ultimate upgrade for three massive audiences: **Fantasy Sports fans**, **Sports Bettors**, and the **iGaming industry**. A market where every **player token** is driven by live, measurable football performance. Goals. xG. Carries. Injuries. Form cycles. Transfer momentum.
+In **2026**, athlete tokenization is becoming the ultimate upgrade for three massive audiences: **Fantasy Sports fans** on platforms like [FanDuel](https://www.fanduel.com), **Sports Bettors** using [DraftKings](https://www.draftkings.com), and the **iGaming industry**. A market where every **player token** is driven by live, measurable football performance. Goals. xG. Carries. Injuries. Form cycles. Transfer momentum.
 
 That’s why this matters. Stockballer takes **Chainlink-certified valuation** and turns it into a growth engine. A way for users to move beyond passive entertainment and into active, data-backed ownership. A way for platforms to unlock deeper engagement, longer retention, and entirely new monetization layers.
 

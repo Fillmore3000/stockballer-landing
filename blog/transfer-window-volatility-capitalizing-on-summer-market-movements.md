@@ -18,14 +18,14 @@ If you aren’t positioned *before* the ink is dry, you’re donating edge. Leav
 
 ## The Anatomy of the "Transfer Premia"
 
-In traditional finance, a company's stock price jumps when it gets acquired by a larger conglomerate. In sports investment, we call this the **Transfer Premia**. 
+In traditional finance, a company's stock price jumps when it gets acquired by a larger conglomerate. In sports investment—governed by [FIFA](https://www.fifa.com) transfer regulations—we call this the **Transfer Premia**. 
 
 Data shows that a player’s token value doesn't just increase because they are "better" at a bigger club: it increases because the **visibility multiplier** shifts. A goal scored for Real Madrid is worth more to the market than a goal scored for Getafe. 
 
 ### Why the Price Jumps:
 *   **Institutional Demand:** Larger clubs have larger global fanbases. More eyes on the player means more buy-pressure on their token.
 *   **Competition Weighting:** Moving to a club in the Champions League immediately re-rates a player’s potential ceiling.
-*   **The "Badge Effect":** Historically, players moving to "Big 6" or "Tier 1" European clubs see an immediate **30% floor raise** in their baseline valuation regardless of their first three months of performance.
+*   **The "Badge Effect":** Historically, players moving to "Big 6" or "Tier 1" European clubs see an immediate **30% floor raise** in their baseline valuation regardless of their first three months of performance—data secured on [Base](https://base.org) blockchain.
 
 ![A football player running up a rising financial growth chart showing increased player token value.](https://cdn.marblism.com/nIAJwwV1Z0U.webp)
 

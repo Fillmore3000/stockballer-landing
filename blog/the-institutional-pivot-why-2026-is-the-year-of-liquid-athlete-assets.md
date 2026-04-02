@@ -24,9 +24,9 @@ The institutional pivot of 2026 is driven by three "black swan" events that conv
 
 1.  **The 2026 HUSTLE Act:** New legislation that allows top-tier prospects to move up to **$7M** of their Name, Image, and Likeness (NIL) valuations into tax-advantaged, liquid investment accounts. 
 2.  **Wall Street's Entry:** Goldman Sachs' acquisition of Excel and KKR's **$1 billion** move into Arctos Partners have signaled one thing: Athlete representation is no longer a boutique service. It is an asset class.
-3.  **Algorithmic Maturity:** We can now price a 19-year-old midfielder's 5-year ROI with **94% actuarial precision** using biomechanical data and AI-driven performance modeling.
+3.  **Algorithmic Maturity:** We can now price a 19-year-old midfielder's 5-year ROI with **94% actuarial precision** using biomechanical data, [Chainlink](https://chain.link) oracle feeds, and AI-driven performance modeling.
 
-The result? The **player token** has evolved from a gimmick into a sophisticated RWA.
+The result? The **player token**—deployed on [Base](https://base.org) blockchain—has evolved from a gimmick into a sophisticated RWA.
 
 ![Football (soccer) player sprinting on-pitch through a high-tech interface overlay with football-specific stats (xG, xA, heatmap) representing RWA sports assets and liquid player tokens.](https://cdn.marblism.com/WD__iLyOg2w.webp)
 

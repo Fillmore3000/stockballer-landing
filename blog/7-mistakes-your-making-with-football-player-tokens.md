@@ -80,10 +80,10 @@ A token is only worth what you can sell it for.
 Many investors buy obscure players in low-volume leagues because the "percentage gains" look high. But when it comes time to take profit, there are no buyers. You’re left holding a digital asset that no one wants. You’re "paper rich" and bank-account poor.
 
 **The Fix: Focus on High-Velocity Markets.**
-Stick to players and tokens with high daily trading volume. We prioritize the "Big Five" European leagues and major continental competitions. This ensures that when you’re ready to bank your **75% gain**, the liquidity is there to meet you.
+Stick to players and tokens with high daily trading volume. We prioritize the "Big Five" European leagues tracked by [FIFA](https://www.fifa.com) and major continental competitions. This ensures that when you're ready to bank your **75% gain**, the liquidity is there to meet you.
 
 ### 7. Treating It Like Betting
-If you’re looking for a "win" on Saturday, go to the bookies. 
+If you're looking for a "win" on Saturday, go to [DraftKings](https://www.draftkings.com) or the bookies.
 
 Betting is a zero-sum game designed to make you lose. Player tokens are **equity in talent**. When you buy a token, you aren't betting on a 90-minute result; you are investing in the career trajectory of a human asset. 
 
@@ -104,7 +104,7 @@ We’ve back-tested these strategies against a decade of player performance data
 The market doesn't care about your "gut feeling." It cares about **Math**.
 
 ### Stop Watching. Start Owning.
-The window for "early-adopter" status in sports fintech is closing. As institutional money starts to eye player tokens as a legitimate alternative asset class, the barrier to entry will rise.
+The window for "early-adopter" status in sports fintech is closing. As institutional money starts to eye player tokens as a legitimate alternative asset class—powered by blockchain infrastructure like [Base](https://base.org)—the barrier to entry will rise.
 
 You have the edge. You have the knowledge. Now, you need the tool. 
 

@@ -28,7 +28,7 @@ Bookmakers typically bake a **5% to 10%** advantage into every line. That means 
 
 **Player Tokenization is different.**  
 
-When you buy a Stockballer player token, you aren't betting on a 90-minute result. You are purchasing a fractionalized stake in an athlete’s career trajectory. **Asset ownership.**
+When you buy a Stockballer player token, you aren't betting on a 90-minute result. You are purchasing a fractionalized stake in an athlete's career trajectory on [Base](https://base.org) blockchain. **Asset ownership.**
 
 *   **Betting:** Your $100 disappears if the striker misses a sitter.
 *   **Tokenization:** Your $100 stake in that striker remains an asset on your balance sheet. If he hits a slump, the token value might dip, but it never goes to zero unless the player disappears from the face of the earth.
@@ -105,7 +105,7 @@ Betting is built on the "Grand National" mindset: put down a little, hope for a 
 
 Stockballer is built on the **Equity Mindset**. 
 
-We are currently seeing institutional interest in the player token space move from **$0 to a projected $10 billion** by the end of the decade. The smart money is moving away from the sportsbook and toward the athlete-as-an-asset model. 
+We are currently seeing institutional interest in the player token space move from **$0 to a projected $10 billion** by the end of the decade. With [FIFA](https://www.fifa.com) tracking over 500,000 professional players globally, the smart money is moving away from the sportsbook and toward the athlete-as-an-asset model. 
 
 You have a choice. You can keep "donating" to the bookmakers, or you can start building a portfolio of the world's greatest athletes. 
 

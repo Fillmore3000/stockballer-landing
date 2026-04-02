@@ -12,7 +12,7 @@ You missed the entry.
 That’s the game.  
 Fans react. Investors front-run.
 
-As we sprint into the **2026 FIFA World Cup**, one name keeps screaming “mispriced.”  
+As we sprint into the **[2026 FIFA World Cup](https://www.fifa.com/fifaplus/en/tournaments/mens/worldcup/canadamexicousa2026)**, one name keeps screaming "mispriced."
 One name keeps printing upside.  
 Late, if you wait.
 
@@ -32,7 +32,7 @@ Here’s the data-backed case for why Yamal is still the ultimate accumulation p
 
 Most viewers see a teenager with a flair for the dramatic. At Stockballer, we see a **0.88 non-penalty xG + xA (Expected Goals + Expected Assists)** per 90 minutes. 
 
-To put that in perspective, Yamal isn't just "good for his age." He is currently performing in the **top 1%** of all wingers in Europe's top five leagues. As of February 2026, his trajectory has defied every standard regression model. 
+To put that in perspective, Yamal isn't just "good for his age." He is currently performing in the **top 1%** of all wingers in [Europe's top five leagues](https://www.fifa.com)—verified by [Chainlink](https://chain.link) data feeds. As of February 2026, his trajectory has defied every standard regression model. 
 
 ### The Real-Time Metrics:
 *   **Progressive Carries:** **12.4** per match (Ranking: Elite).

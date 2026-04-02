@@ -16,7 +16,7 @@ Welcome to **The Scout Report**. No vibes. No worship. Just performance vs. pric
 
 ### The Reality of the "Haaland Premium"
 
-Erling Haaland is a statistical anomaly. As of **February 25, 2026**, his Manchester City output is violent:
+Erling Haaland is a statistical anomaly. As of **February 25, 2026**, his Manchester City output in the [Premier League](https://www.fifa.com) is violent:
 * **22 Goals** in the Premier League.
 * **7 Assists** across **2,238 minutes**.
 * Average match rating: **7.72**.

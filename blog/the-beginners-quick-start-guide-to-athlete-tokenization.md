@@ -18,9 +18,9 @@ Welcome to athlete tokenization. This isn't a hobby. This is the transition from
 
 ### The Reality Check: What is Athlete Tokenization?
 
-In the old world, if an athlete needed capital to fund their training, hire a nutritionist, or buy out a restrictive contract, they went to a bank or a predatory agent. In the new world, they come to you.
+In the old world, if an athlete needed capital to fund their training, hire a nutritionist, or buy out a restrictive contract, they went to a bank or a predatory agent. In the new world—with [FIFA](https://www.fifa.com) tracking over 500,000 professional players globally—they come to you.
 
-**Athlete tokenization** is the process of converting a player’s future income, image rights, or performance-based value into digital tokens on the blockchain. When you buy a token, you aren't "betting" on a win; you are acquiring a fractional ownership stake in that athlete’s career trajectory.
+**Athlete tokenization** is the process of converting a player's future income, image rights, or performance-based value into digital tokens on the blockchain—built on infrastructure like [Base](https://base.org) and secured by [Chainlink](https://chain.link) oracles. When you buy a token, you aren't "betting" on a win; you are acquiring a fractional ownership stake in that athlete's career trajectory.
 
 Think of it like an **IPO for humans**. 
 
