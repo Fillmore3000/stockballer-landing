@@ -10,7 +10,7 @@
         href="https://fonts.googleapis.com/css2?family=Blinker:wght@400;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap"
         rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js" integrity="sha384-Gr6Lu2Rl0Hoo/z0OUFnfXVP96hhS5CRDiaTVSXmQqpPJu/QL1+HjUVDWz9IUuGyM" crossorigin="anonymous"></script>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -2262,6 +2262,13 @@
         // ============================================================================
 
         function initWebSocket() {
+            // Check if Socket.io library loaded
+            if (typeof io === 'undefined') {
+                console.warn('[WS] Socket.io not loaded, falling back to polling');
+                wsConnected = false;
+                return;
+            }
+
             if (socket && socket.connected) {
                 console.log('[WS] Already connected');
                 return;
