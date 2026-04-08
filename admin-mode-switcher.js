@@ -155,7 +155,7 @@ class EconomicsCalculator {
 // ============================================================================
 
 function getApiBase() {
-    return window.API_BASE || localStorage.getItem('stockballer_admin_api_base') || 'http://localhost:3001/api';
+    return window.API_BASE || localStorage.getItem('stockballer_admin_api_base') || 'https://stockballer-api-production.up.railway.app/api';
 }
 
 function getActiveSeasonRunId() {
@@ -645,7 +645,7 @@ async function fetchSeasonStatus() {
             return null;
         }
 
-        const apiBase = window.API_BASE || 'http://localhost:3001/api';
+        const apiBase = window.API_BASE || 'https://stockballer-api-production.up.railway.app/api';
         const response = await fetch(`${apiBase}/simulation/season/${runId}/status`);
         if (!response.ok) return null;
         

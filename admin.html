@@ -2129,11 +2129,11 @@
             const protocol = window.location.protocol === 'https:' ? 'https' : 'http';
 
             return [
+                'https://stockballer-api-production.up.railway.app/api',
                 `${protocol}://${host}:3001/api`,
                 `${protocol}://${host}:8080/api`,
                 'http://localhost:3001/api',
-                'http://127.0.0.1:3001/api',
-                'https://stockballer-api-production.up.railway.app/api'
+                'http://127.0.0.1:3001/api'
             ];
         }
 
@@ -2141,7 +2141,6 @@
             const params = new URLSearchParams(window.location.search);
             const apiFromQuery = params.get('api');
             const apiFromStorage = localStorage.getItem('stockballer_admin_api_base');
-            const localPage = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
             const setApiBase = (base) => {
                 API_BASE = base.replace(/\/$/, '');
@@ -2156,18 +2155,23 @@
                 return;
             }
 
-            // Second priority: persisted manual override.
-            if (apiFromStorage) {
+            // Second priority: persisted manual override (but ignore localhost since we want production).
+            if (apiFromStorage && !apiFromStorage.includes('localhost') && !apiFromStorage.includes('127.0.0.1')) {
                 setApiBase(apiFromStorage);
                 console.log('[Admin] API base from storage:', API_BASE);
                 return;
             }
 
-            // Default behavior: local page uses local API first, then fallback list.
-            const candidates = getApiCandidates();
-            const ordered = localPage ? candidates : [candidates[candidates.length - 1], ...candidates.slice(0, -1)];
+            // Clear any old localhost storage values.
+            if (apiFromStorage && (apiFromStorage.includes('localhost') || apiFromStorage.includes('127.0.0.1'))) {
+                localStorage.removeItem('stockballer_admin_api_base');
+                console.log('[Admin] Cleared old localhost API base from storage');
+            }
 
-            for (const candidate of ordered) {
+            // Default behavior: always try Railway production first, then local fallbacks.
+            const candidates = getApiCandidates();
+
+            for (const candidate of candidates) {
                 try {
                     const res = await fetch(`${candidate}/health`, { method: 'GET' });
                     if (res.ok) {
@@ -2180,8 +2184,8 @@
                 }
             }
 
-            // Last fallback to local dev API.
-            setApiBase('http://localhost:3001/api');
+            // Last fallback to Railway production API.
+            setApiBase('https://stockballer-api-production.up.railway.app/api');
             console.warn('[Admin] Could not verify API candidate. Falling back to', API_BASE);
         }
 
