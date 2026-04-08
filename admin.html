@@ -10,6 +10,7 @@
         href="https://fonts.googleapis.com/css2?family=Blinker:wght@400;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap"
         rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js" integrity="sha384-Gr6Lu2Rl0Hoo/z0OUFnfXVP96hhS5CRDiaTVSXmQqpPJu/QL1+HjUVDWz9IUuGyM" crossorigin="anonymous"></script>
     <style>
         * {
             margin: 0;
@@ -2100,6 +2101,14 @@
         let activeSeasonRunId = null;
         window.activeSeasonRunId = null;
 
+        // WebSocket Configuration
+        let socket = null;
+        let wsConnected = false;
+        let wsReconnectAttempts = 0;
+        const WS_MAX_RECONNECT_ATTEMPTS = 5;
+        const WS_RECONNECT_DELAY = 3000;
+        const ADMIN_WS_KEY = 'stockballer2026'; // Same as backend ADMIN_WS_KEY
+
         // Bot fleet state
         let allBots = [];
         let filteredBots = [];
@@ -2232,8 +2241,176 @@
         async function initDashboard() {
             await resolveApiBase();
             loadDashboard();
-            // Auto-refresh every 30 seconds
-            refreshInterval = setInterval(loadDashboard, 30000);
+            
+            // Initialize WebSocket connection for real-time updates
+            initWebSocket();
+            
+            // Fallback polling: 30s when WS disconnected, 60s when connected (for stats refresh)
+            refreshInterval = setInterval(() => {
+                if (!wsConnected) {
+                    loadDashboard(); // Full refresh when no WebSocket
+                } else {
+                    // When WS connected, only refresh stats periodically (activity comes via WS)
+                    loadStats();
+                    loadBots();
+                }
+            }, wsConnected ? 60000 : 30000);
+        }
+
+        // ============================================================================
+        // WEBSOCKET CONNECTION (Real-time Activity Feed)
+        // ============================================================================
+
+        function initWebSocket() {
+            if (socket && socket.connected) {
+                console.log('[WS] Already connected');
+                return;
+            }
+
+            // Extract WebSocket URL from API_BASE (Socket.io uses HTTP URL, not ws://)
+            const wsUrl = API_BASE.replace('/api', '');
+
+            console.log('[WS] Connecting to:', wsUrl);
+
+            try {
+                socket = io(wsUrl, {
+                    transports: ['websocket', 'polling'],
+                    reconnection: true,
+                    reconnectionAttempts: WS_MAX_RECONNECT_ATTEMPTS,
+                    reconnectionDelay: WS_RECONNECT_DELAY,
+                    timeout: 10000,
+                });
+
+                socket.on('connect', () => {
+                    console.log('[WS] Connected:', socket.id);
+                    wsConnected = true;
+                    wsReconnectAttempts = 0;
+                    updateWsStatus(true);
+
+                    // Subscribe to admin dashboard events
+                    socket.emit('subscribe:admin', { adminKey: ADMIN_WS_KEY }, (response) => {
+                        if (response?.success) {
+                            console.log('[WS] Subscribed to admin dashboard');
+                            showToast('Real-time updates enabled', 'success');
+                        } else {
+                            console.warn('[WS] Admin subscription failed:', response?.error);
+                            showToast('WebSocket auth failed, using polling', 'warning');
+                        }
+                    });
+                });
+
+                socket.on('disconnect', (reason) => {
+                    console.log('[WS] Disconnected:', reason);
+                    wsConnected = false;
+                    updateWsStatus(false);
+                });
+
+                socket.on('connect_error', (error) => {
+                    console.warn('[WS] Connection error:', error.message);
+                    wsReconnectAttempts++;
+                    if (wsReconnectAttempts >= WS_MAX_RECONNECT_ATTEMPTS) {
+                        console.log('[WS] Max reconnect attempts reached, falling back to polling');
+                        showToast('WebSocket unavailable, using polling', 'warning');
+                    }
+                });
+
+                // Handle real-time activity events
+                socket.on('admin-activity', (data) => {
+                    console.log('[WS] Activity received:', data);
+                    handleRealtimeActivity(data);
+                });
+
+                // Handle aggregated stats updates
+                socket.on('admin-stats', (data) => {
+                    console.log('[WS] Stats received:', data);
+                    handleRealtimeStats(data);
+                });
+
+                // Handle errors
+                socket.on('error', (error) => {
+                    console.error('[WS] Error:', error);
+                });
+
+            } catch (error) {
+                console.error('[WS] Failed to initialize:', error);
+                wsConnected = false;
+                updateWsStatus(false);
+            }
+        }
+
+        function handleRealtimeActivity(activity) {
+            // Prepend new activity to the feed (keep last 100 items)
+            if (!latestActionFeed) latestActionFeed = [];
+            
+            const activityItem = {
+                eventId: activity.id,
+                eventType: activity.type,
+                userType: activity.trader?.isBot ? 'bot' : 'live',
+                walletAddress: activity.trader?.walletAddress,
+                displayName: activity.trader?.displayName,
+                entityType: activity.player ? 'player' : undefined,
+                entityId: activity.player?.id,
+                entityName: activity.player?.name,
+                amount: activity.amount,
+                price: activity.price,
+                total: activity.total,
+                reason: activity.reason,
+                timestamp: new Date(activity.timestamp),
+                strategy: activity.trader?.strategy,
+            };
+
+            latestActionFeed.unshift(activityItem);
+            if (latestActionFeed.length > 100) {
+                latestActionFeed = latestActionFeed.slice(0, 100);
+            }
+
+            // Update the action monitoring UI
+            if (typeof renderActionMonitor === 'function') {
+                renderActionMonitor();
+            }
+
+            // Flash the activity indicator
+            flashActivityIndicator();
+        }
+
+        function handleRealtimeStats(stats) {
+            // Update stats display if available
+            if (stats.totalTrades24h !== undefined) {
+                const tradesEl = document.getElementById('total-trades');
+                if (tradesEl) tradesEl.textContent = stats.totalTrades24h;
+            }
+        }
+
+        function updateWsStatus(connected) {
+            const statusDot = document.querySelector('.status-dot');
+            const statusText = document.querySelector('.status-indicator');
+            
+            if (connected) {
+                if (statusDot) statusDot.classList.remove('offline');
+                if (statusText) {
+                    const existingBadge = statusText.querySelector('.ws-badge');
+                    if (!existingBadge) {
+                        const badge = document.createElement('span');
+                        badge.className = 'ws-badge';
+                        badge.style.cssText = 'background: #00ff88; color: #000; font-size: 10px; padding: 2px 6px; border-radius: 4px; margin-left: 8px; font-weight: 600;';
+                        badge.textContent = 'WS';
+                        statusText.appendChild(badge);
+                    }
+                }
+            } else {
+                const existingBadge = document.querySelector('.ws-badge');
+                if (existingBadge) existingBadge.remove();
+            }
+        }
+
+        function flashActivityIndicator() {
+            const statusDot = document.querySelector('.status-dot');
+            if (statusDot) {
+                statusDot.style.background = '#ffff00';
+                setTimeout(() => {
+                    statusDot.style.background = wsConnected ? '#00ff88' : '#ff4444';
+                }, 200);
+            }
         }
 
         // Load all dashboard data
