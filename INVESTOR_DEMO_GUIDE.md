@@ -19,9 +19,7 @@ Both modes share unified bot fleet controls and use the **same centralized econo
 2. Enter the deployment-configured admin password
 3. Dashboard auto-detects API base URL or uses `http://localhost:3001/api`
 
-**Security note**: The dashboard no longer stores a plaintext password in source.
-Provide `window.__ADMIN_PASSWORD_HASH` (SHA-256 hex) at serve time, or set
-`localStorage['stockballer_admin_password_hash']` for local development.
+**Security note**: The dashboard currently uses a plaintext password comparison (`stockballer2026`). SHA-256 hashing is planned for a future hardening pass.
 
 ---
 
