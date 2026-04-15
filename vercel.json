@@ -5,6 +5,7 @@
     { "source": "/privacy", "destination": "/privacy.html" },
     { "source": "/terms", "destination": "/terms.html" },
     { "source": "/app", "destination": "/app/index.html" },
+    { "source": "/app/assets/node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/:font", "destination": "/app/fonts/:font" },
     { "source": "/app/node_modules/@expo/vector-icons/:path*", "destination": "/app/assets/node_modules/@expo/vector-icons/:path*" },
     { "source": "/app/node_modules/@react-navigation/:path*", "destination": "/app/assets/node_modules/@react-navigation/:path*" }
   ],
