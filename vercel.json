@@ -1,17 +1,42 @@
 {
   "rewrites": [
-    { "source": "/admin", "destination": "/admin.html" },
-    { "source": "/blog", "destination": "/blog.html" },
-    { "source": "/privacy", "destination": "/privacy.html" },
-    { "source": "/terms", "destination": "/terms.html" },
-    { "source": "/app", "destination": "/app/index.html" },
-    { "source": "/app/assets/node_modules/@react-navigation/:path*", "destination": "/app/assets/node_modules/@react-navigation/:path*" }
+    {
+      "source": "/admin",
+      "destination": "/admin.html"
+    },
+    {
+      "source": "/blog",
+      "destination": "/blog.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms.html"
+    },
+    {
+      "source": "/app",
+      "destination": "/app/index.html"
+    },
+    {
+      "source": "/app/assets/node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/:font",
+      "destination": "/app/fonts/:font"
+    },
+    {
+      "source": "/app/assets/node_modules/@react-navigation/:path*",
+      "destination": "/app/assets/node_modules/@react-navigation/:path*"
+    }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
       ]
     }
   ]
