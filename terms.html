@@ -25,9 +25,19 @@
 
         body {
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: rgba(13, 39, 88, 1);
+            background: #000;
             color: #fff;
             line-height: 1.7;
+        }
+
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #000 0%, #000 40%, #0d2758 100%);
+            z-index: -1;
         }
 
         h1,
@@ -47,14 +57,15 @@
 
         /* Navigation */
         nav {
-            padding: 10px 0;
+            padding: 18px 0;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 100;
-            background: #0528F3;
-            box-shadow: 0 4px 20px rgba(5, 40, 243, 0.3);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         nav .container {
@@ -79,10 +90,13 @@
             background: #F5CB3F;
             border: none;
             margin-left: 10px;
-            border-radius: 8px;
-            color: #0d2758;
+            border-radius: 4px;
+            color: #000;
             font-family: 'DM Sans', sans-serif;
-            font-weight: 600;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
             text-decoration: none;
@@ -102,8 +116,10 @@
         .legal-content h1 {
             font-size: 2.5rem;
             font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
             margin-bottom: 16px;
-            color: #F5CB3F;
+            color: #fff;
         }
 
         .legal-content .last-updated {
@@ -115,6 +131,8 @@
         .legal-content h2 {
             font-size: 1.5rem;
             font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             margin-top: 40px;
             margin-bottom: 16px;
             color: #F5CB3F;
@@ -144,9 +162,10 @@
         }
 
         .legal-content .warning-box {
-            background: rgba(245, 203, 63, 0.15);
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(245, 203, 63, 0.4);
-            border-radius: 8px;
+            border-top: 2px solid #F5CB3F;
+            border-radius: 4px;
             padding: 20px;
             margin: 24px 0;
         }
@@ -159,7 +178,8 @@
 
         /* Footer */
         footer {
-            background: rgba(0, 0, 0, 0.3);
+            background: #000;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding: 40px 0;
             text-align: center;
         }
@@ -200,6 +220,7 @@
 </head>
 
 <body>
+    <div class="gradient-bg"></div>
     <nav>
         <div class="container">
             <a href="index.html" class="logo">
@@ -410,6 +431,7 @@
         <div class="container">
             <div class="footer-links">
                 <a href="index.html">Home</a>
+                <a href="team.html">Team</a>
                 <a href="terms.html">Terms of Service</a>
                 <a href="privacy.html">Privacy Policy</a>
                 <a href="mailto:contact@stockballer.app">Contact</a>

@@ -119,9 +119,19 @@
 
         body {
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: rgba(13, 39, 88, 1);
+            background: #000;
             color: #fff;
             line-height: 1.8;
+        }
+
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #000 0%, #000 40%, #0d2758 100%);
+            z-index: -1;
         }
 
         h1, h2, h3, h4, h5, h6 {
@@ -142,8 +152,10 @@
             left: 0;
             right: 0;
             z-index: 100;
-            background: #0528F3;
-            box-shadow: 0 4px 20px rgba(5, 40, 243, 0.3);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: none;
         }
 
         nav .container {
@@ -184,10 +196,13 @@
             padding: 10px 24px;
             background: #F5CB3F;
             border: none;
-            border-radius: 8px;
-            color: #0d2758;
+            border-radius: 4px;
+            color: #000;
             font-family: 'DM Sans', sans-serif;
-            font-weight: 600;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
             text-decoration: none;
@@ -376,6 +391,7 @@
 </head>
 
 <body>
+    <div class="gradient-bg"></div>
     <nav>
         <div class="container">
             <a href="../index.html" class="logo">
@@ -570,12 +586,12 @@
     </script>
 
     <style>
-        #cookie-banner { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(13, 39, 88, 0.98); border-top: 2px solid #F5CB3F; padding: 20px; z-index: 9999; }
+        #cookie-banner { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(0, 0, 0, 0.97); border-top: 1px solid #F5CB3F; padding: 20px; z-index: 9999; box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3); }
         .cookie-content { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; }
         .cookie-content p { flex: 1; min-width: 300px; margin: 0; color: rgba(255, 255, 255, 0.9); font-size: 0.95rem; }
         .cookie-buttons { display: flex; gap: 12px; }
         .cookie-btn { padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; }
-        .cookie-btn-primary { background: #F5CB3F; color: #0d2758; border: none; }
+        .cookie-btn-primary { background: #F5CB3F; color: #000; border: none; }
         .cookie-btn-secondary { background: transparent; color: rgba(255, 255, 255, 0.8); border: 1px solid rgba(255, 255, 255, 0.3); }
         @media (max-width: 640px) { .cookie-content { flex-direction: column; text-align: center; } .cookie-buttons { width: 100%; justify-content: center; } }
     </style>

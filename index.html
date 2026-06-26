@@ -51,7 +51,7 @@
 
     <!-- SEO Meta Tags -->
     <meta name="description"
-        content="Invest in top football athletes with real performance-based returns. Buy tokens, track stats, and profit when your players perform. Haaland +261%, Salah +209% in 2025/26 simulation.">
+        content="Invest in top football athletes with performance-based returns. Buy tokens, track stats, and profit when your players perform. Haaland +261%, Salah +209% in our 2025/26 simulated season.">
     <meta name="keywords"
         content="athlete investing, football tokens, Premier League investment, sports trading, athlete stocks, ERC-1155, blockchain sports, StockBaller">
     <meta name="author" content="Apaw Holdings Ltd">
@@ -63,8 +63,8 @@
     <meta property="og:url" content="https://stockballer.app/">
     <meta property="og:title" content="StockBaller - The Stock Market for Professional Football">
     <meta property="og:description"
-        content="Invest in Premier League athletes with real performance-based returns. Buy tokens, track stats, and profit when your players perform.">
-    <meta property="og:image" content="https://stockballer.app/og-image.png">
+        content="Invest in Premier League athletes with performance-based returns. Buy tokens, track stats, and profit when your players perform. Currently in simulated season testing.">
+    <meta property="og:image" content="https://stockballer.app/NewLogo.png">
     <meta property="og:site_name" content="StockBaller">
 
     <!-- Twitter Card -->
@@ -73,8 +73,8 @@
     <meta name="twitter:creator" content="@StockBallerApp">
     <meta name="twitter:title" content="StockBaller - The Stock Market for Professional Football">
     <meta name="twitter:description"
-        content="Invest in Premier League athletes with real performance-based returns. Buy tokens, track stats, and profit when your players perform.">
-    <meta name="twitter:image" content="https://stockballer.app/og-image.png">
+        content="Invest in Premier League athletes with performance-based returns. Buy tokens, track stats, and profit when your players perform. Currently in simulated season testing.">
+    <meta name="twitter:image" content="https://stockballer.app/NewLogo.png">
 
     <!-- Additional SEO -->
     <meta name="theme-color" content="#0d2758">
@@ -91,7 +91,7 @@
         "name": "StockBaller",
         "url": "https://stockballer.app",
         "logo": "https://stockballer.app/NewLogo.png",
-        "description": "The first marketplace for tokenized athlete performance. Trade Premier League stars with real performance-based returns.",
+        "description": "The first marketplace for tokenized athlete performance. Trade Premier League stars with performance-based returns.",
         "sameAs": [
             "https://twitter.com/StockBallerApp"
         ],
@@ -112,7 +112,7 @@
         "url": "https://stockballer.app",
         "potentialAction": {
             "@type": "SearchAction",
-            "target": "https://stockballer.app/blog?q={search_term_string}",
+            "target": "https://stockballer.app/blog.html?q={search_term_string}",
             "query-input": "required name=search_term_string"
         }
     }
@@ -131,7 +131,7 @@
 
         body {
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: rgba(13, 39, 88, 0.5);
+            background: linear-gradient(135deg, #000 0%, #000 40%, #0d2758 100%);
             color: #fff;
             line-height: 1.6;
             overflow-x: hidden;
@@ -153,7 +153,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(13, 39, 88, 1);
+            background: linear-gradient(135deg, #000 0%, #000 40%, #0d2758 100%);
             z-index: -1;
         }
 
@@ -165,15 +165,16 @@
 
         /* Navigation */
         nav {
-            padding: 10px 0;
+            padding: 18px 0;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 100;
-            background: #0528F3;
-            border-bottom: none;
-            box-shadow: 0 4px 20px rgba(5, 40, 243, 0.3);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: none;
         }
 
         nav .container {
@@ -197,10 +198,13 @@
             background: #F5CB3F;
             border: none;
             margin-left: 10px;
-            border-radius: 8px;
-            color: #0d2758;
+            border-radius: 4px;
+            color: #000;
             font-family: 'DM Sans', sans-serif;
-            font-weight: 600;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
         }
@@ -219,6 +223,7 @@
             padding: 120px 0 80px;
             position: relative;
             overflow: hidden;
+            background: #000;
         }
 
         .hero-video-container {
@@ -243,7 +248,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, rgba(13, 39, 88, 0.75) 0%, rgba(13, 39, 88, 0.65) 100%);
+            background: linear-gradient(90deg, #000 0%, #000 32%, rgba(0, 0, 0, 0.92) 42%, rgba(0, 0, 0, 0.55) 58%, rgba(0, 0, 0, 0.15) 75%, transparent 100%);
             z-index: 1;
         }
 
@@ -254,15 +259,17 @@
 
         .hero-content {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1.1fr 0.9fr;
             gap: 60px;
             align-items: center;
         }
 
         .hero-text h1 {
-            font-size: 3.5rem;
+            font-size: 4rem;
             font-weight: 800;
-            line-height: 1.1;
+            line-height: 1.05;
+            letter-spacing: -1px;
+            text-transform: uppercase;
             margin-bottom: 24px;
         }
 
@@ -281,6 +288,8 @@
             display: flex;
             gap: 40px;
             margin-bottom: 40px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
         }
 
         .hero-stat {
@@ -290,27 +299,24 @@
         .hero-stat-value {
             font-size: 2rem;
             font-weight: 700;
-            color: #F5CB3F;
+            color: #fff;
         }
 
         .hero-stat-label {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.45);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
         }
 
         .hero-preheadline {
             display: inline-block;
-            padding: 8px 16px;
-            background: rgba(245, 203, 63, 0.15);
-            border: 1px solid rgba(245, 203, 63, 0.3);
-            border-radius: 20px;
-            color: #F5CB3F;
-            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8rem;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             margin-bottom: 16px;
-            animation: pulse 2s ease-in-out infinite;
         }
 
         @keyframes pulse {
@@ -380,14 +386,16 @@
             padding: 16px 32px;
             background: #F5CB3F;
             border: none;
-            border-radius: 12px;
-            color: #0d2758;
+            border-radius: 4px;
+            color: #000;
             font-family: 'DM Sans', sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(245, 203, 63, 0.3);
+            box-shadow: none;
         }
 
         .btn-primary:hover {
@@ -399,12 +407,14 @@
         .btn-secondary {
             padding: 16px 32px;
             background: transparent;
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 4px;
             color: #fff;
             font-family: 'DM Sans', sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             cursor: pointer;
             transition: all 0.3s;
         }
@@ -421,16 +431,17 @@
         }
 
         .athlete-card-preview {
-            background: linear-gradient(145deg, #0d51d8 0%, #181818ab 150%);
-            border: 2px solid rgba(245, 203, 63, 0.3);
-            border-radius: 24px;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(245, 203, 63, 0.3);
+            border-radius: 8px;
             padding: 32px;
             transition: box-shadow 0.5s;
-            box-shadow: 0 25px 50px rgba(5, 40, 243, 0.4);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
         }
 
         .athlete-card-preview:hover {
-            box-shadow: 0 30px 60px rgba(5, 40, 243, 0.5);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
         }
 
         .athlete-card-header {
@@ -444,7 +455,8 @@
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background: #0528f3;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(245, 203, 63, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -466,8 +478,9 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px;
-            background: #0528f3;
-            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
             margin-bottom: 20px;
         }
 
@@ -503,8 +516,9 @@
 
         .athlete-mini-stat {
             padding: 12px;
-            background: rgba(5, 40, 243, 0.4);
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
         }
 
         .athlete-mini-stat-value {
@@ -538,7 +552,6 @@
         /* Social Proof Section */
         .social-proof-section {
             padding: 60px 0;
-            background: #0528f3;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -560,7 +573,7 @@
         }
 
         .testimonial-card {
-            background: linear-gradient(145deg, rgba(13, 81, 216, 0.5) 0%, rgba(13, 39, 88, 0.5) 100%);
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 28px;
@@ -620,7 +633,7 @@
             gap: 48px;
             margin-top: 40px;
             padding: 40px 32px;
-            background: linear-gradient(0deg, rgba(13, 39, 88, 0.5) 0%, rgba(13, 81, 216, 0.5) 100%);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
             flex-wrap: wrap;
@@ -648,9 +661,6 @@
         }
 
         /* FAQ Section */
-        .faq-section {
-            background: linear-gradient(180deg, #0d51d8 0%, #0d2758 100%);
-        }
 
         .faq-grid {
             max-width: 800px;
@@ -658,7 +668,7 @@
         }
 
         .faq-item {
-            background: rgba(13, 39, 88, 0.5);
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
             margin-bottom: 16px;
@@ -711,12 +721,6 @@
         }
 
         /* How It Works */
-        #how-it-works {
-            background-image: url('background.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
 
         .section {
             padding: 100px 0;
@@ -725,7 +729,6 @@
         /* Video Section */
         .video-section {
             padding: 80px 0;
-            background: linear-gradient(180deg, rgba(5, 40, 243, 0.1) 0%, rgba(13, 39, 88, 0.3) 100%);
             position: relative;
         }
 
@@ -775,19 +778,19 @@
 
         .section-badge {
             display: inline-block;
-            padding: 8px 16px;
-            background: #0528f3;
-            border: none;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.5);
             margin-bottom: 16px;
-            box-shadow: 0 4px 15px rgba(5, 40, 243, 0.4);
         }
 
         .section-header h2 {
             font-size: 2.5rem;
-            font-weight: 700;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
             margin-bottom: 16px;
         }
 
@@ -805,36 +808,36 @@
         }
 
         .step-card {
-            text-align: center;
+            text-align: left;
             padding: 40px;
-            background: linear-gradient(145deg, #0d51d8 0%, #181818ab 80%);
-            border: 2px solid #0528f3;
-            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-top: 2px solid rgba(245, 203, 63, 0.4);
+            border-radius: 8px;
             transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
         }
 
         .step-card:hover {
             transform: translateY(-8px);
             border-color: #F5CB3F;
-            box-shadow: 0 20px 40px rgba(5, 40, 243, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
         .step-number {
-            width: 60px;
-            height: 60px;
-            background: #F5CB3F;
-            color: #0d2758;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 0 auto 24px;
+            font-family: 'Blinker', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1;
+            color: transparent;
+            -webkit-text-stroke: 1.5px #F5CB3F;
+            margin-bottom: 16px;
         }
 
         .step-card h3 {
             font-size: 1.25rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             margin-bottom: 12px;
         }
 
@@ -843,19 +846,60 @@
             font-size: 0.95rem;
         }
 
-        /* Inline Lead Capture CTA */
+        /* Inline Lead Capture CTA - Full-Bleed Statement Section */
         .inline-cta {
-            margin-top: 60px;
-            padding: 40px;
-            background: linear-gradient(135deg, #0528f3 0%, #0d51d8 100%);
-            border-radius: 24px;
+            margin-top: 100px;
+            margin-left: calc(-50vw + 50%);
+            margin-right: calc(-50vw + 50%);
+            width: 100vw;
+            padding: 120px 24px;
+            position: relative;
+            background-image: url('StockballerBrand-ID-pg2.png');
+            background-size: cover;
+            background-position: center 30%;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(5, 40, 243, 0.3);
+            overflow: hidden;
+        }
+
+        .inline-cta::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.78);
+            z-index: 1;
+        }
+
+        .inline-cta-watermark {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            overflow: hidden;
+            pointer-events: none;
+            rotate: -6deg;
+        }
+
+        .inline-cta-watermark div {
+            white-space: nowrap;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.06);
+        }
+
+        .inline-cta-content {
+            position: relative;
+            z-index: 3;
         }
 
         .inline-cta h3 {
-            font-size: 1.75rem;
-            margin-bottom: 24px;
+            font-size: 2.25rem;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            margin-bottom: 32px;
         }
 
         .inline-cta h3 span {
@@ -877,6 +921,10 @@
         }
 
         @media (max-width: 640px) {
+            .inline-cta {
+                padding: 80px 24px;
+            }
+
             .inline-cta-form {
                 flex-direction: column;
             }
@@ -886,14 +934,15 @@
             }
 
             .inline-cta h3 {
-                font-size: 1.4rem;
+                font-size: 1.5rem;
+            }
+
+            .inline-cta-watermark div {
+                font-size: 1.5rem;
             }
         }
 
         /* Top Performers - Data Backed */
-        .performers-section {
-            background: #0528f3;
-        }
 
         .performers-grid {
             display: grid;
@@ -902,23 +951,23 @@
         }
 
         .performer-card {
-            background: #0d51d8;
-            border: 2px solid rgba(255, 255, 255, 0.15);
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
             padding: 24px;
             cursor: pointer;
             transition: all 0.3s;
         }
 
         .performer-card:hover {
-            background: rgba(13, 39, 88, 0.5);
+            background: rgba(255, 255, 255, 0.07);
             border-color: #F5CB3F;
             transform: translateY(-4px);
         }
 
         .performer-card.selected {
             border-color: #F5CB3F;
-            background: rgba(13, 39, 88, 0.5);
+            background: rgba(255, 255, 255, 0.07);
         }
 
         .performer-header {
@@ -998,9 +1047,6 @@
         }
 
         /* Investment Calculator */
-        .calculator-section {
-            background: rgba(13, 39, 88, 0.5);
-        }
 
         .calculator-container {
             display: grid;
@@ -1010,11 +1056,11 @@
         }
 
         .calculator-card {
-            background: linear-gradient(145deg, #0d51d8 0%, #0528f3 100%);
-            border: 2px solid rgba(245, 203, 63, 0.2);
-            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(245, 203, 63, 0.25);
+            border-radius: 8px;
             padding: 40px;
-            box-shadow: 0 20px 40px rgba(5, 40, 243, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .calculator-card h3 {
@@ -1041,9 +1087,9 @@
         .calc-input {
             width: 100%;
             padding: 16px;
-            background: rgba(13, 39, 88, 0.5);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
             color: #fff;
             font-size: 1.25rem;
             font-weight: 600;
@@ -1051,7 +1097,7 @@
 
         .calc-input:focus {
             outline: none;
-            border-color: #0528f3;
+            border-color: #F5CB3F;
         }
 
         .calc-slider {
@@ -1081,21 +1127,21 @@
 
         .athlete-option {
             padding: 12px;
-            background: rgba(13, 39, 88, 0.5);
-            border: 2px solid transparent;
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
             cursor: pointer;
             text-align: center;
             transition: all 0.2s;
         }
 
         .athlete-option:hover {
-            background: #0528f3;
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .athlete-option.selected {
             border-color: #F5CB3F;
-            background: #0528f3;
+            background: rgba(245, 203, 63, 0.1);
         }
 
         .athlete-option-name {
@@ -1137,8 +1183,8 @@
         .calc-summary {
             margin-top: 20px;
             padding: 16px;
-            background: rgba(13, 39, 88, 0.5);
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 8px;
             font-size: 0.95rem;
             color: rgba(255, 255, 255, 0.9);
             line-height: 1.6;
@@ -1194,9 +1240,6 @@
         }
 
         /* Trust & Transparency */
-        .trust-section {
-            background: linear-gradient(180deg, #0d2758 0%, #0d51d8 100%);
-        }
 
         .trust-grid {
             display: grid;
@@ -1207,9 +1250,9 @@
         .trust-card {
             text-align: center;
             padding: 32px 24px;
-            background: rgba(13, 39, 88, 0.5);
-            border: 2px solid #0528f3;
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
             transition: transform 0.3s, border-color 0.3s;
         }
 
@@ -1262,10 +1305,10 @@
             align-items: center;
             gap: 16px;
             padding: 16px;
-            background: linear-gradient(135deg, #0d51d8 0%, #0d2758 100%);
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 8px;
             margin-bottom: 12px;
-            border: 1px solid rgba(5, 40, 243, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             transition: transform 0.2s;
         }
 
@@ -1306,11 +1349,11 @@
         }
 
         .risk-chart-container {
-            background: linear-gradient(145deg, #0d51d8 0%, #0d2758 100%);
-            border: 2px solid #0528f3;
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
             padding: 24px;
-            box-shadow: 0 15px 30px rgba(5, 40, 243, 0.2);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
         }
 
         .risk-chart-title {
@@ -1323,16 +1366,53 @@
             height: 250px;
         }
 
-        /* CTA Section */
+        /* CTA Section - Split Layout (full-bleed image) */
         .cta-section {
-            padding: 120px 0;
-            text-align: center;
-            background: #0528f3;
+            padding: 0;
+            background: #000;
+        }
+
+        .cta-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: stretch;
+            min-height: 600px;
+        }
+
+        .cta-visual {
+            position: relative;
+            min-height: 600px;
+            overflow: hidden;
+        }
+
+        .cta-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .cta-visual::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent 0%, transparent 60%, #000 100%);
+        }
+
+        .cta-content {
+            text-align: left;
+            padding: 100px 24px 100px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .cta-section h2 {
             font-size: 3rem;
             font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            line-height: 1.05;
             margin-bottom: 16px;
         }
 
@@ -1340,22 +1420,58 @@
             color: #F5CB3F;
         }
 
-        .cta-section>p {
+        .cta-content>p {
             color: rgba(255, 255, 255, 0.7);
             font-size: 1.2rem;
             margin-bottom: 40px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            max-width: 480px;
+        }
+
+        @media (max-width: 900px) {
+            .cta-split {
+                grid-template-columns: 1fr;
+                min-height: 0;
+            }
+
+            .cta-visual {
+                display: none;
+            }
+
+            .cta-content {
+                text-align: center;
+                padding: 80px 24px;
+            }
+
+            .cta-content>p {
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .cta-benefits {
+                justify-content: center !important;
+            }
+
+            .cta-content>div[style*="flex-start"] {
+                justify-content: center !important;
+            }
         }
 
         .cta-form {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
-            max-width: 600px;
-            margin: 0 auto 24px;
-            justify-content: center;
+            max-width: 480px;
+            margin: 0 0 24px;
+            justify-content: flex-start;
+        }
+
+        @media (max-width: 900px) {
+            .cta-form {
+                max-width: 600px;
+                margin: 0 auto 24px;
+                justify-content: center;
+            }
         }
 
         .cta-form .cta-input {
@@ -1366,9 +1482,9 @@
         .cta-input {
             flex: 1;
             padding: 18px 24px;
-            background: rgba(13, 39, 88, 0.5);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
             color: #fff;
             font-size: 1rem;
         }
@@ -1380,15 +1496,17 @@
         .cta-input:focus {
             outline: none;
             border-color: #F5CB3F;
-            background: rgba(13, 39, 88, 0.8);
+            background: rgba(0, 0, 0, 0.6);
         }
 
         .cta-submit {
             padding: 18px 32px;
             background: #F5CB3F;
             border: none;
-            border-radius: 12px;
-            color: #0d2758;
+            border-radius: 4px;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             font-family: 'DM Sans', sans-serif;
             font-size: 1rem;
             font-weight: 600;
@@ -1431,7 +1549,7 @@
         /* Footer */
         footer {
             padding: 60px 0 40px;
-            background: #0a1f44;
+            background: #000;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: rgba(255, 255, 255, 0.6);
         }
@@ -1776,7 +1894,7 @@
 
         /* AI Prediction Market Section */
         .prediction-section {
-            background: linear-gradient(180deg, #0d2758 0%, #0a1f4a 100%);
+            background: #000;
             padding: 80px 0;
         }
 
@@ -1822,9 +1940,9 @@
         }
 
         .prediction-card {
-            background: linear-gradient(145deg, rgba(5, 40, 243, 0.3), rgba(13, 39, 88, 0.8));
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(245, 203, 63, 0.3);
-            border-radius: 20px;
+            border-radius: 8px;
             padding: 32px;
             position: relative;
             overflow: hidden;
@@ -2037,9 +2155,9 @@
         .hero-email-form input[type="email"] {
             flex: 1;
             padding: 16px 20px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 12px;
-            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 4px;
+            background: rgba(255,255,255,0.08);
             color: #fff;
             font-size: 1rem;
             font-family: 'DM Sans', sans-serif;
@@ -2065,43 +2183,24 @@
             }
         }
 
-        /* Countdown Timer */
-        .countdown-wrapper {
+        /* Live Status Badge */
+        .live-badge {
             display: inline-flex;
             align-items: center;
-            gap: 12px;
-            padding: 12px 20px;
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid rgba(239, 68, 68, 0.4);
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
-        .countdown-label {
-            color: #ef4444;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        .countdown-timer {
-            display: flex;
             gap: 8px;
-        }
-        .countdown-unit {
-            text-align: center;
-        }
-        .countdown-value {
-            background: rgba(239, 68, 68, 0.2);
-            padding: 6px 10px;
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            min-width: 40px;
-            color: #fff;
-        }
-        .countdown-unit-label {
-            font-size: 0.7rem;
-            color: rgba(255,255,255,0.5);
+            margin-bottom: 20px;
+            color: #10b981;
+            font-weight: 600;
             text-transform: uppercase;
-            margin-top: 2px;
+            letter-spacing: 1.5px;
+            font-size: 0.78rem;
+        }
+        .live-badge .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: pulse 1.5s ease-in-out infinite;
         }
 
         /* Sticky Scroll CTA */
@@ -2110,7 +2209,8 @@
             bottom: -100px;
             left: 0;
             right: 0;
-            background: linear-gradient(90deg, #0528F3, #0d2758);
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(8px);
             padding: 16px 24px;
             z-index: 999;
             box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
@@ -2140,8 +2240,10 @@
         }
         .sticky-cta-form input {
             padding: 12px 16px;
-            border: none;
-            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.06);
+            color: #fff;
             width: 220px;
             font-family: 'DM Sans', sans-serif;
         }
@@ -2149,9 +2251,11 @@
             padding: 12px 24px;
             background: #F5CB3F;
             border: none;
-            border-radius: 8px;
-            color: #0d2758;
-            font-weight: 600;
+            border-radius: 4px;
+            color: #000;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             cursor: pointer;
             font-family: 'DM Sans', sans-serif;
             transition: background 0.2s;
@@ -2187,9 +2291,9 @@
             display: flex;
         }
         .exit-popup {
-            background: linear-gradient(145deg, #0d2758, #0a1f4a);
-            border: 2px solid #F5CB3F;
-            border-radius: 24px;
+            background: #0a0a0a;
+            border: 1px solid #F5CB3F;
+            border-radius: 8px;
             padding: 48px;
             max-width: 500px;
             text-align: center;
@@ -2232,9 +2336,9 @@
         }
         .exit-popup-form input {
             padding: 16px;
-            border: 2px solid rgba(255,255,255,0.2);
-            border-radius: 12px;
-            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 4px;
+            background: rgba(255,255,255,0.06);
             color: #fff;
             font-size: 1rem;
             font-family: 'DM Sans', sans-serif;
@@ -2246,9 +2350,11 @@
             padding: 16px;
             background: #F5CB3F;
             border: none;
-            border-radius: 12px;
-            color: #0d2758;
-            font-weight: 600;
+            border-radius: 4px;
+            color: #000;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             font-size: 1rem;
             cursor: pointer;
             font-family: 'DM Sans', sans-serif;
@@ -2293,37 +2399,18 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-video-container">
-            <video class="hero-video" autoplay muted loop playsinline>
-                <source src="header.mp4" type="video/mp4">
-            </video>
+            <img class="hero-video" src="StockballerBrand-ID.png" alt="">
         </div>
         <div class="hero-overlay"></div>
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <div class="hero-preheadline">Early Access Open · WC26 Kickoff June 11</div>
-                    
-                    <!-- Countdown Timer -->
-                    <div class="countdown-wrapper">
-                        <span class="countdown-label">⚽ WC26 Kickoff:</span>
-                        <div class="countdown-timer" id="hero-countdown">
-                            <div class="countdown-unit">
-                                <div class="countdown-value" id="countdown-days">00</div>
-                                <div class="countdown-unit-label">Days</div>
-                            </div>
-                            <div class="countdown-unit">
-                                <div class="countdown-value" id="countdown-hours">00</div>
-                                <div class="countdown-unit-label">Hrs</div>
-                            </div>
-                            <div class="countdown-unit">
-                                <div class="countdown-value" id="countdown-mins">00</div>
-                                <div class="countdown-unit-label">Min</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <h1>Stop Renting<br><span>Your Football Edge.</span></h1>
-                    <p>Bet slips expire. Fantasy points reset. StockBaller lets you own and trade athlete performance tokens on testnet before the production launch.</p>
+                    <div class="hero-preheadline">🔴 LIVE NOW · World Cup 2026 Is Underway</div>
+
+                    <div class="live-badge"><span class="dot"></span> Matches Live — Prices Moving</div>
+
+                    <h1>Stop Watching.<br><span>Start Trading the Action.</span></h1>
+                    <p>The World Cup is live and every goal, save, and red card is moving prices in real time. StockBaller lets you own and trade athlete performance tokens on testnet before the production launch.</p>
 
                     <div class="hero-stats">
                         <div class="hero-stat">
@@ -2351,7 +2438,7 @@
                     <ul style="list-style: none; margin-top: 16px; margin-bottom: 4px; display: flex; flex-direction: column; gap: 9px;">
                         <li style="display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: rgba(255,255,255,0.85);"><span style="color: #F5CB3F; font-weight: 700;">✓</span> Own the token in your wallet</li>
                         <li style="display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: rgba(255,255,255,0.85);"><span style="color: #F5CB3F; font-weight: 700;">✓</span> Trade before and after narrative shifts</li>
-                        <li style="display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: rgba(255,255,255,0.85);"><span style="color: #F5CB3F; font-weight: 700;">✓</span> Learn with a World Cup breakout report and live demo</li>
+                        <li style="display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: rgba(255,255,255,0.85);"><span style="color: #F5CB3F; font-weight: 700;">✓</span> Make matchday predictions and track them against real performance</li>
                     </ul>
 
                     <div style="margin-top: 20px; margin-bottom: 4px;">
@@ -2466,34 +2553,41 @@
 
             <div class="steps-grid">
                 <div class="step-card">
-                    <div class="step-number">🎯</div>
+                    <div class="step-number">01</div>
                     <h3>Scout (The Accumulation)</h3>
                     <p>Identify undervalued talent in the Premier League. Buy tokens while they are focused on the Title
                         Race.</p>
                 </div>
                 <div class="step-card">
-                    <div class="step-number">💰</div>
+                    <div class="step-number">02</div>
                     <h3>Hold (The Bridge)</h3>
                     <p>Your portfolio carries over. You don't lose your assets at the end of the season. You hold them
                         through the transfer window.</p>
                 </div>
                 <div class="step-card">
-                    <div class="step-number">🚀</div>
+                    <div class="step-number">03</div>
                     <h3>Profit (The Multiplier)</h3>
-                    <p>Sell into the liquidity spike when your player scores on the World Stage in Mexico/USA/Canada.
+                    <p>Sell into the liquidity spike the moment your player lights up the scoreboard — happening right now in Mexico/USA/Canada.
                     </p>
                 </div>
             </div>
 
             <!-- Inline Lead Capture -->
             <div class="inline-cta">
-                <h3>Ready to scout the WC26 breakouts? <span>Get your free report.</span></h3>
-                <form class="inline-cta-form" id="inline-waitlist-form">
-                    <input type="text" class="cta-input" placeholder="Your name" required id="inline-cta-name">
-                    <input type="email" class="cta-input" placeholder="Your email" required id="inline-cta-email">
-                    <button type="submit" class="cta-submit" id="inline-cta-submit">Get the Scout Report →</button>
-                </form>
-                <div class="form-message" id="inline-cta-message"></div>
+                <div class="inline-cta-watermark" aria-hidden="true">
+                    <div>TOKENS ARE MOVING EVERY MATCHDAY TOKENS ARE MOVING EVERY MATCHDAY</div>
+                    <div>GET THE LIVE SCOUT REPORT GET THE LIVE SCOUT REPORT GET THE LIVE</div>
+                    <div>TOKENS ARE MOVING EVERY MATCHDAY TOKENS ARE MOVING EVERY MATCHDAY</div>
+                </div>
+                <div class="inline-cta-content">
+                    <h3>Tokens are moving every matchday. <span>Get the Live Scout Report.</span></h3>
+                    <form class="inline-cta-form" id="inline-waitlist-form">
+                        <input type="text" class="cta-input" placeholder="Your name" required id="inline-cta-name">
+                        <input type="email" class="cta-input" placeholder="Your email" required id="inline-cta-email">
+                        <button type="submit" class="cta-submit" id="inline-cta-submit">Get the Scout Report →</button>
+                    </form>
+                    <div class="form-message" id="inline-cta-message"></div>
+                </div>
             </div>
         </div>
     </section>
@@ -2502,8 +2596,8 @@
     <section class="social-proof-section">
         <div class="container">
             <div class="social-proof-header">
-                <h2 style="font-size: 2rem; margin-bottom: 8px;">We Back-Tested the Algorithm on the 2024 Season.</h2>
-                <p>Our algorithm has just flagged 5 new players with this exact data pattern heading into the World Cup.
+                <h2 style="font-size: 2rem; margin-bottom: 8px;">We Back-Tested the Algorithm on the 2024 Season — Now It's Live for 2026.</h2>
+                <p>Our algorithm just flagged 5 players surging in value as the tournament unfolds.
                 </p>
             </div>
 
@@ -2786,8 +2880,8 @@
                     <div class="faq-answer">
                         <div class="faq-answer-content">
                             The testnet is free — sign up and explore the full platform with no real money required.
-                            At production launch, minimum entry is planned at $10. We recommend joining the early
-                            access list now to lock in your spot and receive the WC26 Scout Report.
+                            At production launch, minimum entry is planned at $10. With the tournament live right
+                            now, join the early access list to catch matchday moves before production opens.
                         </div>
                     </div>
                 </div>
@@ -2839,35 +2933,40 @@
 
     <!-- CTA Section -->
     <section class="cta-section" id="cta">
-        <div class="container">
-            <h2>Get the <span>WC26 Scout Report</span></h2>
-            <p>Our algorithm flagged 5 players with breakout potential. Get the full analysis before the tournament.</p>
-
-            <div class="cta-benefits"
-                style="display: flex; justify-content: center; gap: 32px; margin: 24px 0; flex-wrap: wrap;">
-                <span style="display: flex; align-items: center; gap: 8px;"><span style="color: #10b981;">✓</span>
-                    Pre-Tournament Window Access</span>
-                <span style="display: flex; align-items: center; gap: 8px;"><span style="color: #10b981;">✓</span>
-                    5 Flagged Players Report</span>
-                <span style="display: flex; align-items: center; gap: 8px;"><span style="color: #10b981;">✓</span>
-                    Priority Entry</span>
+        <div class="cta-split">
+            <div class="cta-visual">
+                <img src="StockballerBrand-ID-pg3.png" alt="StockBaller">
             </div>
+            <div class="cta-content">
+                <h2>Get the <span>Live Scout Report</span></h2>
+                <p>Our algorithm just flagged 5 players surging as the tournament plays out. Get the full breakdown.</p>
 
-            <form class="cta-form" id="waitlist-form">
-                <input type="text" class="cta-input" placeholder="Your name" required id="cta-name">
-                <input type="email" class="cta-input" placeholder="Your email" required id="cta-email">
-                <button type="submit" class="cta-submit" id="cta-submit">Get the Scout Report →</button>
-            </form>
-
-            <div style="display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 16px;">
-                <div class="waitlist-avatars" style="margin-right: 0;">
-                    <img src="https://i.pravatar.cc/100?img=5" alt="User">
-                    <img src="https://i.pravatar.cc/100?img=6" alt="User">
-                    <img src="https://i.pravatar.cc/100?img=7" alt="User">
+                <div class="cta-benefits"
+                    style="display: flex; justify-content: flex-start; gap: 32px; margin: 24px 0; flex-wrap: wrap;">
+                    <span style="display: flex; align-items: center; gap: 8px;"><span style="color: #10b981;">✓</span>
+                        Live Matchday Alerts</span>
+                    <span style="display: flex; align-items: center; gap: 8px;"><span style="color: #10b981;">✓</span>
+                        5 Flagged Players Report</span>
+                    <span style="display: flex; align-items: center; gap: 8px;"><span style="color: #10b981;">✓</span>
+                        Priority Entry</span>
                 </div>
-                <p class="cta-note" style="margin: 0;"><strong id="cta-waitlist-count">2,800+</strong> fans on the early access list • Limited to first 5,000 spots</p>
+
+                <form class="cta-form" id="waitlist-form">
+                    <input type="text" class="cta-input" placeholder="Your name" required id="cta-name">
+                    <input type="email" class="cta-input" placeholder="Your email" required id="cta-email">
+                    <button type="submit" class="cta-submit" id="cta-submit">Get the Scout Report →</button>
+                </form>
+
+                <div style="display: flex; justify-content: flex-start; align-items: center; gap: 12px; margin-top: 16px;">
+                    <div class="waitlist-avatars" style="margin-right: 0;">
+                        <img src="https://i.pravatar.cc/100?img=5" alt="User">
+                        <img src="https://i.pravatar.cc/100?img=6" alt="User">
+                        <img src="https://i.pravatar.cc/100?img=7" alt="User">
+                    </div>
+                    <p class="cta-note" style="margin: 0;"><strong id="cta-waitlist-count">2,800+</strong> fans on the early access list • Limited to first 5,000 spots</p>
+                </div>
+                <div class="form-message" id="cta-message"></div>
             </div>
-            <div class="form-message" id="cta-message"></div>
         </div>
     </section>
 
@@ -2969,47 +3068,46 @@
             initPreviewChart();
         });
 
-        // Load simulation data
+        // Load live World Cup 2026 token data from the market backend
         async function loadSimulationData() {
             try {
-                const response = await fetch(`${API_BASE}/simulation/results`);
+                const response = await fetch(`${API_BASE}/market/players`);
                 if (!response.ok) throw new Error(`API returned ${response.status}`);
                 const data = await response.json();
 
-                if (data.hasResult && data.result) {
-                    simulationData = data.result;
-                    updatePageWithData();
+                if (data.success && Array.isArray(data.data) && data.data.length > 0) {
+                    const tokenResults = mapPlayersToTokens(data.data);
+                    simulationData = { tokenResults };
+                    updatePageWithData(tokenResults);
                 } else {
-                    throw new Error('No simulation results available');
+                    throw new Error('No player data available');
                 }
             } catch (error) {
-                console.warn('API unavailable, using simulation data:', error.message);
+                console.warn('API unavailable, using fallback data:', error.message);
                 simulationData = null;
                 const fallbackTokens = getDefaultTokens();
                 renderPerformers(fallbackTokens);
                 renderRiskChart(fallbackTokens);
                 updateRiskSection(fallbackTokens);
                 updateHeroCard(fallbackTokens[0]);
+                updateCalculatorOptions(fallbackTokens);
             }
         }
 
         // Update page elements with real data
-        function updatePageWithData() {
-            if (!simulationData) return;
+        function updatePageWithData(tokenResults) {
+            if (!tokenResults || tokenResults.length === 0) return;
 
-            const summary = simulationData.summary;
+            // Hero stats - live market cap across all current tokens
+            const totalMarketCap = tokenResults.reduce((sum, t) => sum + t.endPrice * (t.totalSupply || 0), 0);
+            document.getElementById('hero-volume').textContent = formatCurrency(totalMarketCap);
 
-            // Hero stats
-            document.getElementById('hero-volume').textContent = formatCurrency(summary.totalTradingVolume);
-
-            // Calculate average return from tokens
-            const tokenResults = parseTokenResults(simulationData.tokenResults);
+            // Average return across all live tokens
             const avgReturn = tokenResults.reduce((sum, t) => sum + t.totalReturn, 0) / tokenResults.length;
             document.getElementById('hero-return').textContent = '+' + avgReturn.toFixed(1) + '%';
 
             // Trust section
-            document.getElementById('trust-volume').textContent = formatCurrency(summary.totalTradingVolume);
-            document.getElementById('trust-fees').textContent = formatCurrency(summary.totalFeesCollected);
+            document.getElementById('trust-volume').textContent = formatCurrency(totalMarketCap);
 
             // Render performers
             renderPerformers(tokenResults);
@@ -3027,23 +3125,25 @@
             updateCalculatorOptions(tokenResults);
         }
 
-        // Parse token results (handle PowerShell string format)
-        function parseTokenResults(tokenResults) {
-            if (!tokenResults) return getDefaultTokens();
-
-            return tokenResults.map(result => {
-                if (typeof result === 'string') {
-                    // Parse PowerShell object string
-                    const parsed = {};
-                    const matches = result.matchAll(/(\w+)=([^;]+)/g);
-                    for (const match of matches) {
-                        let value = match[2].trim();
-                        if (!isNaN(value)) value = parseFloat(value);
-                        parsed[match[1]] = value;
-                    }
-                    return parsed;
-                }
-                return result;
+        // Map live /market/players records (World Cup 2026 tokens, current yield formula)
+        // into the token shape the rendering functions below expect.
+        function mapPlayersToTokens(players) {
+            return players.map(p => {
+                const startPrice = p.ipoPrice || 100;
+                const endPrice = p.currentPrice || startPrice;
+                return {
+                    name: p.name,
+                    team: p.team,
+                    photoUrl: p.photoUrl,
+                    totalSupply: p.totalSupply,
+                    startPrice,
+                    endPrice,
+                    totalReturn: ((endPrice - startPrice) / startPrice) * 100,
+                    goals: p.stats?.goals,
+                    assists: p.stats?.assists,
+                    avgRating: p.stats?.rating ? Number(p.stats.rating.toFixed(1)) : undefined,
+                    apy: p.yieldData?.apy,
+                };
             }).sort((a, b) => b.totalReturn - a.totalReturn);
         }
 
@@ -3068,11 +3168,11 @@
                 <div class="performer-card ${index === 0 ? 'selected' : ''}" data-token='${JSON.stringify(token)}'>
                     <div class="performer-header">
                         <div class="performer-info">
-                            <img class="performer-avatar-img" src="${getPlayerImage(token.name, token.imageId)}" alt="${token.name}" onerror="if(this.src.indexOf('ui-avatars')===-1){this.src='https://ui-avatars.com/api/?name='+encodeURIComponent(this.alt)+'&background=0528f3&color=F5CB3F&size=250&bold=true'}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
+                            <img class="performer-avatar-img" src="${token.photoUrl || getPlayerImage(token.name, token.imageId)}" alt="${token.name}" onerror="if(this.src.indexOf('ui-avatars')===-1){this.src='https://ui-avatars.com/api/?name='+encodeURIComponent(this.alt)+'&background=0528f3&color=F5CB3F&size=250&bold=true'}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
                             <div class="performer-avatar" style="display:none;">${getPlayerEmoji(token.name)}</div>
                             <div>
                                 <div class="performer-name">${token.name}</div>
-                                <div class="performer-team">${getPlayerTeam(token.name)}</div>
+                                <div class="performer-team">${token.team || getPlayerTeam(token.name)}</div>
                             </div>
                         </div>
                         <div class="performer-return">
@@ -3199,14 +3299,14 @@
 
         function updatePreviewCard(token) {
             document.getElementById('preview-name').textContent = token.name;
-            document.getElementById('preview-team').textContent = getPlayerTeam(token.name);
+            document.getElementById('preview-team').textContent = token.team || getPlayerTeam(token.name);
             document.getElementById('preview-price').textContent = '$' + (token.endPrice?.toFixed(2) || '200.00');
 
             // Update avatar image
             const avatarEl = document.getElementById('preview-avatar');
             const fallbackEl = document.getElementById('preview-avatar-fallback');
             if (avatarEl) {
-                avatarEl.src = getPlayerImage(token.name, token.imageId);
+                avatarEl.src = token.photoUrl || getPlayerImage(token.name, token.imageId);
                 avatarEl.style.display = 'block';
                 avatarEl.onerror = () => {
                     if (avatarEl.src.indexOf('ui-avatars') === -1) {
@@ -3288,7 +3388,7 @@
             const avatarEl = document.getElementById('preview-avatar');
             const fallbackEl = document.getElementById('preview-avatar-fallback');
             if (avatarEl) {
-                avatarEl.src = getPlayerImage(token.name, token.imageId);
+                avatarEl.src = token.photoUrl || getPlayerImage(token.name, token.imageId);
                 avatarEl.style.display = 'block';
                 avatarEl.onerror = () => {
                     if (avatarEl.src.indexOf('ui-avatars') === -1) {
@@ -3307,7 +3407,7 @@
 
             // Update team
             const teamEl = document.getElementById('preview-team');
-            if (teamEl) teamEl.textContent = getPlayerTeam(token.name);
+            if (teamEl) teamEl.textContent = token.team || getPlayerTeam(token.name);
 
             // Update price
             const priceEl = document.getElementById('preview-price');
@@ -3686,8 +3786,8 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(13, 39, 88, 0.98);
-            border-top: 2px solid #F5CB3F;
+            background: rgba(0, 0, 0, 0.97);
+            border-top: 1px solid #F5CB3F;
             padding: 20px;
             z-index: 9999;
             box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
@@ -3724,7 +3824,7 @@
         }
         .cookie-btn-primary {
             background: #F5CB3F;
-            color: #0d2758;
+            color: #000;
             border: none;
         }
         .cookie-btn-primary:hover {
@@ -3756,14 +3856,14 @@
     <div class="exit-popup-overlay" id="exit-popup">
         <div class="exit-popup">
             <button class="exit-popup-close" onclick="closeExitPopup()">&times;</button>
-            <h2>Wait! Don't miss the <span>WC26 window</span></h2>
-            <p>Get our free Scout Report with 5 undervalued players flagged by our algorithm before the tournament.</p>
+            <h2>Wait! The <span>tournament is live</span> right now</h2>
+            <p>Get our free Scout Report on 5 players surging in value as matches play out.</p>
             <form class="exit-popup-form" id="exit-popup-form">
                 <input type="email" placeholder="Your best email" required id="exit-email">
                 <button type="submit">Send Me The Report →</button>
             </form>
             <div class="exit-popup-bonus">
-                🎁 Plus: Early access to Pre-Tournament pricing
+                🎁 Plus: Early access to live pricing data
             </div>
         </div>
     </div>
@@ -3787,33 +3887,6 @@
     <!-- Conversion Optimization Scripts -->
     <script>
     (function() {
-        // ============================================
-        // COUNTDOWN TIMER (World Cup 2026 Start: June 11, 2026)
-        // ============================================
-        const targetDate = new Date('2026-06-11T00:00:00').getTime();
-        
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
-            
-            if (distance > 0) {
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                
-                const daysEl = document.getElementById('countdown-days');
-                const hoursEl = document.getElementById('countdown-hours');
-                const minsEl = document.getElementById('countdown-mins');
-                
-                if (daysEl) daysEl.textContent = days.toString().padStart(2, '0');
-                if (hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
-                if (minsEl) minsEl.textContent = mins.toString().padStart(2, '0');
-            }
-        }
-        
-        updateCountdown();
-        setInterval(updateCountdown, 60000);
-
         // ============================================
         // STICKY CTA (show after scrolling past hero)
         // ============================================

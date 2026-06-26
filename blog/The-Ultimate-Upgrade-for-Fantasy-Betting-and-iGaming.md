@@ -1,3 +1,7 @@
+---
+date: 2026-04-02
+---
+
 # The Ultimate Upgrade for Fantasy, Betting, and iGaming
 
 ![[HERO] The Future of Athlete Liquidity: Why Chainlink-Certified Valuation is the Gold Standard](https://cdn.marblism.com/OK7wbi7vrWp.webp)
