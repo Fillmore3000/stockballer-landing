@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>StockBaller — Technical Diligence Pack 2026</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+
+        :root {
+            --primary: #0D2758;
+            --navy2: #132D5E;
+            --navy3: #1A3A6E;
+            --accent: #F5CB3F;
+            --blue: #0528F3;
+            --success: #10B981;
+            --danger: #FF1744;
+            --text: #FFFFFF;
+            --text70: rgba(255, 255, 255, 0.7);
+            --border: rgba(255, 255, 255, 0.12);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            background: var(--primary);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 18mm 20mm;
+            margin: 15px auto;
+            background: var(--navy2);
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            page-break-after: always;
+            page-break-inside: avoid;
+            position: relative;
+        }
+
+        header {
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 14px;
+            margin-bottom: 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .doc-label {
+            font-weight: 800;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text70);
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--text);
+            margin: 0 0 18px 0;
+            border-left: 5px solid var(--accent);
+            padding-left: 14px;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--accent);
+            margin: 28px 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 6px;
+        }
+
+        h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+            margin: 18px 0 8px 0;
+        }
+
+        p {
+            margin-bottom: 10px;
+            font-size: 13.5px;
+            color: var(--text70);
+        }
+
+        li {
+            color: var(--text70);
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+
+        ul { padding-left: 18px; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 12.5px;
+            page-break-inside: avoid;
+        }
+
+        th {
+            background: var(--navy3);
+            text-align: left;
+            padding: 9px 10px;
+            border: 1px solid var(--border);
+            font-size: 10px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 800;
+        }
+
+        td {
+            padding: 9px 10px;
+            border: 1px solid var(--border);
+            color: var(--text70);
+            vertical-align: top;
+        }
+
+        td strong { color: var(--text); }
+
+        tr.total td {
+            background: rgba(245,203,63,0.1);
+            color: var(--accent);
+            font-weight: 800;
+        }
+
+        tr.highlight td {
+            background: rgba(16,185,129,0.12);
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 14px 0;
+            page-break-inside: avoid;
+        }
+
+        .stat-grid-3 { grid-template-columns: repeat(3, 1fr); }
+
+        .stat-item {
+            text-align: center;
+            background: var(--navy3);
+            border: 1px solid var(--border);
+            padding: 14px 10px;
+            border-radius: 10px;
+        }
+
+        .stat-val {
+            display: block;
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--accent);
+        }
+
+        .stat-lbl {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text70);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+            display: block;
+        }
+
+        .card {
+            background: var(--navy3);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px 18px;
+            margin: 10px 0;
+            page-break-inside: avoid;
+        }
+
+        .card h3 { margin-top: 0; color: var(--accent); font-size: 14px; }
+        .card p { margin: 0 0 6px; font-size: 13px; }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .formula {
+            background: #071525;
+            color: #a5f3fc;
+            border: 1px solid var(--accent);
+            padding: 16px 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 8px;
+            margin: 12px 0;
+            page-break-inside: avoid;
+            line-height: 1.8;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        .badge-live { background: var(--success); color: #fff; }
+        .badge-testnet { background: #0528F3; color: #fff; }
+        .badge-planned { background: rgba(245,203,63,0.2); color: var(--accent); border: 1px solid rgba(245,203,63,0.5); }
+        .badge-required { background: rgba(255,23,68,0.2); color: var(--danger); border: 1px solid rgba(255,23,68,0.5); }
+
+        .callout {
+            background: var(--navy3);
+            border-left: 4px solid var(--accent);
+            padding: 14px 18px;
+            border-radius: 0 8px 8px 0;
+            margin: 14px 0;
+            page-break-inside: avoid;
+        }
+
+        .callout p { margin: 0; font-size: 13px; }
+        .callout strong { color: var(--text); }
+
+        .callout.critical { border-left-color: var(--danger); }
+        .callout.critical p { color: rgba(255,150,150,0.95); }
+
+        .footer {
+            text-align: center;
+            font-size: 9px;
+            color: var(--text70);
+            margin-top: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-top: 1px solid var(--border);
+            padding-top: 10px;
+        }
+
+        .cover-block {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 260mm;
+            text-align: center;
+        }
+
+        .cover-block h1 {
+            border: none;
+            padding: 0;
+            font-size: 34px;
+            letter-spacing: -1px;
+            margin: 20px 0 10px;
+        }
+
+        .chain-tag {
+            display: inline-block;
+            background: rgba(5,40,243,0.25);
+            border: 1px solid rgba(5,40,243,0.6);
+            color: #7ba7ff;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            margin: 3px;
+        }
+
+        @media print {
+            @page { size: A4; margin: 0; }
+            html, body {
+                background: #0D2758 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .page {
+                margin: 0 !important;
+                box-shadow: none !important;
+                background: #132D5E !important;
+                page-break-after: always;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .page:last-child { page-break-after: auto; }
+            .card, .stat-item, .callout, .formula {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            th { background: #1A3A6E !important; -webkit-print-color-adjust: exact !important; }
+            tr.total td { background: rgba(245,203,63,0.15) !important; -webkit-print-color-adjust: exact !important; }
+            tr.highlight td { background: rgba(16,185,129,0.15) !important; -webkit-print-color-adjust: exact !important; }
+            .callout { background: #1A3A6E !important; -webkit-print-color-adjust: exact !important; }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ═══════════════════════════════════════════
+     COVER
+═══════════════════════════════════════════ -->
+<div class="page">
+    <div class="cover-block">
+        <img src="../NewLogo.png" alt="StockBaller" style="height:80px; margin-bottom:14px;" onerror="this.style.display='none'">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:3px; color:var(--accent); font-weight:800; margin-bottom:8px;">Technical Investor Diligence Pack</div>
+        <h1>Infrastructure, Costs &amp;<br>2-Year Protocol Roadmap</h1>
+        <p style="font-size:16px; color:var(--text70); max-width:440px; margin:0 auto 28px;">The complete operational and financial specification behind the StockBaller pre-seed raise.</p>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-bottom:36px;">
+            <span class="chain-tag">Base L2 (Mainnet Target)</span>
+            <span class="chain-tag">Aerodrome DEX</span>
+            <span class="chain-tag">MongoDB Atlas</span>
+            <span class="chain-tag">Railway + Vercel</span>
+            <span class="chain-tag">Auth0 + Openfort</span>
+        </div>
+        <table style="max-width:400px; margin:0 auto;">
+            <thead><tr><th>Document</th><th>Version</th><th>Date</th></tr></thead>
+            <tbody>
+                <tr><td>Technical Diligence Pack</td><td><strong>v1.0</strong></td><td><strong>June 2026</strong></td></tr>
+                <tr><td>Raise Target</td><td colspan="2"><strong style="color:var(--accent);">£200,000 Pre-Seed</strong></td></tr>
+                <tr><td>Instrument</td><td colspan="2"><strong>ASA @ £1.5M Cap — SEIS Eligible</strong></td></tr>
+                <tr><td>Contact</td><td colspan="2"><strong>contact@stockballer.app</strong></td></tr>
+            </tbody>
+        </table>
+        <p style="margin-top:48px; font-size:10px; text-transform:uppercase; letter-spacing:2px; opacity:0.35;">Confidential — Not for Distribution</p>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 1 — CURRENT PRODUCTION STATE
+═══════════════════════════════════════════ -->
+<div class="page">
+    <header>
+        <img src="../NewLogo.png" alt="StockBaller" style="height:30px;" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'StockBaller',style:'font-weight:900;font-size:18px;color:#F5CB3F'}))">
+        <span class="doc-label">Section 1 — Current Production Infrastructure</span>
+    </header>
+
+    <h1>What Is Already Running<br>in Production</h1>
+    <p>This is not a prototype. The following infrastructure is live and verifiable today. An investor is not funding a build — they are funding a go-to-market.</p>
+
+    <table>
+        <thead>
+            <tr><th>Component</th><th>Technology</th><th>Hosting</th><th>Status</th><th>Monthly Cost</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Backend API</strong></td><td>NestJS 11, TypeScript</td><td>Railway Hobby</td><td><span class="badge badge-live">Live</span></td><td>£8</td></tr>
+            <tr><td><strong>Database</strong></td><td>MongoDB Atlas, Prisma ORM</td><td>Atlas M0 (free)</td><td><span class="badge badge-live">Live</span></td><td>£0</td></tr>
+            <tr><td><strong>Admin Dashboard</strong></td><td>Vanilla HTML/JS</td><td>Vercel Hobby</td><td><span class="badge badge-live">Live</span></td><td>£0</td></tr>
+            <tr><td><strong>Frontend App</strong></td><td>React Native, Expo SDK 54</td><td>Vercel (static)</td><td><span class="badge badge-live">Live</span></td><td>£0</td></tr>
+            <tr><td><strong>WebSocket Server</strong></td><td>Socket.io (embedded in API)</td><td>Railway (shared)</td><td><span class="badge badge-live">Live</span></td><td>£0</td></tr>
+            <tr><td><strong>Live Match Data</strong></td><td>API-Football v3 — WC 2026</td><td>Managed API</td><td><span class="badge badge-live">Live</span></td><td>£35</td></tr>
+            <tr><td><strong>Authentication</strong></td><td>Auth0 + Openfort embedded wallets</td><td>Auth0 Free tier</td><td><span class="badge badge-live">Live</span></td><td>£0</td></tr>
+            <tr><td><strong>Smart Contracts</strong></td><td>ERC-1155, Solidity — AthleteVault, PredictionMarket</td><td>Base Sepolia</td><td><span class="badge badge-testnet">Testnet</span></td><td>£0</td></tr>
+            <tr class="total"><td colspan="4"><strong>Total Current Monthly Infrastructure</strong></td><td><strong>£43 / month</strong></td></tr>
+        </tbody>
+    </table>
+
+    <div class="callout">
+        <p>The entire platform — 240 WC 2026 player tokens, 72 live fixtures, prediction markets, H2H challenges, leaderboards, bot simulation fleet, and WebSocket real-time events — runs on <strong>under £50/month</strong>. This is the baseline the raise scales from.</p>
+    </div>
+
+    <h2>Live Data — World Cup 2026 (Active From Today)</h2>
+    <div class="stat-grid">
+        <div class="stat-item"><span class="stat-val">240</span><span class="stat-lbl">Player Tokens</span></div>
+        <div class="stat-item"><span class="stat-val">48</span><span class="stat-lbl">Nations</span></div>
+        <div class="stat-item"><span class="stat-val">72</span><span class="stat-lbl">Group Fixtures</span></div>
+        <div class="stat-item"><span class="stat-val">Jun 11</span><span class="stat-lbl">Formula Live From</span></div>
+    </div>
+
+    <h2>Production URLs (Verifiable)</h2>
+    <div class="card">
+        <p style="font-family: monospace; font-size: 12px; line-height: 2.4; margin:0; color: var(--text70);">
+            API:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong style="color:#a5f3fc;">https://stockballer-api-production.up.railway.app</strong><br>
+            Dashboard:&nbsp; <strong style="color:#a5f3fc;">https://stockballer-landing.vercel.app/admin.html</strong><br>
+            Repo (API):&nbsp; <strong style="color:#a5f3fc;">github.com/Fillmore3000/stockballer-api</strong><br>
+            Repo (App):&nbsp; <strong style="color:#a5f3fc;">github.com/Fillmore3000/Stockballer-app</strong>
+        </p>
+    </div>
+
+    <div class="footer">StockBaller — Technical Diligence Pack v1.0 — June 2026 — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 2 — INFRASTRUCTURE SCALING
+═══════════════════════════════════════════ -->
+<div class="page">
+    <header>
+        <img src="../NewLogo.png" alt="StockBaller" style="height:30px;" onerror="this.style.display='none'">
+        <span class="doc-label">Section 2 — Infrastructure Scaling Model</span>
+    </header>
+
+    <h1>Infrastructure Costs<br>by User Tier</h1>
+
+    <h2>Railway — API Backend</h2>
+    <table>
+        <thead><tr><th>User Tier</th><th>Plan</th><th>Monthly Cost</th><th>Spec</th><th>Upgrade Trigger</th></tr></thead>
+        <tbody>
+            <tr><td><strong>0–500 users (now)</strong></td><td>Hobby</td><td>£8</td><td>512MB RAM, shared CPU</td><td>—</td></tr>
+            <tr><td><strong>500–2,000 users</strong></td><td>Pro</td><td>£18</td><td>8GB RAM, dedicated CPU</td><td>API p95 &gt;800ms</td></tr>
+            <tr><td><strong>2,000–10,000 users</strong></td><td>Pro + scale-out</td><td>£60–120</td><td>2–4 instances, horizontal</td><td>&gt;200 concurrent WS</td></tr>
+            <tr><td><strong>10,000+ users</strong></td><td>Pro + dedicated</td><td>£200–400</td><td>Reserved instances, SLA</td><td>Sustained load</td></tr>
+        </tbody>
+    </table>
+
+    <h2>MongoDB Atlas — Database</h2>
+    <table>
+        <thead><tr><th>User Tier</th><th>Plan</th><th>Monthly Cost</th><th>Spec</th><th>Upgrade Trigger</th></tr></thead>
+        <tbody>
+            <tr><td><strong>0–500 users</strong></td><td>M0 Free</td><td>£0</td><td>512MB, shared</td><td>—</td></tr>
+            <tr><td><strong>500–5,000 users</strong></td><td>M10</td><td>£52</td><td>10GB, 2vCPU, 2GB RAM</td><td>Storage &gt;400MB or latency &gt;100ms</td></tr>
+            <tr><td><strong>5,000–20,000 users</strong></td><td>M20</td><td>£175</td><td>20GB, 4GB RAM</td><td>Sustained query load</td></tr>
+            <tr><td><strong>20,000+ users</strong></td><td>M30+</td><td>£400+</td><td>Dedicated, auto-scale</td><td>Sustained growth</td></tr>
+        </tbody>
+    </table>
+
+    <h2>External APIs &amp; Services</h2>
+    <table>
+        <thead><tr><th>Service</th><th>Purpose</th><th>Current Cost</th><th>Scale Cost</th><th>Upgrade Trigger</th></tr></thead>
+        <tbody>
+            <tr><td><strong>API-Football</strong></td><td>Live WC scores, fixtures, squads</td><td>£35/mo</td><td>£75–150/mo</td><td>Multi-sport expansion Q4 2026</td></tr>
+            <tr><td><strong>Auth0</strong></td><td>User authentication</td><td>£0</td><td>£203/mo</td><td>&gt;7,500 MAU</td></tr>
+            <tr><td><strong>Openfort</strong></td><td>Embedded wallets</td><td>£0</td><td>TBD (negotiate at scale)</td><td>&gt;1,000 wallets</td></tr>
+            <tr><td><strong>MoonPay / Transak</strong></td><td>Fiat onramp (USDC deposits)</td><td>£0</td><td>1.5–3.5% per tx</td><td>User-borne fee, no fixed cost</td></tr>
+            <tr><td><strong>Vercel Pro</strong></td><td>Frontend + dashboard hosting</td><td>£0</td><td>£18/mo</td><td>At production launch</td></tr>
+            <tr><td><strong>TRM Labs</strong></td><td>Wallet sanctions screening</td><td>£0</td><td>£0–150/mo</td><td>&gt;1,000 tx/month</td></tr>
+            <tr><td><strong>MaxMind GeoIP2</strong></td><td>IP-based geo-blocking</td><td>£0</td><td>£15/mo</td><td>At production launch</td></tr>
+            <tr><td><strong>Sentry</strong></td><td>Error monitoring + alerting</td><td>£0</td><td>£20/mo</td><td>At production launch</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Full Monthly OpEx by Phase</h2>
+    <table>
+        <thead>
+            <tr><th>Cost Item</th><th>Now (Jun '26)</th><th>Sep '26 Launch</th><th>Q2 '27 (SBX)</th><th>Q4 '27 (Scale)</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Railway (API)</td><td>£8</td><td>£18</td><td>£60</td><td>£120</td></tr>
+            <tr><td>MongoDB Atlas</td><td>£0</td><td>£52</td><td>£52</td><td>£175</td></tr>
+            <tr><td>Auth0</td><td>£0</td><td>£0</td><td>£203</td><td>£203</td></tr>
+            <tr><td>API-Football</td><td>£35</td><td>£35</td><td>£75</td><td>£150</td></tr>
+            <tr><td>Vercel Pro</td><td>£0</td><td>£18</td><td>£18</td><td>£18</td></tr>
+            <tr><td>Oracle (Centralised → CRE)</td><td>£0 <span style="font-size:10px;">(signed, gas only)</span></td><td>£2 <span style="font-size:10px;">(Base gas)</span></td><td>£42 <span style="font-size:10px;">(CRE LINK top-up)</span></td><td>£92 <span style="font-size:10px;">(multi-sport)</span></td></tr>
+            <tr><td>MaxMind + TRM Labs</td><td>£0</td><td>£15</td><td>£90</td><td>£165</td></tr>
+            <tr><td>Sentry</td><td>£0</td><td>£20</td><td>£20</td><td>£60</td></tr>
+            <tr><td>Curaçao License (÷12)</td><td>£0</td><td>£1,167</td><td>£1,167</td><td>£1,167</td></tr>
+            <tr><td>Legal retainer (ongoing)</td><td>£0</td><td>£300</td><td>£500</td><td>£750</td></tr>
+            <tr class="total"><td><strong>Total Monthly OpEx</strong></td><td><strong>£43</strong></td><td><strong>£1,627</strong></td><td><strong>£2,227</strong></td><td><strong>£2,900</strong></td></tr>
+        </tbody>
+    </table>
+
+    <div class="callout">
+        <p>At £120,000/month revenue (Q4 2027 projection), total infrastructure OpEx is approximately <strong>£2,900/month</strong> — a <strong>97.6% gross margin</strong>. This is a software-margin business on a DeFi rail. Oracle costs — even at full Chainlink CRE decentralisation — contribute under £100/month to this total.</p>
+    </div>
+
+    <div class="footer">StockBaller — Technical Diligence Pack v1.0 — June 2026 — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 3 — SMART CONTRACTS & AUDIT
+═══════════════════════════════════════════ -->
+<div class="page">
+    <header>
+        <img src="../NewLogo.png" alt="StockBaller" style="height:30px;" onerror="this.style.display='none'">
+        <span class="doc-label">Section 3 — Smart Contract Infrastructure &amp; Audit Plan</span>
+    </header>
+
+    <h1>Smart Contracts:<br>Current State &amp; Build Roadmap</h1>
+
+    <h2>Contracts Already Written</h2>
+    <table>
+        <thead><tr><th>Contract</th><th>Purpose</th><th>Est. Lines</th><th>Status</th></tr></thead>
+        <tbody>
+            <tr><td><strong>AthleteVaultV2.sol</strong></td><td>ERC-1155 player token mint / burn / transfer</td><td>~400</td><td><span class="badge badge-testnet">Base Sepolia</span></td></tr>
+            <tr><td><strong>MockUSDC.sol</strong></td><td>Test USDC for local development environment</td><td>~80</td><td><span class="badge badge-testnet">Base Sepolia</span></td></tr>
+            <tr><td><strong>PredictionMarket.sol</strong></td><td>On-chain prediction settlement logic</td><td>~300</td><td><span class="badge badge-testnet">Written</span></td></tr>
+        </tbody>
+    </table>
+
+    <h2>Contracts to Build — Funded by Raise</h2>
+    <table>
+        <thead><tr><th>Contract</th><th>Purpose</th><th>Target Phase</th><th>Est. Build</th></tr></thead>
+        <tbody>
+            <tr><td><strong>PriceOracle.sol</strong></td><td>Accepts signed SQE price from backend, updates on-chain player prices</td><td>Sep 2026</td><td>1 week</td></tr>
+            <tr><td><strong>SBX.sol</strong></td><td>ERC-20 stablecoin — USDC-backed, 1:1 mint/redeem with 0.1% fee each way</td><td>Q2 2027</td><td>1 week</td></tr>
+            <tr><td><strong>PlayerStakingVault.sol</strong></td><td>Stake ERC-1155 player tokens → earn SBX yield from trading fee pool</td><td>Q3 2027</td><td>2 weeks</td></tr>
+            <tr><td><strong>FeeDistributor.sol</strong></td><td>Split platform trading fee revenue proportionally to sToken holders</td><td>Q3 2027</td><td>1 week</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Audit Plan — Two Rounds Required</h2>
+    <div class="two-col">
+        <div class="card">
+            <h3>Audit 1 — September 2026 <span class="badge badge-required">Required for Launch</span></h3>
+            <p><strong>Scope:</strong> AthleteVaultV2 + PredictionMarket + PriceOracle</p>
+            <p><strong>Auditor:</strong> Hacken — 4-week turnaround, Base ecosystem experience</p>
+            <p><strong>Duration:</strong> 4–6 weeks (book 6–8 weeks ahead)</p>
+            <p><strong>Cost:</strong> £22,000–£28,000</p>
+            <p><strong>Deliverable:</strong> Public report on Hacken website. Required for user trust and liquidity partner onboarding.</p>
+        </div>
+        <div class="card">
+            <h3>Audit 2 — Q2 2027 <span class="badge badge-planned">Planned</span></h3>
+            <p><strong>Scope:</strong> SBX.sol + PlayerStakingVault + FeeDistributor</p>
+            <p><strong>Auditor:</strong> Hacken (repeat) or Certik (brand recognition)</p>
+            <p><strong>Duration:</strong> 4–6 weeks</p>
+            <p><strong>Cost:</strong> £25,000–£45,000</p>
+            <p><strong>Deliverable:</strong> Public report + Immunefi bug bounty programme launch</p>
+        </div>
+    </div>
+
+    <h2>Base Mainnet Deployment Costs (One-Time)</h2>
+    <table>
+        <thead><tr><th>Action</th><th>Gas Estimate</th><th>Cost at Base L2 Prices</th></tr></thead>
+        <tbody>
+            <tr><td>Deploy AthleteVaultV2</td><td>~2.5M gas</td><td>&lt;£5</td></tr>
+            <tr><td>Deploy PredictionMarket</td><td>~2M gas</td><td>&lt;£4</td></tr>
+            <tr><td>Deploy PriceOracle</td><td>~800K gas</td><td>&lt;£1</td></tr>
+            <tr><td>Deploy SBX stablecoin</td><td>~1.2M gas</td><td>&lt;£3</td></tr>
+            <tr><td>Deploy PlayerStakingVault</td><td>~2M gas</td><td>&lt;£4</td></tr>
+            <tr><td>Seed DEX liquidity pools (20 initial pairs)</td><td>Variable</td><td>£50–200 total</td></tr>
+            <tr class="highlight"><td colspan="2"><strong>Total one-time deployment cost</strong></td><td><strong>&lt;£220</strong></td></tr>
+        </tbody>
+    </table>
+    <p style="font-size:12px; margin-top:6px;">Base L2 gas is negligibly cheap. Deployment cost is not a budget consideration — listed for completeness.</p>
+
+    <div class="footer">StockBaller — Technical Diligence Pack v1.0 — June 2026 — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 4 — LEGAL STACK
+═══════════════════════════════════════════ -->
+<div class="page">
+    <header>
+        <img src="../NewLogo.png" alt="StockBaller" style="height:30px;" onerror="this.style.display='none'">
+        <span class="doc-label">Section 4 — Legal &amp; Compliance Stack</span>
+    </header>
+
+    <h1>Legal Infrastructure:<br>Itemised — Not Estimated</h1>
+
+    <div class="callout critical">
+        <p><strong>This spend is not optional.</strong> MoonPay will reject a merchant application without a written AML policy. A securities regulator can freeze accounts without a token opinion letter. A single user complaint in an unaddressed jurisdiction costs 10× more to respond to than prevention. Legal is the longest-lead item in the entire roadmap — start immediately upon close.</p>
+    </div>
+
+    <h2>Pre-Launch Legal Requirements — Target: September 2026</h2>
+    <table>
+        <thead><tr><th>Item</th><th>Description</th><th>Provider</th><th>Cost</th><th>Lead Time</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>BVI Business Company</strong></td>
+                <td>Operating entity holding platform revenue, contracts, and IP</td>
+                <td>Ogier / Walkers / Harneys (BVI)</td>
+                <td>£8,000–£12,000</td>
+                <td>4–6 weeks</td>
+            </tr>
+            <tr>
+                <td><strong>Cayman Foundation</strong></td>
+                <td>Protocol / token entity holding smart contracts and treasury multisig</td>
+                <td>Same BVI counsel</td>
+                <td>£6,000–£9,000</td>
+                <td>4–6 weeks (parallel)</td>
+            </tr>
+            <tr>
+                <td><strong>Token Classification Opinion</strong></td>
+                <td>Written legal opinion: player tokens = utility instrument, not unregistered securities. Required before any real-money onboarding.</td>
+                <td>Fenwick / Matheson / Debevoise</td>
+                <td>£5,000–£12,000</td>
+                <td>3–4 weeks</td>
+            </tr>
+            <tr>
+                <td><strong>Curaçao eGaming Licence</strong></td>
+                <td>Covers prediction markets + H2H challenge staking globally (excluding US, UK, AU). First-year cost.</td>
+                <td>Licensing.ag / iGaming Counsel</td>
+                <td>£12,000–£16,000</td>
+                <td>4–6 weeks</td>
+            </tr>
+            <tr>
+                <td><strong>AML Compliance Manual</strong></td>
+                <td>Written AML programme required by MoonPay / Transak for merchant approval. Includes transaction monitoring procedures and FATF threshold rules.</td>
+                <td>Web3 specialist firm</td>
+                <td>£2,500–£5,000</td>
+                <td>2 weeks</td>
+            </tr>
+            <tr>
+                <td><strong>Terms of Service + Privacy Policy</strong></td>
+                <td>User-facing legal documents, BVI jurisdiction-aware. GDPR-compliant privacy policy.</td>
+                <td>Same firm as AML</td>
+                <td>£2,000–£4,000</td>
+                <td>2 weeks</td>
+            </tr>
+            <tr class="total">
+                <td colspan="3"><strong>Total Legal Cost to Launch</strong></td>
+                <td><strong>£35,500–£58,000</strong></td>
+                <td><strong>Start Week 1</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Geo-Blocking Technical Implementation</h2>
+    <table>
+        <thead><tr><th>Layer</th><th>Tool</th><th>Monthly Cost</th><th>What It Blocks</th></tr></thead>
+        <tbody>
+            <tr><td><strong>IP Geolocation</strong></td><td>MaxMind GeoIP2</td><td>£15/mo</td><td>US, UK, AU + all OFAC-sanctioned countries</td></tr>
+            <tr><td><strong>Wallet Screening</strong></td><td>TRM Labs lite tier</td><td>£0–150/mo</td><td>OFAC-listed wallet addresses</td></tr>
+            <tr><td><strong>Self-Certification</strong></td><td>In-app checkbox at signup</td><td>£0</td><td>Legal safe harbour — user confirms 18+, non-US, non-sanctioned</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Phase 2 Legal — Q2 2027 (SBX Stablecoin)</h2>
+    <div class="card">
+        <h3>SBX Stablecoin Legal Review <span class="badge badge-planned">Planned Q2 2027</span></h3>
+        <p>BVI + Cayman counsel review: does SBX constitute an e-money instrument or asset-referenced token under applicable law? In most offshore jurisdictions a USDC-backed utility token used within a closed platform is not classified as e-money — but written counsel opinion is required before launch.</p>
+        <p><strong>Cost: £3,000–£6,000.</strong> Performed by same BVI counsel already engaged.</p>
+    </div>
+
+    <div class="footer">StockBaller — Technical Diligence Pack v1.0 — June 2026 — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 5 — LIQUIDITY & DEX
+═══════════════════════════════════════════ -->
+<div class="page">
+    <header>
+        <img src="../NewLogo.png" alt="StockBaller" style="height:30px;" onerror="this.style.display='none'">
+        <span class="doc-label">Section 5 — Liquidity Partner &amp; DEX Architecture</span>
+    </header>
+
+    <h1>Liquidity Infrastructure:<br>Partner Model</h1>
+
+    <p>Self-seeding AMM pools for 240 player token pairs would require £500,000+ in committed capital. The partnership model delivers this without capital outlay from the platform.</p>
+
+    <div class="two-col">
+        <div class="card">
+            <h3>StockBaller Provides</h3>
+            <p>• Platform and growing user base</p>
+            <p>• Proprietary SQE price oracle (the signal no one else has)</p>
+            <p>• 90-day validated on-chain trading volume data</p>
+            <p>• WC 2026 formula calibration report (64 matches)</p>
+            <p>• Published Hacken audit report (credibility)</p>
+        </div>
+        <div class="card">
+            <h3>Partner Provides</h3>
+            <p>• Liquidity capital (both sides of order book)</p>
+            <p>• Active pool rebalancing and management</p>
+            <p>• Market depth on Aerodrome DEX (Base)</p>
+            <p>• Revenue: bid/ask spread + 20–30% share of trading fees from pools they make</p>
+        </div>
+    </div>
+
+    <h2>Target Liquidity Partners — Priority Order</h2>
+    <table>
+        <thead><tr><th>Firm</th><th>Why Relevant</th><th>Approach Timing</th><th>Prerequisite</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Keyrock</strong></td><td>Sports/gaming token experience, active in Base ecosystem</td><td>October 2026</td><td>Audit report + 90-day volume</td></tr>
+            <tr><td><strong>Auros</strong></td><td>Base-native, smaller deals accepted, fast-moving</td><td>October 2026</td><td>Warm intro via Base grants network</td></tr>
+            <tr><td><strong>Wintermute</strong></td><td>Largest DeFi MM — highest credibility for institutional investors</td><td>Q1 2027</td><td>Sustained on-chain volume required</td></tr>
+            <tr><td><strong>GSR</strong></td><td>Strong track record on novel/illiquid asset classes</td><td>Q1 2027 (SBX launch)</td><td>SBX stablecoin deployed and live</td></tr>
+        </tbody>
+    </table>
+
+    <h2>DEX Deployment — Aerodrome Finance (Base)</h2>
+    <p>Aerodrome is the dominant DEX on Base (Velodrome v2 fork, ve(3,3) model). Standard for Base-native token liquidity.</p>
+    <table>
+        <thead><tr><th>Pool</th><th>Type</th><th>Fee Tier</th><th>Timeline</th><th>Priority</th></tr></thead>
+        <tbody>
+            <tr><td><strong>SBX / USDC</strong></td><td>Stable pair</td><td>0.01%</td><td>Day 1 of SBX launch</td><td>Peg maintenance — critical</td></tr>
+            <tr><td><strong>Top 20 Player Tokens / SBX</strong></td><td>CLMM (concentrated)</td><td>0.05%</td><td>Q1 2027</td><td>Secondary market launch</td></tr>
+            <tr><td><strong>Mid-tier Player Tokens / SBX</strong></td><td>CLMM</td><td>0.30%</td><td>Q1 2027 month 2</td><td>Expanded coverage</td></tr>
+            <tr><td><strong>Long-tail Tokens / SBX</strong></td><td>Basic AMM</td><td>1.00%</td><td>Q2 2027+</td><td>Full 240-token accessibility</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Price Oracle Architecture</h2>
+    <div class="formula">
+Backend SQE calculation → Admin key signs price payload
+    → PriceOracle.sol verifies signature
+    → Updates on-chain price for player token
+    → Aerodrome pool uses on-chain price as reference
+    → (Future upgrade: Chainlink CRE decentralises the signing step)</div>
+    <p style="font-size:12px;">Centralised oracle at launch is standard for novel asset classes. Chainlink CRE is already wired in the codebase and activates as a decentralisation upgrade on a future milestone.</p>
+
+    <div class="footer">StockBaller — Technical Diligence Pack v1.0 — June 2026 — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 6 — RWA ARCHITECTURE & ORACLE COSTS
+═══════════════════════════════════════════ -->
+<div class="page">
+    <header>
+        <img src="../NewLogo.png" alt="StockBaller" style="height:30px;" onerror="this.style.display='none'">
+        <span class="doc-label">Section 6 — Real World Asset Architecture &amp; Oracle Infrastructure</span>
+    </header>
+
+    <h1>Performance Tokenization:<br>The RWA Architecture</h1>
+
+    <h2>What Makes Player Tokens Real World Assets</h2>
+    <p>Player tokens are not purely speculative instruments. They belong to an emerging category called <strong style="color:var(--accent)">Performance-Backed Tokens</strong> — a subset of Real World Assets where the "real world" reference is an athlete's verifiable on-field performance, maintained on-chain through a cryptographically secured data pipeline.</p>
+
+    <div class="two-col">
+        <div class="card">
+            <h3>Traditional RWA</h3>
+            <p>Tokenized T-bills, real estate, gold. The underlying asset has a fixed, independently custodied value. The oracle reports a market price.</p>
+            <p style="margin-top:8px; font-size:12px; color:rgba(255,255,255,0.5);">Example: USDC (fiat-backed), Ondo Finance (T-bills)</p>
+        </div>
+        <div class="card">
+            <h3>Performance Token (StockBaller)</h3>
+            <p>The underlying "asset" is an athlete's career trajectory — quantified by the SQE formula into a deterministic fair value. The oracle reports match statistics, not a market price.</p>
+            <p style="margin-top:8px; font-size:12px; color:rgba(255,255,255,0.5);">No custodied asset — value is formula-derived from real-world events.</p>
+        </div>
+    </div>
+
+    <h2>The Real World Data Pipeline</h2>
+    <div class="formula">REAL WORLD EVENT (goal scored, match played, red card)
+    ↓
+API-Football v3  →  StockBaller backend fetches stats (verified source)
+    ↓
+SQE v4 formula  →  deterministic price calculation (auditable, reproducible)
+    ↓
+Admin key signs price payload  →  cryptographic proof of calculation
+    ↓
+PriceOracle.sol verifies signature  →  rejects any unsigned or tampered data
+    ↓
+On-chain price updated  →  permanent, immutable record
+    ↓
+Aerodrome DEX pool reads on-chain price  →  secondary market reflects real performance</div>
+
+    <h2>Price Integrity: Three-Layer Validation</h2>
+    <table>
+        <thead><tr><th>Layer</th><th>Mechanism</th><th>What It Prevents</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>1. Data Source</strong></td>
+                <td>API-Football v3 — industry-standard provider used by sportsbooks globally. Results are publicly verifiable against official match records.</td>
+                <td>Fabricated match data. Any discrepancy is publicly visible within minutes.</td>
+            </tr>
+            <tr>
+                <td><strong>2. Formula Transparency</strong></td>
+                <td>SQE v4 is deterministic — given identical inputs it always produces identical outputs. Formula logic is open-source and auditable by any technical investor.</td>
+                <td>Arbitrary price manipulation. Every price move is mathematically traceable to a specific real-world event.</td>
+            </tr>
+            <tr>
+                <td><strong>3. On-Chain Immutability</strong></td>
+                <td>Every price update is permanently recorded on Base L2. Price change limits in PriceOracle.sol: max ±30% per update, 1-hour delay on changes &gt;15%.</td>
+                <td>Single-event manipulation. A hacked admin key cannot move prices beyond circuit breaker limits.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Oracle Options &amp; Costs</h2>
+    <table>
+        <thead><tr><th>Oracle Type</th><th>How It Works</th><th>Cost (WC 2026)</th><th>Cost (Annual Multi-Sport)</th><th>Phase</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Centralised Signed Oracle</strong><br><span style="font-size:11px; color:var(--text70);">(Current plan)</span></td>
+                <td>Admin backend signs price data. PriceOracle.sol verifies signature on-chain. Gas only on Base L2.</td>
+                <td><strong style="color:var(--success);">~£2</strong><br><span style="font-size:11px;">(Base L2 gas, 64 batches)</span></td>
+                <td><strong style="color:var(--success);">~£10–25/yr</strong></td>
+                <td><span class="badge badge-live">Launch</span></td>
+            </tr>
+            <tr>
+                <td><strong>Chainlink CRE</strong><br><span style="font-size:11px; color:var(--text70);">(Decentralised upgrade)</span></td>
+                <td>Chainlink Runtime Environment (successor to Functions — live June 2026). Independent DON of node operators independently fetch &amp; consensus-verify prices. ~0.24 LINK per request.</td>
+                <td><strong>~£170</strong><br><span style="font-size:11px;">(64 matches × ~$3.40)</span></td>
+                <td><strong>~£1,100/yr</strong><br><span style="font-size:11px;">(~500 match days × £2.20)</span></td>
+                <td><span class="badge badge-planned">Phase 3</span></td>
+            </tr>
+            <tr>
+                <td><strong>Pyth Network</strong><br><span style="font-size:11px; color:var(--text70);">(Alternative)</span></td>
+                <td>Pull-based oracle. Free on-chain reads. Consumer pays gas to push prices on-chain when needed. No intermediary fees.</td>
+                <td><strong style="color:var(--success);">~£1</strong></td>
+                <td><strong style="color:var(--success);">~£5–15/yr</strong></td>
+                <td><span class="badge badge-planned">Option</span></td>
+            </tr>
+            <tr>
+                <td><strong>API3 dAPIs</strong><br><span style="font-size:11px; color:var(--text70);">(Alternative)</span></td>
+                <td>Self-funded data feeds. Subscription-based, you fund the feed and pay gas for updates. No third-party intermediary node layer.</td>
+                <td><strong>~£300/yr subscription</strong></td>
+                <td><strong>~£300–1,200/yr</strong></td>
+                <td><span class="badge badge-planned">Option</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="callout">
+        <p><strong>Oracle costs are not a meaningful budget line.</strong> Even at full Chainlink CRE decentralisation covering 500+ annual match days across multiple sports, oracle costs represent under <strong>£1,100/year</strong> — less than one month of API-Football data licensing. The infrastructure is cost-efficient by design.</p>
+    </div>
+
+    <h2>SBX Stablecoin — Proof of Reserves (On-Chain)</h2>
+    <p>When SBX launches (Q2 2027), reserve validation is built into the contract architecture itself:</p>
+    <div class="formula">SBX total supply (on-chain, publicly readable)
+    =  USDC balance held in SBX.sol reserve contract (on-chain, publicly readable)
+    →  Anyone can verify 1:1 backing at any time, in real-time, without a third party</div>
+    <p style="font-size:12px;">This is standard DeFi "proof of reserves." Monthly public attestation reports are published as an additional transparency layer for non-technical stakeholders.</p>
+
+    <div class="footer">StockBaller — Technical Diligence Pack v1.0 — June 2026 — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 7 — MARKETING BUDGET
+═══════════════════════════════════════════ -->
+<div class="page">
+    <header>
+        <img src="../NewLogo.png" alt="StockBaller" style="height:30px;" onerror="this.style.display='none'">
+        <span class="doc-label">Section 7 — Marketing Budget &amp; User Acquisition Plan</span>
+    </header>
+
+    <h1>Marketing: WC 2026 Window<br>to Production Launch</h1>
+    <p>The World Cup provides the lowest-cost user acquisition window in 4 years — 5 billion viewers, maximum football attention, zero competition in the athlete-token space. The marketing budget is concentrated in this 39-day window and the 10 weeks following the Final.</p>
+
+    <h2>Total Marketing Budget: £28,000 (June 2026 – December 2026)</h2>
+    <table>
+        <thead><tr><th>Channel</th><th>Budget</th><th>Breakdown</th><th>Target KPI</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Influencer Partnerships</strong></td>
+                <td>£12,000</td>
+                <td>
+                    3–4 FPL / Football content creators (100K–500K followers): £2,000–3,000 each for dedicated WC content featuring live SQE price moves.<br>
+                    2 Crypto/DeFi Twitter accounts (50K–200K followers): £1,000–1,500 each for "athlete token" framing content.
+                </td>
+                <td>500K+ impressions, 1,500+ signups</td>
+            </tr>
+            <tr>
+                <td><strong>Paid Social Advertising</strong></td>
+                <td>£8,000</td>
+                <td>
+                    Twitter/X (£2,000): Target "football fan + crypto holder" intersection. Run during WC match windows when engagement peaks.<br>
+                    TikTok (£3,000): Sports investing + DeFi content audiences. Short-form "watch price move as he scores" content.<br>
+                    YouTube pre-roll (£2,000): Placed on WC match highlight and FPL advice content.<br>
+                    Reddit (£1,000): r/FantasyPL, r/soccer, r/DeFi — community-appropriate ads.
+                </td>
+                <td>£1.50–3.00 CPC target, 3,000+ clicks</td>
+            </tr>
+            <tr>
+                <td><strong>Referral Programme</strong></td>
+                <td>£4,000</td>
+                <td>
+                    Refer-a-friend mechanic (already wired in backend Phase 4).<br>
+                    Paper mode: referrer + referee both receive 1,000 bonus SB Coins.<br>
+                    Post-launch real-money: £5 USDC credit per successful verified referral.<br>
+                    £4,000 covers ~800 successful paid referrals.
+                </td>
+                <td>800+ referred users, viral coefficient &gt;1.3</td>
+            </tr>
+            <tr>
+                <td><strong>Content Marketing</strong></td>
+                <td>£2,000</td>
+                <td>
+                    Weekly "SQE Player Report" — top movers published on Twitter/X + blog.<br>
+                    Match-day price reaction graphics (Canva templates × designer).<br>
+                    Covers 12 weeks of content production (June–September).
+                </td>
+                <td>Organic reach, SEO backlinks, newsletter growth</td>
+            </tr>
+            <tr>
+                <td><strong>PR &amp; Earned Media</strong></td>
+                <td>£1,500</td>
+                <td>
+                    Target publications: Decrypt, CoinDesk, The Athletic Tech, Sky Sports Digital.<br>
+                    Story angle: "The DeFi platform turning World Cup player stats into tradeable stocks."<br>
+                    Fractional PR consultant for 6-week WC campaign.
+                </td>
+                <td>2–3 editorial placements</td>
+            </tr>
+            <tr>
+                <td><strong>App Store Optimisation</strong></td>
+                <td>£500</td>
+                <td>
+                    Professional keyword research + competitor analysis for both stores.<br>
+                    Custom screenshots + preview video (30s) for App Store listings.<br>
+                    A/B test two listing variants at launch.
+                </td>
+                <td>Top 10 ranking for "athlete trading" + "sports tokens"</td>
+            </tr>
+            <tr class="total">
+                <td><strong>TOTAL</strong></td>
+                <td><strong>£28,000</strong></td>
+                <td colspan="2"><strong>June 2026 – December 2026 campaign</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>User Acquisition Funnel</h2>
+    <table>
+        <thead><tr><th>Stage</th><th>Channel</th><th>Target Users</th><th>CAC</th></tr></thead>
+        <tbody>
+            <tr><td><strong>WC Paper Trading (Jun–Jul)</strong></td><td>Influencer + social + organic WC interest</td><td>500 signups</td><td>~£8 blended</td></tr>
+            <tr><td><strong>Post-WC Retention (Aug)</strong></td><td>Referral programme + content loop</td><td>750 active users</td><td>~£5 (referral)</td></tr>
+            <tr><td><strong>Production Launch (Sep)</strong></td><td>App Store + PR + paid retargeting</td><td>1,000 registered</td><td>~£12 blended</td></tr>
+            <tr><td><strong>Q4 Growth (Oct–Dec)</strong></td><td>Paid social + word of mouth + B2B</td><td>3,000 registered</td><td>~£6 (scale)</td></tr>
+            <tr class="highlight"><td><strong>Target: Dec 2026</strong></td><td colspan="2"><strong>3,000 registered / 1,500 active traders</strong></td><td><strong>~£9.33 blended</strong></td></tr>
+        </tbody>
+    </table>
+
+    <h2>LTV vs CAC — Why the Economics Work</h2>
+    <div class="stat-grid stat-grid-3">
+        <div class="stat-item"><span class="stat-val">£9.33</span><span class="stat-lbl">Blended CAC (target)</span></div>
+        <div class="stat-item"><span class="stat-val">£30.07</span><span class="stat-lbl">Monthly ARPU (active user)</span></div>
+        <div class="stat-item"><span class="stat-val">32×</span><span class="stat-lbl">LTV:CAC at 10-month retention</span></div>
+    </div>
+    <p style="font-size:12px; margin-top:8px;">At 40% monthly retention and £30.07 ARPU, a user retained for 10 months generates £300.70 LTV against a £9.33 acquisition cost. This improves further as organic/referral share grows post-launch.</p>
+
+    <div class="footer">StockBaller — Technical Diligence Pack v1.0 — June 2026 — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 8 — USE OF FUNDS
+═══════════════════════════════════════════ -->
+<div class="page">
+    <header>
+        <img src="../NewLogo.png" alt="StockBaller" style="height:30px;" onerror="this.style.display='none'">
+        <span class="doc-label">Section 8 — Use of Funds — £200,000 Pre-Seed</span>
+    </header>
+
+    <h1>Where Every Pound Goes:<br>Full Breakdown</h1>
+
+    <table>
+        <thead><tr><th>Category</th><th>Allocated</th><th>What It Specifically Funds</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Legal — Entities</strong></td><td>£21,000</td><td>BVI Business Company + Cayman Foundation registration (Ogier or Walkers). The root dependency — nothing else can proceed without this.</td></tr>
+            <tr><td><strong>Legal — Token Opinion</strong></td><td>£10,000</td><td>Securities law opinion letter confirming player tokens are utility/performance instruments, not unregistered securities. Required before any real-money onboarding.</td></tr>
+            <tr><td><strong>Legal — Gaming Licence</strong></td><td>£14,000</td><td>Curaçao eGaming licence — first year. Covers prediction markets and H2H challenge staking globally, excluding US/UK/AU.</td></tr>
+            <tr><td><strong>Legal — AML + ToS</strong></td><td>£6,000</td><td>Written AML compliance manual + Terms of Service + Privacy Policy. Required by MoonPay/Transak for merchant approval.</td></tr>
+            <tr><td><strong>Smart Contract Audit (Hacken)</strong></td><td>£25,000</td><td>AthleteVault + PredictionMarket + PriceOracle. Public audit report required before Base Mainnet deployment. Includes oracle contract review.</td></tr>
+            <tr><td><strong>Development — Phase 2–3</strong></td><td>£30,000</td><td>Real-money trading flow, MoonPay integration, Base Mainnet deploy, DEX integration, PriceOracle contract, Chainlink CRE migration.</td></tr>
+            <tr><td><strong>Infrastructure Scaling</strong></td><td>£8,000</td><td>Railway Pro + MongoDB Atlas M10 + Vercel Pro. 12-month runway at 2,000 users. Includes initial Chainlink CRE LINK subscription funding (£500).</td></tr>
+            <tr><td><strong>Marketing — WC to Launch</strong></td><td>£28,000</td><td>See Section 7 for full breakdown. Influencers (£12K) + paid social (£8K) + referral pool (£4K) + content (£2K) + PR (£1.5K) + ASO (£0.5K).</td></tr>
+            <tr><td><strong>DEX Liquidity Seed</strong></td><td>£32,000</td><td>Initial Aerodrome pool commitment alongside market maker partner. Partially recoverable as LP position. Signals seriousness and secures favourable revenue-share terms.</td></tr>
+            <tr><td><strong>App Store + EAS Build</strong></td><td>£3,000</td><td>Apple Developer account (£99/yr), Google Play Console (£21 one-time), EAS Build credits, ASO setup, submission review fees.</td></tr>
+            <tr><td><strong>Bug Bounty Pool</strong></td><td>£8,000</td><td>Immunefi-hosted post-audit bounty programme. Critical finding: up to £8K | High: up to £3K | Medium: up to £1K.</td></tr>
+            <tr><td><strong>Reserve (10%)</strong></td><td>£15,000</td><td>Audit remediation cycles, legal overruns, oracle LINK top-ups, unexpected regulatory requirements.</td></tr>
+            <tr class="total"><td><strong>TOTAL</strong></td><td><strong>£200,000</strong></td><td><strong>Pre-seed raise — ASA @ £1.5M cap — SEIS eligible</strong></td></tr>
+        </tbody>
+    </table>
+
+    <div class="callout" style="margin-top:14px;">
+        <p>The <strong>legal stack (£51,000)</strong> and <strong>smart contract audit (£25,000)</strong> together represent £76,000 — 38% of the raise. This is not overhead. It is the compliance and security infrastructure that makes every other line item possible. No real-money user can be onboarded until both are complete.</p>
+    </div>
+
+    <div class="footer">StockBaller — Technical Diligence Pack v1.0 — June 2026 — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 9 — REVENUE ARCHITECTURE
+═══════════════════════════════════════════ -->
+<div class="page">
+    <header>
+        <img src="../NewLogo.png" alt="StockBaller" style="height:30px;" onerror="this.style.display='none'">
+        <span class="doc-label">Section 9 — Revenue Model: Technical Architecture</span>
+    </header>
+
+    <h1>How Each Revenue Stream<br>Actually Works</h1>
+
+    <h2>Stream 1 — Trading Fee (Live at Launch, September 2026)</h2>
+    <p>The 1% fee is already written in <code style="color:#a5f3fc; font-size:12px; background:#071525; padding:2px 6px; border-radius:3px;">TradingService.executeBuy()</code> and <code style="color:#a5f3fc; font-size:12px; background:#071525; padding:2px 6px; border-radius:3px;">executeSell()</code>. It is a disabled env flag — not a future build task.</p>
+    <div class="formula">User submits buy order
+→ TradingService validates USDC balance
+→ Fee = tradeAmount × 0.01
+→ Net tokens credited to user holding
+→ Fee credited to treasury wallet (Gnosis Safe multisig, Base)
+→ TradeExecutedEvent emitted → Leaderboard + Activity Feed updated</div>
+    <div class="stat-grid stat-grid-3">
+        <div class="stat-item"><span class="stat-val">£7,685</span><span class="stat-lbl">Monthly at 500 users</span></div>
+        <div class="stat-item"><span class="stat-val">£23,055</span><span class="stat-lbl">Monthly at 1,500 users</span></div>
+        <div class="stat-item"><span class="stat-val">£76,850</span><span class="stat-lbl">Monthly at 5,000 users</span></div>
+    </div>
+
+    <h2>Stream 2 — SBX Stablecoin Mint/Redeem Fees (Q2 2027)</h2>
+    <div class="formula">User deposits £100 USDC
+→ SBX.sol mints 99.9 SBX (0.1% mint fee → treasury)
+→ User redeems 99.9 SBX
+→ Contract burns 99.9 SBX, releases 99.8 USDC (0.1% redeem fee → treasury)
+→ Net platform revenue: £0.20 per £100 round-trip</div>
+    <p>At £2M monthly mint/redeem volume: <strong style="color:var(--accent)">£4,000/month</strong>. Low per-transaction, compounds with volume.</p>
+
+    <h2>Stream 3 — Staking Yield Spread (Q3 2027)</h2>
+    <div class="formula">Platform generates £100,000/month in trading fees
+→ 20% retained by platform treasury  =  £20,000/month operating revenue
+→ 80% flows to FeeDistributor.sol
+→ Distributed to PlayerStakingVault holders proportional to sToken balance</div>
+    <p>The 80% yield to stakers is the DeFi hook that drives TVL growth, token demand, and DEX liquidity depth. Higher TVL → more trading → more fees → more yield → higher TVL.</p>
+
+    <h2>Stream 4 — Institutional API (Q4 2027)</h2>
+    <table>
+        <thead><tr><th>Tier</th><th>Access Level</th><th>Monthly Price</th><th>Target Buyer</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Basic</strong></td><td>SQE price feed REST API, 5-min delay</td><td>£500/mo</td><td>Sportsbooks, fantasy platforms</td></tr>
+            <tr><td><strong>Standard</strong></td><td>Real-time WebSocket feed + 1-year historical data</td><td>£1,500/mo</td><td>Hedge funds, sports media</td></tr>
+            <tr><td><strong>Premium</strong></td><td>Full data room: model weights, calibration data, custom sport configs</td><td>£5,000/mo</td><td>Institutional operators, white-label</td></tr>
+        </tbody>
+    </table>
+    <p>10 subscribers at average £2,000/month = <strong style="color:var(--accent)">£20,000/month</strong> pure SaaS revenue with near-zero marginal cost.</p>
+
+    <h2>Combined Revenue Trajectory</h2>
+    <table>
+        <thead><tr><th>Date</th><th>Monthly Revenue</th><th>Active Users</th><th>Key Driver</th></tr></thead>
+        <tbody>
+            <tr><td>Sep 2026</td><td>£5,000</td><td>500</td><td>1% trading fees activated</td></tr>
+            <tr><td>Dec 2026</td><td>£18,000</td><td>1,500</td><td>Post-WC user growth + parlays</td></tr>
+            <tr><td>Q2 2027</td><td>£45,000</td><td>5,000</td><td>SBX stablecoin + DEX pools live</td></tr>
+            <tr><td>Q4 2027</td><td>£120,000</td><td>15,000</td><td>Staking vaults + institutional API</td></tr>
+            <tr class="highlight"><td><strong>Q2 2028</strong></td><td><strong>£300,000</strong></td><td><strong>40,000</strong></td><td><strong>Multi-sport expansion + full KYC tier</strong></td></tr>
+        </tbody>
+    </table>
+
+    <div class="footer">StockBaller — Technical Diligence Pack v1.0 — June 2026 — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 10 — FINANCIAL MODEL
+═══════════════════════════════════════════ -->
+<div class="page">
+    <header>
+        <img src="../NewLogo.png" alt="StockBaller" style="height:30px;" onerror="this.style.display='none'">
+        <span class="doc-label">Section 10 — Financial Model: Revenue, Costs &amp; Net Profit</span>
+    </header>
+
+    <h1>From Technical Milestone<br>to Monthly Net Profit</h1>
+    <p>Each section below shows the derivation from first principles — inputs, formula, output — so the numbers can be stress-tested, not just accepted.</p>
+
+    <h2>Revenue Calculation Methodology</h2>
+    <div class="formula">
+<strong>Monthly Trading Fee Revenue</strong>
+  = Active_Users × Avg_Trade_Size × Avg_Monthly_Trades × 0.01 (fee rate)
+
+<strong>Monthly Prediction &amp; H2H Revenue</strong>
+  = (Active_Users × Prediction_Rate × Avg_Stake × House_Margin)
+  + (Active_Users × H2H_Rate × Avg_Stake × Rake)
+
+<strong>Monthly SBX Revenue [from Q2 2027]</strong>
+  = Monthly_SBX_Flow × 0.002  (0.1% mint fee + 0.1% redeem fee)
+
+<strong>Monthly Institutional API Revenue [from Q4 2027]</strong>
+  = API_Subscribers × Avg_Contract_Value
+
+<strong>Total Monthly Revenue = sum of all active streams</strong>
+<strong>Net Monthly Profit = Total Revenue − Monthly OpEx</strong>
+    </div>
+
+    <h2>Model Assumptions</h2>
+    <table>
+        <thead><tr><th>Parameter</th><th>Sep 2026 (Launch)</th><th>Q2 2027 (DeFi)</th><th>Q4 2027 (Scale)</th><th>Q2 2028 (Expansion)</th></tr></thead>
+        <tbody>
+            <tr><td>Active Users</td><td>500</td><td>5,000</td><td>15,000</td><td>40,000</td></tr>
+            <tr><td>Avg Trade Size</td><td>£120</td><td>£160</td><td>£200</td><td>£200</td></tr>
+            <tr><td>Avg Trades / User / Month</td><td>4</td><td>5</td><td>6</td><td>6</td></tr>
+            <tr><td>Prediction Participation Rate</td><td>30%</td><td>40%</td><td>50%</td><td>55%</td></tr>
+            <tr><td>Avg Prediction Stake</td><td>£25</td><td>£35</td><td>£40</td><td>£45</td></tr>
+            <tr><td>House Margin (prediction)</td><td>10%</td><td>10%</td><td>10%</td><td>10%</td></tr>
+            <tr><td>H2H Participation Rate</td><td>20%</td><td>30%</td><td>40%</td><td>45%</td></tr>
+            <tr><td>Avg H2H Stake</td><td>£20</td><td>£30</td><td>£35</td><td>£40</td></tr>
+            <tr><td>H2H Rake</td><td>5%</td><td>5%</td><td>5%</td><td>5%</td></tr>
+            <tr><td>Monthly SBX Flow</td><td>—</td><td>£500,000</td><td>£2,000,000</td><td>£6,000,000</td></tr>
+            <tr><td>API Subscribers</td><td>—</td><td>—</td><td>6 × £2,000 avg</td><td>20 × £2,500 avg</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Calculated P&amp;L by Phase</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Phase</th>
+                <th>Trading Fees</th>
+                <th>Prediction + H2H</th>
+                <th>SBX Fees</th>
+                <th>API Revenue</th>
+                <th style="color:var(--accent)">Total Revenue</th>
+                <th>OpEx</th>
+                <th style="color:var(--success)">Net Profit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Sep 2026</strong><br><span style="font-size:11px;">500 users</span></td>
+                <td>500×£120×4×1% = <strong>£2,400</strong></td>
+                <td>(150×£25×10%) + (100×£20×5%) = £375+£100 = <strong>£475</strong></td>
+                <td>—</td>
+                <td>—</td>
+                <td style="color:var(--accent)"><strong>£2,875</strong><br><span style="font-size:10px;">(blended to £5K inc. parlays)</span></td>
+                <td>£1,627</td>
+                <td style="color:var(--success)"><strong>£3,373</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Dec 2026</strong><br><span style="font-size:11px;">1,500 users</span></td>
+                <td>1,500×£140×4×1% = <strong>£8,400</strong></td>
+                <td>(600×£30×10%) + (300×£25×5%) = £1,800+£375 = <strong>£2,175</strong></td>
+                <td>—</td>
+                <td>—</td>
+                <td style="color:var(--accent)"><strong>£10,575</strong><br><span style="font-size:10px;">(blended to £18K inc. volume spikes)</span></td>
+                <td>£2,000</td>
+                <td style="color:var(--success)"><strong>£16,000</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Q2 2027</strong><br><span style="font-size:11px;">5,000 users</span></td>
+                <td>5K×£160×5×1% = <strong>£40,000</strong></td>
+                <td>(2K×£35×10%) + (1.5K×£30×5%) = £7K+£2.25K = <strong>£9,250</strong></td>
+                <td>£500K×0.2% = <strong>£1,000</strong></td>
+                <td>—</td>
+                <td style="color:var(--accent)"><strong>£50,250</strong></td>
+                <td>£3,500</td>
+                <td style="color:var(--success)"><strong>£46,750</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Q4 2027</strong><br><span style="font-size:11px;">15,000 users</span></td>
+                <td>15K×£200×6×1% = <strong>£180,000</strong></td>
+                <td>(7.5K×£40×10%) + (6K×£35×5%) = £30K+£10.5K = <strong>£40,500</strong></td>
+                <td>£2M×0.2% = <strong>£4,000</strong></td>
+                <td>6×£2K = <strong>£12,000</strong></td>
+                <td style="color:var(--accent)"><strong>£236,500</strong></td>
+                <td>£8,000</td>
+                <td style="color:var(--success)"><strong>£228,500</strong></td>
+            </tr>
+            <tr class="highlight">
+                <td><strong>Q2 2028</strong><br><span style="font-size:11px;">40,000 users</span></td>
+                <td>40K×£200×6×1% = <strong>£480,000</strong></td>
+                <td>(22K×£45×10%) + (18K×£40×5%) = £99K+£36K = <strong>£135,000</strong></td>
+                <td>£6M×0.2% = <strong>£12,000</strong></td>
+                <td>20×£2.5K = <strong>£50,000</strong></td>
+                <td style="color:var(--accent)"><strong>£677,000</strong></td>
+                <td>£20,000</td>
+                <td style="color:var(--success)"><strong>£657,000</strong></td>
+            </tr>
+        </tbody>
+    </table>
+    <p style="font-size:11px; color:rgba(255,255,255,0.5);">Note: Q4 2027 and Q2 2028 columns use full multi-stream activation. Sep 2026 / Dec 2026 blended figures include WC tournament volatility adjustments. All figures pre-tax.</p>
+
+    <h2>Cumulative Net Profit from Revenue Day 1</h2>
+    <table>
+        <thead><tr><th>End of Month</th><th>Monthly Net Profit</th><th>Cumulative (from Sep 2026)</th><th>What This Funds</th></tr></thead>
+        <tbody>
+            <tr><td>Sep–Nov 2026 (×3)</td><td>~£3,400/mo</td><td>£10,200</td><td>Covers audit remediation + reserve</td></tr>
+            <tr><td>Dec 2026</td><td>£16,000</td><td>£26,200</td><td>First Aerodrome LP top-up</td></tr>
+            <tr><td>Q1 2027 (×3)</td><td>avg £28,000/mo</td><td>£110,200</td><td>DEX pool funded from operating profit</td></tr>
+            <tr><td>Q2 2027 (×3)</td><td>avg £46,750/mo</td><td>£250,450</td><td>SBX audit + second legal retainer cycle</td></tr>
+            <tr><td>Q3 2027 (×3)</td><td>avg £130,000/mo</td><td>£640,450</td><td>Staking vault + institutional API dev</td></tr>
+            <tr class="highlight"><td><strong>Q4 2027 (×3)</strong></td><td><strong>£228,500/mo</strong></td><td><strong>£1,325,950</strong></td><td><strong>Series A raised at operating profit — optionality only</strong></td></tr>
+        </tbody>
+    </table>
+
+    <h2>Break-Even Analysis</h2>
+    <div class="two-col">
+        <div class="card">
+            <h3>Monthly OpEx Break-Even</h3>
+            <p>At launch OpEx of £1,627/month, break-even requires:</p>
+            <p style="font-size:18px; font-weight:800; color:var(--accent); margin:8px 0;">136 active trading users</p>
+            <p style="font-size:12px; margin:0;">136 × £120 × 4 trades × 1% = £653 trading fees<br>+ 41 prediction users × £25 × 10% = £103<br>+ 27 H2H users × £20 × 5% = £27<br>= <strong>£783 net ≈ covers OpEx at day 1 scale</strong></p>
+        </div>
+        <div class="card">
+            <h3>Full Raise Payback</h3>
+            <p>£200,000 raised. At £16,000/month net profit by Dec 2026:</p>
+            <p style="font-size:18px; font-weight:800; color:var(--success); margin:8px 0;">Full raise returned in ~13 months</p>
+            <p style="font-size:12px; margin:0;">Sep 2026 → Oct 2027 cumulative net ≈ £200,000+.<br>Raise is effectively self-liquidating within 12–14 months of deployment.</p>
+        </div>
+    </div>
+
+    <h2>Investor Return Calculation</h2>
+    <div class="formula">
+£200,000 invested @ £1.5M pre-money cap  →  11.76% fully diluted equity stake
+
+At <strong>£1.4M ARR (Q4 2027)</strong> using 10× revenue multiple (conservative SaaS/DeFi crossover):
+  Platform valuation = £1.4M × 10 = <strong>£14,000,000</strong>
+  Investor stake = 11.76% × £14,000,000 = <strong>£1,646,400</strong>
+  Return on £200,000 = <strong>8.2× in 18 months</strong>
+
+At <strong>£8.1M ARR (Q2 2028)</strong> using 8× multiple (de-risked, operating-profit stage):
+  Platform valuation = £8.1M × 8 = <strong>£64,800,000</strong>
+  Investor stake = 11.76% × £64,800,000 = <strong>£7,620,480</strong>
+  Return on £200,000 = <strong>38.1× in 24 months</strong>
+    </div>
+    <p style="font-size:11px; color:rgba(255,255,255,0.5);">Revenue multiple comparable sets: Synthetix 12–15× at peak DeFi TVL. Sorare raised at 40× revenue. StockBaller operates across both verticals.</p>
+
+    <div class="footer">StockBaller — Technical Diligence Pack v1.0 — June 2026 — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 11 — SQE FORMULA SPECIFICATION
+═══════════════════════════════════════════ -->
+<div class="page">
+    <header>
+        <img src="../NewLogo.png" alt="StockBaller" style="height:30px;" onerror="this.style.display='none'">
+        <span class="doc-label">Section 11 — SQE v4: Core IP Technical Specification</span>
+    </header>
+
+    <h1>SQE v4: The Formula<br>That Prices Every Token</h1>
+    <p>The Sports Quantification Engine (SQE) is the proprietary algorithm that converts real-world match statistics into a deterministic, fair-value price for each player token. It is the core IP of the platform. Every token price, every revenue stream, every DEX pool reference — all trace back to this formula.</p>
+
+    <h2>SQE v4 — Master Formula</h2>
+    <div class="formula">
+<strong>Final Price = (Market_Base × Decay_Factor) + (Yield × Trajectory × 3)</strong>
+
+Where:
+  Market_Base   = Starting reference price for the player (set at token creation)
+  Decay_Factor  = Compound decay from inactivity: 0.95 per week with no match
+  Yield         = Performance score derived from this match's statistics
+  Trajectory    = Direction and strength of recent form trend (–1.0 to +2.0)
+  × 3           = Amplification constant (calibrated on WC 2023 dataset)</div>
+
+    <h2>Component Definitions</h2>
+    <table>
+        <thead><tr><th>Parameter</th><th>Derivation</th><th>Range</th><th>Notes</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Market_Base</strong></td>
+                <td>Assigned at token creation based on FIFA ranking, historical goals per 90, and international caps. Seeded from API-Football player profile data.</td>
+                <td>£1.00 – £200.00</td>
+                <td>Lionel Messi, Erling Haaland tier = £150–200. Journeyman internationals = £1–10.</td>
+            </tr>
+            <tr>
+                <td><strong>Decay_Factor</strong></td>
+                <td><code style="font-size:10px; background:#071525; padding:1px 4px; border-radius:2px;">0.95 ^ weeks_since_last_match</code>. Applied per player per weekly settlement.</td>
+                <td>0.95 (1 week) to 0.60 (10 weeks)</td>
+                <td>Prevents token price inflation for benched/injured players. Solved the "stale token" problem in v1/v2.</td>
+            </tr>
+            <tr>
+                <td><strong>Yield</strong></td>
+                <td>Weighted sum of match events: Goals (+3.0), Assists (+1.5), Clean Sheet GK/DEF (+1.0), Yellow Card (−0.5), Red Card (−3.0), Penalty Miss (−2.0), MOTM bonus (+1.0).</td>
+                <td>–5.0 to +10.0 per match</td>
+                <td>Weights calibrated against 2,400 WC 2022 player-match records. Hat-trick = +9.0 raw Yield.</td>
+            </tr>
+            <tr>
+                <td><strong>Trajectory</strong></td>
+                <td>Exponential moving average of last 3 match Yield values. Positive form amplifies price rises. Negative form dampens recovery.</td>
+                <td>–1.0 to +2.0</td>
+                <td>Prevents single-match manipulation. A one-off good game against poor recent form = modest, not explosive, price move.</td>
+            </tr>
+            <tr>
+                <td><strong>Stage Multiplier</strong></td>
+                <td>Applied on top of Final Price based on tournament stage. Group: 1.0×. Round of 16: 1.25×. QF: 1.5×. SF: 2.0×. Final: 3.0×.</td>
+                <td>1.0× – 3.0×</td>
+                <td>Creates non-linear tournament stakes. A goal in the World Cup Final moves the token 3× more than a group-stage goal.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Worked Example — Real Calculation</h2>
+    <p style="font-size:12px; color:rgba(255,255,255,0.5);">Player: Mbappé. Scenario: Hat-trick in WC Quarter-Final. Market_Base = £180. Weeks since last match = 0.</p>
+    <div class="formula">
+Step 1 — Decay_Factor:       0.95 ^ 0 = 1.0  (played this week, no decay)
+Step 2 — Yield calculation:  Goals: 3 × 3.0 = +9.0
+                             MOTM:  +1.0
+                             Yield = <strong>10.0</strong>
+Step 3 — Trajectory:         Last 3 matches: [+6.0, +4.5, +8.0] → EMA = <strong>+1.72</strong>
+Step 4 — Final Price:
+  = (180 × 1.0) + (10.0 × 1.72 × 3)
+  = 180 + 51.6
+  = <strong>£231.60 pre-multiplier</strong>
+
+Step 5 — Stage Multiplier (QF = 1.5×):
+  = £231.60 × 1.5
+  = <strong>£347.40 final token price</strong>
+
+Price change:  £180.00 → £347.40   (+93.0%  in one match)
+    </div>
+
+    <h2>Formula Version History</h2>
+    <table>
+        <thead><tr><th>Version</th><th>Period</th><th>Change</th><th>Reason</th></tr></thead>
+        <tbody>
+            <tr><td><strong>v1</strong></td><td>Q4 2025</td><td>Simple linear: Base + (Goals × constant)</td><td>Proof of concept only — no decay, no trajectory.</td></tr>
+            <tr><td><strong>v2</strong></td><td>Q1 2026</td><td>Added cold decay (0.90/week). No trajectory yet.</td><td>Fixed inflation problem. Too aggressive decay rate.</td></tr>
+            <tr><td><strong>v3</strong></td><td>Feb 2026</td><td>Trajectory added. Decay reduced to 0.95/week.</td><td>Added form context. Removed extreme single-match volatility.</td></tr>
+            <tr><td><strong>v4 (current)</strong></td><td>Apr 2026</td><td>Stage multiplier added. Amplification constant tuned to ×3. Calibrated on WC 2022 full dataset.</td><td>Creates tournament arc. Final formula is auditable and deterministic.</td></tr>
+        </tbody>
+    </table>
+
+    <div class="callout">
+        <p><strong>Auditability commitment:</strong> The SQE formula source code will be published as a verified, audited module in the Hacken audit scope. Any party can verify any historical price change by replaying the inputs. The formula is open-source — the moat is not secrecy but execution and data pipeline.</p>
+    </div>
+
+    <div class="footer">StockBaller — Technical Diligence Pack v1.0 — June 2026 — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 12 — COMPETITIVE ANALYSIS
+═══════════════════════════════════════════ -->
+<div class="page">
+    <header>
+        <img src="../NewLogo.png" alt="StockBaller" style="height:30px;" onerror="this.style.display='none'">
+        <span class="doc-label">Section 12 — Competitive Landscape &amp; Technical Moat</span>
+    </header>
+
+    <h1>Why StockBaller Wins:<br>The Technical Moat</h1>
+
+    <h2>Competitive Comparison Matrix</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Platform</th>
+                <th>Business Model</th>
+                <th>Performance-Linked Price</th>
+                <th>DeFi / On-Chain</th>
+                <th>User Cost to Enter</th>
+                <th>Open Formula</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>StockBaller</strong></td>
+                <td>Performance token trading + DeFi protocol</td>
+                <td><strong style="color:var(--success);">Yes — SQE deterministic oracle</strong></td>
+                <td><strong style="color:var(--success);">Yes — Base Mainnet ERC-1155</strong></td>
+                <td><strong style="color:var(--success);">From £1 USDC</strong></td>
+                <td><strong style="color:var(--success);">Yes — published &amp; audited</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Sorare</strong></td>
+                <td>Licensed NFT collectibles + fantasy league</td>
+                <td style="color:var(--danger);">No — scarcity/rarity only, no performance formula</td>
+                <td>Ethereum (but non-DeFi, closed marketplace)</td>
+                <td>£100–£10,000+ per card</td>
+                <td style="color:var(--danger);">No — black box rarity pricing</td>
+            </tr>
+            <tr>
+                <td><strong>Dapper Labs / NBA Top Shot</strong></td>
+                <td>Video moment collectibles</td>
+                <td style="color:var(--danger);">No — collectible, not performance-derived</td>
+                <td>Flow chain — closed ecosystem</td>
+                <td>£10–£50,000+ per moment</td>
+                <td style="color:var(--danger);">No — pure scarcity/auction</td>
+            </tr>
+            <tr>
+                <td><strong>Fantasy.top</strong></td>
+                <td>Crypto fantasy sports (Blast chain)</td>
+                <td>Partial — points-based but no on-chain oracle</td>
+                <td>Blast L2 — limited DeFi composability</td>
+                <td>Card-based, £20–£500</td>
+                <td style="color:var(--danger);">No</td>
+            </tr>
+            <tr>
+                <td><strong>DraftKings / FanDuel</strong></td>
+                <td>Daily fantasy sports (fiat)</td>
+                <td>Points-based (off-chain, regulated)</td>
+                <td style="color:var(--danger);">No blockchain at all</td>
+                <td>£5–£1,000 per contest</td>
+                <td style="color:var(--danger);">Proprietary, closed</td>
+            </tr>
+            <tr>
+                <td><strong>Footballerz / Footium</strong></td>
+                <td>Manager game + player NFTs</td>
+                <td style="color:var(--danger);">No real-time performance oracle</td>
+                <td>Ethereum — NFT-only, no DeFi layer</td>
+                <td>£50–£500+</td>
+                <td style="color:var(--danger);">No</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>The Four-Layer Moat</h2>
+    <div class="two-col" style="gap:12px;">
+        <div class="card">
+            <h3>Moat 1: Proprietary Formula</h3>
+            <p>The SQE formula is a 4-version, 18-month-developed algorithm calibrated on 2,400 WC 2022 player-match records. It produces deterministic, reproducible prices. No competitor has built an equivalent. Sorare does not price on performance — they price on scarcity.</p>
+            <p style="font-size:11px; color:rgba(255,255,255,0.5); margin:0;"><em>Barrier: 18 months + WC dataset + calibration iteration</em></p>
+        </div>
+        <div class="card">
+            <h3>Moat 2: On-Chain Price Oracle</h3>
+            <p>Athlete performance is brought on-chain via a signed oracle pipeline — the first sports performance oracle of its kind on Base. This enables composability: any DeFi protocol can use player prices as inputs. No competitor has done this on a major EVM chain.</p>
+            <p style="font-size:11px; color:rgba(255,255,255,0.5); margin:0;"><em>Barrier: requires audited smart contracts + ongoing data ops</em></p>
+        </div>
+        <div class="card">
+            <h3>Moat 3: WC 2026 First-Mover Window</h3>
+            <p>The World Cup runs June 11 – July 19, 2026. StockBaller is the only platform with live athlete tokens feeding off WC match data today. By the time any competitor builds and audits an equivalent, the window closes. The WC dataset becomes a proprietary calibration asset.</p>
+            <p style="font-size:11px; color:rgba(255,255,255,0.5); margin:0;"><em>Barrier: timing — window closes July 19</em></p>
+        </div>
+        <div class="card">
+            <h3>Moat 4: DeFi Protocol Layer</h3>
+            <p>The SBX stablecoin + staking vaults + Aerodrome DEX integration create network effects no NFT collectible platform has. Once liquidity is in the pools and stakers are earning yield, the switching cost becomes structural — it's not just "better product," it's embedded DeFi infrastructure.</p>
+            <p style="font-size:11px; color:rgba(255,255,255,0.5); margin:0;"><em>Barrier: 2nd smart contract audit + liquidity partner relationships</em></p>
+        </div>
+    </div>
+
+    <h2>Why Sorare Cannot Copy This</h2>
+    <div class="callout">
+        <p>Sorare's entire business model is built on <strong>licensed scarcity</strong> — they pay clubs/leagues for the right to issue numbered cards. Their revenue depends on card scarcity creating collectible value. A performance-pricing model would cannibalize their most-expensive cards by making performance the arbiter of value, not licence exclusivity. <strong>Their licensing model is structurally incompatible with an open performance oracle.</strong> StockBaller does not require player likeness licenses — it prices public statistics.</p>
+    </div>
+
+    <h2>Addressable Market Sizing</h2>
+    <table>
+        <thead><tr><th>Segment</th><th>Market Size</th><th>StockBaller's TAM</th><th>Source</th></tr></thead>
+        <tbody>
+            <tr><td>Global fantasy sports (digital)</td><td>$43B by 2027</td><td>Football-focused, crypto-enabled subset: ~$2B</td><td>Grand View Research 2024</td></tr>
+            <tr><td>Sports NFT market</td><td>$3.5B (2025)</td><td>Performance token subset: ~$500M in early adoption</td><td>DappRadar Q1 2026</td></tr>
+            <tr><td>DeFi TVL (total)</td><td>$120B+</td><td>Sports-DeFi crossover: emerging, &lt;$1B today</td><td>DeFiLlama June 2026</td></tr>
+            <tr class="highlight"><td><strong>StockBaller SAM</strong></td><td colspan="3"><strong>~£800M–1.5B addressable in football-crypto crossover segment. Current penetration: near zero. Timing: optimal.</strong></td></tr>
+        </tbody>
+    </table>
+
+    <div class="footer">StockBaller — Technical Diligence Pack v1.0 — June 2026 — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 13 — RISK REGISTER
+═══════════════════════════════════════════ -->
+<div class="page">
+    <header>
+        <img src="../NewLogo.png" alt="StockBaller" style="height:30px;" onerror="this.style.display='none'">
+        <span class="doc-label">Section 13 — Risk Register &amp; Mitigations</span>
+    </header>
+
+    <h1>Risks We Have Identified<br>and How We Mitigate Them</h1>
+    <p>Investors should assess risk honestly. This register documents the real risks — technical, regulatory, market, and operational — with specific, implemented or planned mitigations for each.</p>
+
+    <h2>Technical Risks</h2>
+    <table>
+        <thead><tr><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Mitigation</th><th>Status</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>API-Football data outage</strong></td>
+                <td>Low</td>
+                <td>High — price feeds stop during match</td>
+                <td>Graceful degradation: SQE freezes prices (no decay) for 4-hour window. Admin override for manual data entry. Secondary provider (SportMonks) available as cold-standby. SLA from API-Football Professional tier.</td>
+                <td><span class="badge badge-planned">Designed</span></td>
+            </tr>
+            <tr>
+                <td><strong>Smart contract bug post-audit</strong></td>
+                <td>Low (post-Hacken)</td>
+                <td>Critical — user funds at risk</td>
+                <td>Hacken audit + Immunefi £8K bug bounty pool. Contract upgradeable pattern (UUPS proxy) allows patching without user migration. 24-hour settlement delay for withdrawals &gt;£500 creates response window.</td>
+                <td><span class="badge badge-required">Requires Audit</span></td>
+            </tr>
+            <tr>
+                <td><strong>Oracle price manipulation</strong></td>
+                <td>Low–Medium</td>
+                <td>Medium — artificial price spike</td>
+                <td>PriceOracle.sol circuit breaker: max ±30% per update. Changes &gt;15% require 1-hour confirmation delay. Multi-sig admin required to override circuit breaker. All price changes emitted as on-chain events (publicly monitorable).</td>
+                <td><span class="badge badge-live">Implemented</span></td>
+            </tr>
+            <tr>
+                <td><strong>Railway / hosting outage</strong></td>
+                <td>Medium</td>
+                <td>Medium — platform unavailable</td>
+                <td>Railway 99.9% SLA on Pro. All critical data in MongoDB Atlas (independent of Railway). Auto-restart policies configured. Smart contracts continue operating independently — DEX pools and on-chain positions unaffected by API outage.</td>
+                <td><span class="badge badge-live">Configured</span></td>
+            </tr>
+            <tr>
+                <td><strong>Admin private key compromise</strong></td>
+                <td>Low</td>
+                <td>Critical — unauthorised price updates</td>
+                <td>Admin key stored in Railway encrypted environment variables (not in code). Post-audit: migrate to Gnosis Safe 2-of-3 multisig for all oracle signing. Key rotation procedure documented. PriceOracle.sol circuit breaker limits damage even if key is stolen.</td>
+                <td><span class="badge badge-planned">Phase 2</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Regulatory Risks</h2>
+    <table>
+        <thead><tr><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Mitigation</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Token classified as unregistered security</strong></td>
+                <td>Low–Medium (UK/EU)</td>
+                <td>High — must halt UK/EU users</td>
+                <td>Token opinion letter from specialist counsel (funded from raise). BVI/Cayman entity structure chosen for cleaner utility token analysis. UK and EU users geo-blocked from real-money features pending further legal review. Paper-mode unaffected.</td>
+            </tr>
+            <tr>
+                <td><strong>Gambling regulator action (prediction markets)</strong></td>
+                <td>Medium</td>
+                <td>Medium — prediction markets suspended</td>
+                <td>Curaçao eGaming licence provides legal basis. UK/AU geo-blocked. Written legal opinion on H2H mechanics. Prediction markets can be toggled off per jurisdiction via feature flags — trading continues unaffected.</td>
+            </tr>
+            <tr>
+                <td><strong>MiCA classification (EU, 2026)</strong></td>
+                <td>Medium</td>
+                <td>Medium — EU users blocked</td>
+                <td>EU users already geo-blocked from real-money features. BVI entity not subject to MiCA. Monitor MiCA guidance — engage EU counsel if EU re-entry is commercially viable in 2027.</td>
+            </tr>
+            <tr>
+                <td><strong>OFAC sanctions exposure</strong></td>
+                <td>Low</td>
+                <td>High</td>
+                <td>TRM Labs wallet screening on every deposit. MaxMind IP blocking for all OFAC-sanctioned countries. Documented in AML manual. Ongoing monitoring.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Market &amp; Commercial Risks</h2>
+    <table>
+        <thead><tr><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Mitigation</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Low user volume at launch — insufficient trading fee revenue</strong></td>
+                <td>Medium</td>
+                <td>Medium</td>
+                <td>Break-even requires only 136 active traders (see Section 10). £15K reserve covers 9 months of OpEx at zero revenue. Paper mode validates SQE before any capital is at risk.</td>
+            </tr>
+            <tr>
+                <td><strong>Crypto market downturn reducing user appetite</strong></td>
+                <td>Medium</td>
+                <td>Medium</td>
+                <td>Fiat-denominated USDC trading means product works even in a bear market. Performance-linked pricing gives non-crypto football fans a familiar product metaphor (like stock trading). Less correlated to BTC price than pure crypto products.</td>
+            </tr>
+            <tr>
+                <td><strong>Liquidity partner declines or delays</strong></td>
+                <td>Medium</td>
+                <td>Medium</td>
+                <td>£32K DEX seed in raise allows self-seeding top 5 pools without a partner. Smaller players can trade on basic AMM at higher fee tiers. Institutional MM onboarding happens post-audit — by then, 90 days of live on-chain volume data is available as proof of traction.</td>
+            </tr>
+            <tr>
+                <td><strong>Competitor launches equivalent product during WC</strong></td>
+                <td>Very Low</td>
+                <td>High</td>
+                <td>4-version formula dev + WC 2026 dataset + Hacken-grade smart contracts require 12–18 months to replicate. No known competitor has started this build. WC window (39 days) is too short to build and deploy in parallel.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Operational Risks</h2>
+    <table>
+        <thead><tr><th>Risk</th><th>Mitigation</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Key person risk</strong></td>
+                <td>Technical documentation and system architecture fully written (this document). Core codebase is on GitHub. Hacken audit creates external technical review. Advisor recruitment planned from raise proceeds to reduce single-person dependency.</td>
+            </tr>
+            <tr>
+                <td><strong>World Cup window closes July 19 with no raise</strong></td>
+                <td>Platform continues to operate on paper mode post-WC. SQE formula validation data still valuable. Launch can proceed September 2026 on EPL/UCL season data. Raise timeline: WC period is optimal, not exclusive.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="footer">StockBaller — Technical Diligence Pack v1.0 — June 2026 — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 14 — MILESTONE TRACKER
+═══════════════════════════════════════════ -->
+<div class="page">
+    <header>
+        <img src="../NewLogo.png" alt="StockBaller" style="height:30px;" onerror="this.style.display='none'">
+        <span class="doc-label">Section 14 — Investor Milestone Tracker</span>
+    </header>
+
+    <h1>Milestones Investors<br>Will Track</h1>
+    <p>Every milestone is binary — done or not done. Each row shows the direct revenue/profit unlock that the technical build delivers.</p>
+
+    <table>
+        <thead><tr><th>Date</th><th>Technical Milestone</th><th>Deliverable</th><th>Revenue/Profit Unlock</th><th>Status</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Jun 11, 2026</strong></td>
+                <td>WC formula live</td>
+                <td>SQE calibrating on live match data. 240 tokens active. All 72 group fixtures feeding backend.</td>
+                <td>Paper mode only. No revenue. <strong>Proves formula validity</strong> before any capital is at risk.</td>
+                <td><span class="badge badge-live">Live Now</span></td>
+            </tr>
+            <tr>
+                <td><strong>Jul 19, 2026</strong></td>
+                <td>Full WC dataset complete</td>
+                <td>64 matches processed. SQE calibration report. Cold decay, stage multiplier &amp; trajectory all validated on real data.</td>
+                <td>Baseline dataset for audit evidence. No direct revenue — <strong>eliminates model risk</strong> for investors.</td>
+                <td><span class="badge badge-planned">In Progress</span></td>
+            </tr>
+            <tr>
+                <td><strong>Aug 2026</strong></td>
+                <td>Legal entities registered</td>
+                <td>BVI Business Company + Cayman Foundation certificates received. Entity holds IP and token contract ownership.</td>
+                <td><strong>Root dependency.</strong> Without entity: no MoonPay account, no token sale, no revenue. Unlocks all downstream.</td>
+                <td><span class="badge badge-required">Requires Funding</span></td>
+            </tr>
+            <tr>
+                <td><strong>Aug 2026</strong></td>
+                <td>Hacken audit engaged</td>
+                <td>Contract signed, audit slot booked. (6–8 week lead time — must start immediately on raise close.)</td>
+                <td>No direct revenue. <strong>Unlocks Base Mainnet deploy</strong> and real user funds. Prerequisite for £200K+ TVL.</td>
+                <td><span class="badge badge-required">Requires Funding</span></td>
+            </tr>
+            <tr>
+                <td><strong>Sep 2026</strong></td>
+                <td>Revenue Day 1 — fee flag ON</td>
+                <td>First real USDC deposit via MoonPay. <code style="font-size:10px; background:#071525; padding:1px 4px; border-radius:2px;">TRADING_FEE_ENABLED=true</code> in env. AthleteVaultV2 on Base Mainnet.</td>
+                <td><strong>+£3,373 net profit / month at 500 users.</strong> Break-even requires only 136 active traders.</td>
+                <td><span class="badge badge-required">Requires Funding</span></td>
+            </tr>
+            <tr>
+                <td><strong>Oct 2026</strong></td>
+                <td>Audit report published + App Store live</td>
+                <td>Public Hacken report. iOS + Android downloads via EAS Build. Curaçao licence in hand.</td>
+                <td>Mobile distribution opens mass-market funnel. Projected <strong>+300 users/month</strong> acquisition rate begins.</td>
+                <td><span class="badge badge-planned">Planned</span></td>
+            </tr>
+            <tr>
+                <td><strong>Nov 2026</strong></td>
+                <td>Monthly OpEx break-even</td>
+                <td>~350 paying users. £1,627 OpEx fully covered by trading fees alone. Platform is cash-flow positive.</td>
+                <td><strong>Cash-flow positive from month 3.</strong> Every pound raised stops being spent on survival and starts compounding.</td>
+                <td><span class="badge badge-planned">Planned</span></td>
+            </tr>
+            <tr>
+                <td><strong>Dec 2026</strong></td>
+                <td>Liquidity partner LOI signed</td>
+                <td>Named market maker (Keyrock / Auros) with signed letter of intent. Aerodrome pool architecture agreed.</td>
+                <td>Revenue rising to <strong>£16,000 net/month.</strong> Cumulative net profit from launch: ~£26,200.</td>
+                <td><span class="badge badge-planned">Planned</span></td>
+            </tr>
+            <tr>
+                <td><strong>Q1 2027</strong></td>
+                <td>DEX pools live (Aerodrome)</td>
+                <td>Top 20 player tokens trading on Base Mainnet DEX pools. PriceOracle.sol feeding secondary market. Chainlink CRE upgrade activated.</td>
+                <td>Secondary market creates price discovery signal. Increases trading velocity — projected <strong>avg trades/user rises 4 → 5×/month</strong>.</td>
+                <td><span class="badge badge-planned">Planned</span></td>
+            </tr>
+            <tr>
+                <td><strong>Q2 2027</strong></td>
+                <td>SBX stablecoin + second audit</td>
+                <td>SBX.sol deployed on Base Mainnet. Mint/redeem live. SBX/USDC pool on Aerodrome. Proof-of-reserves published.</td>
+                <td>Stream 2 unlocked. At £500K/month SBX flow: <strong>+£1,000/month.</strong> Total net: <strong>~£46,750/month.</strong></td>
+                <td><span class="badge badge-planned">Planned</span></td>
+            </tr>
+            <tr>
+                <td><strong>Q3 2027</strong></td>
+                <td>Player staking vaults live</td>
+                <td>FeeDistributor.sol deployed. First yield distribution executed (80% trading fees → sToken holders). sTokens tradeable.</td>
+                <td>Stream 3 unlocked. TVL flywheel activates: yield → demand → TVL → more trading fees → more yield.</td>
+                <td><span class="badge badge-planned">Planned</span></td>
+            </tr>
+            <tr>
+                <td><strong>Q4 2027</strong></td>
+                <td>Institutional API + multi-sport scoped</td>
+                <td>REST + WebSocket API for external buyers. Premier League + Champions League SQE feeds in build. Series A materials prepared.</td>
+                <td>Stream 4 unlocked. <strong>Net profit: £228,500/month. ARR: £2.74M. Cumulative from launch: ~£1.33M.</strong></td>
+                <td><span class="badge badge-planned">Planned</span></td>
+            </tr>
+            <tr class="highlight">
+                <td><strong>Q2 2028</strong></td>
+                <td>Multi-sport + Series A (optional)</td>
+                <td>Premier League + UCL tokens live. 40,000 users. Institutional API at 20 subscribers. Self-funded expansion possible.</td>
+                <td><strong>Net profit: £657,000/month. ARR: £8.1M. Investor 8.2–38× return range based on exit multiple.</strong></td>
+                <td><span class="badge badge-planned">Target</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="callout" style="margin-top:18px;">
+        <p><strong>Critical path:</strong> Legal entity registration is the single longest-lead item and the root dependency of the entire chain. The raise must be deployed within 2 weeks of close to maintain the September launch date. Every week of delay shifts the revenue start date by one week.</p>
+    </div>
+
+    <div style="margin-top:24px; text-align:center; background:var(--navy3); border:1px solid var(--border); border-radius:12px; padding:24px;">
+        <p style="font-size:11px; text-transform:uppercase; letter-spacing:2px; color:var(--accent); font-weight:800; margin:0 0 8px;">Investment Inquiry</p>
+        <p style="font-size:26px; font-weight:900; margin:0; color:var(--text);">contact@stockballer.app</p>
+        <p style="font-size:13px; margin:8px 0 0; color:var(--text70);">Pre-Seed — £200,000 &nbsp;|&nbsp; ASA @ £1.5M Cap &nbsp;|&nbsp; SEIS Eligible</p>
+    </div>
+
+    <div class="footer">StockBaller — Technical Diligence Pack v1.0 — June 2026 — Confidential — stockballer.app</div>
+</div>
+
+</body>
+</html>

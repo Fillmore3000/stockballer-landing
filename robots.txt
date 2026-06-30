@@ -11,6 +11,10 @@ Sitemap: https://stockballer.app/sitemap.xml
 Disallow: /admin.html
 Disallow: /admin
 
+# Disallow investor portal
+Disallow: /investors.html
+Disallow: /investors
+
 # Allow all crawlers to index key pages
 User-agent: Googlebot
 Allow: /

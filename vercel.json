@@ -5,6 +5,10 @@
       "destination": "/admin.html"
     },
     {
+      "source": "/investors",
+      "destination": "/investors/index.html"
+    },
+    {
       "source": "/blog",
       "destination": "/blog.html"
     },

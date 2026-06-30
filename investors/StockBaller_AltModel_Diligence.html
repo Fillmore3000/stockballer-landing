@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>StockBaller — AI Model + Blockchain Architecture — Alternative Raise Plan</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+
+        :root {
+            --primary: #08111F;
+            --navy2: #0F1E35;
+            --navy3: #162840;
+            --accent: #00E5FF;
+            --accent2: #7C3AED;
+            --success: #10B981;
+            --danger: #FF1744;
+            --gold: #F5CB3F;
+            --text: #FFFFFF;
+            --text70: rgba(255, 255, 255, 0.7);
+            --border: rgba(0, 229, 255, 0.15);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            background: var(--primary);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 18mm 20mm;
+            margin: 15px auto;
+            background: var(--navy2);
+            box-shadow: 0 0 30px rgba(0,0,0,0.6);
+            page-break-after: always;
+            page-break-inside: avoid;
+            position: relative;
+        }
+
+        header {
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 14px;
+            margin-bottom: 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .doc-label {
+            font-weight: 800;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text70);
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--text);
+            margin: 0 0 18px 0;
+            border-left: 5px solid var(--accent);
+            padding-left: 14px;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--accent);
+            margin: 26px 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 6px;
+        }
+
+        h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+            margin: 16px 0 8px 0;
+        }
+
+        p {
+            margin-bottom: 10px;
+            font-size: 13.5px;
+            color: var(--text70);
+        }
+
+        li {
+            color: var(--text70);
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+
+        ul { padding-left: 18px; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 12.5px;
+            page-break-inside: avoid;
+        }
+
+        th {
+            background: var(--navy3);
+            text-align: left;
+            padding: 9px 10px;
+            border: 1px solid var(--border);
+            font-size: 10px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 800;
+        }
+
+        td {
+            padding: 9px 10px;
+            border: 1px solid var(--border);
+            color: var(--text70);
+            vertical-align: top;
+        }
+
+        td strong { color: var(--text); }
+
+        tr.total td {
+            background: rgba(0,229,255,0.08);
+            color: var(--accent);
+            font-weight: 800;
+        }
+
+        tr.highlight td {
+            background: rgba(16,185,129,0.10);
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 14px 0;
+            page-break-inside: avoid;
+        }
+
+        .stat-grid-3 { grid-template-columns: repeat(3, 1fr); }
+        .stat-grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+        .stat-item {
+            text-align: center;
+            background: var(--navy3);
+            border: 1px solid var(--border);
+            padding: 14px 10px;
+            border-radius: 10px;
+        }
+
+        .stat-val {
+            display: block;
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--accent);
+        }
+
+        .stat-lbl {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text70);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+            display: block;
+        }
+
+        .card {
+            background: var(--navy3);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px 18px;
+            margin: 10px 0;
+            page-break-inside: avoid;
+        }
+
+        .card h3 { margin-top: 0; color: var(--accent); font-size: 14px; }
+        .card p { margin: 0 0 6px; font-size: 13px; }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .three-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+        }
+
+        .formula {
+            background: #040D1A;
+            color: #a5f3fc;
+            border: 1px solid var(--accent);
+            padding: 16px 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 8px;
+            margin: 12px 0;
+            page-break-inside: avoid;
+            line-height: 1.9;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        .badge-live { background: var(--success); color: #fff; }
+        .badge-ai { background: var(--accent2); color: #fff; }
+        .badge-chain { background: rgba(0,229,255,0.2); color: var(--accent); border: 1px solid rgba(0,229,255,0.5); }
+        .badge-planned { background: rgba(245,203,63,0.18); color: var(--gold); border: 1px solid rgba(245,203,63,0.4); }
+        .badge-fast { background: rgba(16,185,129,0.2); color: var(--success); border: 1px solid rgba(16,185,129,0.5); }
+
+        .callout {
+            background: var(--navy3);
+            border-left: 4px solid var(--accent);
+            padding: 14px 18px;
+            border-radius: 0 8px 8px 0;
+            margin: 14px 0;
+            page-break-inside: avoid;
+        }
+
+        .callout p { margin: 0; font-size: 13px; }
+        .callout strong { color: var(--text); }
+
+        .callout.purple { border-left-color: var(--accent2); }
+        .callout.green { border-left-color: var(--success); }
+
+        .callout.vs {
+            border-left-color: var(--gold);
+            background: rgba(245,203,63,0.06);
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 9px;
+            color: var(--text70);
+            margin-top: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-top: 1px solid var(--border);
+            padding-top: 10px;
+        }
+
+        .cover-block {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 260mm;
+            text-align: center;
+        }
+
+        .cover-block h1 {
+            border: none;
+            padding: 0;
+            font-size: 32px;
+            letter-spacing: -1px;
+            margin: 20px 0 10px;
+        }
+
+        .chain-tag {
+            display: inline-block;
+            background: rgba(0,229,255,0.12);
+            border: 1px solid rgba(0,229,255,0.4);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            margin: 3px;
+        }
+
+        .ai-tag {
+            display: inline-block;
+            background: rgba(124,58,237,0.25);
+            border: 1px solid rgba(124,58,237,0.6);
+            color: #c4b5fd;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            margin: 3px;
+        }
+
+        code {
+            background: #040D1A;
+            color: #a5f3fc;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        @media print {
+            @page { size: A4; margin: 0; }
+            html, body {
+                background: #08111F !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .page {
+                margin: 0 !important;
+                box-shadow: none !important;
+                background: #0F1E35 !important;
+                page-break-after: always;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .page:last-child { page-break-after: auto; }
+            .card, .stat-item, .callout, .formula {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            th { background: #162840 !important; -webkit-print-color-adjust: exact !important; }
+            tr.total td { background: rgba(0,229,255,0.08) !important; -webkit-print-color-adjust: exact !important; }
+            tr.highlight td { background: rgba(16,185,129,0.1) !important; -webkit-print-color-adjust: exact !important; }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ═══════════════════════════════════════════
+     COVER
+═══════════════════════════════════════════ -->
+<div class="page">
+    <div class="cover-block">
+        <img src="../NewLogo.png" alt="StockBaller" style="height:80px; margin-bottom:14px;" onerror="this.style.display='none'">
+        <div style="font-size:10px; text-transform:uppercase; letter-spacing:3px; color:var(--accent); font-weight:800; margin-bottom:6px;">Alternative Technical Diligence — Lean Raise Plan</div>
+        <h1>AI Prediction Engine<br>&amp; Blockchain Fee Architecture</h1>
+        <p style="font-size:15px; color:var(--text70); max-width:460px; margin:0 auto 10px;">A crypto-native, regulation-light launch path. No fiat onramp. No stablecoin. No licensing costs. Revenue from on-chain trading fees and AI prediction subscriptions from day one.</p>
+
+        <div class="callout vs" style="max-width:520px; margin:18px auto 24px; text-align:left;">
+            <p style="margin-bottom:6px; font-size:12px; font-weight:700; color:var(--gold);">HOW THIS DIFFERS FROM THE PRIMARY DILIGENCE PACK</p>
+            <p style="margin:0; font-size:12px; line-height:1.8;">
+                Primary Pack: £200K raise — includes BVI/Cayman entity (£21K), Curaçao licence (£14K), token opinion (£10K), AML/ToS (£6K), stablecoin arc, fiat onramp, full DeFi protocol.<br>
+                <strong style="color:var(--accent);">This Pack: £120K raise — none of those costs. Users connect wallets with existing USDC or subscribe via Stripe (already live). AI subscription SaaS + on-chain fee revenue only. Launches faster with less capital risk.</strong>
+            </p>
+        </div>
+
+        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-bottom:32px;">
+            <span class="ai-tag">SQE v4 AI Pricing Engine</span>
+            <span class="ai-tag">Prediction Model</span>
+            <span class="chain-tag">Base L2 (ERC-1155)</span>
+            <span class="chain-tag">On-Chain Fee Collection</span>
+            <span class="chain-tag">Smart Contract Revenue</span>
+        </div>
+
+        <table style="max-width:420px; margin:0 auto;">
+            <thead><tr><th>Document</th><th>Version</th><th>Date</th></tr></thead>
+            <tbody>
+                <tr><td>Alternative Technical Diligence</td><td><strong>v1.0</strong></td><td><strong>June 2026</strong></td></tr>
+                <tr><td>Raise Target</td><td colspan="2"><strong style="color:var(--accent);">£120,000 Pre-Seed</strong></td></tr>
+                <tr><td>Instrument</td><td colspan="2"><strong>ASA @ £900K Cap — 11.76% equity — SEIS Eligible</strong></td></tr>
+                <tr><td>Model</td><td colspan="2"><strong>Stripe (primary) + crypto wallet-connect (Web3 users)</strong></td></tr>
+                <tr><td>Contact</td><td colspan="2"><strong>contact@stockballer.app</strong></td></tr>
+            </tbody>
+        </table>
+        <p style="margin-top:40px; font-size:10px; text-transform:uppercase; letter-spacing:2px; opacity:0.35;">Confidential — Not for Distribution</p>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 1 — PLATFORM STATE (TODAY)
+═══════════════════════════════════════════ -->
+<div class="page">
+    <header>
+        <img src="../NewLogo.png" alt="StockBaller" style="height:30px;" onerror="this.style.display='none'">
+        <span class="doc-label">Section 1 — What Is Already Running in Production</span>
+    </header>
+
+    <h1>Live Now — Zero Regulatory<br>Blockers to This State</h1>
+    <p>Everything below is running today. None of it requires a legal entity, a gaming licence, or a fiat onramp. An investor reviewing this document can verify every URL in real time.</p>
+
+    <h2>Production Infrastructure — Fully Operational</h2>
+    <table>
+        <thead>
+            <tr><th>Component</th><th>Technology</th><th>Status</th><th>Cost/Month</th><th>Regulatory Dependency</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Backend API</strong></td><td>NestJS 11, TypeScript — Railway</td><td><span class="badge badge-live">Live</span></td><td>£8</td><td style="color:var(--success);"><strong>None</strong></td></tr>
+            <tr><td><strong>Database</strong></td><td>MongoDB Atlas, Prisma ORM</td><td><span class="badge badge-live">Live</span></td><td>£0</td><td style="color:var(--success);"><strong>None</strong></td></tr>
+            <tr><td><strong>Frontend App</strong></td><td>React Native, Expo SDK 54 — Vercel</td><td><span class="badge badge-live">Live</span></td><td>£0</td><td style="color:var(--success);"><strong>None</strong></td></tr>
+            <tr><td><strong>SQE v4 AI Pricing Engine</strong></td><td>TypeScript module, WC 2026 live data</td><td><span class="badge badge-live">Live</span></td><td>£0</td><td style="color:var(--success);"><strong>None</strong></td></tr>
+            <tr><td><strong>Live Match Data Feed</strong></td><td>API-Football v3 — WC 2026</td><td><span class="badge badge-live">Live</span></td><td>£35</td><td style="color:var(--success);"><strong>Data licence only</strong></td></tr>
+            <tr><td><strong>Wallet Authentication</strong></td><td>Auth0 + Openfort embedded wallets</td><td><span class="badge badge-live">Live</span></td><td>£0</td><td style="color:var(--success);"><strong>None</strong></td></tr>
+            <tr><td><strong>Smart Contracts</strong></td><td>ERC-1155 AthleteVaultV2 + PredictionMarket</td><td><span class="badge badge-chain">Testnet</span></td><td>£0</td><td style="color:var(--gold);"><strong>Audit only (no licence)</strong></td></tr>
+            <tr><td><strong>Agent Bot Fleet</strong></td><td>100 autonomous agents, real Openfort wallets, 4 archetypes</td><td><span class="badge badge-live">Live (paper)</span></td><td>£0</td><td style="color:var(--success);"><strong>None — wallets funded post-audit</strong></td></tr>
+            <tr class="total"><td colspan="3"><strong>Total Current Monthly Infrastructure</strong></td><td><strong>£43</strong></td><td><strong style="color:var(--success);">Zero regulatory costs</strong></td></tr>
+        </tbody>
+    </table>
+
+    <h2>World Cup 2026 — Live From Today</h2>
+    <div class="stat-grid">
+        <div class="stat-item"><span class="stat-val">240</span><span class="stat-lbl">Player Tokens</span></div>
+        <div class="stat-item"><span class="stat-val">48</span><span class="stat-lbl">Nations</span></div>
+        <div class="stat-item"><span class="stat-val">72</span><span class="stat-lbl">Group Fixtures</span></div>
+        <div class="stat-item"><span class="stat-val">Jun 11</span><span class="stat-lbl">Formula Live From</span></div>
+    </div>
+
+    <h2>What This Model Skips (And Why That's Fine)</h2>
+    <div class="two-col">
+        <div class="card">
+            <h3>Skipped in This Model</h3>
+            <p>• BVI/Cayman legal entity (£21K)<br>
+               • Token opinion letter (£10K)<br>
+               • Curaçao gaming licence (£14K)<br>
+               • AML compliance manual (£4K)<br>
+               • Fiat onramp (MoonPay/Transak)<br>
+               • SBX stablecoin + DeFi protocol<br>
+               • DEX liquidity seeding (£32K)</p>
+        </div>
+        <div class="card">
+            <h3>Why It Works Without Them</h3>
+            <p>• No fiat handled = no e-money regulation<br>
+               • Users hold their own USDC in their own wallets<br>
+               • Smart contracts collect fees — no platform custody<br>
+               • AI subscription is a SaaS product, not a financial instrument<br>
+               • Prediction markets limited to crypto-native users (self-certified)<br>
+               • Legal stack added later if/when scaling to fiat</p>
+        </div>
+    </div>
+
+    <div class="callout green">
+        <p><strong>This is not a compromise — it is a different go-to-market sequence.</strong> The platform generates real revenue (on-chain fees + AI subscriptions) before spending a single pound on legal infrastructure. The legal stack is added when the revenue validates the spend, not as a prerequisite to the first pound in.</p>
+    </div>
+
+    <h2>Verifiable Production URLs</h2>
+    <div class="card">
+        <p style="font-family: monospace; font-size: 12px; line-height: 2.4; margin:0; color: var(--text70);">
+            API:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong style="color:var(--accent);">https://stockballer-api-production.up.railway.app</strong><br>
+            Dashboard:&nbsp; <strong style="color:var(--accent);">https://stockballer-landing.vercel.app/admin.html</strong><br>
+            Contracts:&nbsp; <strong style="color:var(--accent);">Base Sepolia — verifiable on Basescan</strong>
+        </p>
+    </div>
+
+    <div class="footer">StockBaller — AI Model + Blockchain Architecture — Alternative Raise Plan v1.0 — June 2026 — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 2 — AI PREDICTION ENGINE
+═══════════════════════════════════════════ -->
+<div class="page">
+    <header>
+        <img src="../NewLogo.png" alt="StockBaller" style="height:30px;" onerror="this.style.display='none'">
+        <span class="doc-label">Section 2 — SQE v4: The AI Prediction &amp; Pricing Engine</span>
+    </header>
+
+    <h1>The AI Engine That Prices<br>Every Athlete Token</h1>
+    <p>The Sports Quantification Engine (SQE v4) is the proprietary model at the centre of this platform. It does two things no competitor has built: it converts real-world athlete performance into a deterministic, on-chain-verifiable price in real time — and it generates a prediction signal that lets users (and the subscription product) forecast the next price move before the match ends.</p>
+
+    <h2>What "AI" Means Here — Precisely</h2>
+    <div class="two-col">
+        <div class="card">
+            <h3><span class="badge badge-ai">Pricing Layer</span> Deterministic Model</h3>
+            <p>The pricing formula is a <strong>calibrated, weighted algorithm</strong> — not a neural network. Given identical inputs it always produces identical outputs. This is intentional: it makes every price move auditable, legally defensible, and reproducible by any third party.</p>
+            <p style="font-size:12px; color:rgba(255,255,255,0.45);">Calibrated on: 2,400 WC 2022 player-match records. Version 4 of 4 iteration cycles.</p>
+        </div>
+        <div class="card">
+            <h3><span class="badge badge-ai">Prediction Layer</span> ML Signal</h3>
+            <p>The prediction model is a <strong>supervised classification model</strong> — trained on historical SQE outcomes — that outputs a probability distribution over three outcomes: Price Up / Flat / Down in the next match. This is the signal sold in the subscription tiers.</p>
+            <p style="font-size:12px; color:rgba(255,255,255,0.45);">Training data: 4 SQE formula versions × 2,400+ match records = 9,600+ labelled outcomes.</p>
+        </div>
+    </div>
+
+    <h2>SQE v4 — Master Pricing Formula</h2>
+    <div class="formula">
+<strong>Final Price = (Market_Base × Decay_Factor) + (Yield × Trajectory × 3)</strong>
+
+  Market_Base    Starting reference price per player (FIFA rank + career stats seed)
+  Decay_Factor   0.95 ^ weeks_inactive  →  benched/injured players lose value over time
+  Yield          Weighted match event score (goals, assists, cards, clean sheets)
+  Trajectory     EMA of last 3 match Yield scores  →  form context, not just one match
+  × 3            Amplification constant  →  calibrated on WC 2022 dataset
+
+  Stage Multiplier:  Group 1.0× | R16 1.25× | QF 1.5× | SF 2.0× | Final 3.0×</div>
+
+    <h2>Yield Event Weights — Full Table</h2>
+    <table>
+        <thead><tr><th>Match Event</th><th>Yield Points</th><th>Rationale</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Goal scored</strong></td><td>+3.0</td><td>Highest single positive event. Core value driver for attackers.</td></tr>
+            <tr><td><strong>Assist</strong></td><td>+1.5</td><td>Half-weight of goal. Direct contribution to scoring.</td></tr>
+            <tr><td><strong>Clean sheet (GK/DEF)</strong></td><td>+1.0</td><td>Positional context — rewards defensive discipline.</td></tr>
+            <tr><td><strong>MOTM award</strong></td><td>+1.0</td><td>Official match award — independent editorial validation of performance.</td></tr>
+            <tr><td><strong>Penalty won</strong></td><td>+0.5</td><td>Partial contribution — not a direct goal but a high-value action.</td></tr>
+            <tr><td><strong>Yellow card</strong></td><td>−0.5</td><td>Minor negative. Discipline signal — next yellow = suspension risk.</td></tr>
+            <tr><td><strong>Penalty miss</strong></td><td>−2.0</td><td>High-visibility failure. Significant negative sentiment driver.</td></tr>
+            <tr><td><strong>Red card</strong></td><td>−3.0</td><td>Maximum negative. Player exits match + misses next game (Decay accelerates).</td></tr>
+            <tr><td><strong>Own goal</strong></td><td>−1.5</td><td>Significant error. Treated as negative contribution to team performance.</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Prediction Model — How It Works</h2>
+    <div class="formula">
+<strong>Input features (per player, per upcoming match):</strong>
+  1. Current Trajectory score (EMA of last 3 Yield values)
+  2. Decay_Factor (weeks since last match)
+  3. Opponent defensive rating (derived from opponent's last 5 defensive Yield conceded)
+  4. Tournament stage (categorical: Group / Knockout)
+  5. Days rest since last match
+  6. Historical Yield variance (consistency score — high variance = unpredictable)
+
+<strong>Output:</strong>
+  P(Price Up)    =  probability next match Yield &gt; current Trajectory
+  P(Flat)        =  probability next match Yield ≈ current Trajectory (±10%)
+  P(Price Down)  =  probability next match Yield &lt; current Trajectory
+
+<strong>Model type:</strong>  Gradient Boosted Trees (XGBoost)
+<strong>Training set:</strong> 2,400 WC 2022 labelled outcomes + 1,200 WC 2026 (live, expanding)
+<strong>Validation:</strong>  Rolling out-of-sample test on each WC 2026 match as data comes in</div>
+
+    <h2>Prediction Accuracy — Current Baseline</h2>
+    <div class="stat-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="stat-item">
+            <span class="stat-val" style="color:var(--success);">64%</span>
+            <span class="stat-lbl">Directional Accuracy<br>(Up vs. Not-Up)</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-val">58%</span>
+            <span class="stat-lbl">3-Class Accuracy<br>(Up / Flat / Down)</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-val" style="color:var(--accent);">+1,200</span>
+            <span class="stat-lbl">Live WC 2026 Records<br>Adding Daily</span>
+        </div>
+    </div>
+    <p style="font-size:12px; margin-top:6px;">64% directional accuracy vs. a 50% random baseline on binary direction. The model improves as WC 2026 match data accumulates — by the Final (64 matches), accuracy is projected to reach 68–72% directional on the holdout set. This is the signal being sold.</p>
+
+    <h2>Why This Is Defensible IP</h2>
+    <div class="callout purple">
+        <p>The SQE model is the <strong>only performance-pricing oracle for footballer tokens on any EVM chain</strong>. Building an equivalent requires: (1) designing and iterating the formula over multiple versions, (2) curating and labelling 2,400+ match records, (3) training, validating and deploying the ML layer, (4) wiring it to a live sports data API with correct stat parsing, and (5) connecting the output to a verified on-chain oracle. No competitor has done steps 3–5 together. The WC 2026 dataset created during this tournament is a proprietary training asset that grows more valuable every match day.</p>
+    </div>
+
+    <div class="footer">StockBaller — AI Model + Blockchain Architecture — Alternative Raise Plan v1.0 — June 2026 — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 3 — BLOCKCHAIN FEE ARCHITECTURE
+═══════════════════════════════════════════ -->
+<div class="page">
+    <header>
+        <img src="../NewLogo.png" alt="StockBaller" style="height:30px;" onerror="this.style.display='none'">
+        <span class="doc-label">Section 3 — On-Chain Fee Architecture &amp; Smart Contract Revenue</span>
+    </header>
+
+    <h1>How Every Trade Generates<br>On-Chain Revenue</h1>
+    <p>In this model, platform revenue is collected directly by smart contracts on Base L2 — not by the platform as a custodian. No user funds pass through a company bank account. The fee is extracted at the contract layer, accumulated in a treasury multisig, and withdrawable by the platform at any time. This is the technical and legal distinction that removes the need for an e-money licence.</p>
+
+    <h2>Fee Collection Flow — Buy Transaction</h2>
+    <div class="formula">
+User connects wallet (Openfort embedded or MetaMask/Coinbase Wallet)
+    ↓
+User calls AthleteVaultV2.buy(tokenId, amount)  —  sends USDC from their wallet
+    ↓
+Contract calculates:  platformFee = tradeAmount × 0.01  (1%)
+    ↓
+Contract splits:
+    netTokenValue  →  credited to user's on-chain token balance (ERC-1155)
+    platformFee    →  forwarded to TreasuryWallet (Gnosis Safe multisig)
+    ↓
+TradeExecutedEvent emitted  →  picked up by backend → leaderboard + activity feed update
+    ↓
+User receives ERC-1155 token in their wallet  —  fully self-custodied</div>
+
+    <h2>Fee Collection Flow — Prediction Market Settlement</h2>
+    <div class="formula">
+User calls PredictionMarket.placeBet(matchId, outcome, stakeAmount)
+    ↓
+Stake locked in contract escrow until match result finalised
+    ↓
+SQE backend posts result: PredictionMarket.settle(matchId, result)
+    ↓
+Winners receive:  payout = stakeAmount × odds × (1 - 0.10)  (10% house margin)
+    ↓
+10% margin  →  forwarded to TreasuryWallet (same Gnosis Safe multisig)
+    ↓
+No platform custody at any point — contract holds escrow, not the company</div>
+
+    <h2>Base L2 — Why Gas Costs Are Not a Revenue Concern</h2>
+    <table>
+        <thead><tr><th>Transaction Type</th><th>Gas Used</th><th>Cost at Base L2 Prices</th><th>User Pays</th><th>Platform Impact</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Buy player token (ERC-1155)</strong></td>
+                <td>~65,000 gas</td>
+                <td><strong style="color:var(--success);">~£0.0005</strong></td>
+                <td>User (from their ETH balance)</td>
+                <td>Zero — user bears gas</td>
+            </tr>
+            <tr>
+                <td><strong>Sell player token</strong></td>
+                <td>~55,000 gas</td>
+                <td><strong style="color:var(--success);">~£0.0004</strong></td>
+                <td>User</td>
+                <td>Zero</td>
+            </tr>
+            <tr>
+                <td><strong>Place prediction bet</strong></td>
+                <td>~80,000 gas</td>
+                <td><strong style="color:var(--success);">~£0.0006</strong></td>
+                <td>User</td>
+                <td>Zero</td>
+            </tr>
+            <tr>
+                <td><strong>Settle prediction market (admin)</strong></td>
+                <td>~120,000 gas</td>
+                <td><strong style="color:var(--success);">~£0.0009</strong></td>
+                <td><strong>Platform pays</strong></td>
+                <td>£0.0009 per match settlement</td>
+            </tr>
+            <tr>
+                <td><strong>Oracle price update (PriceOracle.sol)</strong></td>
+                <td>~40,000 gas</td>
+                <td><strong style="color:var(--success);">~£0.0003</strong></td>
+                <td><strong>Platform pays</strong></td>
+                <td>£0.0003 per player update</td>
+            </tr>
+            <tr>
+                <td><strong>Treasury withdrawal (Gnosis Safe)</strong></td>
+                <td>~200,000 gas</td>
+                <td><strong style="color:var(--success);">~£0.0015</strong></td>
+                <td><strong>Platform pays once/month</strong></td>
+                <td>Negligible vs. accumulated fees</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Annual Platform Gas Cost — Calculated</h2>
+    <div class="formula">
+Match settlements:     64 WC matches × £0.0009     =  £0.06
+Oracle updates:        240 tokens × 64 matches      =  15,360 updates × £0.0003  =  £4.61
+Treasury withdrawals:  12 per year                  =  12 × £0.0015  =  £0.02
+
+<strong>Total platform-paid gas cost for entire WC 2026 campaign: ~£4.69</strong>
+
+At full multi-sport scale (500 match days/year, 500 token updates each):
+  Oracle updates:       500 × 500 × £0.0003  =  <strong>£75/year</strong>
+  Settlements:          500 × £0.0009        =  <strong>£0.45/year</strong>
+  <strong>Total annual gas cost at scale: ~£75.45</strong>
+    </div>
+
+    <h2>Treasury Architecture</h2>
+    <div class="two-col">
+        <div class="card">
+            <h3>Gnosis Safe Multisig <span class="badge badge-chain">Base Mainnet</span></h3>
+            <p>All platform fees accumulate in a <strong>2-of-3 Gnosis Safe multisig</strong> on Base. No single key can withdraw funds. Standard for Web3 treasury management — used by Uniswap, Aave, Compound.</p>
+            <p>Keys held by: Founder (1) + Technical Lead (1) + Hardware Wallet Cold Store (1).</p>
+            <p style="font-size:12px; color:rgba(255,255,255,0.45); margin:0;">Cost to deploy: &lt;£0.50 one-time gas. No ongoing fees.</p>
+        </div>
+        <div class="card">
+            <h3>Revenue Visibility <span class="badge badge-chain">Public On-Chain</span></h3>
+            <p>Every fee collection is a public blockchain event. An investor can verify accumulated treasury balance and all fee transactions directly on <strong>Basescan</strong> — no need to trust platform-reported figures.</p>
+            <p>This is a structural advantage over any fiat-based business: revenue is independently auditable by anyone with the contract address.</p>
+            <p style="font-size:12px; color:rgba(255,255,255,0.45); margin:0;">Real-time treasury balance: readable via ethers.js or Basescan.</p>
+        </div>
+    </div>
+
+    <h2>Fee Revenue Projection at 500 Active Wallet Users</h2>
+    <table>
+        <thead><tr><th>Revenue Stream</th><th>Formula</th><th>Monthly Revenue</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Trading fee (1%)</strong></td>
+                <td>500 users × £120 avg trade × 4 trades/month × 1%</td>
+                <td><strong style="color:var(--accent);">£2,400</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Prediction house margin (10%)</strong></td>
+                <td>150 users × £25 avg stake × 10%</td>
+                <td><strong style="color:var(--accent);">£375</strong></td>
+            </tr>
+            <tr>
+                <td><strong>H2H challenge rake (5%)</strong></td>
+                <td>100 users × £20 avg stake × 5%</td>
+                <td><strong style="color:var(--accent);">£100</strong></td>
+            </tr>
+            <tr class="total">
+                <td><strong>Total on-chain fee revenue</strong></td>
+                <td><strong>500 wallet users, WC period</strong></td>
+                <td><strong>£2,875 / month</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="callout">
+        <p><strong>No custodian. No bank account. No e-money flow.</strong> The smart contract is the revenue engine. Platform gas costs to operate this at WC 2026 scale: <strong>under £5 total</strong>. At full multi-sport scale: <strong>under £80/year</strong>. This is the most capital-efficient fee collection architecture available — and it's already written and deployed on testnet.</p>
+    </div>
+
+    <div class="footer">StockBaller — AI Model + Blockchain Architecture — Alternative Raise Plan v1.0 — June 2026 — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 4 — AI SUBSCRIPTION TIERS
+═══════════════════════════════════════════ -->
+<div class="page">
+    <header>
+        <img src="../NewLogo.png" alt="StockBaller" style="height:30px;" onerror="this.style.display='none'">
+        <span class="doc-label">Section 4 — AI Subscription Product: Tiers, Pricing &amp; MRR Projections</span>
+    </header>
+
+    <h1>The SaaS Layer:<br>Selling the Prediction Signal</h1>
+    <p>On-chain fees require users to trade. Subscriptions generate revenue from users who want the AI signal whether or not they place a trade. A football analyst, a fantasy player, a sports journalist — none of them need a wallet to pay £9.99/month for a prediction feed. This is a completely separate distribution channel, addressable with zero regulatory friction.</p>
+
+    <h2>Subscription Tier Architecture</h2>
+    <div class="three-col" style="margin: 16px 0;">
+        <div class="card" style="border-color: rgba(255,255,255,0.15); text-align:center;">
+            <p style="font-size:10px; text-transform:uppercase; letter-spacing:2px; color:var(--text70); margin:0 0 6px;">Free</p>
+            <p style="font-size:28px; font-weight:900; color:var(--text); margin:0;">£0</p>
+            <p style="font-size:11px; color:var(--text70); margin:4px 0 14px;">/month — no card required</p>
+            <ul style="text-align:left; font-size:12px; padding-left:16px; margin:0;">
+                <li>Live SQE price dashboard (all 240 tokens)</li>
+                <li>Top 5 movers today (delayed 30 min)</li>
+                <li>WC fixture calendar + match results</li>
+                <li>Paper trading mode (unlimited)</li>
+                <li>Community leaderboard (read-only)</li>
+            </ul>
+            <p style="font-size:11px; color:rgba(255,255,255,0.35); margin:12px 0 0;"><em>Funnel entry — converts to Pro</em></p>
+        </div>
+        <div class="card" style="border-color: var(--accent); background: linear-gradient(135deg, #162840 0%, #0d2035 100%); text-align:center;">
+            <p style="font-size:10px; text-transform:uppercase; letter-spacing:2px; color:var(--accent); margin:0 0 6px;">Pro <span class="badge badge-ai" style="margin-left:4px;">AI</span></p>
+            <p style="font-size:28px; font-weight:900; color:var(--accent); margin:0;">£9.99</p>
+            <p style="font-size:11px; color:var(--text70); margin:4px 0 14px;">/month — billed monthly or £79/yr</p>
+            <ul style="text-align:left; font-size:12px; padding-left:16px; margin:0;">
+                <li><strong style="color:var(--text);">Full AI prediction feed — all 240 players</strong></li>
+                <li>Pre-match Up/Flat/Down probability scores</li>
+                <li>Confidence level per prediction (High/Med/Low)</li>
+                <li>Real-time SQE price (no delay)</li>
+                <li>SQE "hot streak" alerts via push notification</li>
+                <li>7-day price trajectory chart per player</li>
+                <li>On-chain wallet connect to trade directly</li>
+            </ul>
+            <p style="font-size:11px; color:var(--success); margin:12px 0 0;"><strong>Primary revenue tier</strong></p>
+        </div>
+        <div class="card" style="border-color: rgba(124,58,237,0.6); text-align:center;">
+            <p style="font-size:10px; text-transform:uppercase; letter-spacing:2px; color:#c4b5fd; margin:0 0 6px;">Institutional <span class="badge badge-ai">API</span></p>
+            <p style="font-size:28px; font-weight:900; color:#c4b5fd; margin:0;">£249</p>
+            <p style="font-size:11px; color:var(--text70); margin:4px 0 14px;">/month — billed annually (£2,988/yr)</p>
+            <ul style="text-align:left; font-size:12px; padding-left:16px; margin:0;">
+                <li><strong style="color:var(--text);">Full SQE REST + WebSocket API access</strong></li>
+                <li>All Pro features included</li>
+                <li>Historical price data export (all versions)</li>
+                <li>Raw Yield event stream (per-match, per-player)</li>
+                <li>Custom sport/league configuration requests</li>
+                <li>White-label prediction feed (embed in own product)</li>
+                <li>SLA: 99.9% uptime commitment</li>
+            </ul>
+            <p style="font-size:11px; color:#c4b5fd; margin:12px 0 0;"><em>Target: sportsbooks, fantasy platforms, media</em></p>
+        </div>
+    </div>
+
+    <h2>Payment Method — Stripe Primary (Ready for Launch), Crypto Wallet Secondary</h2>
+    <div class="two-col">
+        <div class="card" style="border-color:var(--success);">
+            <h3><span class="badge badge-live" style="margin:0 8px 0 0;">Ready</span>Stripe (Primary)</h3>
+            <p>Standard Stripe card billing — <strong style="color:var(--text);">already integrated and ready for August/September launch.</strong> Card, Apple Pay, Google Pay. Platform receives payouts to business bank account as normal SaaS revenue. No FCA licence, no e-money registration required for a subscription SaaS product.</p>
+            <p style="font-size:12px; margin:0; color:rgba(255,255,255,0.45);">Stripe fee: 2.9% + £0.30 per transaction — borne by the platform (not passed to user). At £9.99/month: net to platform ~£9.40.</p>
+        </div>
+        <div class="card">
+            <h3><span class="badge badge-chain" style="margin:0 8px 0 0;">Phase 2</span>Crypto Wallet (Secondary)</h3>
+            <p>USDC wallet-connect payment via <code>SubscriptionManager.sol</code> — available post-audit for crypto-native users who prefer on-chain subscriptions. No custody. USDC flows direct to treasury multisig.</p>
+            <p style="font-size:12px; margin:0; color:rgba(255,255,255,0.45);">Build: 3 days post-audit. Adds wallet-native subscriber segment without replacing Stripe.</p>
+        </div>
+    </div>
+
+    <div class="callout" style="margin:12px 0;">
+        <p><strong>Agent Bot Fleet — Seeded Trading Volume:</strong> 100 autonomous agent wallets (already built and running in paper mode) will be funded with real USDC post-audit. These act as permanent market-making agents: they hold player tokens, react to SQE price moves, and generate real on-chain fee revenue. 100 bots × £25 avg trade × 45 trades/month × 1% fee = <strong>£1,125/month in seeded fee revenue</strong>. Fee revenue is real and on-chain verifiable — disclosed as raise capital recycled through the platform over ~9 months.</p>
+    </div>
+
+    <h2>MRR Projections — Conservative Scenario</h2>
+    <table>
+        <thead>
+            <tr><th>Date</th><th>Free Users</th><th>Pro Subs (£9.99)</th><th>Institutional (£249)</th><th>Subscription MRR</th><th>On-Chain Fees + Bots</th><th>Total MRR</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Sep 2026<br><span style="font-size:10px;">(launch)</span></strong></td>
+                <td>500</td>
+                <td>50</td>
+                <td>0</td>
+                <td style="color:var(--accent);"><strong>£500</strong></td>
+                <td>£2,725 + £1,125 bots</td>
+                <td><strong style="color:var(--success);">£4,350</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Dec 2026<br><span style="font-size:10px;">(post-WC growth)</span></strong></td>
+                <td>1,500</td>
+                <td>200</td>
+                <td>2</td>
+                <td style="color:var(--accent);"><strong>£2,496</strong></td>
+                <td>£5,925 + £900 bots</td>
+                <td><strong style="color:var(--success);">£9,321</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Q2 2027<br><span style="font-size:10px;">(multi-sport)</span></strong></td>
+                <td>5,000</td>
+                <td>750</td>
+                <td>8</td>
+                <td style="color:var(--accent);"><strong>£9,485</strong></td>
+                <td>£29,040</td>
+                <td><strong style="color:var(--success);">£38,525</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Q4 2027<br><span style="font-size:10px;">(scale)</span></strong></td>
+                <td>15,000</td>
+                <td>2,500</td>
+                <td>20</td>
+                <td style="color:var(--accent);"><strong>£29,955</strong></td>
+                <td>£108,000</td>
+                <td><strong style="color:var(--success);">£137,955</strong></td>
+            </tr>
+            <tr class="highlight">
+                <td><strong>Q2 2028<br><span style="font-size:10px;">(expansion)</span></strong></td>
+                <td>40,000</td>
+                <td>7,000</td>
+                <td>50</td>
+                <td><strong>£82,380</strong></td>
+                <td>£307,500</td>
+                <td><strong>£389,880</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Why Subscription Compounds On-Chain Revenue</h2>
+    <div class="formula">
+Pro subscriber (£9.99/month via Stripe) is also the most likely active trader:
+  Avg Pro subscriber trade volume: £200/month  →  fee to platform: £2.00
+  Stripe processing (2.9%+£0.30) on £9.99: cost ~£0.59
+  Net revenue per Pro subscriber:  £9.40 (net Stripe) + £2.00 (fees) = <strong>£11.40/month</strong>
+  LTV at 12-month retention:  £11.40 × 12 = <strong>£136.80</strong>
+  CAC (organic via WC paper mode conversion): ~<strong>£6</strong>
+  LTV:CAC ratio: <strong>22.8×</strong>
+
+Institutional API buyer (£249/month — market-competitive rate):
+  Comparable: Wyscout £300-500/mo | SportMonks Pro £349/mo | InStat £200-400/mo
+  StockBaller adds AI prediction signal on top of raw data — premium justified.
+  Institutional subscriber also runs automated trading: £2,000/month avg  →  fee: £20.00
+  Net revenue per institutional subscriber: £249 + £20 = <strong>£269/month</strong>
+    </div>
+
+    <h2>Subscription Infrastructure Cost</h2>
+    <table>
+        <thead><tr><th>Component</th><th>Tool</th><th>Cost</th><th>Notes</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Stripe billing (Primary)</strong></td><td>Stripe standard — already integrated</td><td>2.9% + £0.30 per charge</td><td>Ready for launch Aug/Sep 2026. Covers Pro + Institutional. No additional licence required.</td></tr>
+            <tr><td><strong>Crypto subscription contract (Phase 2)</strong></td><td>SubscriptionManager.sol (build 3 days post-audit)</td><td>~£0.50 one-time deploy gas</td><td>USDC auto-renewal, on-chain — add-on for Web3-native users post-mainnet</td></tr>
+            <tr><td><strong>Subscription state DB</strong></td><td>MongoDB Atlas (existing)</td><td>£0 additional</td><td>Already provisioned</td></tr>
+            <tr><td><strong>API rate limiting</strong></td><td>NestJS throttle guard (existing)</td><td>£0</td><td>Already implemented</td></tr>
+            <tr class="total"><td colspan="2"><strong>Total subscription infrastructure cost</strong></td><td colspan="2"><strong>&lt;£1 one-time + Stripe processing (2.9%) on card payments</strong></td></tr>
+        </tbody>
+    </table>
+
+    <div class="footer">StockBaller — AI Model + Blockchain Architecture — Alternative Raise Plan v1.0 — June 2026 — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 5 — INFRASTRUCTURE & OPEX
+═══════════════════════════════════════════ -->
+<div class="page">
+    <header>
+        <img src="../NewLogo.png" alt="StockBaller" style="height:30px;" onerror="this.style.display='none'">
+        <span class="doc-label">Section 5 — Infrastructure Costs &amp; Monthly OpEx by Phase</span>
+    </header>
+
+    <h1>Lean Infrastructure:<br>What It Costs to Run This</h1>
+    <p>With no legal entity costs, no gaming licence, and no fiat onramp compliance stack, the dominant cost line is <strong>staff wages</strong> — not infrastructure. Every technical cost line below is a real service with a published pricing page. The wage line reflects 1 engineer at £30K/year total employer cost (salary + NI + pension = £2,750/month).</p>
+
+    <h2>Current State — Everything Running for £43/month</h2>
+    <div class="stat-grid">
+        <div class="stat-item"><span class="stat-val" style="color:var(--success);">£8</span><span class="stat-lbl">Railway API</span></div>
+        <div class="stat-item"><span class="stat-val" style="color:var(--success);">£35</span><span class="stat-lbl">API-Football v3</span></div>
+        <div class="stat-item"><span class="stat-val" style="color:var(--success);">£0</span><span class="stat-lbl">MongoDB Atlas</span></div>
+        <div class="stat-item"><span class="stat-val" style="color:var(--success);">£0</span><span class="stat-lbl">Everything Else</span></div>
+    </div>
+
+    <h2>Infrastructure Scaling — By User Tier</h2>
+    <table>
+        <thead><tr><th>Service</th><th>Now (Jun '26)<br>0–500 users</th><th>Sep '26 Launch<br>500–1,500 users</th><th>Q2 '27<br>1,500–5,000 users</th><th>Q4 '27<br>5,000–15,000 users</th><th>Upgrade Trigger</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Railway (API)</strong></td>
+                <td>£8 — Hobby</td>
+                <td>£18 — Pro</td>
+                <td>£60 — Pro + scale</td>
+                <td>£120 — Pro + 2 instances</td>
+                <td>API p95 &gt;800ms or &gt;200 concurrent WS</td>
+            </tr>
+            <tr>
+                <td><strong>MongoDB Atlas</strong></td>
+                <td>£0 — M0 free</td>
+                <td>£52 — M10</td>
+                <td>£52 — M10</td>
+                <td>£175 — M20</td>
+                <td>Storage &gt;400MB or query latency &gt;100ms</td>
+            </tr>
+            <tr>
+                <td><strong>API-Football v3</strong></td>
+                <td>£35 — WC only</td>
+                <td>£35 — WC</td>
+                <td>£75 — Standard</td>
+                <td>£150 — Professional</td>
+                <td>Multi-sport expansion Q4 2026</td>
+            </tr>
+            <tr>
+                <td><strong>Auth0</strong></td>
+                <td>£0 — Free tier</td>
+                <td>£0 — Free tier</td>
+                <td>£203 — Essential</td>
+                <td>£203 — Essential</td>
+                <td>&gt;7,500 MAU</td>
+            </tr>
+            <tr>
+                <td><strong>Vercel Pro</strong></td>
+                <td>£0 — Hobby</td>
+                <td>£18 — Pro</td>
+                <td>£18 — Pro</td>
+                <td>£18 — Pro</td>
+                <td>At production launch</td>
+            </tr>
+            <tr>
+                <td><strong>Oracle gas (Base L2)</strong></td>
+                <td>£0 — testnet</td>
+                <td>&lt;£1 — mainnet gas</td>
+                <td>&lt;£5 — multi-sport</td>
+                <td>&lt;£8 — full scale</td>
+                <td>No trigger — negligible</td>
+            </tr>
+            <tr>
+                <td><strong>Sentry (error monitoring)</strong></td>
+                <td>£0 — Free</td>
+                <td>£20 — Team</td>
+                <td>£20 — Team</td>
+                <td>£60 — Business</td>
+                <td>At production launch</td>
+            </tr>
+            <tr>
+                <td><strong>Openfort (wallets)</strong></td>
+                <td>£0</td>
+                <td>£0</td>
+                <td>TBD (negotiate)</td>
+                <td>TBD</td>
+                <td>&gt;1,000 embedded wallets</td>
+            </tr>
+            <tr>
+                <td><strong>XGBoost model hosting</strong></td>
+                <td>£0 — in-process</td>
+                <td>£0 — Railway (bundled)</td>
+                <td>£15 — Railway worker</td>
+                <td>£30 — dedicated instance</td>
+                <td>Prediction latency &gt;2s at load</td>
+            </tr>
+            <tr>
+                <td><strong>Staff — 1 engineer @ £30K/yr</strong></td>
+                <td>£0 — pre-raise</td>
+                <td><strong>£2,750/mo</strong> <span style="font-size:10px;">(salary+NI+pension)</span></td>
+                <td>£2,750/mo</td>
+                <td>£3,200/mo <span style="font-size:10px;">(£38K at scale)</span></td>
+                <td>Starts at mainnet launch; funded 6mo from raise bridge</td>
+            </tr>
+            <tr>
+                <td><strong>Smart contract audit</strong></td>
+                <td>—</td>
+                <td><strong>£25,000 one-time</strong></td>
+                <td>—</td>
+                <td>—</td>
+                <td>Required before mainnet real funds</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Full Monthly OpEx by Phase — No Legal Line Items</h2>
+    <table>
+        <thead>
+            <tr><th>Cost Item</th><th>Now (Jun '26)</th><th>Sep '26 Launch</th><th>Q2 '27</th><th>Q4 '27</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Railway (API)</td><td>£8</td><td>£18</td><td>£60</td><td>£120</td></tr>
+            <tr><td>MongoDB Atlas</td><td>£0</td><td>£52</td><td>£52</td><td>£175</td></tr>
+            <tr><td>API-Football v3</td><td>£35</td><td>£35</td><td>£75</td><td>£150</td></tr>
+            <tr><td>Auth0</td><td>£0</td><td>£0</td><td>£203</td><td>£203</td></tr>
+            <tr><td>Vercel Pro</td><td>£0</td><td>£18</td><td>£18</td><td>£18</td></tr>
+            <tr><td>Sentry</td><td>£0</td><td>£20</td><td>£20</td><td>£60</td></tr>
+            <tr><td>XGBoost model hosting</td><td>£0</td><td>£0</td><td>£15</td><td>£30</td></tr>
+            <tr><td><strong>Staff wages (1 engineer, incl. NI+pension)</strong></td><td>£0</td><td><strong>£2,750</strong></td><td>£2,750</td><td>£3,200</td></tr>
+            <tr><td>Oracle gas (Base L2)</td><td>£0</td><td>&lt;£1</td><td>&lt;£5</td><td>&lt;£8</td></tr>
+            <tr class="total">
+                <td><strong>Total Monthly OpEx</strong></td>
+                <td><strong>£43</strong></td>
+                <td><strong>£2,894</strong></td>
+                <td><strong>£3,198</strong></td>
+                <td><strong>£3,964</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="callout green" style="margin-top:14px;">
+        <p><strong>The core structural advantage of this model.</strong> The primary diligence pack has £1,627/month OpEx at launch because it includes the Curaçao licence amortised at £1,167/month. This model has <strong>£2,894/month at launch</strong> — wages are the dominant cost line, not compliance. Staff wages are funded from a 6-month bridge in the raise; from revenue day 1, the bot fleet alone (£1,125/month in seeded on-chain fees) covers nearly 40% of monthly OpEx. The remaining 60% is covered by fewer than 50 human users.</p>
+    </div>
+
+    <h2>OpEx vs. Revenue — Break-Even Points</h2>
+    <table>
+        <thead><tr><th>Phase</th><th>Monthly OpEx</th><th>Required Revenue to Break Even</th><th>Users Needed</th><th>Context</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Launch (Sep '26)</strong></td>
+                <td>£2,894</td>
+                <td>£2,894</td>
+                <td style="color:var(--success);"><strong>Bot fleet covers £1,125. Remaining £1,769 needs ~150 wallet users + 50 Pro subs</strong></td>
+                <td>Bot fleet (100 agents × £25 × 45 trades × 1%) generates £1,125/mo seeded fees from day 1 of mainnet. Human user threshold is very low.</td>
+            </tr>
+            <tr>
+                <td><strong>Growth (Q2 '27)</strong></td>
+                <td>£3,198</td>
+                <td>£3,198</td>
+                <td style="color:var(--success);"><strong>320 Pro subs <em>or</em> 13 API subs <em>or</em> any mix</strong></td>
+                <td>At projected 750 Pro subs this phase, subscription revenue alone is £7,493/mo — 2.3× OpEx.</td>
+            </tr>
+            <tr>
+                <td><strong>Scale (Q4 '27)</strong></td>
+                <td>£3,964</td>
+                <td>£3,964</td>
+                <td style="color:var(--success);"><strong>400 Pro subs <em>or</em> 16 API subs</strong></td>
+                <td>At projected 2,500 Pro subs + 20 API subs, sub revenue alone is £29,955/mo — OpEx is 0.13% of total revenue.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Gross Margin Comparison</h2>
+    <div class="two-col">
+        <div class="card" style="border-color: rgba(255,255,255,0.15);">
+            <h3 style="color:var(--text70);">Primary Pack (£200K raise)</h3>
+            <p>Q4 2027 Revenue: £137,955/month<br>Q4 2027 OpEx (infra + legal staff): £4,200/month</p>
+            <p style="font-size:20px; font-weight:900; color:var(--text70);">97.0% gross margin</p>
+        </div>
+        <div class="card" style="border-color: var(--accent);">
+            <h3 style="color:var(--accent);">This Model (£120K raise)</h3>
+            <p>Q4 2027 Revenue: £137,955/month<br>Q4 2027 OpEx (infra + wages): <strong>£3,964/month</strong></p>
+            <p style="font-size:20px; font-weight:900; color:var(--success);">97.1% gross margin</p>
+            <p style="font-size:12px; margin:0; color:rgba(255,255,255,0.5);">Same top-line. Wages replace legal overhead as primary cost line. Still elite SaaS margins.</p>
+        </div>
+    </div>
+
+    <div class="footer">StockBaller — AI Model + Blockchain Architecture — Alternative Raise Plan v1.0 — June 2026 — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 6 — USE OF FUNDS
+═══════════════════════════════════════════ -->
+<div class="page">
+    <header>
+        <img src="../NewLogo.png" alt="StockBaller" style="height:30px;" onerror="this.style.display='none'">
+        <span class="doc-label">Section 6 — Use of Funds — £120,000 Pre-Seed</span>
+    </header>
+
+    <h1>Where Every Pound Goes:<br>The Lean £120K Plan</h1>
+    <p>With legal costs removed, the raise allocates capital to product, AI model development, smart contract security, growth — and now properly accounts for a 6-month staff wage bridge and a bot fleet seeding fund. Every line item directly produces a technical capability, a user, or operational runway.</p>
+
+    <h2>Full Breakdown</h2>
+    <table>
+        <thead><tr><th>Category</th><th>Allocated</th><th>% of Raise</th><th>What It Specifically Funds</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Smart Contract Audit (Hacken)</strong></td>
+                <td>£25,000</td>
+                <td>20.8%</td>
+                <td>AthleteVaultV2 + PredictionMarket + PriceOracle + SubscriptionManager. Public audit report required before Base Mainnet accepts real user USDC. Non-negotiable — this is the security gate for user funds.</td>
+            </tr>
+            <tr>
+                <td><strong>AI Model Development</strong></td>
+                <td>£16,000</td>
+                <td>13.3%</td>
+                <td>
+                    XGBoost model training pipeline formalised (£4K) — automated retraining on each new match batch.<br>
+                    Feature engineering: opponent strength, player injury history API, weather/venue data (£6K).<br>
+                    Model evaluation dashboard: accuracy tracking, backtesting, confidence calibration (£4K).<br>
+                    Multi-sport SQE configuration: EPL + Champions League formula tuning (£2K).
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Development — Phase 2</strong></td>
+                <td>£18,000</td>
+                <td>15.0%</td>
+                <td>
+                    Stripe billing integration (already configured; Phase 2 adds recurring billing UX) (£2K).<br>
+                    Pro subscription frontend: prediction dashboard, push notifications, player alerts (£7K).<br>
+                    Institutional API layer: rate limiting, JWT auth, WebSocket feed, docs portal (£5K).<br>
+                    Base Mainnet deployment + PriceOracle wiring (£3K).<br>
+                    SubscriptionManager.sol + crypto payment path (£1K — post-audit add-on).
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Infrastructure — 18-Month Runway</strong></td>
+                <td>£6,000</td>
+                <td>5.0%</td>
+                <td>Railway Pro + MongoDB Atlas M10 + Vercel Pro + Sentry Team. Covers 18 months of infrastructure OpEx at launch-phase costs (£144/month × 18 = £2,592) with buffer for Auth0 tier upgrade at 7,500 MAU. <em>Note: staff wages are budgeted separately below.</em></td>
+            </tr>
+            <tr>
+                <td><strong>Marketing — WC Window + Launch</strong></td>
+                <td>£16,000</td>
+                <td>13.3%</td>
+                <td>
+                    FPL / football influencers (3–4 creators, WC content): £6,000.<br>
+                    Crypto/DeFi Twitter + TikTok paid ads (WC match-day targeting): £4,000.<br>
+                    Referral bonus pool (£3 USDC credit per verified referral, ~1,000 referrals): £3,000.<br>
+                    Content production (SQE player reports, price reaction graphics, 12 weeks): £2,000.<br>
+                    PR outreach (Decrypt, CoinDesk, The Athletic Tech): £1,000.
+                </td>
+            </tr>
+            <tr>
+                <td><strong>App Store + EAS Build</strong></td>
+                <td>£2,000</td>
+                <td>1.7%</td>
+                <td>Apple Developer account (£99/yr), Google Play Console (£21), EAS Build credits, ASO keyword research + store screenshots, TestFlight beta rollout management.</td>
+            </tr>
+            <tr>
+                <td><strong>Bug Bounty Pool</strong></td>
+                <td>£5,000</td>
+                <td>4.2%</td>
+                <td>Immunefi-hosted programme post-audit. Critical: up to £5K | High: up to £2K | Medium: up to £500. Signals security seriousness to early institutional API buyers.</td>
+            </tr>
+            <tr style="border-left: 3px solid var(--success);">
+                <td><strong>Staff Wages — 6-Month Bridge</strong></td>
+                <td>£15,000</td>
+                <td>12.5%</td>
+                <td>1 engineer at £30,000/year total cost (salary + employer NI + pension = ~£2,500/month). 6-month bridge from raise until operating revenue covers wages. Revenue projections show wages fully covered from on-chain fees + subscriptions by month 3–4 post-launch. Months 5–6 bridge provides buffer and model risk cushion.</td>
+            </tr>
+            <tr style="border-left: 3px solid var(--accent);">
+                <td><strong>Bot Fleet Seeding — 100 Agent Wallets</strong></td>
+                <td>£10,000</td>
+                <td>8.3%</td>
+                <td>100 autonomous agent wallets (already built + paper-trading) funded with £100 USDC each post-audit. Agents create real on-chain market depth, generate proof-of-activity on Basescan, and produce £1,125/month in on-chain fees (recycled into treasury over ~9 months). Disclosed as seeded liquidity capital.</td>
+            </tr>
+            <tr>
+                <td><strong>Reserve</strong></td>
+                <td>£7,000</td>
+                <td>5.8%</td>
+                <td>Audit remediation cycles (1–2 rounds expected), unexpected infra costs, model retraining compute costs, Base Mainnet deployment gas, early Stripe dispute resolution buffer.</td>
+            </tr>
+            <tr class="total">
+                <td><strong>TOTAL</strong></td>
+                <td><strong>£120,000</strong></td>
+                <td><strong>100%</strong></td>
+                <td><strong>Pre-seed raise — ASA @ £900K pre-money cap — 11.76% equity — SEIS eligible</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Capital Efficiency vs. Primary Raise</h2>
+    <div class="two-col" style="margin-top:14px;">
+        <div class="card" style="border-color:rgba(255,255,255,0.15);">
+            <h3 style="color:var(--text70);">Primary Pack (£200K)</h3>
+            <p style="font-size:13px;">Legal stack: <strong>£51,000</strong> (25.5% of raise)<br>
+            Liquidity seed: <strong>£32,000</strong><br>
+            Product + AI + audit: £117,000</p>
+            <p style="font-size:12px; color:rgba(255,255,255,0.4); margin:0;">£83K of the raise spent on compliance before first line of new code.</p>
+        </div>
+        <div class="card" style="border-color:var(--accent);">
+            <h3>This Pack (£120K)</h3>
+            <p style="font-size:13px;">Legal stack: <strong>£0</strong><br>
+            Liquidity seed: <strong>£0</strong><br>
+            Product + AI + audit + wages: <strong>£120,000 (100%)</strong></p>
+            <p style="font-size:12px; color:var(--success); margin:0;">Every pound produces either a technical capability, user acquisition, or operational runway.</p>
+        </div>
+    </div>
+
+    <div class="callout" style="margin-top:14px;">
+        <p>The <strong>smart contract audit (£25,000)</strong> and <strong>AI model development (£16,000)</strong> together represent £41,000 — 34% of the raise. These two items produce the core defensible IP. The <strong>staff wages bridge (£15,000)</strong> and <strong>bot fleet seeding (£10,000)</strong> together represent £25,000 — 21% of the raise. These are the additions over v1.0 of this plan, reflecting a complete and realistic operational budget. Raise increases from £100K to £120K. Equity increases from 10.0% to 11.76% at the same £900K cap — immaterially different for the investor, materially better for the company.</p>
+    </div>
+
+    <h2>Deployment Timeline</h2>
+    <table>
+        <thead><tr><th>Week</th><th>Action</th><th>Funds Deployed</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Week 1</strong></td><td>Hacken audit engaged — slot booked (6–8 week turnaround)</td><td>£5,000 deposit</td></tr>
+            <tr><td><strong>Week 1–2</strong></td><td>AI model pipeline formalisation begins; WC data already flowing. Staff wage bridge activated.</td><td>£4,000 + £2,500 wages</td></tr>
+            <tr><td><strong>Week 2–4</strong></td><td>WC influencer + paid social campaign launched during Group Stage. Stripe Pro subscriptions can go live immediately — no audit needed for subscriptions.</td><td>£8,000 marketing</td></tr>
+            <tr><td><strong>Week 4–6</strong></td><td>Pro subscription frontend built; institutional API layer built.</td><td>£12,000 dev</td></tr>
+            <tr><td><strong>Week 6–8</strong></td><td>Audit completes; Hacken report published. 100 bot wallets funded. Mainnet deployment.</td><td>£20,000 audit balance + £10,000 bot seeding</td></tr>
+            <tr><td><strong>Week 8–10</strong></td><td>On-chain trading live; bot fleet active. Real fee revenue from day 1. Bug bounty launched.</td><td>£5,000 bug bounty</td></tr>
+            <tr><td><strong>Month 3+</strong></td><td>Revenue covers wages from operating profit. Multi-sport SQE expansion. App Store.</td><td>Remaining balance</td></tr>
+        </tbody>
+    </table>
+
+    <div class="footer">StockBaller — AI Model + Blockchain Architecture — Alternative Raise Plan v1.0 — June 2026 — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 7 — FINANCIAL MODEL
+═══════════════════════════════════════════ -->
+<div class="page">
+    <header>
+        <img src="../NewLogo.png" alt="StockBaller" style="height:30px;" onerror="this.style.display='none'">
+        <span class="doc-label">Section 7 — Financial Model: P&amp;L, Break-Even &amp; Investor Return</span>
+    </header>
+
+    <h1>From Launch to Profit:<br>The Full Financial Model</h1>
+    <p>Every number below is derived from first principles — inputs shown, formula shown, output shown. Stress any assumption and recalculate. Staff wages are now a real cost line. Bot fleet fees are a real but disclosed revenue source. The model is deliberately conservative — even with wages factored in, the platform is cash-flow positive within 3 months of launch.</p>
+
+    <h2>Revenue Calculation Methodology</h2>
+    <div class="formula">
+<strong>On-Chain Fee Revenue (monthly)</strong>
+  Trading:        Active_Wallet_Users × Avg_Trade_Size × Avg_Trades_Per_Month × 0.01
+  Predictions:    (Users × Prediction_Rate) × Avg_Stake × 0.10  (house margin)
+  H2H:            (Users × H2H_Rate) × Avg_Stake × 0.05  (rake)
+  Bot Fleet:      100_bots × Avg_Bot_Trade × 45_trades/month × 0.01
+                  ↳ Disclosed as seeded liquidity — raise capital recycled through treasury
+                  ↳ 100 × £25 × 45 × 1% = <strong>£1,125/month</strong> (active months 1–9 post-mainnet)
+
+<strong>Subscription Revenue (monthly)</strong>
+  Pro:            Pro_Subscribers × £9.99  (via Stripe — live at launch)
+  Institutional:  API_Subscribers × £249   (£249/mo: market-competitive vs Wyscout £300–500, SportMonks Pro £349)
+
+<strong>Total Monthly Revenue   =  On-Chain Fees + Bot Fees + Subscription Revenue</strong>
+<strong>Monthly OpEx            =  Infrastructure + Staff (wages + employer NI + pension)</strong>
+<strong>Monthly Net Profit      =  Total Revenue − Monthly OpEx</strong>
+<strong>Cumulative Net Profit   =  Σ Monthly Net Profit from Revenue Day 1</strong></div>
+
+    <h2>Model Assumptions by Phase</h2>
+    <table>
+        <thead><tr><th>Parameter</th><th>Sep '26 (Launch)</th><th>Dec '26</th><th>Q2 '27</th><th>Q4 '27</th><th>Q2 '28</th></tr></thead>
+        <tbody>
+            <tr><td>Active wallet users (human)</td><td>400</td><td>1,000</td><td>3,200</td><td>8,000</td><td>20,000</td></tr>
+            <tr><td>Avg trade size (USDC)</td><td>£100</td><td>£120</td><td>£150</td><td>£180</td><td>£200</td></tr>
+            <tr><td>Avg trades/user/month</td><td>4</td><td>4</td><td>5</td><td>6</td><td>6</td></tr>
+            <tr><td>Bot fleet active (post-mainnet)</td><td>100 bots</td><td>100 bots</td><td>0 (depleted)</td><td>—</td><td>—</td></tr>
+            <tr><td>Avg bot trade × 45/month × 1%</td><td>£1,125</td><td>£900</td><td>£0</td><td>—</td><td>—</td></tr>
+            <tr><td>Prediction participation</td><td>30%</td><td>35%</td><td>40%</td><td>50%</td><td>55%</td></tr>
+            <tr><td>Avg prediction stake</td><td>£20</td><td>£25</td><td>£30</td><td>£40</td><td>£45</td></tr>
+            <tr><td>H2H participation</td><td>20%</td><td>25%</td><td>30%</td><td>40%</td><td>45%</td></tr>
+            <tr><td>Avg H2H stake</td><td>£15</td><td>£20</td><td>£25</td><td>£35</td><td>£40</td></tr>
+            <tr><td>Free users (total)</td><td>500</td><td>1,500</td><td>5,000</td><td>15,000</td><td>40,000</td></tr>
+            <tr><td>Pro subscribers</td><td>50</td><td>200</td><td>750</td><td>2,500</td><td>7,000</td></tr>
+            <tr><td>Institutional API subs</td><td>0</td><td>2</td><td>8</td><td>20</td><td>50</td></tr>
+            <tr><td>Staff (engineers)</td><td>1</td><td>1</td><td>1</td><td>1</td><td>3</td></tr>
+            <tr><td>Monthly wage cost (total employer)</td><td>£2,750</td><td>£2,750</td><td>£2,750</td><td>£3,200</td><td>£9,000</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Calculated P&amp;L by Phase</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Phase</th>
+                <th>On-Chain Fees (human + bot)</th>
+                <th>Subscriptions</th>
+                <th style="color:var(--accent)">Total Revenue</th>
+                <th>OpEx (infra + wages)</th>
+                <th style="color:var(--success)">Net Profit</th>
+                <th>Margin</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Sep 2026</strong><br><span style="font-size:10px;">400 wallets + 100 bots, 50 Pro</span></td>
+                <td>
+                    400×£100×4×1% = £1,600<br>
+                    120×£20×10% = £240<br>
+                    80×£15×5% = £60<br>
+                    100 bots = £1,125 (seeded)<br>
+                    <strong>= £3,025</strong>
+                </td>
+                <td>50×£9.99 = £500<br>0×£249 = £0<br><strong>= £500</strong></td>
+                <td style="color:var(--accent)"><strong>£3,525</strong></td>
+                <td>£144 infra<br>+ £2,750 wages<br>= <strong>£2,894</strong></td>
+                <td style="color:var(--success)"><strong>£631</strong></td>
+                <td style="color:var(--success)"><strong>17.9%</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Dec 2026</strong><br><span style="font-size:10px;">1,000 wallets + bots, 200 Pro</span></td>
+                <td>
+                    1K×£120×4×1% = £4,800<br>
+                    350×£25×10% = £875<br>
+                    250×£20×5% = £250<br>
+                    100 bots = £900 (winding down)<br>
+                    <strong>= £6,825</strong>
+                </td>
+                <td>200×£9.99 = £1,998<br>2×£249 = £498<br><strong>= £2,496</strong></td>
+                <td style="color:var(--accent)"><strong>£9,321</strong></td>
+                <td>£190 infra<br>+ £2,750 wages<br>= <strong>£2,940</strong></td>
+                <td style="color:var(--success)"><strong>£6,381</strong></td>
+                <td style="color:var(--success)"><strong>68.5%</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Q2 2027</strong><br><span style="font-size:10px;">3.2K wallets, 750 Pro</span></td>
+                <td>
+                    3.2K×£150×5×1% = £24,000<br>
+                    1.28K×£30×10% = £3,840<br>
+                    960×£25×5% = £1,200<br>
+                    Bots depleted = £0<br>
+                    <strong>= £29,040</strong>
+                </td>
+                <td>750×£9.99 = £7,493<br>8×£249 = £1,992<br><strong>= £9,485</strong></td>
+                <td style="color:var(--accent)"><strong>£38,525</strong></td>
+                <td>£448 infra<br>+ £2,750 wages<br>= <strong>£3,198</strong></td>
+                <td style="color:var(--success)"><strong>£35,327</strong></td>
+                <td style="color:var(--success)"><strong>91.7%</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Q4 2027</strong><br><span style="font-size:10px;">8K wallets, 2.5K Pro</span></td>
+                <td>
+                    8K×£180×6×1% = £86,400<br>
+                    4K×£40×10% = £16,000<br>
+                    3.2K×£35×5% = £5,600<br>
+                    <strong>= £108,000</strong>
+                </td>
+                <td>2,500×£9.99 = £24,975<br>20×£249 = £4,980<br><strong>= £29,955</strong></td>
+                <td style="color:var(--accent)"><strong>£137,955</strong></td>
+                <td>£764 infra<br>+ £3,200 wages (£38K/yr)<br>= <strong>£3,964</strong></td>
+                <td style="color:var(--success)"><strong>£133,991</strong></td>
+                <td style="color:var(--success)"><strong>97.1%</strong></td>
+            </tr>
+            <tr class="highlight">
+                <td><strong>Q2 2028</strong><br><span style="font-size:10px;">20K wallets, 7K Pro, 3 staff</span></td>
+                <td>
+                    20K×£200×6×1% = £240,000<br>
+                    11K×£45×10% = £49,500<br>
+                    9K×£40×5% = £18,000<br>
+                    <strong>= £307,500</strong>
+                </td>
+                <td>7K×£9.99 = £69,930<br>50×£249 = £12,450<br><strong>= £82,380</strong></td>
+                <td><strong>£389,880</strong></td>
+                <td>£1,200 infra<br>+ £9,000 wages (3 staff)<br>= <strong>£10,200</strong></td>
+                <td><strong>£379,680</strong></td>
+                <td><strong>97.4%</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Cumulative Net Profit — Revenue Day 1 Onwards</h2>
+    <table>
+        <thead><tr><th>Period</th><th>Monthly Net Profit</th><th>Cumulative (from Sep 2026)</th><th>Milestone</th></tr></thead>
+        <tbody>
+            <tr><td>Sep–Nov 2026 (×3)</td><td>£631 → £2,500/mo (growing)</td><td>~£10,000</td><td>Bot fleet seeding capital recycling; wage bridge covering staff costs</td></tr>
+            <tr><td>Dec 2026</td><td>£6,381</td><td>~£16,400</td><td>2 institutional API clients signed at £249/mo; bot fees winding down naturally</td></tr>
+            <tr><td>Q1 2027 (×3)</td><td>avg ~£18,000/mo</td><td>~£70,400</td><td>Revenue covers wages with margin; raise bridge unused past month 4</td></tr>
+            <tr><td>Q2 2027 (×3)</td><td>avg £35,327/mo</td><td>~£176,400</td><td>£120K raise returned in operating profit — Multi-sport SQE live</td></tr>
+            <tr><td>Q3 2027 (×3)</td><td>avg £70,000/mo</td><td>~£386,400</td><td>Model accuracy at 70%+ directional; API at 15 subscribers; salary review triggered</td></tr>
+            <tr class="highlight"><td><strong>Q4 2027 (×3)</strong></td><td><strong>£133,991/mo</strong></td><td><strong>~£788,400</strong></td><td><strong>Series A optional — platform fully self-funding with growing hire capacity</strong></td></tr>
+        </tbody>
+    </table>
+
+    <h2>Break-Even Analysis</h2>
+    <div class="two-col">
+        <div class="card">
+            <h3>Monthly OpEx Break-Even (with wages)</h3>
+            <p>At launch OpEx of <strong>£2,894/month</strong> (infra + wages):</p>
+            <p style="font-size:17px; font-weight:900; color:var(--accent); margin:6px 0;"><strong>Bot fleet covers £1,125 from day 1.</strong></p>
+            <p style="font-size:12px; margin:0;">
+                Remaining required: £2,894 − £1,125 = £1,769/month<br>
+                50 Pro subs × £9.99 = £500<br>
+                ~120 wallet users × £100 × 4 × 1% = £480<br>
+                Predictions/H2H on 300 free users ≈ £250<br>
+                <strong>~170 active users covers full OpEx.</strong><br>
+                <span style="color:var(--success);">Bot fleet makes break-even threshold dramatically lower.</span>
+            </p>
+        </div>
+        <div class="card">
+            <h3>Full Raise Payback</h3>
+            <p>£120,000 raised. Net profit trajectory:</p>
+            <p style="font-size:17px; font-weight:900; color:var(--success); margin:6px 0;"><strong>~8–9 months</strong></p>
+            <p style="font-size:12px; margin:0;">
+                Sep–Mar 2027 cumulative net ≈ £70,400.<br>
+                Q2 2027 adds £105,000+ (3 months × £35K avg).<br>
+                <strong>£120K raise returned in operating profit by Q2 2027</strong> — approximately 8 months post-launch.
+            </p>
+        </div>
+    </div>
+
+    <h2>Investor Return Calculation</h2>
+    <div class="formula">
+£120,000 invested @ £900K pre-money cap  →  <strong>11.76% fully diluted equity stake</strong>
+(Up from 10.0% at £100K raise — immaterially different for the investor)
+
+At Q4 2027: £1.66M ARR  →  using 12× revenue multiple (AI/SaaS + crypto on-chain revenue):
+  Valuation   = £1.66M × 12 = <strong>£19,900,000</strong>
+  Investor 11.76% = <strong>£2,340,000</strong>
+  Return on £120K = <strong>19.5× in 18 months</strong>
+
+At Q2 2028: £4.68M ARR  →  using 10× multiple (de-risked, operating profit):
+  Valuation   = £4.68M × 10 = <strong>£46,800,000</strong>
+  Investor 11.76% = <strong>£5,505,000</strong>
+  Return on £120K = <strong>45.9× in 24 months</strong>
+
+<strong>SEIS relief (if eligible): first £50K at 50% income tax relief = effective £50K net cost.</strong>
+  Adjusted return on effective £70K net outlay (£120K − £50K SEIS relief) at Q4 2027:  <strong>~33× effective return</strong>
+    </div>
+
+    <p style="font-size:11px; color:rgba(255,255,255,0.4);">Revenue multiples: Comparable AI SaaS platforms (12–20× ARR). Crypto-native platforms with on-chain verifiable revenue trade at premium to pure SaaS. Sorare raised at 40× revenue. Model uses conservative end of range. All figures pre-tax, pre-dilution of any future rounds. Bot fleet fees are disclosed as seeded liquidity (raise capital recycled over 9 months via on-chain fees) and excluded from ARR calculations — all ARR is from human user activity only.</p>
+
+    <div class="footer">StockBaller — AI Model + Blockchain Architecture — Alternative Raise Plan v1.0 — June 2026 — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 8 — MILESTONE TRACKER
+═══════════════════════════════════════════ -->
+<div class="page">
+    <header>
+        <img src="../NewLogo.png" alt="StockBaller" style="height:30px;" onerror="this.style.display='none'">
+        <span class="doc-label">Section 8 — Investor Milestone Tracker: Faster Timeline, No Legal Blockers</span>
+    </header>
+
+    <h1>Milestones: Binary Gates<br>With Direct P&amp;L Impact</h1>
+    <p>No milestone here is blocked by a lawyer, a regulator, or a licence application. Every gate is a technical or commercial deliverable that the team controls. This is the structural advantage of the lean model — the critical path is build, audit, ship.</p>
+
+    <h2>Critical Path Comparison</h2>
+    <div class="two-col" style="margin-bottom:16px;">
+        <div class="card" style="border-color:rgba(255,255,255,0.15);">
+            <h3 style="color:var(--text70);">Primary Pack Critical Path</h3>
+            <p style="font-size:12px; line-height:2;">
+                Close raise → engage lawyers (4–6 weeks)<br>
+                BVI entity registered (4–6 weeks more)<br>
+                Token opinion received (3–4 weeks)<br>
+                Curaçao licence approved (4–6 weeks)<br>
+                AML manual written (2 weeks)<br>
+                MoonPay merchant approved (2–4 weeks)<br>
+                <span style="color:rgba(255,100,100,0.8);">= 19–30 weeks before first paying user</span>
+            </p>
+        </div>
+        <div class="card" style="border-color:var(--accent);">
+            <h3>This Plan Critical Path</h3>
+            <p style="font-size:12px; line-height:2;">
+                Close raise → engage Hacken (Week 1)<br>
+                <strong style="color:var(--success);">Stripe Pro subscriptions go live immediately — no audit needed for SaaS billing</strong><br>
+                Build Pro subscription frontend (Weeks 2–5)<br>
+                Build SubscriptionManager.sol — crypto pay option (Week 3)<br>
+                Audit completes (Week 6–8)<br>
+                Base Mainnet deploy + bot fleet funded (Week 8)<br>
+                <span style="color:var(--success);"><strong>= 8–10 weeks to on-chain Revenue Day 1 (Stripe revenue starts Week 1)</strong></span>
+            </p>
+        </div>
+    </div>
+
+    <h2>Full Milestone Tracker</h2>
+    <table>
+        <thead><tr><th>Date</th><th>Technical Milestone</th><th>Deliverable</th><th>Revenue / P&amp;L Unlock</th><th>Status</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Jun 11, 2026</strong></td>
+                <td>SQE v4 live on WC data</td>
+                <td>240 player tokens pricing from live API-Football v3 match feed. All 72 group fixtures active. Bot simulation fleet live.</td>
+                <td>No revenue. <strong>Proves formula validity</strong> before any capital at risk. WC dataset begins accumulating.</td>
+                <td><span class="badge badge-live">Live Now</span></td>
+            </tr>
+            <tr>
+                <td><strong>Jun–Jul 2026</strong></td>
+                <td>XGBoost model formalised</td>
+                <td>Automated retraining pipeline live on WC match batches. Prediction accuracy dashboard publishing daily results. Feature engineering complete.</td>
+                <td>64-match WC dataset becomes proprietary training asset. Model accuracy improving live — <strong>publishable accuracy report at tournament end</strong>.</td>
+                <td><span class="badge badge-planned">In Progress</span></td>
+            </tr>
+            <tr>
+                <td><strong>Week 1 post-raise</strong></td>
+                <td>Hacken audit engaged</td>
+                <td>Contract signed, audit slot booked. Scope: AthleteVaultV2 + PredictionMarket + PriceOracle + SubscriptionManager.sol.</td>
+                <td>No direct revenue. <strong>This is the only hard dependency before mainnet launch.</strong> 6–8 week turnaround — must start immediately.</td>
+                <td><span class="badge badge-planned">Requires Funding</span></td>
+            </tr>
+            <tr>
+                <td><strong>Weeks 2–5 post-raise</strong></td>
+                <td>Pro subscription product built</td>
+                <td>SubscriptionManager.sol written + tested. Pro dashboard UI (prediction feed, player alerts, confidence scores). USDC auto-renewal flow. API key issuance for institutional tier.</td>
+                <td>Product ready to sell the moment audit completes. <strong>No waiting for any external approval.</strong></td>
+                <td><span class="badge badge-planned">Requires Funding</span></td>
+            </tr>
+            <tr>
+                <td><strong>Week 8–10 post-raise</strong></td>
+                <td>Audit complete — on-chain Revenue Day 1</td>
+                <td>Hacken report published. Base Mainnet contracts deployed. Trading fee flag ON (<code style="font-size:10px; background:#040D1A; padding:1px 4px; border-radius:2px;">TRADING_FEE_ENABLED=true</code>). 100 bot wallets funded with £100 USDC each. Bot fleet live, generating seeded on-chain volume. Pro subscriptions also accepting USDC wallet-pay.</td>
+                <td><strong>On-chain revenue starts: bot fleet contributes £1,125/mo seeded fees. Total projected Day 1 net: +£631/month (400 wallet users + 50 Pro subs − wages − infra). Stripe Stripe subs already generating from Week 1.</strong></td>
+                <td><span class="badge badge-planned">Requires Funding</span></td>
+            </tr>
+            <tr>
+                <td><strong>Oct 2026</strong></td>
+                <td>App Store live + first institutional API client</td>
+                <td>iOS + Android via EAS Build. At least 1 institutional API subscriber signed (sportsbook or fantasy platform). Immunefi bug bounty programme live.</td>
+                <td>Mobile funnel opens. <strong>First £249/month institutional contract signed.</strong> Monthly MRR: ~£4,350+ (including bot-seeded fees).</td>
+                <td><span class="badge badge-planned">Planned</span></td>
+            </tr>
+            <tr>
+                <td><strong>Nov 2026</strong></td>
+                <td>Full raise returned in operating profit</td>
+                <td>Cumulative net profit from Revenue Day 1 approaching £16,000. Wages fully covered by operating revenue from month 3. Model accuracy scorecard at 12 WC matches processed. 100+ Pro subscribers active.</td>
+                <td><strong>Platform cash-flow positive, wages self-funded from revenue. Bot fleet seeding capital recycling on-chain. Every further month is net accumulation.</strong></td>
+                <td><span class="badge badge-planned">Planned</span></td>
+            </tr>
+            <tr>
+                <td><strong>Dec 2026</strong></td>
+                <td>EPL + UCL SQE feeds live</td>
+                <td>Premier League + Champions League SQE formula configured. ~500 new player tokens added. Subscription value proposition dramatically expanded beyond WC window.</td>
+                <td>Prediction feed now year-round (not just tournament). <strong>Subscription churn drops. Pro MRR grows to £2,000+/month</strong>. Institutional API value doubles.</td>
+                <td><span class="badge badge-planned">Planned</span></td>
+            </tr>
+            <tr>
+                <td><strong>Q1 2027</strong></td>
+                <td>£120K raise fully returned in profit</td>
+                <td>Cumulative net profit from launch reaches ~£70,400. Model accuracy at 68%+ directional on EPL holdout set. 5+ institutional API subscribers at £249/month.</td>
+                <td><strong>Raise fully self-liquidated in operating profit by Q2 2027. Investor capital is no longer at risk.</strong> Monthly net: ~£18,000.</td>
+                <td><span class="badge badge-planned">Planned</span></td>
+            </tr>
+            <tr>
+                <td><strong>Q2 2027</strong></td>
+                <td>Model accuracy milestone: 70%+</td>
+                <td>XGBoost model hits 70%+ directional accuracy on rolling 90-day out-of-sample test. Public accuracy dashboard showing live validation. Model scorecard published for institutional buyers.</td>
+                <td>Subscription MRR at <strong>£9,485/month</strong> (750 Pro + 8 Institutional @ £249).</td>
+                <td><span class="badge badge-planned">Planned</span></td>
+            </tr>
+            <tr>
+                <td><strong>Q3 2027</strong></td>
+                <td>20 institutional API subscribers</td>
+                <td>20 named institutional subscribers at £249/month. Annual contract value: avg £2,988/yr each. White-label embed product launched.</td>
+                <td><strong>API revenue alone: £4,980/month = £59,760 ARR from one product line.</strong> Near-zero marginal cost.</td>
+                <td><span class="badge badge-planned">Planned</span></td>
+            </tr>
+            <tr class="highlight">
+                <td><strong>Q4 2027</strong></td>
+                <td>Series A — optional</td>
+                <td>£1.66M ARR. 8,000 active wallet users. 2,500 Pro subscribers. 20 institutional API clients at £249/month. Model accuracy 70%+. Cumulative net profit ~£788,400. Self-funding expansion possible.</td>
+                <td><strong>Net profit: £133,991/month. Investor 11.76% stake worth £2.3M+ at 12× ARR multiple. ~19.5× return in 18 months.</strong></td>
+                <td><span class="badge badge-planned">Target</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="callout" style="margin-top:16px;">
+        <p><strong>The critical path is 8–10 weeks from raise close to on-chain Revenue Day 1.</strong> Stripe Pro subscriptions go live in Week 1 — no audit, no blockchain, no external dependency. The only hard gate before on-chain trading is the Hacken audit. There is no regulator, no licence officer, no e-money application between the raise and the first on-chain fee.</p>
+    </div>
+
+    <div style="margin-top:24px; text-align:center; background:linear-gradient(135deg, var(--navy3) 0%, #0d1f38 100%); border:1px solid var(--border); border-radius:12px; padding:28px;">
+        <p style="font-size:10px; text-transform:uppercase; letter-spacing:2px; color:var(--accent); font-weight:800; margin:0 0 8px;">Investment Inquiry</p>
+        <p style="font-size:26px; font-weight:900; margin:0; color:var(--text);">contact@stockballer.app</p>
+        <p style="font-size:13px; margin:10px 0 4px; color:var(--text70);">Pre-Seed &nbsp;|&nbsp; <strong style="color:var(--accent);">£120,000</strong> &nbsp;|&nbsp; ASA @ £900K Cap &nbsp;|&nbsp; 11.76% equity &nbsp;|&nbsp; SEIS Eligible</p>
+        <p style="font-size:12px; margin:0; color:rgba(255,255,255,0.4);">Alternative lean model — crypto-native, regulation-light, revenue in 8–10 weeks</p>
+    </div>
+
+    <div class="footer">StockBaller — AI Model + Blockchain Architecture — Alternative Raise Plan v1.0 — June 2026 — Confidential — stockballer.app</div>
+</div>
+
+</body>
+</html>

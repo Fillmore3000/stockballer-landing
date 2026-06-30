@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investor Portal - StockBaller</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#0d2758">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Blinker:wght@400;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Blinker', sans-serif;
+        }
+
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #000 0%, #000 40%, #0d2758 100%);
+            z-index: -1;
+        }
+
+        /* ---------- Login Gate ---------- */
+        .login-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .login-overlay.hidden {
+            display: none;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 380px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            padding: 40px 32px;
+            text-align: center;
+        }
+
+        .login-card img {
+            height: 36px;
+            margin-bottom: 24px;
+        }
+
+        .login-card h1 {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+        }
+
+        .login-subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 16px;
+            outline: none;
+        }
+
+        .login-input:focus {
+            border-color: #F5CB3F;
+        }
+
+        .login-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .login-submit {
+            width: 100%;
+            padding: 14px;
+            background: #F5CB3F;
+            border: none;
+            border-radius: 6px;
+            color: #000;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .login-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(245, 203, 63, 0.4);
+        }
+
+        .login-error {
+            display: none;
+            color: #ff6b6b;
+            font-size: 0.85rem;
+            margin-top: 14px;
+        }
+
+        .login-error.show {
+            display: block;
+        }
+
+        /* ---------- Portal Shell ---------- */
+        .portal-shell {
+            display: none;
+            height: 100vh;
+        }
+
+        .portal-shell.active {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 280px;
+            flex-shrink: 0;
+            background: rgba(0, 0, 0, 0.6);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 24px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-header img {
+            height: 24px;
+        }
+
+        .sidebar-header span {
+            font-family: 'Blinker', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 16px 12px;
+        }
+
+        .sidebar-section-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: rgba(255, 255, 255, 0.4);
+            padding: 8px 12px;
+            margin-top: 8px;
+        }
+
+        .sidebar-link {
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.75);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            padding: 10px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            border-left: 2px solid transparent;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .sidebar-link:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+        }
+
+        .sidebar-link.active {
+            background: rgba(245, 203, 63, 0.1);
+            color: #F5CB3F;
+            border-left-color: #F5CB3F;
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            padding: 16px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .sidebar-footer a {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8rem;
+            text-decoration: none;
+        }
+
+        .sidebar-footer a:hover {
+            color: #F5CB3F;
+        }
+
+        /* ---------- Content Area ---------- */
+        .content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .content-topbar {
+            padding: 14px 28px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .content-topbar h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .content-topbar a {
+            color: #F5CB3F;
+            font-size: 0.85rem;
+            text-decoration: none;
+        }
+
+        .content-topbar a:hover {
+            text-decoration: underline;
+        }
+
+        #doc-frame {
+            flex: 1;
+            width: 100%;
+            border: none;
+            background: #fff;
+        }
+
+        /* ---------- Home View ---------- */
+        #home-view {
+            flex: 1;
+            overflow-y: auto;
+            padding: 60px;
+        }
+
+        #home-view h1 {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+        }
+
+        #home-view h1 span {
+            color: #F5CB3F;
+        }
+
+        #home-view>p {
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        .doc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .doc-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 22px;
+            text-align: left;
+            cursor: pointer;
+            color: #fff;
+            font-family: 'DM Sans', sans-serif;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .doc-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(245, 203, 63, 0.4);
+        }
+
+        .doc-card h3 {
+            font-size: 1rem;
+            margin-bottom: 6px;
+        }
+
+        .doc-card p {
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 220px;
+            }
+
+            #home-view {
+                padding: 32px 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="gradient-bg"></div>
+
+    <!-- Login Gate -->
+    <div class="login-overlay" id="login-overlay">
+        <form class="login-card" id="login-form" onsubmit="return handleLogin(event)">
+            <img src="/NewLogo.png" alt="StockBaller">
+            <h1>Investor Portal</h1>
+            <p class="login-subtitle">Enter the password to access investor materials</p>
+            <input type="password" class="login-input" id="login-password" placeholder="Enter password" required
+                autocomplete="off">
+            <button type="submit" class="login-submit">Enter</button>
+            <p class="login-error" id="login-error">Incorrect password. Please try again.</p>
+        </form>
+    </div>
+
+    <!-- Portal Shell -->
+    <div class="portal-shell" id="portal-shell">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="/NewLogo.png" alt="StockBaller">
+                <span>Investor Portal</span>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <button class="sidebar-link active" data-doc="">Home</button>
+                <div class="sidebar-section-label">Overview</div>
+                <button class="sidebar-link" data-doc="PitchDeckNew.html">Pitch Deck</button>
+                <button class="sidebar-link" data-doc="BusinessPlan.html">Business Plan</button>
+                <button class="sidebar-link" data-doc="CapitalTable.html">Capital Table</button>
+                <div class="sidebar-section-label">Diligence</div>
+                <button class="sidebar-link" data-doc="StockBaller_Investor_Diligence.html">Investor Diligence</button>
+                <button class="sidebar-link" data-doc="StockBaller_AltModel_Diligence.html">Alt Model Diligence</button>
+                <div class="sidebar-section-label">World Cup 2026</div>
+                <button class="sidebar-link" data-doc="StockBaller_WC_26_investor_OnePager.html">Investor One-Pager</button>
+                <button class="sidebar-link" data-doc="StockBaller_WC_26_brand_OnePager.html">Brand One-Pager</button>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="/index.html">← Back to stockballer.app</a>
+            </div>
+        </aside>
+
+        <main class="content-area">
+            <div id="home-view">
+                <h1>Welcome to the <span>StockBaller</span> Investor Portal</h1>
+                <p>Everything you need to evaluate StockBaller — pitch deck, business plan, cap table, and full
+                    diligence materials. Select a document from the sidebar to get started.</p>
+                <div class="doc-grid" id="doc-grid"></div>
+            </div>
+            <div class="content-topbar" id="content-topbar" style="display:none;">
+                <h2 id="content-title"></h2>
+                <a id="content-open-new" href="#" target="_blank">Open in new tab ↗</a>
+            </div>
+            <iframe id="doc-frame" style="display:none;"></iframe>
+        </main>
+    </div>
+
+    <script>
+        const PORTAL_PASSWORD = 'investor2026';
+
+        const DOCS = [
+            { file: 'PitchDeckNew.html', label: 'Pitch Deck', desc: 'The StockBaller story, market, and ask.' },
+            { file: 'BusinessPlan.html', label: 'Business Plan', desc: 'Full business plan and model breakdown.' },
+            { file: 'CapitalTable.html', label: 'Capital Table', desc: 'Current cap table and ownership structure.' },
+            { file: 'StockBaller_Investor_Diligence.html', label: 'Investor Diligence', desc: 'Full diligence package for investors.' },
+            { file: 'StockBaller_AltModel_Diligence.html', label: 'Alt Model Diligence', desc: 'Alternative model diligence deep-dive.' },
+            { file: 'StockBaller_WC_26_investor_OnePager.html', label: 'WC26 Investor One-Pager', desc: 'World Cup 2026 investor summary.' },
+            { file: 'StockBaller_WC_26_brand_OnePager.html', label: 'WC26 Brand One-Pager', desc: 'World Cup 2026 brand summary.' },
+        ];
+
+        function renderHomeGrid() {
+            const grid = document.getElementById('doc-grid');
+            grid.innerHTML = DOCS.map(d => `
+                <div class="doc-card" onclick="selectDoc('${d.file}')">
+                    <h3>${d.label}</h3>
+                    <p>${d.desc}</p>
+                </div>
+            `).join('');
+        }
+
+        function selectDoc(file) {
+            const homeView = document.getElementById('home-view');
+            const topbar = document.getElementById('content-topbar');
+            const frame = document.getElementById('doc-frame');
+            const links = document.querySelectorAll('.sidebar-link');
+
+            links.forEach(l => l.classList.toggle('active', l.dataset.doc === file));
+
+            if (!file) {
+                homeView.style.display = 'block';
+                topbar.style.display = 'none';
+                frame.style.display = 'none';
+                frame.src = '';
+                return;
+            }
+
+            const doc = DOCS.find(d => d.file === file);
+            document.getElementById('content-title').textContent = doc ? doc.label : file;
+            document.getElementById('content-open-new').href = '/investors/' + file;
+
+            homeView.style.display = 'none';
+            topbar.style.display = 'flex';
+            frame.style.display = 'block';
+            frame.src = '/investors/' + file;
+        }
+
+        document.getElementById('sidebar-nav').addEventListener('click', (e) => {
+            const btn = e.target.closest('.sidebar-link');
+            if (!btn) return;
+            selectDoc(btn.dataset.doc);
+        });
+
+        function checkAuth() {
+            const isAuthenticated = sessionStorage.getItem('investor_auth') === 'true';
+            const overlay = document.getElementById('login-overlay');
+            const shell = document.getElementById('portal-shell');
+
+            if (isAuthenticated) {
+                overlay.classList.add('hidden');
+                shell.classList.add('active');
+                renderHomeGrid();
+            } else {
+                overlay.classList.remove('hidden');
+                shell.classList.remove('active');
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const password = document.getElementById('login-password').value;
+            const errorEl = document.getElementById('login-error');
+
+            if (password === PORTAL_PASSWORD) {
+                sessionStorage.setItem('investor_auth', 'true');
+                checkAuth();
+                return false;
+            }
+
+            errorEl.classList.add('show');
+            document.getElementById('login-password').value = '';
+            document.getElementById('login-password').focus();
+            return false;
+        }
+
+        document.addEventListener('DOMContentLoaded', checkAuth);
+    </script>
+</body>
+
+</html>

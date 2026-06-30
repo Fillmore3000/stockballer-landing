@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>StockBaller — Capitalisation Table 2026</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+
+        :root {
+            --primary: #0D2758;
+            --navy2: #132D5E;
+            --navy3: #1A3A6E;
+            --accent: #F5CB3F;
+            --success: #10B981;
+            --text: #FFFFFF;
+            --text70: rgba(255, 255, 255, 0.7);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            padding: 60px 80px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .doc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 24px;
+            margin-bottom: 40px;
+        }
+
+        .doc-header h1 {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .doc-header .meta {
+            text-align: right;
+            color: var(--text70);
+            font-size: 12px;
+        }
+
+        .doc-header .meta strong {
+            display: block;
+            color: var(--accent);
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+            page-break-inside: avoid;
+        }
+
+        .section-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 16px;
+            border-left: 3px solid var(--accent);
+            padding-left: 10px;
+        }
+
+        .card-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--navy3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .card .val {
+            font-size: 26px;
+            font-weight: 900;
+            color: var(--accent);
+        }
+
+        .card .lbl {
+            font-size: 11px;
+            color: var(--text70);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        thead tr {
+            background: var(--navy3);
+        }
+
+        th {
+            padding: 12px 16px;
+            text-align: left;
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th.right,
+        td.right {
+            text-align: right;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text70);
+        }
+
+        td strong {
+            color: var(--text);
+        }
+
+        tr.total-row td {
+            background: var(--navy2);
+            color: var(--text);
+            font-weight: 700;
+            border-top: 2px solid var(--border);
+        }
+
+        tr.founder-row td {
+            background: rgba(245, 203, 63, 0.06);
+        }
+
+        tr.founder-row td strong {
+            color: var(--accent);
+        }
+
+        tr.esop-row td {
+            background: rgba(16, 185, 129, 0.06);
+        }
+
+        tr.esop-row td strong {
+            color: var(--success);
+        }
+
+        tr.investor-row td {
+            background: rgba(99, 179, 237, 0.06);
+        }
+
+        tr.investor-row td strong {
+            color: #63b3ed;
+        }
+
+        tr.series-row td {
+            background: rgba(167, 139, 250, 0.06);
+        }
+
+        tr.series-row td strong {
+            color: #a78bfa;
+        }
+
+        .bar-cell {
+            min-width: 160px;
+        }
+
+        .bar-wrap {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            overflow: hidden;
+            height: 10px;
+            margin-top: 4px;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        .notes {
+            background: var(--navy2);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--text70);
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin-top: 40px;
+        }
+
+        .notes h4 {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text70);
+            margin-bottom: 12px;
+        }
+
+        .notes ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .notes ul li {
+            color: var(--text70);
+            padding: 4px 0 4px 16px;
+            position: relative;
+            font-size: 12px;
+        }
+
+        .notes ul li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .doc-footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 15mm 20mm;
+            }
+
+            html,
+            body {
+                background: #0D2758 !important;
+                color: #ffffff !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+                font-size: 11px !important;
+                padding: 0 !important;
+            }
+
+            .section {
+                page-break-inside: avoid;
+                margin-bottom: 30px !important;
+            }
+
+            .section-title {
+                border-left-color: #F5CB3F !important;
+                color: #F5CB3F !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+
+            .card-row {
+                gap: 10px !important;
+                margin-bottom: 25px !important;
+            }
+
+            .card {
+                background: #1A3A6E !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+
+            .card .val {
+                color: #F5CB3F !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            thead tr {
+                background: #1A3A6E !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+
+            th {
+                color: #F5CB3F !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            tr.total-row td {
+                background: #132D5E !important;
+                color: #ffffff !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+
+            /* Hardcoded hex — rgba() tints are stripped by most print engines */
+            tr.founder-row td {
+                background: #1c2e0d !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+
+            tr.esop-row td {
+                background: #0d2520 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+
+            tr.investor-row td {
+                background: #0d1e2e !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+
+            tr.series-row td {
+                background: #1a1228 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+
+            .bar-wrap {
+                background: rgba(255, 255, 255, 0.15) !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .bar-fill {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+
+            .notes {
+                background: #132D5E !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+
+            .doc-header {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            table {
+                page-break-inside: avoid;
+            }
+
+            a {
+                text-decoration: none;
+                color: inherit;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="doc-header">
+        <div>
+            <h1>APAW HOLDINGS LTD - Stock<span style="color:var(--accent)">Baller</span></h1>
+            <div style="color:var(--text70);font-size:14px;margin-top:6px;">Capitalisation Table — Pre-Seed Round</div>
+        </div>
+        <div class="meta">
+            <strong>CONFIDENTIAL</strong>
+            Prepared: May 2026<br>Instrument: ASA @ £1.5M Cap<br>SEIS Eligible
+        </div>
+    </div>
+
+    <div class="card-row">
+        <div class="card">
+            <div class="val">£1.5M</div>
+            <div class="lbl">Pre-Money Valuation</div>
+        </div>
+        <div class="card">
+            <div class="val">£250K</div>
+            <div class="lbl">Pre-Seed Raise (ASA)</div>
+        </div>
+        <div class="card">
+            <div class="val">£1.75M</div>
+            <div class="lbl">Post-Money Valuation</div>
+        </div>
+        <div class="card">
+            <div class="val">15%</div>
+            <div class="lbl">ESOP Pool Reserved</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Table 1 — Current State (Pre-Seed, Pre-Conversion)</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Shareholder</th>
+                    <th>Share Class</th>
+                    <th class="right">Shares Held</th>
+                    <th class="right">% Ownership</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="founder-row">
+                    <td><strong>Founder</strong></td>
+                    <td>Ordinary A</td>
+                    <td class="right">1,000</td>
+                    <td class="right"><strong>100.00%</strong></td>
+                    <td>All voting rights. Sole shareholder.</td>
+                </tr>
+                <tr class="esop-row">
+                    <td><strong>ESOP Pool</strong></td>
+                    <td>EMI Options (Reserved)</td>
+                    <td class="right">— (212 to issue)</td>
+                    <td class="right">—</td>
+                    <td>15% pool. Not yet issued. Board approval required.</td>
+                </tr>
+                <tr class="investor-row">
+                    <td><strong>Pre-Seed Investor</strong></td>
+                    <td>ASA Note</td>
+                    <td class="right">— (pending)</td>
+                    <td class="right">—</td>
+                    <td>£250K @ £1.5M cap. Converts on the earlier of next qualifying round or the 6-month longstop date.</td>
+                </tr>
+                <tr class="total-row">
+                    <td colspan="2"><strong>Total (Issued)</strong></td>
+                    <td class="right"><strong>1,000</strong></td>
+                    <td class="right"><strong>100.00%</strong></td>
+                    <td>ASA not yet converted to equity.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Table 2 — Post Pre-Seed ASA Conversion (Fully Diluted)</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Shareholder</th>
+                    <th>Share Class</th>
+                    <th class="right">Shares</th>
+                    <th class="right">% FD</th>
+                    <th class="right">Value @ £1.5M Cap</th>
+                    <th class="bar-cell">Ownership Split</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="founder-row">
+                    <td><strong>Founder</strong></td>
+                    <td>Ordinary A</td>
+                    <td class="right">1,000</td>
+                    <td class="right"><strong>70.7%</strong></td>
+                    <td class="right">£1,060,500</td>
+                    <td class="bar-cell">
+                        <div class="bar-wrap">
+                            <div class="bar-fill" style="width:70.7%;background:var(--accent);"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="esop-row">
+                    <td><strong>ESOP Pool</strong></td>
+                    <td>EMI Options</td>
+                    <td class="right">212</td>
+                    <td class="right"><strong>15.0%</strong></td>
+                    <td class="right">£225,000</td>
+                    <td class="bar-cell">
+                        <div class="bar-wrap">
+                            <div class="bar-fill" style="width:15%;background:var(--success);"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="investor-row">
+                    <td><strong>Pre-Seed Investor</strong></td>
+                    <td>Ordinary B (ASA→Eq.)</td>
+                    <td class="right">202</td>
+                    <td class="right"><strong>14.3%</strong></td>
+                    <td class="right">£214,500</td>
+                    <td class="bar-cell">
+                        <div class="bar-wrap">
+                            <div class="bar-fill" style="width:14.3%;background:#63b3ed;"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="total-row">
+                    <td colspan="2"><strong>Total (Fully Diluted)</strong></td>
+                    <td class="right"><strong>1,414</strong></td>
+                    <td class="right"><strong>100.0%</strong></td>
+                    <td class="right"><strong>£1,500,000</strong></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="margin-top:10px;font-size:11px;color:var(--text70);">Conversion price = £1,500,000 ÷ 1,212 pre-money
+            shares = <strong style="color:var(--text);">£1,237.62/share</strong> &nbsp;|&nbsp; ASA shares = £250,000 ÷
+            £1,237.62 = <strong style="color:var(--text);">202 shares</strong></div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Table 3 — Series A Projection (Illustrative — £2M @ £8M Pre-Money)</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Shareholder</th>
+                    <th class="right">Shares (Post Series A)</th>
+                    <th class="right">% FD</th>
+                    <th class="right">Value @ £10M Post-Money</th>
+                    <th class="bar-cell">Ownership Split</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="founder-row">
+                    <td><strong>Founder</strong></td>
+                    <td class="right">1,000</td>
+                    <td class="right"><strong>53.5%</strong></td>
+                    <td class="right"><strong>£5,350,000</strong></td>
+                    <td class="bar-cell">
+                        <div class="bar-wrap">
+                            <div class="bar-fill" style="width:53.5%;background:var(--accent);"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="esop-row">
+                    <td><strong>ESOP Pool</strong></td>
+                    <td class="right">212</td>
+                    <td class="right"><strong>11.3%</strong></td>
+                    <td class="right">£1,130,000</td>
+                    <td class="bar-cell">
+                        <div class="bar-wrap">
+                            <div class="bar-fill" style="width:11.3%;background:var(--success);"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="investor-row">
+                    <td><strong>Pre-Seed Investor</strong></td>
+                    <td class="right">202</td>
+                    <td class="right"><strong>10.8%</strong></td>
+                    <td class="right">£1,080,000</td>
+                    <td class="bar-cell">
+                        <div class="bar-wrap">
+                            <div class="bar-fill" style="width:10.8%;background:#63b3ed;"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="series-row">
+                    <td><strong>Series A Investors</strong></td>
+                    <td class="right">453</td>
+                    <td class="right"><strong>24.2%</strong></td>
+                    <td class="right">£2,420,000</td>
+                    <td class="bar-cell">
+                        <div class="bar-wrap">
+                            <div class="bar-fill" style="width:24.2%;background:#a78bfa;"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="total-row">
+                    <td><strong>Total (Fully Diluted)</strong></td>
+                    <td class="right"><strong>1,867</strong></td>
+                    <td class="right"><strong>100.0%</strong></td>
+                    <td class="right"><strong>£10,000,000</strong></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="margin-top:10px;font-size:11px;color:var(--text70);">Series A price = £8,000,000 ÷ 1,414 = <strong
+                style="color:var(--text);">£5,657.00/share</strong> &nbsp;|&nbsp; New shares = £2M ÷ £5,657 + 100 ESOP
+            top-up = <strong style="color:var(--text);">453 new shares</strong></div>
+    </div>
+
+    <div class="notes">
+        <h4>Legal &amp; Structural Notes</h4>
+        <ul>
+            <li>The ASA is a binding subscription for shares under English law. Pre-conversion, the £250,000 subscription sum sits as a <strong>liability on the balance sheet</strong> until shares are formally issued. Unlike a SAFE, the ASA is structured to comply with UK SEIS/EIS requirements.</li>
+            <li>ESOP should be issued via an <strong>EMI scheme</strong> (HMRC-approved) where eligible — gives
+                employees significant tax efficiency vs. unapproved options.</li>
+            <li>The ASA converts to Ordinary B shares on the <strong>earlier of</strong>: (a) the next qualifying equity financing round, or (b) the <strong>longstop date — 6 months from the date of investment</strong>. The 6-month longstop is required to maintain SEIS eligibility. Conversion price is the lower of the £1.5M cap price or any priced-round discount. No discount is negotiated in this ASA.</li>
+            <li>SEIS relief (50% income tax credit + CGT exemption) available to qualifying investors. Seek <strong>HMRC
+                    Advance Assurance before closing</strong>.</li>
+            <li>Recommend founder shares have a <strong>4-year reverse vesting schedule</strong> (12-month cliff) —
+                standard investor expectation at pre-seed.</li>
+            <li>Drag-along, tag-along, pre-emption, anti-dilution and information rights to be formalised in a
+                <strong>Shareholders' Agreement upon ASA conversion</strong>.
+            </li>
+            <li>Series A projections in Table 3 are illustrative only and do not constitute a commitment or offer.</li>
+        </ul>
+    </div>
+
+    <div class="doc-footer">
+        <span>StockBaller Ltd — Confidential</span>
+        <span>Capitalisation Table v1.0 — May 2026</span>
+        <span>For Investor Use Only</span>
+    </div>
+
+</body>
+
+</html>

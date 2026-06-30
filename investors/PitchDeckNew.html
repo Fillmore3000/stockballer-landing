@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>StockBaller - Investor Pitch 2026</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+
+        :root {
+            --primary: #0D2758;
+            --navy2: #132D5E;
+            --navy3: #1A3A6E;
+            --accent: #F5CB3F;
+            --blue: #0528F3;
+            --success: #10B981;
+            --danger: #FF1744;
+            --text: #FFFFFF;
+            --text70: rgba(255, 255, 255, 0.7);
+            --border: rgba(255, 255, 255, 0.1);
+            --gray: rgba(255, 255, 255, 0.7);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            color: var(--text);
+            background: var(--primary);
+        }
+
+        .slide {
+            width: 100vw;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 60px 80px;
+            background: var(--navy2);
+            page-break-after: always;
+            page-break-inside: avoid;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .slide-num {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 20px;
+            opacity: 0.6;
+        }
+
+        .slide-footer {
+            position: absolute;
+            bottom: 24px;
+            left: 80px;
+            right: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+            color: var(--text70);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-top: 1px solid var(--border);
+            padding-top: 10px;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 900;
+            margin: 0;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            color: var(--text);
+        }
+
+        h2 {
+            color: var(--accent);
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .sub-heading {
+            font-size: 20px;
+            color: var(--text70);
+            margin-top: 15px;
+            max-width: 800px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 35px;
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .card {
+            padding: 25px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: var(--navy3);
+            page-break-inside: avoid;
+        }
+
+        .card h3 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+            color: var(--text);
+        }
+
+        .card p {
+            margin: 0;
+            color: var(--text70);
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .stat-box {
+            text-align: center;
+            background: var(--navy3);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 15px;
+            page-break-inside: avoid;
+        }
+
+        .stat-box p {
+            font-size: 12px;
+            margin-top: 10px;
+            color: var(--text70);
+        }
+
+        .stat-val {
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--accent);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text70);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 14px;
+            page-break-inside: avoid;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            background: var(--navy3);
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text70);
+        }
+
+        td strong {
+            color: var(--text);
+        }
+
+        .success-bg {
+            background: rgba(16, 185, 129, 0.15) !important;
+            font-weight: 700;
+            color: var(--success) !important;
+        }
+
+        .success-bg td {
+            color: var(--success) !important;
+        }
+
+        .tag {
+            background: rgba(245, 203, 63, 0.15);
+            color: var(--accent);
+            border: 1px solid rgba(245, 203, 63, 0.4);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .live-badge {
+            display: inline-block;
+            background: var(--success);
+            color: #fff;
+            font-size: 9px;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 3px;
+            text-transform: uppercase;
+            margin-left: 6px;
+            letter-spacing: 0.5px;
+            vertical-align: middle;
+        }
+
+        .traction-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 35px;
+        }
+
+        .traction-card {
+            background: var(--navy3);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--success);
+            padding: 16px 18px;
+            border-radius: 10px;
+            font-size: 13px;
+            color: var(--text70);
+            page-break-inside: avoid;
+        }
+
+        .traction-card strong {
+            display: block;
+            color: var(--text);
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .highlight-box {
+            background: var(--navy3);
+            border: 1px solid var(--border);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+            page-break-inside: avoid;
+        }
+
+        .highlight-box h3 {
+            margin: 0 0 10px 0;
+            color: var(--accent);
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            color: var(--text70);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--border);
+            z-index: 0;
+        }
+
+        .t-point {
+            z-index: 1;
+            background: var(--navy2);
+            text-align: center;
+            width: 20%;
+        }
+
+        .t-point p {
+            color: var(--text70);
+            font-size: 12px;
+        }
+
+        .t-dot {
+            width: 30px;
+            height: 30px;
+            background: var(--accent);
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            border: 4px solid var(--navy2);
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+
+        .t-dot-done {
+            background: var(--success);
+            box-shadow: 0 0 0 2px var(--success);
+        }
+
+        /* ─────────────────────────────────────────
+           PDF / PRINT STYLES
+        ───────────────────────────────────────── */
+        @media print {
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+
+            html,
+            body {
+                background: #0D2758 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+
+            .slide {
+                width: 100%;
+                min-height: 100vh;
+                margin: 0 !important;
+                page-break-after: always;
+                page-break-inside: avoid;
+                background: #132D5E !important;
+                overflow: visible;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .slide:last-child {
+                page-break-after: auto;
+            }
+
+            .card,
+            .stat-box,
+            .traction-card,
+            .highlight-box {
+                background: #1A3A6E !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            th {
+                background: #1A3A6E !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .success-bg {
+                background: rgba(16, 185, 129, 0.2) !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            table,
+            .grid,
+            .traction-grid,
+            .timeline {
+                page-break-inside: avoid;
+            }
+
+            h1,
+            h2 {
+                page-break-after: avoid;
+            }
+
+            a {
+                text-decoration: none;
+                color: inherit;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SLIDE 1: COVER -->
+    <div class="slide" style="justify-content: center; align-items: center; text-align: center;">
+        <img src="../NewLogo.png" alt="StockBaller" style="height:90px; margin-bottom:20px;">
+        <div class="sub-heading" style="text-align:center;">The Bloomberg for Professional Football:<br>
+            AI-Driven Athlete Valuation &amp; Social Simulation</div>
+        <div style="margin-top: 30px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+            <span class="tag">Pre-Seed — £250K</span>
+            <span class="tag">MVP Live in Production</span>
+            <span class="tag">Modular AI Stack</span>
+            <span class="tag">SEIS Eligible</span>
+        </div>
+        <div class="slide-footer">
+            <span>Confidential — stockballer.app</span>
+            <span>June 2026</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: THE PROBLEM -->
+    <div class="slide">
+        <div class="slide-num">02</div>
+        <h2>The Problem</h2>
+        <h1>Fans are <span style="color:var(--accent)">guessing</span>, not investing.</h1>
+        <div class="grid">
+            <div class="card">
+                <h3>Gambling Fatigue</h3>
+                <p>Traditional betting is a zero-sum game where 95% of users lose. Regulators are squeezing the
+                    industry; fans want skill-based alternatives.</p>
+            </div>
+            <div class="card">
+                <h3>The Information Gap</h3>
+                <p>Athlete valuation is emotional and opaque. There is no standard "Fair Value" index based on
+                    quantitative data and news sentiment.</p>
+            </div>
+            <div class="card">
+                <h3>Illiquid Sports NFTs</h3>
+                <p>Collectibles like Sorare are illiquid digital posters. They lack the financial logic required for
+                    true investment simulation.</p>
+            </div>
+            <div class="card">
+                <h3>Regulatory Barriers</h3>
+                <p>Real-money sports exchanges require £1M+ in legal fees and years of licensing. They cannot scale
+                    globally overnight.</p>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <span>Confidential — StockBaller</span>
+            <span>June 2026</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: MARKET POTENTIAL (TAM/SAM/SOM) -->
+    <div class="slide">
+        <div class="slide-num">03</div>
+        <h2>Market Opportunity</h2>
+        <h1>Capturing a <span style="color:var(--accent)">£600B+</span> Global Shift.</h1>
+        <div class="grid-3 grid">
+            <div class="stat-box">
+                <span class="stat-val">£600B</span>
+                <span class="stat-label">TAM (Total Sports Market)</span>
+                <p>Global spending on sports engagement and media.</p>
+            </div>
+            <div class="stat-box">
+                <span class="stat-val">£225B</span>
+                <span class="stat-label">SAM (Betting &amp; Fantasy)</span>
+                <p>Users migrating from gambling to social trading.</p>
+            </div>
+            <div class="stat-box">
+                <span class="stat-val">£1.2B</span>
+                <span class="stat-label">SOM (Target Segment)</span>
+                <p>Gen-Z &amp; Crypto natives seeking sports alternative assets.</p>
+            </div>
+        </div>
+        <div class="highlight-box">
+            <h3>The Gen-Z Trend</h3>
+            <p>Younger fans view sports as Social Capital. They don't want to bet against the house — they want to
+                build portfolios of players they believe in. Fantasy Premier League's 11M+ UK players are the primary
+                conversion target.</p>
+        </div>
+        <div class="slide-footer">
+            <span>Confidential — StockBaller</span>
+            <span>June 2026</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 4: THE SOLUTION -->
+    <div class="slide">
+        <div class="slide-num">04</div>
+        <h2>The Solution</h2>
+        <h1>Scientific Valuation + <span style="color:var(--accent)">Global Simulation.</span></h1>
+        <div class="grid-3 grid">
+            <div class="card">
+                <h3>The Quant Engine (SQE)</h3>
+                <p>Our proprietary protocol converts match stats and AI news sentiment into a defensible "Fair Value"
+                    stock price for every athlete.</p>
+            </div>
+            <div class="card">
+                <h3>Social Trading Simulator</h3>
+                <p>A globally compliant Play-to-Learn simulator where fans trade athlete shares with zero financial
+                    risk, using virtual SB Coins.</p>
+            </div>
+            <div class="card">
+                <h3>SaaS Analytics Pro</h3>
+                <p>A premium dashboard providing institutional-grade scouting reports, "Buy/Sell" signals, and AI
+                    sentiment alerts for serious fans.</p>
+            </div>
+        </div>
+        <div class="highlight-box">
+            <h3>SQE Formula</h3>
+            <p style="font-family: 'Courier New', monospace; font-size: 16px; font-weight: 800; color: #a5f3fc;">
+                Final Price = (Market_Base × Decay) + (Yield × Trajectory × Sentiment × 3)
+            </p>
+        </div>
+        <div class="slide-footer">
+            <span>Confidential — StockBaller</span>
+            <span>June 2026</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 5: TRACTION & PROOF OF WORK -->
+    <div class="slide">
+        <div class="slide-num">05</div>
+        <h2>Traction</h2>
+        <h1>Not a concept deck. <span style="color:var(--accent)">Everything is live.</span></h1>
+        <div class="traction-grid">
+            <div class="traction-card">
+                <strong>NestJS REST + WebSocket API <span class="live-badge">Live</span></strong>
+                Railway production deployment. Auto-scaling. Health-monitored.
+            </div>
+            <div class="traction-card">
+                <strong>ERC-1155 Smart Contracts ×3 <span class="live-badge">Deployed</span></strong>
+                ProSpectVault, MockUSDC &amp; PredictionMarket on Base L2.
+            </div>
+            <div class="traction-card">
+                <strong>AI Prediction Market <span class="live-badge">Live</span></strong>
+                Real-time WC 2026 match outcome forecasting with live settlement engine.
+            </div>
+            <div class="traction-card">
+                <strong>100+ Autonomous Bot Fleet <span class="live-badge">Running</span></strong>
+                Simulated liquidity providers validating the economic model.
+            </div>
+            <div class="traction-card">
+                <strong>240 WC 2026 Player Tokens <span class="live-badge">Live</span></strong>
+                All 48 nations seeded. SQE formula pricing on live match data from June 11.
+            </div>
+            <div class="traction-card">
+                <strong>React Native App + Web <span class="live-badge">Live</span></strong>
+                Vercel-hosted. iOS &amp; Android via Expo. Admin dashboard included.
+            </div>
+        </div>
+        <div class="highlight-box" style="margin-top:25px;">
+            <p style="color:var(--text70); font-size:14px;">All components built and shipped by the founding team
+                <strong style="color:var(--accent)">without external capital</strong> — the strongest possible proof of
+                execution capability and capital efficiency.
+            </p>
+        </div>
+        <div class="slide-footer">
+            <span>Confidential — StockBaller</span>
+            <span>June 2026</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 6: COMPETITIVE EDGE -->
+    <div class="slide">
+        <div class="slide-num">06</div>
+        <h2>Competitor Analysis</h2>
+        <h1>We occupy the <span style="color:var(--accent)">Skill &amp; Intelligence</span> quadrant.</h1>
+        <table style="margin-top:30px;">
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Traditional Betting</th>
+                    <th>Sorare (NFTs)</th>
+                    <th>Fantasy PL</th>
+                    <th>StockBaller</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Asset Logic</strong></td>
+                    <td>Binary (Win/Loss)</td>
+                    <td>Collectibles</td>
+                    <td>Weekly Points</td>
+                    <td class="success-bg">Performance Stocks</td>
+                </tr>
+                <tr>
+                    <td><strong>Valuation Basis</strong></td>
+                    <td>House Odds</td>
+                    <td>Scarcity only</td>
+                    <td>Season avg stats</td>
+                    <td class="success-bg">AI Quant Engine (SQE)</td>
+                </tr>
+                <tr>
+                    <td><strong>User Mindset</strong></td>
+                    <td>Gambling</td>
+                    <td>Collecting</td>
+                    <td>Fantasy Gaming</td>
+                    <td class="success-bg">Portfolio Building</td>
+                </tr>
+                <tr>
+                    <td><strong>Monetization</strong></td>
+                    <td>House Edge</td>
+                    <td>Secondary Sales</td>
+                    <td>None / ads</td>
+                    <td class="success-bg">SaaS Subscription (Recurring)</td>
+                </tr>
+                <tr>
+                    <td><strong>Asset Liquidity</strong></td>
+                    <td>Instant (cash)</td>
+                    <td>Illiquid</td>
+                    <td>No ownership</td>
+                    <td class="success-bg">Fungible, tradeable tokens</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="margin-top: 20px; font-weight: 700; color: var(--text70); font-size:14px;">
+            Our Moat: Proprietary AI Sentiment Engine + Vector Similarity Career Memory — no competitor can replicate
+            this without 2+ years of data.
+        </p>
+        <div class="slide-footer">
+            <span>Confidential — StockBaller</span>
+            <span>June 2026</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 7: REVENUE MODEL -->
+    <div class="slide">
+        <div class="slide-num">07</div>
+        <h2>Business Model</h2>
+        <h1>Engineered for <span style="color:var(--accent)">90%+ Margins.</span></h1>
+        <div class="grid">
+            <div class="card" style="border-left: 5px solid var(--success);">
+                <h3>SaaS Subscriptions (Primary)</h3>
+                <p><strong>£35/mo Pro Tier.</strong> 20% target conversion for advanced SQE AI reports, priority
+                    sentiment alerts, and scouting dashboards.</p>
+            </div>
+            <div class="card">
+                <h3>Simulation Trading Fees</h3>
+                <p>5% friction on simulated trades to control token inflation. Creates a sticky economy with high
+                    retention and daily active use.</p>
+            </div>
+            <div class="card">
+                <h3>Free-to-Play Ad Revenue</h3>
+                <p>AdMob rewarded video on the free tier. ~£3.20/user/month from paper trading users who haven't
+                    converted to Pro yet.</p>
+            </div>
+            <div class="card">
+                <h3>Matchday Rake</h3>
+                <p>15% commission on all social H2H challenges and parlay contests. Scales linearly with active user
+                    count.</p>
+            </div>
+            <div class="card">
+                <h3>B2B Oracle Licensing</h3>
+                <p>White-labelling our SQE Price Feed API to betting operators, agents, and sports media. Recurring
+                    B2B revenue from Q1 2027.</p>
+            </div>
+            <div class="card" style="border: 1px solid rgba(245,203,63,0.4);">
+                <h3 style="color:var(--accent);">Total ARPU: £30.07/mo</h3>
+                <p>LTV:CAC ratio of 40:1. Break-even at ~200 active users on current infrastructure.</p>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <span>Confidential — StockBaller</span>
+            <span>June 2026</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 8: FREE-TO-PLAY LAUNCH STRATEGY -->
+    <div class="slide">
+        <div class="slide-num">08</div>
+        <h2>Go-To-Market</h2>
+        <h1>Free-to-Play first. <span style="color:var(--accent)">Convert to Pro.</span></h1>
+        <div class="grid">
+            <div class="card" style="border-left: 5px solid var(--accent);">
+                <h3>Track 1: Android Launch (Google Play)</h3>
+                <p>Paper trading mobile app. No real money. No wallet barrier. Users receive 10,000 SB Coins on
+                    sign-up. Compete in gameweek leagues using the full SQE engine. Target: first 500 users at
+                    near-zero CAC.</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--success);">
+                <h3>Track 2: Influencer Flywheel</h3>
+                <p>£20,000 targeting 10 key FPL and Sports-Betting influencers for "Alpha Calls" and SQE report
+                    reviews. Weekly AI-generated "Athlete Stock Reports" seeded via Twitter/X, TikTok, and Discord.
+                    CPA target: £5.00 per active user.</p>
+            </div>
+        </div>
+        <div class="grid" style="margin-top:20px;">
+            <div class="stat-box">
+                <span class="stat-val">£5</span>
+                <span class="stat-label">CPA Target</span>
+                <p>Cost per active simulation user via influencer channel.</p>
+            </div>
+            <div class="stat-box">
+                <span class="stat-val">£250+</span>
+                <span class="stat-label">Target LTV</span>
+                <p>25:1 ROI on marketing spend for converted Pro subscribers.</p>
+            </div>
+            <div class="stat-box">
+                <span class="stat-val">11M+</span>
+                <span class="stat-label">FPL Players (UK)</span>
+                <p>Primary crossover audience — already engaged with player tracking.</p>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <span>Confidential — StockBaller</span>
+            <span>June 2026</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 9: FINANCIAL PROJECTIONS -->
+    <div class="slide">
+        <div class="slide-num">09</div>
+        <h2>Financial Projections</h2>
+        <h1>Scaling to <span style="color:var(--accent)">£14.3M+</span> Net Profit by Year 3.</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Phase</th>
+                    <th>Users</th>
+                    <th>Gross Revenue</th>
+                    <th>Annual OpEx</th>
+                    <th>Annual Net Profit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Year 1 (Beta)</strong></td>
+                    <td>1,200</td>
+                    <td>£285,000</td>
+                    <td>£140,000</td>
+                    <td><strong>£145,000</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Year 2 (Growth)</strong></td>
+                    <td>10,000</td>
+                    <td>£3,224,000</td>
+                    <td>£450,000</td>
+                    <td><strong>£2,774,000</strong></td>
+                </tr>
+                <tr class="success-bg">
+                    <td><strong>Year 3 (Scale)</strong></td>
+                    <td>50,000</td>
+                    <td>£16,120,000</td>
+                    <td>£1,800,000</td>
+                    <td><strong>£14,320,000</strong></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="grid-3 grid" style="margin-top:25px;">
+            <div class="stat-box">
+                <span class="stat-val">£30.07</span>
+                <span class="stat-label">Monthly ARPU</span>
+                <p>Across trading fees, SaaS, rakes &amp; ad revenue.</p>
+            </div>
+            <div class="stat-box">
+                <span class="stat-val">40:1</span>
+                <span class="stat-label">LTV:CAC Ratio</span>
+                <p>Based on £5 CPA and £250+ lifetime value per user.</p>
+            </div>
+            <div class="stat-box">
+                <span class="stat-val">200</span>
+                <span class="stat-label">Break-Even Users</span>
+                <p>Monthly profitability at 200 actives vs £11,500 OpEx.</p>
+            </div>
+        </div>
+        <p style="margin-top: 15px; font-size: 13px; color: var(--text70);">Unit economics validated via Machinations.io
+            Monte Carlo simulation over 38 weeks.</p>
+        <div class="slide-footer">
+            <span>Confidential — StockBaller</span>
+            <span>June 2026</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 10: RETENTION & COMMUNITY -->
+    <div class="slide">
+        <div class="slide-num">10</div>
+        <h2>Retention &amp; Social</h2>
+        <h1>Building the <span style="color:var(--accent)">Owners Club.</span></h1>
+        <div class="grid">
+            <div class="card">
+                <h3>The Social Feed</h3>
+                <p>Public portfolios, "Whale" alerts, and AI-driven discussion threads. Users stay for the community
+                    as much as the simulation.</p>
+            </div>
+            <div class="card">
+                <h3>Leaderboards &amp; Snapshots</h3>
+                <p>Weekly leaderboard snapshots and "Beat the Bots" challenges. Status in the StockBaller community
+                    is a primary driver of retention.</p>
+            </div>
+            <div class="card">
+                <h3>H2H &amp; Parlay Contests</h3>
+                <p>Head-to-head prediction challenges and multi-leg parlay bets with settlement and rake engine — live
+                    in the current API.</p>
+            </div>
+            <div class="card">
+                <h3>Dividend Rewards</h3>
+                <p>Holding "Active" players pays out weekly SB Coin dividends, rewarding long-term holding behaviour
+                    over short-term churn.</p>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <span>Confidential — StockBaller</span>
+            <span>June 2026</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 11: THE ROADMAP -->
+    <div class="slide">
+        <div class="slide-num">11</div>
+        <h2>Strategic Roadmap</h2>
+        <h1>From Paper Trading to <span style="color:var(--accent)">DeFi Protocol.</span></h1>
+        <div class="timeline">
+            <div class="t-point">
+                <div class="t-dot t-dot-done"></div>
+                <p><strong>NOW</strong></p>
+                <p>WC 2026 live. 240 tokens active. SQE calibrating on real match data.</p>
+            </div>
+            <div class="t-point">
+                <div class="t-dot"></div>
+                <p><strong>SEP '26</strong></p>
+                <p>Production launch. Real USDC. Smart contract audit. App Store live.</p>
+            </div>
+            <div class="t-point">
+                <div class="t-dot"></div>
+                <p><strong>Q1 '27</strong></p>
+                <p>DEX pools (Aerodrome/Base). Liquidity partner. SQE data API licensing.</p>
+            </div>
+            <div class="t-point">
+                <div class="t-dot"></div>
+                <p><strong>Q2 '27</strong></p>
+                <p>SBX stablecoin (USDC-backed). Player token staking vaults. Yield live.</p>
+            </div>
+            <div class="t-point">
+                <div class="t-dot" style="background: var(--success); box-shadow: 0 0 0 2px var(--success);"></div>
+                <p><strong>Q4 '27</strong></p>
+                <p>Series A readiness. 10,000+ users. Multi-sport. £1.4M+ ARR.</p>
+            </div>
+        </div>
+        <div class="highlight-box" style="margin-top:40px;">
+            <h3>The DeFi Endgame</h3>
+            <p>Player tokens stake into yield vaults. Trading fees flow to stakers. SBX becomes the native stablecoin.
+                The platform evolves from a trading app into a
+                <strong style="color:var(--accent)">self-sustaining DeFi sports protocol</strong> — with a liquidity
+                partner, on-chain price oracle, and institutional API layer.
+            </p>
+        </div>
+        <div class="slide-footer">
+            <span>Confidential — StockBaller</span>
+            <span>June 2026</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 12: THE TEAM -->
+    <div class="slide">
+        <div class="slide-num">12</div>
+        <h2>The Team</h2>
+        <h1>Built by <span style="color:var(--accent)">Proven Execution.</span></h1>
+        <div class="grid">
+            <div class="card">
+                <h3>Founder &amp; Lead Architect</h3>
+                <p style="color:var(--text70);">Henry Apaw — Full-Stack Engineer with expertise in NestJS, React
+                    Native, Solidity, and AI integration. Architected and shipped the entire SQE protocol, smart
+                    contract suite, mobile app, and live API without external capital.</p>
+            </div>
+            <div class="card">
+                <h3>Community &amp; Growth Ops</h3>
+                <p style="color:var(--text70);">Hiring — Leads community building, influencer
+                    partnership strategy, and user acquisition. Manages the FPL crossover funnel and Discord
+                    presence.</p>
+            </div>
+        </div>
+        <div style="margin-top:30px;">
+            <h2 style="margin-bottom:15px;">Post Pre-Seed Hire Plan</h2>
+            <div class="grid-3 grid" style="margin-top:0;">
+                <div class="card">
+                    <h3 style="font-size:15px;">ML Engineer</h3>
+                    <p style="font-size:13px;">LSTM / NLP specialist to productionise the SQE inference pipeline — Q4
+                        2026.</p>
+                </div>
+                <div class="card">
+                    <h3 style="font-size:15px;">Growth Lead</h3>
+                    <p style="font-size:13px;">Senior performance marketer with sports-tech or fintech background — Q3
+                        2026.</p>
+                </div>
+                <div class="card">
+                    <h3 style="font-size:15px;">Regulatory Counsel</h3>
+                    <p style="font-size:13px;">FCA Sandbox / MiCA compliance specialist — Q3 2026.</p>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top:20px; display:flex; gap:15px; flex-wrap:wrap;">
+            <span class="tag">Advisor: Sports Media Exec</span>
+            <span class="tag">Advisor: Web3 Legal Specialist</span>
+        </div>
+        <div class="slide-footer">
+            <span>Confidential — StockBaller</span>
+            <span>June 2026</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 13: TECHNICAL PROOF -->
+    <div class="slide">
+        <div class="slide-num">13</div>
+        <h2>Technical Validation</h2>
+        <h1>A proven, <span style="color:var(--accent)">transparent</span> stack.</h1>
+        <div class="grid">
+            <div class="card">
+                <h3>Code &amp; Docs</h3>
+                <p style="font-family: monospace; font-size:12px; line-height:2; color:var(--text70);">
+                    📄 stockballer.gitbook.io/stockballer-docs/<br>
+                    💻 github.com/Fillmore3000/stockballer-api<br>
+                    💻 github.com/Fillmore3000/Stockballer-app<br>
+                    🤖 youtu.be/ltd3ShHNfTQ
+                </p>
+            </div>
+            <div class="card">
+                <h3>Live Infrastructure</h3>
+                <p style="font-size:13px; color: var(--text70); line-height:2;">
+                    • <strong>NestJS 11</strong> — Scalable REST + WebSocket API<br>
+                    • <strong>Base Sepolia → Mainnet Q3 2026</strong> — 3 audited contracts<br>
+                    • <strong>Chainlink CRE</strong> — Oracle path wired, activates at launch<br>
+                    • <strong>MongoDB Atlas + Prisma</strong> — Production data layer<br>
+                    • <strong>Auth0 + Openfort</strong> — Embedded wallets, zero friction onboarding
+                </p>
+            </div>
+        </div>
+        <div class="highlight-box">
+            <h3>Economic Proof — WC 2026 Live</h3>
+            <p>The SQE v4 formula is calibrating against live World Cup match data from today — June 11, 2026.
+                By tournament end (July 19) it will have processed
+                <strong style="color:var(--accent)">64 real matches</strong> across 48 nations.
+                This is the formula validation dataset no competitor can replicate.
+            </p>
+        </div>
+        <div class="slide-footer">
+            <span>Confidential — StockBaller</span>
+            <span>June 2026</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 14: THE ASK -->
+    <div class="slide" style="justify-content: center; align-items: center; text-align: center;">
+        <div class="slide-num">14</div>
+        <h2>The Ask</h2>
+        <h1>Raising <span style="color:var(--accent)">£250K</span> Pre-Seed</h1>
+        <p class="sub-heading" style="text-align:center;">To reach 1,000 paying subscribers and dominate the Athlete
+            Intelligence market.</p>
+        <div class="grid" style="width: 90%; margin: 30px auto 0;">
+            <div class="card">
+                <h3>40% — Engineering &amp; AI</h3>
+                <p>SQE productionisation, ML engineer hire, iOS + Android mobile app polish.</p>
+            </div>
+            <div class="card">
+                <h3>20% — Marketing &amp; Growth</h3>
+                <p>FPL influencer flywheel, Google Play launch, CPA campaigns.</p>
+            </div>
+            <div class="card">
+                <h3>12% — Legal &amp; Compliance</h3>
+                <p>FCA Sandbox pre-application, MiCA advisory, SEIS finalization, IP protection.</p>
+            </div>
+            <div class="card">
+                <h3>28% — Infra, Ops &amp; Reserve</h3>
+                <p>GCP/AWS scale-up, growth operations, community management, working capital buffer.</p>
+            </div>
+        </div>
+        <p style="margin-top: 30px; font-size: 18px; color:var(--text70);">
+            <strong style="color:var(--text);">Instrument:</strong> Advance Subscription Agreement (ASA) @ £1.5M Cap &nbsp;|&nbsp;
+            <strong style="color:var(--text);">Tax Relief:</strong> SEIS Eligible (50%) &nbsp;|&nbsp;
+            <strong style="color:var(--text);">Runway:</strong> 18–24 months
+        </p>
+        <p style="font-size:15px; color:var(--accent); font-weight:900;">Exit target: £120M+ at Year 3 (80× return
+            potential)</p>
+        <div class="slide-footer">
+            <span>Confidential — StockBaller</span>
+            <span>June 2026</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 15: CONTACT -->
+    <div class="slide"
+        style="justify-content: center; align-items: center; text-align: center; background: var(--navy3);">
+        <img src="../NewLogo.png" alt="StockBaller" style="height:80px; margin-bottom:20px;">
+        <p class="sub-heading" style="text-align:center; color: rgba(255,255,255,0.7);">Join the revolution in athlete
+            valuation.</p>
+        <div style="margin-top: 50px; font-size: 24px;">
+            <p style="color:var(--accent); font-weight:900;">contact@stockballer.app</p>
+            <p style="color:var(--text70);">stockballer.app</p>
+        </div>
+        <div style="margin-top:30px; display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
+            <span class="tag">Pre-Seed — £250K</span>
+            <span class="tag">ASA @ £1.5M Cap</span>
+            <span class="tag">SEIS Eligible</span>
+        </div>
+        <p
+            style="margin-top:40px; font-size:11px; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:2px;">
+            Confidential — May 2026 — StockBaller Ltd
+        </p>
+    </div>
+
+</body>
+
+</html>
