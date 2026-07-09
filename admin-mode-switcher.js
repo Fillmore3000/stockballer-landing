@@ -178,6 +178,7 @@ async function loadLiveData() {
             fetchGameFlowHealth(),
         ]);
 
+        updateWCTournamentStatus(tokens);
         updateLiveMatchContext(matches);
         updateLiveTokenBoard(tokens);
         updateLiveActivityPanel(activity);
@@ -185,11 +186,131 @@ async function loadLiveData() {
 
         // For Live economics: get bot stats from existing admin.html data
         if (window.lastStats) {
-            updateLiveEconomics(window.lastStats);
+            updateLiveEconomics(window.lastStats, tokens);
         }
     } catch (error) {
         console.error('[LiveMode] Load error:', error);
     }
+}
+
+// WC 2026 specific stage labels
+const WC_STAGE_LABELS = {
+    group: { label: 'Group Stage', color: '#64748b' },
+    r32: { label: 'Round of 32', color: '#3b82f6' },
+    r16: { label: 'Round of 16', color: '#8b5cf6' },
+    qf: { label: 'Quarter-Finals', color: '#f59e0b' },
+    sf: { label: 'Semi-Finals', color: '#f97316' },
+    final: { label: 'Final', color: '#ef4444' },
+};
+
+const QF_FIXTURES = [
+    { home: 'Morocco', away: 'France' },
+    { home: 'Norway', away: 'England' },
+    { home: 'Spain', away: 'Belgium' },
+    { home: 'Argentina', away: 'Switzerland' },
+];
+
+function updateWCTournamentStatus(tokens) {
+    const panel = document.getElementById('wc-tournament-status');
+    if (!panel) return;
+
+    if (!Array.isArray(tokens) || tokens.length === 0) {
+        panel.innerHTML = '<div style="padding:16px;color:rgba(255,255,255,0.5);">Loading tournament data...</div>';
+        return;
+    }
+
+    // Group players by stage
+    const stageCounts = {};
+    const teamStages = {};
+    let totalMarketCap = 0;
+    let qfMarketCap = 0;
+    let eliminatedCount = 0;
+
+    for (const t of tokens) {
+        if (!t.wcRound) continue;
+        const stage = t.wcEliminated ? 'eliminated' : t.wcRound;
+        if (t.wcEliminated) {
+            eliminatedCount++;
+        } else {
+            stageCounts[t.wcRound] = (stageCounts[t.wcRound] || 0) + 1;
+            const price = Number(t.currentPrice || 0);
+            totalMarketCap += price;
+            if (t.wcRound === 'qf') {
+                qfMarketCap += price;
+                // Track QF teams
+                if (t.team) teamStages[t.team] = true;
+            }
+        }
+    }
+
+    const qfTeams = Object.keys(teamStages).sort();
+    const qfCount = stageCounts['qf'] || 0;
+    const activePlayers = Object.values(stageCounts).reduce((a, b) => a + b, 0);
+
+    // Top 5 QF players by price
+    const top5 = tokens
+        .filter(t => t.wcRound === 'qf' && !t.wcEliminated)
+        .sort((a, b) => Number(b.currentPrice) - Number(a.currentPrice))
+        .slice(0, 5);
+
+    const stageHTML = ['qf', 'r16', 'r32'].map(stage => {
+        const count = stageCounts[stage] || 0;
+        if (count === 0) return '';
+        const meta = WC_STAGE_LABELS[stage] || { label: stage.toUpperCase(), color: '#fff' };
+        return `<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:10px;text-align:center;">
+            <div style="font-size:11px;color:${meta.color};text-transform:uppercase;font-weight:600;margin-bottom:4px;">${meta.label}</div>
+            <div style="font-size:20px;font-weight:700;color:#fff;">${count}</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.4);">players</div>
+        </div>`;
+    }).join('');
+
+    const top5HTML = top5.map((t, i) => {
+        const change = Number(t.changePct || 0);
+        const col = change >= 0 ? '#00ff88' : '#ff4d4d';
+        return `<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+            <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-size:11px;color:rgba(255,255,255,0.3);width:14px;">${i + 1}</span>
+                <div>
+                    <div style="font-size:12px;color:#fff;font-weight:600;">${t.name}</div>
+                    <div style="font-size:10px;color:rgba(255,255,255,0.4);">${t.team || ''}</div>
+                </div>
+            </div>
+            <div style="text-align:right;">
+                <div style="font-size:13px;font-weight:700;color:#fff;">$${Number(t.currentPrice || 0).toFixed(2)}</div>
+                <div style="font-size:10px;color:${col};">${change >= 0 ? '+' : ''}${change.toFixed(1)}%</div>
+            </div>
+        </div>`;
+    }).join('');
+
+    const fixturesHTML = QF_FIXTURES.map(f =>
+        `<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;background:rgba(255,170,0,0.06);border-radius:6px;margin-bottom:4px;">
+            <span style="font-size:12px;color:#fff;font-weight:600;">${f.home}</span>
+            <span style="font-size:10px;color:#f59e0b;font-weight:700;">QF</span>
+            <span style="font-size:12px;color:#fff;font-weight:600;">${f.away}</span>
+        </div>`
+    ).join('');
+
+    panel.innerHTML = `
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
+            ${stageHTML}
+            <div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-radius:8px;padding:10px;text-align:center;">
+                <div style="font-size:11px;color:#ef4444;text-transform:uppercase;font-weight:600;margin-bottom:4px;">Eliminated</div>
+                <div style="font-size:20px;font-weight:700;color:#fff;">${eliminatedCount}</div>
+                <div style="font-size:10px;color:rgba(255,255,255,0.4);">players</div>
+            </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;margin-bottom:8px;">⚽ QF Fixtures</div>
+                ${fixturesHTML}
+                <div style="margin-top:8px;font-size:10px;color:rgba(255,255,255,0.3);">QF Market Cap: $${qfMarketCap.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</div>
+            </div>
+            <div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;margin-bottom:8px;">🏆 Top QF Players</div>
+                ${top5HTML}
+            </div>
+        </div>
+    `;
 }
 
 async function fetchLiveMatches() {
@@ -564,33 +685,57 @@ function updateLiveGameFlowPanel(gameFlow) {
 
 
 
-function updateLiveEconomics(stats) {
+function updateLiveEconomics(stats, tokens) {
     const panel = document.getElementById('live-economics');
     if (!panel) return;
 
-    // stats should have: totalFeesPaid, activeBots, etc.
     const totalFees = stats?.totalFeesPaid || 0;
-    const monthlyOpEx = EconomicsCalculator.getTotalMonthlyOpEx();
+    const totalTrades = stats?.totalTrades || 0;
+    const activeBots = stats?.activeBots || 0;
+    const monthlyOpEx = typeof EconomicsCalculator !== 'undefined' ? EconomicsCalculator.getTotalMonthlyOpEx() : 450;
     const netDaily = (totalFees > 0) ? (totalFees / 30) - (monthlyOpEx / 30) : 0;
     const netColor = netDaily >= 0 ? '#00ff88' : '#ff6666';
-    const burnRate = monthlyOpEx / 30;
+
+    // Compute WC market cap from tokens (only active, non-eliminated QF players)
+    const wcTokens = Array.isArray(tokens) ? tokens : [];
+    const totalWCMarketCap = wcTokens
+        .filter(t => t.wcRound && !t.wcEliminated)
+        .reduce((sum, t) => sum + Number(t.currentPrice || 0), 0);
+    const qfMarketCap = wcTokens
+        .filter(t => t.wcRound === 'qf' && !t.wcEliminated)
+        .reduce((sum, t) => sum + Number(t.currentPrice || 0), 0);
+
+    const fmt = (n) => n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
     const html = `
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 12px;">
             <div style="background: rgba(0,255,136,0.1); padding: 12px; border-radius: 8px; border: 1px solid rgba(0,255,136,0.2);">
-                <div style="font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase; margin-bottom: 4px;">Total Fees Collected</div>
+                <div style="font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase; margin-bottom: 4px;">WC Fees Collected</div>
                 <div style="font-size: 18px; font-weight: 700; color: #00ff88;">$${totalFees.toFixed(2)}</div>
-                <div style="font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 4px;">1% per trade</div>
+                <div style="font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 4px;">1% per bot trade</div>
             </div>
-            <div style="background: rgba(255,170,0,0.1); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,170,0,0.2);">
-                <div style="font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase; margin-bottom: 4px;">Monthly OpEx</div>
-                <div style="font-size: 18px; font-weight: 700; color: #ffaa00;">$${monthlyOpEx.toFixed(2)}</div>
-                <div style="font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 4px;">Infrastructure costs</div>
+            <div style="background: rgba(0,170,255,0.1); padding: 12px; border-radius: 8px; border: 1px solid rgba(0,170,255,0.2);">
+                <div style="font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase; margin-bottom: 4px;">WC Bot Trades</div>
+                <div style="font-size: 18px; font-weight: 700; color: #7dd3fc;">${totalTrades.toLocaleString()}</div>
+                <div style="font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 4px;">${activeBots} active bots</div>
+            </div>
+            <div style="background: rgba(245,158,11,0.1); padding: 12px; border-radius: 8px; border: 1px solid rgba(245,158,11,0.2);">
+                <div style="font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase; margin-bottom: 4px;">Active Market Cap</div>
+                <div style="font-size: 18px; font-weight: 700; color: #fbbf24;">$${fmt(totalWCMarketCap)}</div>
+                <div style="font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 4px;">non-eliminated players</div>
+            </div>
+            <div style="background: rgba(239,68,68,0.1); padding: 12px; border-radius: 8px; border: 1px solid rgba(239,68,68,0.2);">
+                <div style="font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase; margin-bottom: 4px;">QF Market Cap</div>
+                <div style="font-size: 18px; font-weight: 700; color: #f87171;">$${fmt(qfMarketCap)}</div>
+                <div style="font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 4px;">8 QF teams × 2.0× boost</div>
             </div>
         </div>
         <div style="background: rgba(0,200,255,0.1); padding: 12px; border-radius: 8px; border: 1px solid rgba(0,200,255,0.2);">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div style="font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase;">Estimated Daily Run-Rate</div>
+                <div>
+                    <div style="font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase;">Estimated Daily Run-Rate vs OpEx ($${(monthlyOpEx/30).toFixed(0)}/day)</div>
+                    <div style="font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 2px;">WC 2026 Season — Jun 11 → Jul 19</div>
+                </div>
                 <div style="font-size: 16px; font-weight: 700; color: ${netColor};">${netDaily >= 0 ? '+' : ''}$${netDaily.toFixed(2)}/day</div>
             </div>
         </div>
