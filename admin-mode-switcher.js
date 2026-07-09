@@ -926,3 +926,241 @@ if (document.readyState === 'loading') {
 setInterval(() => {
     loadModeData();
 }, 30000);
+
+// ============================================================================
+// WC 2026 TOURNAMENT SIMULATOR
+// ============================================================================
+
+const WC_2026_NATIONS = {
+    A: ['Mexico', 'South Korea', 'Czech Republic', 'South Africa'],
+    B: ['Canada', 'Qatar', 'Switzerland', 'Bosnia & Herzegovina'],
+    C: ['USA', 'Paraguay', 'Australia', 'Türkiye'],
+    D: ['Brazil', 'Morocco', 'Haiti', 'Scotland'],
+    E: ['Germany', 'Ivory Coast', 'Ecuador', 'Curaçao'],
+    F: ['Netherlands', 'Japan', 'Sweden', 'Tunisia'],
+    G: ['Spain', 'Saudi Arabia', 'Uruguay', 'Cape Verde Islands'],
+    H: ['Belgium', 'Egypt', 'Iran', 'New Zealand'],
+    I: ['France', 'Senegal', 'Iraq', 'Norway'],
+    J: ['Argentina', 'Algeria', 'Austria', 'Jordan'],
+    K: ['Portugal', 'Congo DR', 'Uzbekistan', 'Colombia'],
+    L: ['England', 'Croatia', 'Ghana', 'Panama'],
+};
+
+let tsCurrentMode = 'team';
+
+function tsSelectMode(mode) {
+    tsCurrentMode = mode;
+    const isTeam = mode === 'team';
+    document.getElementById('ts-panel-team').style.display = isTeam ? 'block' : 'none';
+    document.getElementById('ts-panel-predict').style.display = isTeam ? 'none' : 'block';
+
+    const teamBtn = document.getElementById('ts-tab-team');
+    const predictBtn = document.getElementById('ts-tab-predict');
+    if (isTeam) {
+        teamBtn.style.border = '1px solid #00ff88';
+        teamBtn.style.background = 'rgba(0,255,136,0.15)';
+        teamBtn.style.color = '#00ff88';
+        predictBtn.style.border = '1px solid rgba(255,255,255,0.2)';
+        predictBtn.style.background = 'rgba(255,255,255,0.05)';
+        predictBtn.style.color = 'rgba(255,255,255,0.6)';
+    } else {
+        predictBtn.style.border = '1px solid #ffaa00';
+        predictBtn.style.background = 'rgba(255,170,0,0.15)';
+        predictBtn.style.color = '#ffaa00';
+        teamBtn.style.border = '1px solid rgba(255,255,255,0.2)';
+        teamBtn.style.background = 'rgba(255,255,255,0.05)';
+        teamBtn.style.color = 'rgba(255,255,255,0.6)';
+    }
+}
+
+function initTournamentSimPanel() {
+    const sel = document.getElementById('ts-team-select');
+    if (!sel) return;
+    for (const [group, teams] of Object.entries(WC_2026_NATIONS)) {
+        const og = document.createElement('optgroup');
+        og.label = `Group ${group}`;
+        teams.forEach(t => {
+            const opt = document.createElement('option');
+            opt.value = t;
+            opt.textContent = t;
+            og.appendChild(opt);
+        });
+        sel.appendChild(og);
+    }
+}
+
+async function runTeamSimulation() {
+    const team = document.getElementById('ts-team-select').value;
+    if (!team) { if (window.showToast) showToast('Select a team first', 'error'); return; }
+
+    document.getElementById('ts-team-loading').style.display = 'block';
+    document.getElementById('ts-team-results').style.display = 'none';
+    document.getElementById('ts-team-error').style.display = 'none';
+
+    try {
+        const res = await fetch(`${API_BASE}/simulation/wc-tournament/team`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ team, iterations: 20 }),
+        });
+        if (!res.ok) throw new Error(`API ${res.status}: ${await res.text()}`);
+        const data = await res.json();
+        renderTeamResult(data);
+    } catch (err) {
+        document.getElementById('ts-team-error').textContent = `Error: ${err.message}`;
+        document.getElementById('ts-team-error').style.display = 'block';
+    } finally {
+        document.getElementById('ts-team-loading').style.display = 'none';
+    }
+}
+
+function renderTeamResult(data) {
+    const roundsEl = document.getElementById('ts-team-rounds');
+    roundsEl.innerHTML = data.rounds.map(r => `
+        <div style="margin-bottom:12px;">
+            <div style="font-size:11px; font-weight:700; color:rgba(255,255,255,0.5); text-transform:uppercase; margin-bottom:6px; letter-spacing:1px;">${r.name}</div>
+            ${r.matches.map(m => renderMatchCard(m, data.team)).join('')}
+        </div>
+    `).join('');
+
+    const banner = document.getElementById('ts-team-banner');
+    if (data.champion) {
+        banner.innerHTML = `<div style="padding:20px; text-align:center; background:linear-gradient(135deg,rgba(255,215,0,0.2),rgba(255,165,0,0.1)); border:1px solid gold; border-radius:12px;">
+            <div style="font-size:32px;">🏆</div>
+            <div style="font-size:20px; font-weight:700; color:gold; margin-top:4px;">${data.team} are World Champions!</div>
+        </div>`;
+    } else {
+        const lastRound = data.rounds[data.rounds.length - 1];
+        banner.innerHTML = `<div style="padding:16px; text-align:center; background:rgba(255,0,0,0.08); border:1px solid rgba(255,77,77,0.4); border-radius:12px;">
+            <div style="font-size:24px;">❌</div>
+            <div style="color:#ff6b6b; font-weight:600; margin-top:4px;">${data.team} eliminated in ${lastRound?.name ?? 'the tournament'}${data.eliminatedBy ? ` by ${data.eliminatedBy}` : ''}</div>
+        </div>`;
+    }
+
+    if (data.revenueProjection) {
+        document.getElementById('ts-team-revenue').innerHTML = renderRevenueCard(data.revenueProjection);
+    }
+
+    document.getElementById('ts-team-results').style.display = 'block';
+}
+
+function renderMatchCard(match, highlightTeam) {
+    const winnerColor = (team) => team === match.winner ? '#00ff88' : 'rgba(255,255,255,0.4)';
+    const homeColor = winnerColor(match.homeTeam);
+    const awayColor = winnerColor(match.awayTeam);
+    const roundLabel = match.isKnockout && match.simulatedHome === match.simulatedAway
+        ? ` <span style="font-size:10px; color:#ffaa00;">(pens)</span>` : '';
+    return `<div style="display:flex; align-items:center; justify-content:space-between; padding:10px 14px; background:rgba(255,255,255,0.04); border-radius:8px; margin-bottom:4px; border:1px solid rgba(255,255,255,0.08);">
+        <span style="flex:2; color:${homeColor}; font-weight:${match.homeTeam === highlightTeam ? '700' : '400'};">${match.homeTeam}</span>
+        <span style="flex:1; text-align:center; font-size:18px; font-weight:700; color:#fff;">${match.simulatedHome} – ${match.simulatedAway}${roundLabel}</span>
+        <span style="flex:2; text-align:right; color:${awayColor}; font-weight:${match.awayTeam === highlightTeam ? '700' : '400'};">${match.awayTeam}</span>
+    </div>`;
+}
+
+async function runFullPredictionMode() {
+    document.getElementById('ts-predict-loading').style.display = 'block';
+    document.getElementById('ts-predict-results').style.display = 'none';
+    document.getElementById('ts-predict-error').style.display = 'none';
+
+    try {
+        const res = await fetch(`${API_BASE}/simulation/wc-tournament/predict`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ iterations: 20 }),
+        });
+        if (!res.ok) throw new Error(`API ${res.status}: ${await res.text()}`);
+        const data = await res.json();
+        renderPredictionResult(data);
+    } catch (err) {
+        document.getElementById('ts-predict-error').textContent = `Error: ${err.message}`;
+        document.getElementById('ts-predict-error').style.display = 'block';
+    } finally {
+        document.getElementById('ts-predict-loading').style.display = 'none';
+    }
+}
+
+function renderPredictionResult(data) {
+    document.getElementById('ts-predict-champion').innerHTML = `
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            <div style="padding:20px; text-align:center; background:linear-gradient(135deg,rgba(255,215,0,0.2),rgba(255,165,0,0.1)); border:1px solid gold; border-radius:12px;">
+                <div style="font-size:28px;">🏆</div>
+                <div style="font-size:11px; color:rgba(255,255,255,0.5); text-transform:uppercase; margin:4px 0;">Predicted Champion</div>
+                <div style="font-size:20px; font-weight:700; color:gold;">${data.predictedChampion}</div>
+            </div>
+            <div style="padding:20px; text-align:center; background:rgba(192,192,192,0.1); border:1px solid rgba(192,192,192,0.4); border-radius:12px;">
+                <div style="font-size:28px;">🥈</div>
+                <div style="font-size:11px; color:rgba(255,255,255,0.5); text-transform:uppercase; margin:4px 0;">Runner-Up</div>
+                <div style="font-size:18px; font-weight:700; color:silver;">${data.runnerUp}</div>
+            </div>
+        </div>`;
+
+    if (data.topPerformers && data.topPerformers.length) {
+        document.getElementById('ts-predict-performers').innerHTML = renderTopPerformers(data.topPerformers);
+    }
+
+    if (data.analystNote) {
+        document.getElementById('ts-predict-note').innerHTML = `
+            <div style="padding:16px; background:rgba(0,200,255,0.06); border:1px solid rgba(0,200,255,0.2); border-radius:10px;">
+                <div style="font-size:11px; font-weight:700; color:rgba(0,200,255,0.8); text-transform:uppercase; margin-bottom:8px; letter-spacing:1px;">🤖 AI Analyst Note</div>
+                <p style="color:rgba(255,255,255,0.8); font-size:13px; line-height:1.6; margin:0;">${data.analystNote}</p>
+            </div>`;
+    }
+
+    if (data.revenueProjection) {
+        document.getElementById('ts-predict-revenue').innerHTML = renderRevenueCard(data.revenueProjection);
+    }
+
+    document.getElementById('ts-predict-results').style.display = 'block';
+}
+
+function renderTopPerformers(performers) {
+    const cards = performers.map(p => `
+        <div style="padding:12px; background:rgba(0,255,136,0.05); border:1px solid rgba(0,255,136,0.2); border-radius:8px;">
+            <div style="font-weight:700; color:#00ff88; font-size:14px;">${p.name}</div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.5); margin:2px 0;">${p.team}</div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+                <span style="font-size:12px; color:rgba(255,255,255,0.6);">$${p.currentPrice.toFixed(2)} → $${p.projectedPrice.toFixed(2)}</span>
+                <span style="font-weight:700; color:#00ff88;">+${p.deltaPct.toFixed(1)}%</span>
+            </div>
+            <div style="font-size:10px; color:rgba(255,255,255,0.4); margin-top:4px;">${p.reason}</div>
+        </div>`).join('');
+    return `<div>
+        <div style="font-size:11px; font-weight:700; color:rgba(255,255,255,0.5); text-transform:uppercase; margin-bottom:8px; letter-spacing:1px;">🚀 Top 5 Token Value Movers</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:10px;">${cards}</div>
+    </div>`;
+}
+
+function renderRevenueCard(rev) {
+    const rows = rev.byRound.map(r =>
+        `<tr><td style="padding:4px 8px; color:rgba(255,255,255,0.7);">${r.round}</td>
+         <td style="padding:4px 8px; text-align:center; color:rgba(255,255,255,0.5);">${r.matches}</td>
+         <td style="padding:4px 8px; text-align:right; color:#00ff88;">$${r.volume.toFixed(2)}</td>
+         <td style="padding:4px 8px; text-align:right; color:#ffaa00;">$${r.fees.toFixed(2)}</td></tr>`
+    ).join('');
+    return `<div style="padding:14px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); border-radius:10px;">
+        <div style="font-size:11px; font-weight:700; color:rgba(255,255,255,0.5); text-transform:uppercase; margin-bottom:10px; letter-spacing:1px;">💰 Revenue Projection (115 agents)</div>
+        <table style="width:100%; border-collapse:collapse; font-size:12px;">
+            <thead><tr style="border-bottom:1px solid rgba(255,255,255,0.1);">
+                <th style="padding:4px 8px; text-align:left; color:rgba(255,255,255,0.4); font-weight:400;">Round</th>
+                <th style="padding:4px 8px; text-align:center; color:rgba(255,255,255,0.4); font-weight:400;">Matches</th>
+                <th style="padding:4px 8px; text-align:right; color:rgba(255,255,255,0.4); font-weight:400;">Volume</th>
+                <th style="padding:4px 8px; text-align:right; color:rgba(255,255,255,0.4); font-weight:400;">Fees</th>
+            </tr></thead>
+            <tbody>${rows}</tbody>
+        </table>
+        <div style="display:flex; justify-content:space-between; margin-top:10px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.1);">
+            <span style="font-size:12px; color:rgba(255,255,255,0.5);">Total volume: <strong style="color:#00ff88;">$${rev.totalVolume.toFixed(2)}</strong></span>
+            <span style="font-size:12px; color:rgba(255,255,255,0.5);">Total fees: <strong style="color:#ffaa00;">$${rev.totalFees.toFixed(2)}</strong></span>
+            <span style="font-size:12px; color:rgba(255,255,255,0.5);">Break-even: <strong style="color:#00c8ff;">${rev.breakEvenDays} days</strong></span>
+        </div>
+    </div>`;
+}
+
+// Initialise tournament panel when DOM is ready
+(function initTsPanel() {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initTournamentSimPanel);
+    } else {
+        initTournamentSimPanel();
+    }
+})();

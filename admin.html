@@ -1513,6 +1513,74 @@
                     </div>
                 </div>
             </div>
+
+            <!-- ============ WC 2026 TOURNAMENT DEMO SIMULATOR ============ -->
+            <div style="margin-top: 24px;">
+                <div class="live-panel" style="grid-column: 1 / -1;">
+                    <div class="live-panel-title" style="display:flex; justify-content:space-between; align-items:center;">
+                        <span>⚽ WC 2026 Tournament Simulator</span>
+                        <span class="data-badge simulated">DEMO</span>
+                    </div>
+
+                    <!-- Mode tabs -->
+                    <div style="display:flex; gap:8px; margin-bottom:18px;">
+                        <button id="ts-tab-team" onclick="tsSelectMode('team')"
+                            style="flex:1; padding:10px; border-radius:8px; border:1px solid #00ff88; background:rgba(0,255,136,0.15); color:#00ff88; cursor:pointer; font-weight:600;">
+                            ⚽ Follow My Team
+                        </button>
+                        <button id="ts-tab-predict" onclick="tsSelectMode('predict')"
+                            style="flex:1; padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.6); cursor:pointer; font-weight:600;">
+                            🔮 AI Prediction
+                        </button>
+                    </div>
+
+                    <!-- MODE A: Follow My Team -->
+                    <div id="ts-panel-team">
+                        <div style="display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap; margin-bottom:16px;">
+                            <div style="flex:1; min-width:180px;">
+                                <label style="display:block; font-size:11px; color:rgba(255,255,255,0.5); margin-bottom:6px;">SELECT YOUR TEAM</label>
+                                <select id="ts-team-select" style="width:100%; padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(0,0,0,0.4); color:#fff; font-size:14px;">
+                                    <option value="">-- Choose Nation --</option>
+                                </select>
+                            </div>
+                            <button onclick="runTeamSimulation()"
+                                style="padding:10px 24px; border-radius:8px; border:1px solid #00ff88; background:rgba(0,255,136,0.2); color:#00ff88; cursor:pointer; font-weight:700; white-space:nowrap;">
+                                ▶ Simulate
+                            </button>
+                        </div>
+                        <div id="ts-team-loading" style="display:none; text-align:center; padding:20px; color:rgba(255,255,255,0.5);">
+                            ⏳ Running Monte Carlo group stage + knockout path…
+                        </div>
+                        <div id="ts-team-results" style="display:none;">
+                            <div id="ts-team-rounds"></div>
+                            <div id="ts-team-banner" style="margin-top:16px;"></div>
+                            <div id="ts-team-revenue" style="margin-top:16px;"></div>
+                        </div>
+                        <div id="ts-team-error" style="display:none; color:#ff4d4d; padding:12px; background:rgba(255,0,0,0.1); border-radius:8px;"></div>
+                    </div>
+
+                    <!-- MODE B: AI Prediction -->
+                    <div id="ts-panel-predict" style="display:none;">
+                        <p style="color:rgba(255,255,255,0.6); font-size:13px; margin-bottom:14px;">
+                            Runs 1,000 Monte Carlo iterations across all 12 groups → knockout bracket → predicts champion + top 5 token value movers.
+                        </p>
+                        <button onclick="runFullPredictionMode()"
+                            style="padding:12px 32px; border-radius:8px; border:1px solid #ffaa00; background:rgba(255,170,0,0.2); color:#ffaa00; cursor:pointer; font-weight:700; font-size:15px;">
+                            🔮 Predict the World Cup
+                        </button>
+                        <div id="ts-predict-loading" style="display:none; text-align:center; padding:24px; color:rgba(255,255,255,0.5);">
+                            ⏳ Simulating 48 teams × 72 group matches + knockout bracket… this may take 30–60s.
+                        </div>
+                        <div id="ts-predict-results" style="display:none; margin-top:20px;">
+                            <div id="ts-predict-champion"></div>
+                            <div id="ts-predict-performers" style="margin-top:16px;"></div>
+                            <div id="ts-predict-note" style="margin-top:16px;"></div>
+                            <div id="ts-predict-revenue" style="margin-top:16px;"></div>
+                        </div>
+                        <div id="ts-predict-error" style="display:none; color:#ff4d4d; padding:12px; background:rgba(255,0,0,0.1); border-radius:8px; margin-top:12px;"></div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Panels Grid -->
@@ -2090,6 +2158,157 @@
         </div>
     </div>
 
+    <!-- ====================================================================
+         WORLD CUP 2026 REPORTS SECTION (Phase 4.3)
+         Monte Carlo simulation results + H2H + player price impact
+         ==================================================================== -->
+    <div class="panel full-panel" id="wc-reports-panel" style="margin: 24px;">
+        <div class="section-header">
+            <div class="section-title">⚽ World Cup 2026 Reports</div>
+            <div style="font-size:12px; color:rgba(255,255,255,0.5);">Monte Carlo simulation • H2H stats • Player price impact</div>
+        </div>
+        <!-- Fixture Selector -->
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:12px; margin-bottom:20px;">
+            <div>
+                <label style="font-size:11px; color:rgba(255,255,255,0.5); display:block; margin-bottom:4px;">Home Team</label>
+                <input id="wc-home-team" type="text" placeholder="e.g. Brazil" style="width:100%; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:8px; padding:8px 12px; color:#fff; font-size:13px;" />
+            </div>
+            <div>
+                <label style="font-size:11px; color:rgba(255,255,255,0.5); display:block; margin-bottom:4px;">Away Team</label>
+                <input id="wc-away-team" type="text" placeholder="e.g. Argentina" style="width:100%; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:8px; padding:8px 12px; color:#fff; font-size:13px;" />
+            </div>
+            <div>
+                <label style="font-size:11px; color:rgba(255,255,255,0.5); display:block; margin-bottom:4px;">Round</label>
+                <select id="wc-round" style="width:100%; background:rgba(30,30,50,0.95); border:1px solid rgba(255,255,255,0.15); border-radius:8px; padding:8px 12px; color:#fff; font-size:13px;">
+                    <option value="group">Group Stage (×1.0)</option>
+                    <option value="r32">Round of 32 (×1.2)</option>
+                    <option value="r16">Round of 16 (×1.5)</option>
+                    <option value="qf">Quarter-Final (×2.0)</option>
+                    <option value="sf">Semi-Final (×2.5)</option>
+                    <option value="final">Final (×3.0)</option>
+                </select>
+            </div>
+            <div style="align-self:end;">
+                <button onclick="runWcReport()" style="background:linear-gradient(135deg,#6366f1,#8b5cf6); color:#fff; border:none; border-radius:8px; padding:9px 20px; font-size:13px; font-weight:600; cursor:pointer;">
+                    ▶ Run Simulation
+                </button>
+            </div>
+        </div>
+
+        <!-- Loading / Error State -->
+        <div id="wc-report-loading" style="display:none; text-align:center; padding:24px; color:rgba(255,255,255,0.5);">
+            ⏳ Running 1,000-iteration Monte Carlo simulation…
+        </div>
+        <div id="wc-report-error" style="display:none; padding:12px 16px; background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.3); border-radius:8px; color:#f87171; margin-bottom:16px;"></div>
+
+        <!-- Results Grid -->
+        <div id="wc-report-results" style="display:none;">
+            <!-- Win probabilities bar chart -->
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:20px;">
+                <div id="wc-prob-home" style="background:rgba(99,102,241,0.15); border:1px solid rgba(99,102,241,0.3); border-radius:10px; padding:16px; text-align:center;">
+                    <div id="wc-home-name" style="font-size:13px; color:rgba(255,255,255,0.6); margin-bottom:4px;">Home</div>
+                    <div id="wc-home-pct" style="font-size:28px; font-weight:700; color:#818cf8;">--%</div>
+                    <div style="font-size:11px; color:rgba(255,255,255,0.4);">Win probability</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:16px; text-align:center;">
+                    <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-bottom:4px;">Draw</div>
+                    <div id="wc-draw-pct" style="font-size:28px; font-weight:700; color:#94a3b8;">--%</div>
+                    <div style="font-size:11px; color:rgba(255,255,255,0.4);">Draw probability</div>
+                </div>
+                <div id="wc-prob-away" style="background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.25); border-radius:10px; padding:16px; text-align:center;">
+                    <div id="wc-away-name" style="font-size:13px; color:rgba(255,255,255,0.6); margin-bottom:4px;">Away</div>
+                    <div id="wc-away-pct" style="font-size:28px; font-weight:700; color:#f87171;">--%</div>
+                    <div style="font-size:11px; color:rgba(255,255,255,0.4);">Win probability</div>
+                </div>
+            </div>
+
+            <!-- Most likely score + analyst note -->
+            <div style="display:grid; grid-template-columns:200px 1fr; gap:16px; margin-bottom:20px;">
+                <div style="background:rgba(0,255,136,0.08); border:1px solid rgba(0,255,136,0.2); border-radius:10px; padding:16px; text-align:center;">
+                    <div style="font-size:11px; color:rgba(255,255,255,0.5); margin-bottom:6px;">Most Likely Score</div>
+                    <div id="wc-score" style="font-size:32px; font-weight:700; color:#00ff88;">- : -</div>
+                    <div id="wc-score-pct" style="font-size:11px; color:rgba(255,255,255,0.4); margin-top:4px;">--% of sims</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:16px;">
+                    <div style="font-size:11px; color:rgba(255,255,255,0.5); margin-bottom:6px;">AI Analyst Note</div>
+                    <div id="wc-analyst-note" style="font-size:13px; color:rgba(255,255,255,0.85); line-height:1.6;">—</div>
+                </div>
+            </div>
+
+            <!-- Player price impact table -->
+            <div>
+                <div style="font-size:13px; font-weight:600; color:rgba(255,255,255,0.7); margin-bottom:12px;">📊 Player Price Impact</div>
+                <div style="overflow-x:auto;">
+                    <table class="bot-table" id="wc-impact-table">
+                        <thead>
+                            <tr>
+                                <th>Player</th>
+                                <th>Team</th>
+                                <th>Current Price</th>
+                                <th>If Scores</th>
+                                <th>If Assists</th>
+                                <th>If Eliminated</th>
+                            </tr>
+                        </thead>
+                        <tbody id="wc-impact-tbody">
+                            <tr><td colspan="6" style="text-align:center; color:rgba(255,255,255,0.4);">Run a simulation to see player impact data</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Export button -->
+            <div style="margin-top:16px; text-align:right;">
+                <button onclick="exportWcReport()" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); color:#fff; border-radius:8px; padding:8px 16px; font-size:12px; cursor:pointer;">
+                    ⬇️ Export JSON
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- END WC REPORTS SECTION -->
+
+    <!-- ================================================================== -->
+    <!-- LIVE MATCH DAY DEMO SECTION                                         -->
+    <!-- ================================================================== -->
+    <div id="live-demo-section" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.12); border-radius:16px; padding:24px; margin:20px 0;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <div>
+          <h2 style="margin:0; font-size:18px; font-weight:700; color:#fff;">⚽ Live Match Day Demo</h2>
+          <p style="margin:4px 0 0; font-size:12px; color:rgba(255,255,255,0.5);">Ephemeral real-time simulator — no DB writes. Up to 6 parallel matches via WebSocket.</p>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <label style="font-size:12px; color:rgba(255,255,255,0.6);">Matches:</label>
+          <select id="demo-match-count" onchange="initDemoFixtures()" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); color:#fff; border-radius:6px; padding:5px 10px; font-size:12px;">
+            <option value="1">1 Match</option>
+            <option value="2">2 Matches</option>
+            <option value="3">3 Matches</option>
+            <option value="4" selected>4 Matches</option>
+          </select>
+          <label style="font-size:12px; color:rgba(255,255,255,0.6);">Speed:</label>
+          <select id="demo-speed" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); color:#fff; border-radius:6px; padding:5px 10px; font-size:12px;">
+            <option value="normal">Normal (1s/tick)</option>
+            <option value="fast">Fast (200ms/tick)</option>
+          </select>
+          <button onclick="startLiveDemo()" style="background:linear-gradient(135deg,#10b981,#059669); color:#fff; border:none; border-radius:8px; padding:9px 20px; font-size:13px; font-weight:600; cursor:pointer;">▶ Start Match Day</button>
+          <button onclick="stopLiveDemo()" style="background:rgba(239,68,68,0.2); border:1px solid rgba(239,68,68,0.5); color:#ef4444; border-radius:8px; padding:9px 16px; font-size:13px; font-weight:600; cursor:pointer;">⏹ Stop All</button>
+        </div>
+      </div>
+
+      <!-- Fixture rows -->
+      <div id="demo-fixtures" style="display:grid; gap:12px; margin-bottom:20px;">
+      </div>
+
+      <!-- Price Impact Feed -->
+      <div style="margin-top:16px;">
+        <h3 style="font-size:13px; font-weight:600; color:rgba(255,255,255,0.7); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.5px;">Price Impact Feed</h3>
+        <div id="demo-price-feed" style="background:rgba(0,0,0,0.3); border-radius:8px; padding:12px; max-height:180px; overflow-y:auto; font-size:12px; color:rgba(255,255,255,0.8); font-family:monospace;">
+          <div style="color:rgba(255,255,255,0.35);">Waiting for goals...</div>
+        </div>
+      </div>
+
+
+    </div>
+
     <!-- Toast Container -->
     <div class="toast-container" id="toast-container"></div>
 
@@ -2098,6 +2317,7 @@
         let API_BASE = '';
         let refreshInterval;
         let strategyChart;
+        let lastWcReport = null; // store last WC report for export
         let activeSeasonRunId = null;
         window.activeSeasonRunId = null;
 
@@ -2108,6 +2328,13 @@
         const WS_MAX_RECONNECT_ATTEMPTS = 5;
         const WS_RECONNECT_DELAY = 3000;
         const ADMIN_WS_KEY = 'stockballer2026'; // Same as backend ADMIN_WS_KEY
+        const ADMIN_API_KEY = 'stockballer2026'; // x-admin-key header for AdminGuard
+
+        // Authenticated fetch for AdminGuard-protected endpoints
+        function adminFetch(url, options = {}) {
+            const headers = { 'x-admin-key': ADMIN_API_KEY, ...(options.headers || {}) };
+            return fetch(url, { ...options, headers });
+        }
 
         // Bot fleet state
         let allBots = [];
@@ -2138,48 +2365,51 @@
             const protocol = window.location.protocol === 'https:' ? 'https' : 'http';
 
             return [
-                'https://stockballer-api-production.up.railway.app/api',
+                'http://localhost:3001/api',
+                'http://127.0.0.1:3001/api',
                 `${protocol}://${host}:3001/api`,
                 `${protocol}://${host}:8080/api`,
-                'http://localhost:3001/api',
-                'http://127.0.0.1:3001/api'
+                'https://stockballer-api-production.up.railway.app/api',
             ];
         }
 
         async function resolveApiBase() {
             const params = new URLSearchParams(window.location.search);
             const apiFromQuery = params.get('api');
-            const apiFromStorage = localStorage.getItem('stockballer_admin_api_base');
 
             const setApiBase = (base) => {
                 API_BASE = base.replace(/\/$/, '');
-                localStorage.setItem('stockballer_admin_api_base', API_BASE);
                 window.API_BASE = API_BASE;
+                localStorage.setItem('stockballer_admin_api_base', API_BASE);
             };
 
-            // Highest priority: explicit query override.
+            // Highest priority: explicit ?api= query param override.
             if (apiFromQuery) {
                 setApiBase(apiFromQuery);
                 console.log('[Admin] API base from query:', API_BASE);
                 return;
             }
 
-            // Second priority: persisted manual override (but ignore localhost since we want production).
-            if (apiFromStorage && !apiFromStorage.includes('localhost') && !apiFromStorage.includes('127.0.0.1')) {
+            const isLocalDashboard = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+
+            if (isLocalDashboard) {
+                // Running locally — always use local API, no probe needed.
+                // Clear any stale stored value to prevent Railway from sneaking back in.
+                localStorage.removeItem('stockballer_admin_api_base');
+                setApiBase('http://localhost:3001/api');
+                console.log('[Admin] Local dashboard — API base set to localhost:3001');
+                return;
+            }
+
+            // Deployed dashboard: use stored override if present, otherwise probe candidates.
+            const apiFromStorage = localStorage.getItem('stockballer_admin_api_base');
+            if (apiFromStorage) {
                 setApiBase(apiFromStorage);
                 console.log('[Admin] API base from storage:', API_BASE);
                 return;
             }
 
-            // Clear any old localhost storage values.
-            if (apiFromStorage && (apiFromStorage.includes('localhost') || apiFromStorage.includes('127.0.0.1'))) {
-                localStorage.removeItem('stockballer_admin_api_base');
-                console.log('[Admin] Cleared old localhost API base from storage');
-            }
-
-            // Default behavior: always try Railway production first, then local fallbacks.
             const candidates = getApiCandidates();
-
             for (const candidate of candidates) {
                 try {
                     const res = await fetch(`${candidate}/health`, { method: 'GET' });
@@ -2193,7 +2423,7 @@
                 }
             }
 
-            // Last fallback to Railway production API.
+            // Final fallback.
             setApiBase('https://stockballer-api-production.up.railway.app/api');
             console.warn('[Admin] Could not verify API candidate. Falling back to', API_BASE);
         }
@@ -2304,6 +2534,11 @@
                             showToast('WebSocket auth failed, using polling', 'warning');
                         }
                     });
+
+                    // Subscribe to live match demo room
+                    socket.emit('subscribe:demo', {}, (res) => {
+                        if (res?.success) console.log('[WS] Subscribed to live match demo');
+                    });
                 });
 
                 socket.on('disconnect', (reason) => {
@@ -2331,6 +2566,26 @@
                 socket.on('admin-stats', (data) => {
                     console.log('[WS] Stats received:', data);
                     handleRealtimeStats(data);
+                });
+
+                // Handle live match demo events — update price feed only
+                socket.on('demo:match-event', (data) => {
+                    if (data?.event?.priceImpact) {
+                        const { playerName, oldPrice, newPrice } = data.event.priceImpact;
+                        const delta = (newPrice - oldPrice).toFixed(2);
+                        const sign = delta > 0 ? '+' : '';
+                        const color = delta > 0 ? '#10b981' : '#ef4444';
+                        const feed = document.getElementById('demo-price-feed');
+                        if (feed) {
+                            // Clear placeholder on first real entry
+                            if (feed.firstElementChild?.style.color === 'rgba(255, 255, 255, 0.35)') feed.innerHTML = '';
+                            const entry = document.createElement('div');
+                            entry.style.cssText = 'padding:3px 0; border-bottom:1px solid rgba(255,255,255,0.06);';
+                            entry.innerHTML = `<span style="color:rgba(255,255,255,0.4);">${data.minute}'</span> ⚽ <b>${playerName}</b> — $${oldPrice} → <span style="color:${color};">$${newPrice} (${sign}${delta})</span>`;
+                            feed.insertBefore(entry, feed.firstChild);
+                            while (feed.children.length > 30) feed.removeChild(feed.lastChild);
+                        }
+                    }
                 });
 
                 // Handle errors
@@ -2372,8 +2627,8 @@
             }
 
             // Update the action monitoring UI
-            if (typeof renderActionMonitor === 'function') {
-                renderActionMonitor();
+            if (typeof renderUserActionMonitoring === 'function') {
+                renderUserActionMonitoring();
             }
 
             // Flash the activity indicator
@@ -2382,9 +2637,10 @@
 
         function handleRealtimeStats(stats) {
             // Update stats display if available
-            if (stats.totalTrades24h !== undefined) {
+            const trades = stats.totalTrades24h ?? stats.totalTrades;
+            if (trades !== undefined) {
                 const tradesEl = document.getElementById('total-trades');
-                if (tradesEl) tradesEl.textContent = stats.totalTrades24h;
+                if (tradesEl) tradesEl.textContent = trades;
             }
         }
 
@@ -2773,7 +3029,7 @@
         // Load real users (non-bots)
         async function loadUsers() {
             try {
-                const response = await fetch(`${API_BASE}/trading/users`);
+                const response = await adminFetch(`${API_BASE}/trading/users`);
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}`);
                 }
@@ -3176,7 +3432,7 @@
                 noteEl.textContent = `Sending ${actionLabel} command...`;
             }
 
-            const response = await fetch(`${API_BASE}/frontend-agents/${action}`, {
+            const response = await adminFetch(`${API_BASE}/frontend-agents/${action}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -3749,7 +4005,7 @@
         // Actions
         async function activateAllBots() {
             try {
-                const response = await fetch(`${API_BASE}/bots/activate-all`, { method: 'POST' });
+                const response = await adminFetch(`${API_BASE}/bots/activate-all`, { method: 'POST' });
                 const result = await response.json();
                 showToast(`✅ Activated ${result.count} bots`);
                 loadDashboard();
@@ -3760,7 +4016,7 @@
 
         async function deactivateAllBots() {
             try {
-                const response = await fetch(`${API_BASE}/bots/deactivate-all`, { method: 'POST' });
+                const response = await adminFetch(`${API_BASE}/bots/deactivate-all`, { method: 'POST' });
                 const result = await response.json();
                 showToast(`⏸️ Deactivated ${result.count} bots`);
                 loadDashboard();
@@ -3774,7 +4030,7 @@
                 document.getElementById('create-fleet-btn').disabled = true;
                 document.getElementById('create-fleet-btn').textContent = '⏳ Creating...';
 
-                const response = await fetch(`${API_BASE}/bots/fleet`, {
+                const response = await adminFetch(`${API_BASE}/bots/fleet`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ count: 100, startingBalance: 5000 })
@@ -3798,7 +4054,7 @@
 
                 let triggered = 0;
                 for (const bot of activeBots) {
-                    await fetch(`${API_BASE}/bots/${bot.id}/trade`, { method: 'POST' });
+                    await adminFetch(`${API_BASE}/bots/${bot.id}/trade`, { method: 'POST' });
                     triggered++;
                 }
                 showToast(`🔀 Triggered trades for ${triggered} bots`);
@@ -3816,7 +4072,7 @@
 
                 let triggered = 0;
                 for (const bot of activeBots) {
-                    await fetch(`${API_BASE}/bots/${bot.id}/prediction-bet`, { method: 'POST' });
+                    await adminFetch(`${API_BASE}/bots/${bot.id}/prediction-bet`, { method: 'POST' });
                     triggered++;
                 }
                 showToast(`🎯 Triggered prediction bets for ${triggered} bots`);
@@ -3831,7 +4087,7 @@
                 return;
             }
             try {
-                await fetch(`${API_BASE}/bots/all`, { method: 'DELETE' });
+                await adminFetch(`${API_BASE}/bots/all`, { method: 'DELETE' });
                 showToast('🗑️ All bots deleted');
                 loadDashboard();
             } catch (error) {
@@ -3847,7 +4103,7 @@
             try {
                 showToast('⏳ Funding all bots with ETH + USDC. This may take a minute...');
 
-                const response = await fetch(`${API_BASE}/bots/fund-all`, {
+                const response = await adminFetch(`${API_BASE}/bots/fund-all`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -3877,7 +4133,7 @@
 
         async function createSeasonRun() {
             try {
-                const response = await fetch(`${API_BASE}/simulation/season/create`, {
+                const response = await adminFetch(`${API_BASE}/simulation/season/create`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({})
@@ -3907,7 +4163,7 @@
                     return;
                 }
 
-                const response = await fetch(`${API_BASE}/simulation/season/${activeSeasonRunId}/step`, {
+                const response = await adminFetch(`${API_BASE}/simulation/season/${activeSeasonRunId}/step`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ runBots: true, runPersonas: true })
@@ -3975,7 +4231,7 @@
                     return;
                 }
 
-                const response = await fetch(`${API_BASE}/simulation/season/${activeSeasonRunId}/reset`, {
+                const response = await adminFetch(`${API_BASE}/simulation/season/${activeSeasonRunId}/reset`, {
                     method: 'POST'
                 });
                 const payload = await response.json();
@@ -4046,6 +4302,229 @@
 
             setTimeout(() => toast.remove(), 3000);
         }
+
+        // ====================================================================
+        // WC 2026 REPORTS (Phase 4.3)
+        // ====================================================================
+
+        async function runWcReport() {
+            const homeTeam = document.getElementById('wc-home-team').value.trim();
+            const awayTeam = document.getElementById('wc-away-team').value.trim();
+            const round = document.getElementById('wc-round').value;
+
+            if (!homeTeam || !awayTeam) {
+                showToast('⚽ Enter both team names', 'error');
+                return;
+            }
+
+            document.getElementById('wc-report-loading').style.display = 'block';
+            document.getElementById('wc-report-results').style.display = 'none';
+            document.getElementById('wc-report-error').style.display = 'none';
+
+            try {
+                const res = await fetch(`${API_BASE}/simulation/wc-report`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        fixtureId: 0,
+                        homeTeam,
+                        awayTeam,
+                        homeTeamId: 0,
+                        awayTeamId: 0,
+                        round,
+                        includeH2H: true,
+                    }),
+                });
+
+                if (!res.ok) {
+                    const err = await res.text();
+                    throw new Error(`API ${res.status}: ${err}`);
+                }
+
+                const report = await res.json();
+                lastWcReport = report;
+                renderWcReport(report, homeTeam, awayTeam);
+            } catch (err) {
+                const errEl = document.getElementById('wc-report-error');
+                errEl.textContent = `❌ ${err.message}`;
+                errEl.style.display = 'block';
+                showToast('❌ Simulation failed: ' + err.message, 'error');
+            } finally {
+                document.getElementById('wc-report-loading').style.display = 'none';
+            }
+        }
+
+        function renderWcReport(report, homeTeam, awayTeam) {
+            const sim = report.simulation || {};
+            const goals = sim.expectedGoals || {};
+
+            document.getElementById('wc-home-name').textContent = homeTeam;
+            document.getElementById('wc-away-name').textContent = awayTeam;
+            document.getElementById('wc-home-pct').textContent = ((sim.homeWinPct || 0) * 100).toFixed(1) + '%';
+            document.getElementById('wc-draw-pct').textContent = ((sim.drawPct || 0) * 100).toFixed(1) + '%';
+            document.getElementById('wc-away-pct').textContent = ((sim.awayWinPct || 0) * 100).toFixed(1) + '%';
+            document.getElementById('wc-score').textContent = `${(goals.home || 0).toFixed(1)} : ${(goals.away || 0).toFixed(1)}`;
+            document.getElementById('wc-analyst-note').textContent = sim.analystNote || '—';
+            document.getElementById('wc-score-pct').textContent = '';
+
+            // Player impact table
+            const tbody = document.getElementById('wc-impact-tbody');
+            const impacts = report.playerImpact || [];
+            if (impacts.length > 0) {
+                tbody.innerHTML = impacts.map((p) => {
+                    const scoreColor = p.priceIfScores > p.currentPrice ? '#00ff88' : '#ff6666';
+                    const elimColor = '#ff6666';
+                    return `<tr>
+                        <td>${p.playerName}</td>
+                        <td style="color:rgba(255,255,255,0.6);">${p.teamName}</td>
+                        <td>$${(p.currentPrice || 0).toFixed(2)}</td>
+                        <td style="color:${scoreColor};">$${(p.priceIfScores || 0).toFixed(2)}</td>
+                        <td>$${(p.priceIfAssists || 0).toFixed(2)}</td>
+                        <td style="color:${elimColor};">$${(p.priceIfEliminated || 0).toFixed(2)}</td>
+                    </tr>`;
+                }).join('');
+            } else {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:rgba(255,255,255,0.4);">No players found for these teams</td></tr>';
+            }
+
+            document.getElementById('wc-report-results').style.display = 'block';
+        }
+
+        function exportWcReport() {
+            if (!lastWcReport) {
+                showToast('Run a simulation first', 'error');
+                return;
+            }
+            const blob = new Blob([JSON.stringify(lastWcReport, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `wc-report-${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // ======================================================================
+        // LIVE MATCH DAY DEMO
+        // ======================================================================
+
+        // All 48 WC 2026 nations as flat list (same as WC_2026_NATIONS groups)
+        const LIVE_DEMO_NATIONS = [
+            'Mexico','South Korea','Czech Republic','South Africa',
+            'Canada','Qatar','Switzerland','Bosnia & Herzegovina',
+            'USA','Paraguay','Australia','Türkiye',
+            'Brazil','Morocco','Haiti','Scotland',
+            'Germany','Ivory Coast','Ecuador','Curaçao',
+            'Netherlands','Japan','Sweden','Tunisia',
+            'Spain','Saudi Arabia','Uruguay','Cape Verde Islands',
+            'Belgium','Egypt','Iran','New Zealand',
+            'France','Senegal','Iraq','Norway',
+            'Argentina','Algeria','Austria','Jordan',
+            'Portugal','Congo DR','Uzbekistan','Colombia',
+            'England','Croatia','Ghana','Panama',
+        ].sort();
+
+        const LIVE_DEMO_ROUNDS = ['group','r32','r16','qf','sf','final'];
+        const MAX_FIXTURES = 4;
+
+        function buildNationOptions(selectedValue) {
+            return LIVE_DEMO_NATIONS.map(n =>
+                `<option value="${n}" ${n === selectedValue ? 'selected' : ''}>${n}</option>`
+            ).join('');
+        }
+
+        function buildRoundOptions(selectedValue) {
+            return LIVE_DEMO_ROUNDS.map(r =>
+                `<option value="${r}" ${r === selectedValue ? 'selected' : ''}>${r.toUpperCase()}</option>`
+            ).join('');
+        }
+
+        function initDemoFixtures() {
+            const count = parseInt(document.getElementById('demo-match-count')?.value || '4', 10);
+            const defaults = [
+                { home: 'Argentina', away: 'Brazil', round: 'sf' },
+                { home: 'France', away: 'England', round: 'qf' },
+                { home: 'Germany', away: 'Spain', round: 'r16' },
+                { home: 'USA', away: 'Mexico', round: 'group' },
+            ];
+            const container = document.getElementById('demo-fixtures');
+            if (!container) return;
+            // Set grid columns to match count
+            container.style.gridTemplateColumns = Array(count).fill('1fr').join(' ');
+            container.innerHTML = defaults.slice(0, count).map((d, i) => `
+                <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:10px; padding:12px;">
+                    <div style="font-size:11px; color:rgba(255,255,255,0.4); margin-bottom:8px;">Fixture ${i + 1}</div>
+                    <select id="demo-home-${i}" style="width:100%; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:6px; padding:5px 8px; font-size:12px; margin-bottom:6px;">
+                        ${buildNationOptions(d.home)}
+                    </select>
+                    <div style="text-align:center; font-size:11px; color:rgba(255,255,255,0.4); margin:2px 0;">vs</div>
+                    <select id="demo-away-${i}" style="width:100%; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:6px; padding:5px 8px; font-size:12px; margin-bottom:6px;">
+                        ${buildNationOptions(d.away)}
+                    </select>
+                    <select id="demo-round-${i}" style="width:100%; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:6px; padding:5px 8px; font-size:12px;">
+                        ${buildRoundOptions(d.round)}
+                    </select>
+                </div>
+            `).join('');
+        }
+
+
+
+        async function startLiveDemo() {
+            const speed = document.getElementById('demo-speed')?.value || 'normal';
+            const count = parseInt(document.getElementById('demo-match-count')?.value || '4', 10);
+            const fixtures = [];
+            for (let i = 0; i < count; i++) {
+                const home = document.getElementById(`demo-home-${i}`)?.value;
+                const away = document.getElementById(`demo-away-${i}`)?.value;
+                const round = document.getElementById(`demo-round-${i}`)?.value;
+                if (home && away) fixtures.push({ homeTeam: home, awayTeam: away, round, speed });
+            }
+            if (!fixtures.length) { showToast('Add at least one fixture', 'error'); return; }
+
+            // Reset price feed
+            const feed = document.getElementById('demo-price-feed');
+            if (feed) feed.innerHTML = '<div style="color:rgba(255,255,255,0.35);">Waiting for goals...</div>';
+
+            try {
+                const response = await adminFetch(`${API_BASE}/demo/live/start`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ fixtures })
+                });
+                if (!response.ok) {
+                    const err = await response.json().catch(() => ({}));
+                    showToast(err.message || `Server error ${response.status}`, 'error');
+                    return;
+                }
+                const result = await response.json();
+                if (result.success) {
+                    showToast(`Started ${result.started?.length ?? 0} match(es)`, 'success');
+                    if (result.errors?.length) showToast(`${result.errors.length} fixture(s) failed`, 'warning');
+                } else {
+                    showToast(result.error || 'Failed to start demo', 'error');
+                }
+            } catch (e) {
+                showToast('Error starting live demo: ' + e.message, 'error');
+            }
+        }
+
+        async function stopLiveDemo() {
+            try {
+                const response = await adminFetch(`${API_BASE}/demo/live/stop`, { method: 'POST', body: '{}' });
+                const result = await response.json().catch(() => ({}));
+                showToast(`Stopped ${result.stopped ?? 0} match(es)`, 'success');
+            } catch (e) {
+                showToast('Error stopping demo: ' + e.message, 'error');
+            }
+        }
+
+        // Init fixture rows on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            initDemoFixtures();
+        });
+        // Also init immediately if DOM is already ready
+        if (document.readyState !== 'loading') initDemoFixtures();
     </script>
 
     <!-- Mode Switcher & Economics Engine -->
