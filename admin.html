@@ -1386,17 +1386,9 @@
         <!-- ============== LIVE MODE PANELS ============== -->
         <div data-panel-mode="LIVE" style="display: block;">
             <div class="live-data-grid">
-                <!-- WC 2026 Tournament Status -->
-                <div class="live-panel" style="grid-column: 1 / -1;">
-                    <div class="live-panel-title">⚽ WC 2026 Tournament Status <span class="data-badge live">LIVE</span></div>
-                    <div id="wc-tournament-status">
-                        <div style="padding: 20px; text-align: center; color: rgba(255,255,255,0.5);">Loading...</div>
-                    </div>
-                </div>
-
                 <!-- Live Match Context -->
                 <div class="live-panel">
-                    <div class="live-panel-title">📅 Upcoming Fixtures <span class="data-badge live">WC 2026</span></div>
+                    <div class="live-panel-title">📅 Upcoming Fixtures <span class="data-badge live">PL</span></div>
                     <div id="live-match-context">
                         <div style="padding: 20px; text-align: center; color: rgba(255,255,255,0.5);">Loading...</div>
                     </div>
@@ -1406,14 +1398,6 @@
                 <div class="live-panel">
                     <div class="live-panel-title">📊 Live Token Board <span class="data-badge live">LIVE</span></div>
                     <div id="live-token-board">
-                        <div style="padding: 20px; text-align: center; color: rgba(255,255,255,0.5);">Loading...</div>
-                    </div>
-                </div>
-
-                <!-- Live Economics -->
-                <div class="live-panel" style="grid-column: 1 / -1;">
-                    <div class="live-panel-title">💰 WC 2026 Market Economics <span class="data-badge live">LIVE</span></div>
-                    <div id="live-economics">
                         <div style="padding: 20px; text-align: center; color: rgba(255,255,255,0.5);">Loading...</div>
                     </div>
                 </div>
@@ -1439,7 +1423,7 @@
         <!-- ============== SIMULATION MODE PANELS ============== -->
         <div data-panel-mode="SIMULATION" style="display: none;">
             <div class="live-data-grid">
-                <!-- Season Controls -->
+                <!-- Season Controls — Treasury Manager engine (real SQE pricing formula) -->
                 <div class="live-panel">
                     <div class="live-panel-title">🗓️ Season Controls <span
                             class="data-badge simulated">SIMULATED</span></div>
@@ -1458,6 +1442,11 @@
                             style="background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.2); text-align: center;"
                             onclick="loadSeasonRunStatus()">
                             🔄 Refresh
+                        </button>
+                        <button class="action-btn"
+                            style="background: rgba(0,255,136,0.12); color: #00ff88; border: 1px solid rgba(0,255,136,0.35); text-align: center;"
+                            onclick="runSeasonToEnd()">
+                            ⏩ Run Full Season
                         </button>
                         <button class="action-btn danger" onclick="resetSeasonRun()">
                             ♻️ Reset
@@ -1479,25 +1468,15 @@
                     </div>
                 </div>
 
-                <!-- Simulated Token Path -->
+                <!-- Popular Tokens (most purchases, cumulative for the run) -->
                 <div class="live-panel" style="grid-column: 1 / -1;">
-                    <div class="live-panel-title">📈 Simulated Token Evolution <span
+                    <div class="live-panel-title">📈 Popular Tokens <span
                             class="data-badge simulated">SIMULATED</span></div>
                     <div id="simulation-token-path">
                         <div style="padding: 40px; text-align: center; color: rgba(255,255,255,0.5);">
                             <div style="font-size: 32px; margin-bottom: 8px;">📊</div>
-                            <div>Price history tracking across matchdays</div>
+                            <div>Most-purchased tokens will appear as the season steps forward</div>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Simulated Bot Portfolio -->
-                <div class="live-panel" style="grid-column: 1 / -1;">
-                    <div class="live-panel-title">🤖 Simulated Bot Portfolio <span
-                            class="data-badge simulated">SIMULATED</span></div>
-                    <div id="simulation-bot-portfolio">
-                        <div style="padding: 20px; text-align: center; color: rgba(255,255,255,0.5);">Run simulation to
-                            see portfolio rebalancing</div>
                     </div>
                 </div>
 
@@ -1522,73 +1501,6 @@
                 </div>
             </div>
 
-            <!-- ============ WC 2026 TOURNAMENT DEMO SIMULATOR ============ -->
-            <div style="margin-top: 24px;">
-                <div class="live-panel" style="grid-column: 1 / -1;">
-                    <div class="live-panel-title" style="display:flex; justify-content:space-between; align-items:center;">
-                        <span>⚽ WC 2026 Tournament Simulator</span>
-                        <span class="data-badge simulated">DEMO</span>
-                    </div>
-
-                    <!-- Mode tabs -->
-                    <div style="display:flex; gap:8px; margin-bottom:18px;">
-                        <button id="ts-tab-team" onclick="tsSelectMode('team')"
-                            style="flex:1; padding:10px; border-radius:8px; border:1px solid #00ff88; background:rgba(0,255,136,0.15); color:#00ff88; cursor:pointer; font-weight:600;">
-                            ⚽ Follow My Team
-                        </button>
-                        <button id="ts-tab-predict" onclick="tsSelectMode('predict')"
-                            style="flex:1; padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.6); cursor:pointer; font-weight:600;">
-                            🔮 AI Prediction
-                        </button>
-                    </div>
-
-                    <!-- MODE A: Follow My Team -->
-                    <div id="ts-panel-team">
-                        <div style="display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap; margin-bottom:16px;">
-                            <div style="flex:1; min-width:180px;">
-                                <label style="display:block; font-size:11px; color:rgba(255,255,255,0.5); margin-bottom:6px;">SELECT YOUR TEAM</label>
-                                <select id="ts-team-select" style="width:100%; padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(0,0,0,0.4); color:#fff; font-size:14px;">
-                                    <option value="">-- Choose Nation --</option>
-                                </select>
-                            </div>
-                            <button onclick="runTeamSimulation()"
-                                style="padding:10px 24px; border-radius:8px; border:1px solid #00ff88; background:rgba(0,255,136,0.2); color:#00ff88; cursor:pointer; font-weight:700; white-space:nowrap;">
-                                ▶ Simulate
-                            </button>
-                        </div>
-                        <div id="ts-team-loading" style="display:none; text-align:center; padding:20px; color:rgba(255,255,255,0.5);">
-                            ⏳ Running Monte Carlo group stage + knockout path…
-                        </div>
-                        <div id="ts-team-results" style="display:none;">
-                            <div id="ts-team-rounds"></div>
-                            <div id="ts-team-banner" style="margin-top:16px;"></div>
-                            <div id="ts-team-revenue" style="margin-top:16px;"></div>
-                        </div>
-                        <div id="ts-team-error" style="display:none; color:#ff4d4d; padding:12px; background:rgba(255,0,0,0.1); border-radius:8px;"></div>
-                    </div>
-
-                    <!-- MODE B: AI Prediction -->
-                    <div id="ts-panel-predict" style="display:none;">
-                        <p style="color:rgba(255,255,255,0.6); font-size:13px; margin-bottom:14px;">
-                            Runs 1,000 Monte Carlo iterations across all 12 groups → knockout bracket → predicts champion + top 5 token value movers.
-                        </p>
-                        <button onclick="runFullPredictionMode()"
-                            style="padding:12px 32px; border-radius:8px; border:1px solid #ffaa00; background:rgba(255,170,0,0.2); color:#ffaa00; cursor:pointer; font-weight:700; font-size:15px;">
-                            🔮 Predict the World Cup
-                        </button>
-                        <div id="ts-predict-loading" style="display:none; text-align:center; padding:24px; color:rgba(255,255,255,0.5);">
-                            ⏳ Simulating 48 teams × 72 group matches + knockout bracket… this may take 30–60s.
-                        </div>
-                        <div id="ts-predict-results" style="display:none; margin-top:20px;">
-                            <div id="ts-predict-champion"></div>
-                            <div id="ts-predict-performers" style="margin-top:16px;"></div>
-                            <div id="ts-predict-note" style="margin-top:16px;"></div>
-                            <div id="ts-predict-revenue" style="margin-top:16px;"></div>
-                        </div>
-                        <div id="ts-predict-error" style="display:none; color:#ff4d4d; padding:12px; background:rgba(255,0,0,0.1); border-radius:8px; margin-top:12px;"></div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- Panels Grid -->
@@ -1616,7 +1528,7 @@
                     </div>
                     <div class="fleet-summary-card">
                         <div class="fleet-summary-value" id="fleet-balance">--</div>
-                        <div class="fleet-summary-label">Total Balance</div>
+                        <div class="fleet-summary-label">Total Position Value</div>
                     </div>
                 </div>
 
@@ -1672,18 +1584,267 @@
                             <span class="chain-value mono">84532</span>
                         </div>
                         <div class="chain-item">
-                            <span class="chain-label">Vault Contract</span>
-                            <span class="chain-value mono" id="vault-address">Loading...</span>
-                        </div>
-                        <div class="chain-item">
-                            <span class="chain-label">Prediction Market</span>
-                            <span class="chain-value mono" id="prediction-address">Loading...</span>
+                            <span class="chain-label">Treasury Contract</span>
+                            <span class="chain-value mono" id="treasury-address">Loading...</span>
                         </div>
                         <div class="chain-item">
                             <span class="chain-label">Admin Wallet</span>
                             <span class="chain-value mono" id="admin-wallet">Loading...</span>
                         </div>
                     </div>
+                </div>
+
+                <!-- StockBallerVault Pool State (peer-to-peer model, PL 2026-27) -->
+                <div class="panel">
+                    <div class="panel-title">🏦 Treasury Pool (Vault Ledger)</div>
+                    <div class="blockchain-info">
+                        <div class="chain-item" style="background: rgba(0,150,255,0.1);">
+                            <span class="chain-label">Unallocated Cash</span>
+                            <span class="chain-value" id="treasury-liquid" style="color: #0096ff;">Loading...</span>
+                        </div>
+                        <div class="chain-item">
+                            <span class="chain-label">Bots' Allocated Cash</span>
+                            <span class="chain-value" id="treasury-reserve">Loading...</span>
+                        </div>
+                        <div class="chain-item" style="background: rgba(0,255,136,0.1);">
+                            <span class="chain-label">Fee Vault</span>
+                            <span class="chain-value" id="treasury-fees" style="color: #00ff88;">Loading...</span>
+                        </div>
+                        <div class="chain-item">
+                            <span class="chain-label">Token Inventory Value</span>
+                            <span class="chain-value" id="treasury-inventory-value">Loading...</span>
+                        </div>
+                        <div class="chain-item" style="background: rgba(255,215,0,0.1);">
+                            <span class="chain-label">Total Treasury Value</span>
+                            <span class="chain-value" id="treasury-net-worth" style="color: #ffd700;">Loading...</span>
+                        </div>
+                        <div class="chain-item">
+                            <span class="chain-label">Trades Today</span>
+                            <span class="chain-value" id="treasury-daily-trades">Loading...</span>
+                        </div>
+                        <div class="chain-item">
+                            <span class="chain-label">Total Trades / Volume</span>
+                            <span class="chain-value" id="treasury-total-trades">Loading...</span>
+                        </div>
+                    </div>
+                    <div style="font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 8px;">
+                        Total Treasury Value = unallocated cash + bots' allocated cash + real on-chain token
+                        inventory marked to current price — the number that actually moves when player prices
+                        change, not just from trading.
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <a id="treasury-basescan-link" href="#" target="_blank" rel="noopener"
+                            style="flex: 1; text-align: center; font-size: 12px; padding: 8px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: #8fa1ff; text-decoration: none;">
+                            🔗 Treasury on Basescan ↗
+                        </a>
+                        <a id="treasury-usdc-basescan-link" href="#" target="_blank" rel="noopener"
+                            style="flex: 1; text-align: center; font-size: 12px; padding: 8px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: #8fa1ff; text-decoration: none;">
+                            🔗 Treasury USDC on Basescan ↗
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Treasury Manager — reserve-mint recommendation (advisory only, read-only) -->
+                <div class="panel">
+                    <div class="panel-title">📈 Treasury Manager</div>
+                    <div class="blockchain-info">
+                        <div class="chain-item">
+                            <span class="chain-label">Reserve Target (10%)</span>
+                            <span class="chain-value" id="tm-reserve-target">Loading...</span>
+                        </div>
+                        <div class="chain-item">
+                            <span class="chain-label">Mint Trigger (200% of target)</span>
+                            <span class="chain-value" id="tm-trigger-threshold">Loading...</span>
+                        </div>
+                        <div class="chain-item" id="tm-triggered-item">
+                            <span class="chain-label">Mint Recommended?</span>
+                            <span class="chain-value" id="tm-triggered">Loading...</span>
+                        </div>
+                        <div class="chain-item" style="background: rgba(0,255,136,0.1);">
+                            <span class="chain-label">Recommended Deposit</span>
+                            <span class="chain-value" id="tm-recommended-deposit" style="color: #00ff88;">Loading...</span>
+                        </div>
+                    </div>
+                    <div id="tm-rationale" style="margin-top: 8px; font-size: 12px; color: rgba(255,255,255,0.6);"></div>
+                    <button class="action-btn" onclick="loadTreasuryManager()" style="margin-top: 10px; width: 100%;">
+                        🔄 Refresh
+                    </button>
+
+                    <hr style="border-color: rgba(255,255,255,0.1); margin: 14px 0;">
+
+                    <div style="font-size: 12px; color: rgba(255,255,255,0.5);">
+                        For match-day-by-match-day simulation of this formula (popular tokens, fees, treasury volume),
+                        switch to SIMULATION mode and use the Season Controls panel.
+                    </div>
+                </div>
+
+                <!-- Loan Simulation — 2026-07-27 lender-viability test. No real lender
+                     involved; principal/APR/liquidation threshold are tracked, but
+                     collateral value, fee income, and elapsed time are all real,
+                     live on-chain reads — testing whether fee revenue actually
+                     keeps pace with interest, not projecting that it will. -->
+                <div class="panel">
+                    <div class="panel-title">🏛️ Loan Simulation (test — no real lender)</div>
+                    <div id="loan-sim-empty" style="font-size: 12px; color: rgba(255,255,255,0.5); display: none;">
+                        No active loan simulation.
+                    </div>
+                    <div id="loan-sim-content">
+                        <div class="blockchain-info">
+                            <div class="chain-item">
+                                <span class="chain-label">Principal</span>
+                                <span class="chain-value" id="loan-sim-principal">Loading...</span>
+                            </div>
+                            <div class="chain-item">
+                                <span class="chain-label">APR (real Aave V3 Base rate)</span>
+                                <span class="chain-value" id="loan-sim-apr">Loading...</span>
+                            </div>
+                            <div class="chain-item">
+                                <span class="chain-label">Days Elapsed</span>
+                                <span class="chain-value" id="loan-sim-days">Loading...</span>
+                            </div>
+                            <div class="chain-item">
+                                <span class="chain-label">Accrued Interest</span>
+                                <span class="chain-value" id="loan-sim-interest">Loading...</span>
+                            </div>
+                            <div class="chain-item" style="background: rgba(0,255,136,0.1);">
+                                <span class="chain-label">Real Fees Earned Since Start</span>
+                                <span class="chain-value" id="loan-sim-fees" style="color: #00ff88;">Loading...</span>
+                            </div>
+                            <div class="chain-item" id="loan-sim-covering-item">
+                                <span class="chain-label">Fees Covering Interest?</span>
+                                <span class="chain-value" id="loan-sim-covering">Loading...</span>
+                            </div>
+                            <div class="chain-item">
+                                <span class="chain-label">Current Collateral (live TTV)</span>
+                                <span class="chain-value" id="loan-sim-collateral">Loading...</span>
+                            </div>
+                            <div class="chain-item">
+                                <span class="chain-label">Current LTV</span>
+                                <span class="chain-value" id="loan-sim-ltv">Loading...</span>
+                            </div>
+                            <div class="chain-item" id="loan-sim-health-item">
+                                <span class="chain-label">Health Factor</span>
+                                <span class="chain-value" id="loan-sim-health">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="action-btn" onclick="loadLoanSimulation()" style="margin-top: 10px; width: 100%;">
+                        🔄 Refresh
+                    </button>
+                    <div style="font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 8px;">
+                        No real lender is involved — this tracks a simulated principal/rate/liquidation threshold
+                        against real collateral value, real fee income, and real elapsed time. Health factor below
+                        1.0 means the simulated position would be liquidated.
+                    </div>
+                </div>
+
+                <!-- Liquidity Reserve — the owner-held "buyer of last resort" (2026-07-27).
+                     isActive: false, never self-trades — only steps in as a fallback
+                     counterparty for a sell (see BotService.findBuyerForToken), and as of
+                     2026-07-28 only for a sell already confirmed profitable in the 8-15%
+                     band, never a declining position. Reads the same real Bot record the
+                     fleet grid uses (allBots), no separate fetch. -->
+                <div class="panel">
+                    <div class="panel-title">🏦 Liquidity Reserve</div>
+                    <div id="reserve-empty" style="font-size: 12px; color: rgba(255,255,255,0.5); display: none;">
+                        Reserve bot record not found — run setup-liquidity-reserve.ts.
+                    </div>
+                    <div id="reserve-content">
+                        <div class="blockchain-info">
+                            <div class="chain-item" style="background: rgba(0,150,255,0.1);">
+                                <span class="chain-label">Spendable Cash</span>
+                                <span class="chain-value" id="reserve-cash" style="color: #0096ff;">Loading...</span>
+                            </div>
+                            <div class="chain-item">
+                                <span class="chain-label">Holdings Value (marked)</span>
+                                <span class="chain-value" id="reserve-holdings-value">Loading...</span>
+                            </div>
+                            <div class="chain-item" style="background: rgba(255,215,0,0.1);">
+                                <span class="chain-label">Total Reserve Value</span>
+                                <span class="chain-value" id="reserve-total" style="color: #ffd700;">Loading...</span>
+                            </div>
+                            <div class="chain-item" id="reserve-pnl-item">
+                                <span class="chain-label">Realized P&amp;L</span>
+                                <span class="chain-value" id="reserve-pnl">Loading...</span>
+                            </div>
+                            <div class="chain-item">
+                                <span class="chain-label">Trades (buys / sells)</span>
+                                <span class="chain-value" id="reserve-trades">Loading...</span>
+                            </div>
+                            <div class="chain-item">
+                                <span class="chain-label">Fees Paid</span>
+                                <span class="chain-value" id="reserve-fees">Loading...</span>
+                            </div>
+                        </div>
+                        <div style="margin-top: 10px; font-size: 11px; color: rgba(255,255,255,0.5);">Current Holdings</div>
+                        <div id="reserve-holdings-list" style="font-size: 12px; margin-top: 4px;"></div>
+                        <div style="margin-top: 10px; font-size: 11px; color: rgba(255,255,255,0.5);">Recent Trades</div>
+                        <div id="reserve-trades-list" style="font-size: 12px; margin-top: 4px;"></div>
+                    </div>
+                    <div style="font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 8px;">
+                        Only buys a sell already confirmed profitable, 8–15% — never a declining position.
+                        Excluded from the fleet grid below since it isn't a trading strategy.
+                    </div>
+                </div>
+
+                <!-- Practice Mode — replays real historical PL fixtures through the real pricing pipeline -->
+                <div class="panel">
+                    <div class="panel-title">⚽ Practice Mode <span class="data-badge live">REAL</span></div>
+                    <div style="font-size: 12px; color: rgba(255,255,255,0.5); margin-bottom: 10px;">
+                        Replays ~3 real historical PL fixtures per club through the real pricing pipeline — real
+                        stat changes, real price moves, real on-chain updates. Permanent, no revert (testnet;
+                        squads refresh naturally before the real season).
+                    </div>
+                    <div style="display: grid; gap: 8px; margin-bottom: 12px;">
+                        <button class="action-btn"
+                            style="background: rgba(5,40,243,0.2); color: #8fa1ff; border: 1px solid rgba(5,40,243,0.45); text-align: center;"
+                            onclick="createPracticeRun()">
+                            🚀 Start Run
+                        </button>
+                        <button class="action-btn"
+                            style="background: rgba(0,170,255,0.15); color: #00c8ff; border: 1px solid rgba(0,170,255,0.4); text-align: center;"
+                            onclick="stepPracticeRun()">
+                            ⏭️ Step Fixture
+                        </button>
+                        <button class="action-btn"
+                            style="background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.2); text-align: center;"
+                            onclick="loadPracticeRunStatus()">
+                            🔄 Refresh
+                        </button>
+                        <button class="action-btn"
+                            style="background: rgba(0,255,136,0.12); color: #00ff88; border: 1px solid rgba(0,255,136,0.35); text-align: center;"
+                            onclick="runPracticeToEnd()">
+                            ⏩ Run All Fixtures
+                        </button>
+                        <button class="action-btn danger" onclick="stopPracticeRun()">
+                            ⏹️ Stop
+                        </button>
+                    </div>
+                    <div data-practice-status
+                        style="font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.5; padding: 12px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                        No practice run active
+                    </div>
+                    <div id="practice-recent-changes" style="margin-top: 10px; max-height: 220px; overflow-y: auto; font-size: 11px;"></div>
+                </div>
+
+                <!-- Bot Wallet Gas Status -->
+                <div class="panel">
+                    <div class="panel-title">⛽ Bot Wallet Gas Status</div>
+                    <div class="blockchain-info">
+                        <div class="chain-item">
+                            <span class="chain-label">Total Bots</span>
+                            <span class="chain-value" id="gas-total-bots">Loading...</span>
+                        </div>
+                        <div class="chain-item" id="gas-low-count-item" style="background: rgba(255,68,68,0.1);">
+                            <span class="chain-label">Low on Gas (&lt; 0.0003 ETH)</span>
+                            <span class="chain-value" id="gas-low-count" style="color: #ff4444;">Loading...</span>
+                        </div>
+                    </div>
+                    <button class="action-btn" id="fund-bots-btn" onclick="fundLowGasBots()" style="margin-top: 10px; width: 100%;">
+                        ⛽ Fund All Low-Gas Bots
+                    </button>
+                    <div id="fund-bots-status" style="margin-top: 8px; font-size: 12px; color: rgba(255,255,255,0.6);"></div>
+                    <div id="gas-low-list" style="max-height: 200px; overflow-y: auto; margin-top: 10px; font-size: 12px;"></div>
                 </div>
 
                 <!-- Strategy Distribution -->
@@ -2119,44 +2280,6 @@
                     </button>
                 </div>
                 <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1);">
-                    <div class="panel-title" style="font-size: 14px;">🗓️ Simulated Season (Matchday Step)</div>
-                    <div style="display: grid; gap: 8px;">
-                        <button class="action-btn"
-                            style="background: rgba(5,40,243,0.2); color: #8fa1ff; border: 1px solid rgba(5,40,243,0.45);"
-                            onclick="createSeasonRun()">
-                            🚀 Create Season Run
-                        </button>
-                        <button class="action-btn"
-                            style="background: rgba(0,170,255,0.15); color: #00c8ff; border: 1px solid rgba(0,170,255,0.4);"
-                            onclick="stepSeasonRun()">
-                            ⏭️ Advance One Matchday
-                        </button>
-                        <button class="action-btn"
-                            style="background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.2);"
-                            onclick="loadSeasonRunStatus()">
-                            🔎 Refresh Season Status
-                        </button>
-                        <button class="action-btn danger" onclick="resetSeasonRun()">
-                            ♻️ Reset Season Run
-                        </button>
-                    </div>
-                    <div data-season-status
-                        style="margin-top: 10px; font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.5;">
-                        No season run active
-                    </div>
-                </div>
-                <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1);">
-                    <div class="panel-title" style="font-size: 14px;">💰 Blockchain Funding</div>
-                    <button class="action-btn" id="fund-all-btn"
-                        style="width: 100%; margin-top: 8px; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: white;"
-                        onclick="fundAllBots()">
-                        ⛽ Fund All Bots (ETH + USDC)
-                    </button>
-                    <p style="font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 8px; text-align: center;">
-                        Sends 0.005 ETH + $5,000 USDC to each bot
-                    </p>
-                </div>
-                <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1);">
                     <div class="panel-title" style="font-size: 14px;">⚠️ Danger Zone</div>
                     <button class="action-btn danger" style="width: 100%; margin-top: 8px;" onclick="resetBots()">
                         🗑️ Delete All Bots & Reset
@@ -2164,157 +2287,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- ====================================================================
-         WORLD CUP 2026 REPORTS SECTION (Phase 4.3)
-         Monte Carlo simulation results + H2H + player price impact
-         ==================================================================== -->
-    <div class="panel full-panel" id="wc-reports-panel" style="margin: 24px;">
-        <div class="section-header">
-            <div class="section-title">⚽ World Cup 2026 Reports</div>
-            <div style="font-size:12px; color:rgba(255,255,255,0.5);">Monte Carlo simulation • H2H stats • Player price impact</div>
-        </div>
-        <!-- Fixture Selector -->
-        <div style="display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:12px; margin-bottom:20px;">
-            <div>
-                <label style="font-size:11px; color:rgba(255,255,255,0.5); display:block; margin-bottom:4px;">Home Team</label>
-                <input id="wc-home-team" type="text" placeholder="e.g. Brazil" style="width:100%; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:8px; padding:8px 12px; color:#fff; font-size:13px;" />
-            </div>
-            <div>
-                <label style="font-size:11px; color:rgba(255,255,255,0.5); display:block; margin-bottom:4px;">Away Team</label>
-                <input id="wc-away-team" type="text" placeholder="e.g. Argentina" style="width:100%; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:8px; padding:8px 12px; color:#fff; font-size:13px;" />
-            </div>
-            <div>
-                <label style="font-size:11px; color:rgba(255,255,255,0.5); display:block; margin-bottom:4px;">Round</label>
-                <select id="wc-round" style="width:100%; background:rgba(30,30,50,0.95); border:1px solid rgba(255,255,255,0.15); border-radius:8px; padding:8px 12px; color:#fff; font-size:13px;">
-                    <option value="group">Group Stage (×1.0)</option>
-                    <option value="r32">Round of 32 (×1.2)</option>
-                    <option value="r16">Round of 16 (×1.5)</option>
-                    <option value="qf">Quarter-Final (×2.0)</option>
-                    <option value="sf">Semi-Final (×2.5)</option>
-                    <option value="final">Final (×3.0)</option>
-                </select>
-            </div>
-            <div style="align-self:end;">
-                <button onclick="runWcReport()" style="background:linear-gradient(135deg,#6366f1,#8b5cf6); color:#fff; border:none; border-radius:8px; padding:9px 20px; font-size:13px; font-weight:600; cursor:pointer;">
-                    ▶ Run Simulation
-                </button>
-            </div>
-        </div>
-
-        <!-- Loading / Error State -->
-        <div id="wc-report-loading" style="display:none; text-align:center; padding:24px; color:rgba(255,255,255,0.5);">
-            ⏳ Running 1,000-iteration Monte Carlo simulation…
-        </div>
-        <div id="wc-report-error" style="display:none; padding:12px 16px; background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.3); border-radius:8px; color:#f87171; margin-bottom:16px;"></div>
-
-        <!-- Results Grid -->
-        <div id="wc-report-results" style="display:none;">
-            <!-- Win probabilities bar chart -->
-            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:20px;">
-                <div id="wc-prob-home" style="background:rgba(99,102,241,0.15); border:1px solid rgba(99,102,241,0.3); border-radius:10px; padding:16px; text-align:center;">
-                    <div id="wc-home-name" style="font-size:13px; color:rgba(255,255,255,0.6); margin-bottom:4px;">Home</div>
-                    <div id="wc-home-pct" style="font-size:28px; font-weight:700; color:#818cf8;">--%</div>
-                    <div style="font-size:11px; color:rgba(255,255,255,0.4);">Win probability</div>
-                </div>
-                <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:16px; text-align:center;">
-                    <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-bottom:4px;">Draw</div>
-                    <div id="wc-draw-pct" style="font-size:28px; font-weight:700; color:#94a3b8;">--%</div>
-                    <div style="font-size:11px; color:rgba(255,255,255,0.4);">Draw probability</div>
-                </div>
-                <div id="wc-prob-away" style="background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.25); border-radius:10px; padding:16px; text-align:center;">
-                    <div id="wc-away-name" style="font-size:13px; color:rgba(255,255,255,0.6); margin-bottom:4px;">Away</div>
-                    <div id="wc-away-pct" style="font-size:28px; font-weight:700; color:#f87171;">--%</div>
-                    <div style="font-size:11px; color:rgba(255,255,255,0.4);">Win probability</div>
-                </div>
-            </div>
-
-            <!-- Most likely score + analyst note -->
-            <div style="display:grid; grid-template-columns:200px 1fr; gap:16px; margin-bottom:20px;">
-                <div style="background:rgba(0,255,136,0.08); border:1px solid rgba(0,255,136,0.2); border-radius:10px; padding:16px; text-align:center;">
-                    <div style="font-size:11px; color:rgba(255,255,255,0.5); margin-bottom:6px;">Most Likely Score</div>
-                    <div id="wc-score" style="font-size:32px; font-weight:700; color:#00ff88;">- : -</div>
-                    <div id="wc-score-pct" style="font-size:11px; color:rgba(255,255,255,0.4); margin-top:4px;">--% of sims</div>
-                </div>
-                <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:16px;">
-                    <div style="font-size:11px; color:rgba(255,255,255,0.5); margin-bottom:6px;">AI Analyst Note</div>
-                    <div id="wc-analyst-note" style="font-size:13px; color:rgba(255,255,255,0.85); line-height:1.6;">—</div>
-                </div>
-            </div>
-
-            <!-- Player price impact table -->
-            <div>
-                <div style="font-size:13px; font-weight:600; color:rgba(255,255,255,0.7); margin-bottom:12px;">📊 Player Price Impact</div>
-                <div style="overflow-x:auto;">
-                    <table class="bot-table" id="wc-impact-table">
-                        <thead>
-                            <tr>
-                                <th>Player</th>
-                                <th>Team</th>
-                                <th>Current Price</th>
-                                <th>If Scores</th>
-                                <th>If Assists</th>
-                                <th>If Eliminated</th>
-                            </tr>
-                        </thead>
-                        <tbody id="wc-impact-tbody">
-                            <tr><td colspan="6" style="text-align:center; color:rgba(255,255,255,0.4);">Run a simulation to see player impact data</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Export button -->
-            <div style="margin-top:16px; text-align:right;">
-                <button onclick="exportWcReport()" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); color:#fff; border-radius:8px; padding:8px 16px; font-size:12px; cursor:pointer;">
-                    ⬇️ Export JSON
-                </button>
-            </div>
-        </div>
-    </div>
-    <!-- END WC REPORTS SECTION -->
-
-    <!-- ================================================================== -->
-    <!-- LIVE MATCH DAY DEMO SECTION                                         -->
-    <!-- ================================================================== -->
-    <div id="live-demo-section" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.12); border-radius:16px; padding:24px; margin:20px 0;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <div>
-          <h2 style="margin:0; font-size:18px; font-weight:700; color:#fff;">⚽ Live Match Day Demo</h2>
-          <p style="margin:4px 0 0; font-size:12px; color:rgba(255,255,255,0.5);">Ephemeral real-time simulator — no DB writes. Up to 6 parallel matches via WebSocket.</p>
-        </div>
-        <div style="display:flex; gap:10px; align-items:center;">
-          <label style="font-size:12px; color:rgba(255,255,255,0.6);">Matches:</label>
-          <select id="demo-match-count" onchange="initDemoFixtures()" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); color:#fff; border-radius:6px; padding:5px 10px; font-size:12px;">
-            <option value="1">1 Match</option>
-            <option value="2">2 Matches</option>
-            <option value="3">3 Matches</option>
-            <option value="4" selected>4 Matches</option>
-          </select>
-          <label style="font-size:12px; color:rgba(255,255,255,0.6);">Speed:</label>
-          <select id="demo-speed" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); color:#fff; border-radius:6px; padding:5px 10px; font-size:12px;">
-            <option value="normal">Normal (1s/tick)</option>
-            <option value="fast">Fast (200ms/tick)</option>
-          </select>
-          <button onclick="startLiveDemo()" style="background:linear-gradient(135deg,#10b981,#059669); color:#fff; border:none; border-radius:8px; padding:9px 20px; font-size:13px; font-weight:600; cursor:pointer;">▶ Start Match Day</button>
-          <button onclick="stopLiveDemo()" style="background:rgba(239,68,68,0.2); border:1px solid rgba(239,68,68,0.5); color:#ef4444; border-radius:8px; padding:9px 16px; font-size:13px; font-weight:600; cursor:pointer;">⏹ Stop All</button>
-        </div>
-      </div>
-
-      <!-- Fixture rows -->
-      <div id="demo-fixtures" style="display:grid; gap:12px; margin-bottom:20px;">
-      </div>
-
-      <!-- Price Impact Feed -->
-      <div style="margin-top:16px;">
-        <h3 style="font-size:13px; font-weight:600; color:rgba(255,255,255,0.7); margin:0 0 10px; text-transform:uppercase; letter-spacing:0.5px;">Price Impact Feed</h3>
-        <div id="demo-price-feed" style="background:rgba(0,0,0,0.3); border-radius:8px; padding:12px; max-height:180px; overflow-y:auto; font-size:12px; color:rgba(255,255,255,0.8); font-family:monospace;">
-          <div style="color:rgba(255,255,255,0.35);">Waiting for goals...</div>
-        </div>
-      </div>
-
-
     </div>
 
     <!-- Toast Container -->
@@ -2325,7 +2297,6 @@
         let API_BASE = '';
         let refreshInterval;
         let strategyChart;
-        let lastWcReport = null; // store last WC report for export
         let activeSeasonRunId = null;
         window.activeSeasonRunId = null;
 
@@ -2483,7 +2454,11 @@
             // Initialize WebSocket connection for real-time updates
             initWebSocket();
             
-            // Fallback polling: 30s when WS disconnected, 60s when connected (for stats refresh)
+            // Fallback polling: 60s when WS disconnected, 120s when connected
+            // (stretched from 30s/60s — every poll fans out into several RPC
+            // reads, e.g. gas-status/treasury-pool; less frequent polling
+            // plus their own short server-side caches keeps that volume
+            // well under the RPC provider's per-second rate limit).
             refreshInterval = setInterval(() => {
                 if (!wsConnected) {
                     loadDashboard(); // Full refresh when no WebSocket
@@ -2492,7 +2467,7 @@
                     loadStats();
                     loadBots();
                 }
-            }, wsConnected ? 60000 : 30000);
+            }, wsConnected ? 120000 : 60000);
         }
 
         // ============================================================================
@@ -2574,26 +2549,6 @@
                 socket.on('admin-stats', (data) => {
                     console.log('[WS] Stats received:', data);
                     handleRealtimeStats(data);
-                });
-
-                // Handle live match demo events — update price feed only
-                socket.on('demo:match-event', (data) => {
-                    if (data?.event?.priceImpact) {
-                        const { playerName, oldPrice, newPrice } = data.event.priceImpact;
-                        const delta = (newPrice - oldPrice).toFixed(2);
-                        const sign = delta > 0 ? '+' : '';
-                        const color = delta > 0 ? '#10b981' : '#ef4444';
-                        const feed = document.getElementById('demo-price-feed');
-                        if (feed) {
-                            // Clear placeholder on first real entry
-                            if (feed.firstElementChild?.style.color === 'rgba(255, 255, 255, 0.35)') feed.innerHTML = '';
-                            const entry = document.createElement('div');
-                            entry.style.cssText = 'padding:3px 0; border-bottom:1px solid rgba(255,255,255,0.06);';
-                            entry.innerHTML = `<span style="color:rgba(255,255,255,0.4);">${data.minute}'</span> ⚽ <b>${playerName}</b> — $${oldPrice} → <span style="color:${color};">$${newPrice} (${sign}${delta})</span>`;
-                            feed.insertBefore(entry, feed.firstChild);
-                            while (feed.children.length > 30) feed.removeChild(feed.lastChild);
-                        }
-                    }
                 });
 
                 // Handle errors
@@ -2691,10 +2646,13 @@
                     loadStats(),
                     loadBots(),
                     loadBlockchainInfo(),
+                    loadTreasuryManager(),
+                    loadLoanSimulation(),
                     loadUsers(),
                     loadUserActionMonitoring(),
                     typeof loadAuditTrail === 'function' ? loadAuditTrail() : Promise.resolve(),
-                    loadSeasonRunStatus()
+                    loadSeasonRunStatus(),
+                    loadPracticeRunStatus()
                 ]);
                 updateApiStatus(true);
 
@@ -2746,6 +2704,13 @@
                 if (stats.byStrategy) {
                     updateStrategyChart(stats.byStrategy);
                 }
+
+                // loadStats() and loadBots() run concurrently (Promise.all in
+                // loadDashboard, fire-and-forget on the polling interval) —
+                // whichever finishes second re-renders the fleet summary so
+                // it never shows a stale totalPositionValue from before
+                // window.lastStats was set.
+                updateFleetSummary();
             } catch (error) {
                 console.error('Stats load error:', error);
                 // Show error state
@@ -2758,7 +2723,16 @@
         async function loadBots() {
             try {
                 const response = await fetch(`${API_BASE}/bots`);
-                allBots = await response.json();
+                const fetchedBots = await response.json();
+
+                // The Reserve is a real Bot record (findBuyerForToken needs it
+                // to be one), but it isn't a trading strategy — isActive is
+                // always false, it never appears in nextTradeAt scheduling, and
+                // mixing it into fleet stats/activity/holdings would double-count
+                // its buys/sells alongside the peer trade's own bot. Give it its
+                // own panel (renderReservePanel) instead; everywhere else uses
+                // allBots with it filtered out.
+                allBots = fetchedBots.filter(b => b.name !== 'liquidity-reserve');
 
                 // Update fleet summary
                 updateFleetSummary();
@@ -2769,6 +2743,8 @@
                 // Update activity feed and holdings
                 updateActivityFeed(allBots);
                 updateHoldingsTable(allBots);
+
+                renderReservePanel(fetchedBots);
             } catch (error) {
                 console.error('Bots load error:', error);
             }
@@ -2778,14 +2754,17 @@
             const active = allBots.filter(b => b.isActive).length;
             const totalTrades = allBots.reduce((sum, b) => sum + b.totalTrades, 0);
             const totalPnl = allBots.reduce((sum, b) => sum + b.profitLoss, 0);
-            const totalBalance = allBots.reduce((sum, b) => sum + b.usdcBalance, 0);
+            // Real fleet value (holdings marked to price) comes from /bots/stats —
+            // window.lastStats is populated by loadStats(), avoids a second fetch
+            // and avoids duplicating the valuation math that already lives server-side.
+            const totalPositionValue = window.lastStats?.totalPositionValue || 0;
 
             document.getElementById('fleet-count').textContent = `${allBots.length} bots`;
             document.getElementById('fleet-active').textContent = active;
             document.getElementById('fleet-trades').textContent = totalTrades;
             document.getElementById('fleet-pnl').textContent = `$${totalPnl.toFixed(0)}`;
             document.getElementById('fleet-pnl').style.color = totalPnl >= 0 ? '#00ff88' : '#ff6666';
-            document.getElementById('fleet-balance').textContent = `$${(totalBalance / 1000).toFixed(1)}k`;
+            document.getElementById('fleet-balance').textContent = `$${(totalPositionValue / 1000).toFixed(1)}k`;
         }
 
         function setStrategyFilter(strategy) {
@@ -2837,8 +2816,8 @@
                         <div class="bot-card-strategy ${strategyClass}">${bot.strategy.replace('_', ' ')}</div>
                         <div class="bot-card-stats">
                             <div class="bot-card-stat">
-                                <div class="bot-card-stat-value">$${bot.usdcBalance.toFixed(0)}</div>
-                                <div class="bot-card-stat-label">Balance</div>
+                                <div class="bot-card-stat-value">$${(bot.positionValue || 0).toFixed(0)}</div>
+                                <div class="bot-card-stat-label">Position Value</div>
                             </div>
                             <div class="bot-card-stat">
                                 <div class="bot-card-stat-value">${bot.totalTrades}</div>
@@ -2876,7 +2855,7 @@
             if (!bot) return;
 
             // For now, show an alert. Could expand to a modal later.
-            alert(`${bot.name}\n\nStrategy: ${bot.strategy}\nBalance: $${bot.usdcBalance.toFixed(2)}\nTrades: ${bot.totalTrades}\nP/L: $${bot.profitLoss.toFixed(2)}\nHoldings: ${bot.holdings?.length || 0}\nPrediction Bets: ${bot.predictionBets?.length || 0}`);
+            alert(`${bot.name}\n\nStrategy: ${bot.strategy}\nPosition Value: $${(bot.positionValue || 0).toFixed(2)}\nTrades: ${bot.totalTrades}\nP/L: $${bot.profitLoss.toFixed(2)}\nHoldings: ${bot.holdings?.length || 0}\nPrediction Bets: ${bot.predictionBets?.length || 0}`);
         }
 
         // Update holdings grid with cards from all bots
@@ -3007,8 +2986,28 @@
                 const contractsRes = await fetch(`${API_BASE}/blockchain/contracts`);
                 const contracts = await contractsRes.json();
 
-                document.getElementById('vault-address').textContent = truncateAddress(contracts.proSpectVault || 'Not deployed');
-                document.getElementById('prediction-address').textContent = truncateAddress(contracts.predictionMarket || 'Not deployed');
+                document.getElementById('treasury-address').textContent = truncateAddress(contracts.treasury || 'Not deployed');
+
+                // Basescan links — direct verification, same addresses the app itself trades against
+                const basescanBase = 'https://sepolia.basescan.org/address/';
+                const treasuryLink = document.getElementById('treasury-basescan-link');
+                const treasuryUsdcLink = document.getElementById('treasury-usdc-basescan-link');
+                if (treasuryLink) {
+                    if (contracts.treasury) {
+                        treasuryLink.href = `${basescanBase}${contracts.treasury}`;
+                    } else {
+                        treasuryLink.style.opacity = '0.4';
+                        treasuryLink.style.pointerEvents = 'none';
+                    }
+                }
+                if (treasuryUsdcLink) {
+                    if (contracts.treasuryUsdc) {
+                        treasuryUsdcLink.href = `${basescanBase}${contracts.treasuryUsdc}`;
+                    } else {
+                        treasuryUsdcLink.style.opacity = '0.4';
+                        treasuryUsdcLink.style.pointerEvents = 'none';
+                    }
+                }
                 document.getElementById('admin-wallet').textContent = truncateAddress(contracts.adminWallet || 'Not set');
 
                 // Load blockchain trading status
@@ -3029,8 +3028,253 @@
                 }
             } catch (error) {
                 console.error('Blockchain info error:', error);
-                document.getElementById('vault-address').textContent = 'Error loading';
+                document.getElementById('treasury-address').textContent = 'Error loading';
                 document.getElementById('trading-mode').textContent = 'Error';
+            }
+
+            try {
+                // Single atomic on-chain snapshot for the whole panel — cash
+                // buckets, trade counters, AND token inventory value all come
+                // from one call/one cache, so they can never drift apart the
+                // way two separately-cached endpoints could under active
+                // trading (unallocatedCash/allocatedCash fresher than a longer-lived
+                // tokenInventoryValue cache, shown together as if simultaneous).
+                const netWorthRes = await fetch(`${API_BASE}/blockchain/treasury-net-worth`);
+                const netWorthJson = await netWorthRes.json();
+
+                if (netWorthJson.success) {
+                    const nw = netWorthJson.data;
+                    document.getElementById('treasury-liquid').textContent = `$${nw.unallocatedCash.toFixed(2)}`;
+                    document.getElementById('treasury-reserve').textContent = `$${nw.allocatedCash.toFixed(2)}`;
+                    document.getElementById('treasury-fees').textContent = `$${nw.feeVault.toFixed(2)}`;
+                    document.getElementById('treasury-inventory-value').textContent = `$${nw.tokenInventoryValue.toFixed(2)}`;
+                    document.getElementById('treasury-net-worth').textContent = `$${nw.totalNetWorth.toFixed(2)}`;
+                    document.getElementById('treasury-daily-trades').textContent = nw.dailyTradeCount;
+                    document.getElementById('treasury-total-trades').textContent =
+                        `${nw.totalTradeCount} / $${nw.totalVolume.toFixed(2)}`;
+                } else {
+                    document.getElementById('treasury-liquid').textContent = 'Not deployed';
+                    document.getElementById('treasury-reserve').textContent = '--';
+                    document.getElementById('treasury-fees').textContent = '--';
+                    document.getElementById('treasury-inventory-value').textContent = '--';
+                    document.getElementById('treasury-net-worth').textContent = '--';
+                    document.getElementById('treasury-daily-trades').textContent = '--';
+                    document.getElementById('treasury-total-trades').textContent = '--';
+                }
+            } catch (error) {
+                console.error('Treasury net worth error:', error);
+                document.getElementById('treasury-liquid').textContent = 'Error loading';
+            }
+
+            try {
+                // Bot wallet gas status — flags bots below the same threshold
+                // the hourly checkAndFundBotGas cron tops up against
+                const gasRes = await fetch(`${API_BASE}/bots/gas-status`);
+                const gasJson = await gasRes.json();
+
+                if (gasJson.success) {
+                    document.getElementById('gas-total-bots').textContent = gasJson.totalBots;
+                    const lowCountEl = document.getElementById('gas-low-count');
+                    const lowCountItem = document.getElementById('gas-low-count-item');
+                    lowCountEl.textContent = gasJson.lowBalanceCount;
+                    lowCountItem.style.background = gasJson.lowBalanceCount > 0
+                        ? 'rgba(255,68,68,0.15)' : 'rgba(0,255,136,0.1)';
+                    lowCountEl.style.color = gasJson.lowBalanceCount > 0 ? '#ff4444' : '#00ff88';
+
+                    const listEl = document.getElementById('gas-low-list');
+                    if (gasJson.lowBalanceBots.length === 0) {
+                        listEl.innerHTML = '<div style="color: rgba(255,255,255,0.5); padding: 8px;">All bots have sufficient gas.</div>';
+                    } else {
+                        listEl.innerHTML = gasJson.lowBalanceBots.map(bot => `
+                            <div style="display: flex; justify-content: space-between; padding: 4px 8px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                <span>${bot.botName || bot.walletAddress.slice(0, 10)}</span>
+                                <span style="color: ${bot.error ? '#ff4444' : '#ffaa00'};">${bot.error ? 'Error' : (bot.ethBalance !== null ? bot.ethBalance.toFixed(6) + ' ETH' : '--')}</span>
+                            </div>
+                        `).join('');
+                    }
+                } else {
+                    document.getElementById('gas-total-bots').textContent = 'Error';
+                    document.getElementById('gas-low-count').textContent = 'Error';
+                }
+            } catch (error) {
+                console.error('Bot gas status error:', error);
+                document.getElementById('gas-total-bots').textContent = 'Error loading';
+                document.getElementById('gas-low-count').textContent = '--';
+            }
+        }
+
+        // Read-only advisory recommendation — never mutates on-chain state,
+        // so this uses a bare fetch like the other read-only panels above
+        // (treasury-pool, gas-status), not adminFetch.
+        async function loadTreasuryManager() {
+            try {
+                const res = await fetch(`${API_BASE}/treasury-manager/recommendation`);
+                const json = await res.json();
+
+                if (json.success) {
+                    document.getElementById('tm-reserve-target').textContent = `$${json.reserveTarget.toFixed(2)}`;
+                    document.getElementById('tm-trigger-threshold').textContent = `$${json.triggerThreshold.toFixed(2)}`;
+
+                    const triggeredEl = document.getElementById('tm-triggered');
+                    const triggeredItem = document.getElementById('tm-triggered-item');
+                    triggeredEl.textContent = json.triggered ? '✅ YES' : 'No';
+                    triggeredEl.style.color = json.triggered ? '#00ff88' : 'rgba(255,255,255,0.8)';
+                    triggeredItem.style.background = json.triggered ? 'rgba(0,255,136,0.15)' : 'transparent';
+
+                    document.getElementById('tm-recommended-deposit').textContent = `$${json.recommendedDepositUsd.toFixed(2)}`;
+                    document.getElementById('tm-rationale').textContent = json.rationale || '';
+                } else {
+                    document.getElementById('tm-reserve-target').textContent = json.error || 'Not deployed';
+                    document.getElementById('tm-trigger-threshold').textContent = '--';
+                    document.getElementById('tm-triggered').textContent = '--';
+                    document.getElementById('tm-recommended-deposit').textContent = '--';
+                    document.getElementById('tm-rationale').textContent = '';
+                }
+            } catch (error) {
+                console.error('Treasury Manager error:', error);
+                document.getElementById('tm-reserve-target').textContent = 'Error loading';
+            }
+        }
+
+        // Read-only — every field is re-derived server-side from live
+        // on-chain state on every call (see LoanSimulationService), so a
+        // bare fetch on refresh is enough; nothing here is cached client-side.
+        async function loadLoanSimulation() {
+            try {
+                const res = await fetch(`${API_BASE}/treasury-manager/loan-simulation`);
+                const json = await res.json();
+
+                const emptyEl = document.getElementById('loan-sim-empty');
+                const contentEl = document.getElementById('loan-sim-content');
+
+                if (json.success) {
+                    emptyEl.style.display = 'none';
+                    contentEl.style.display = 'block';
+
+                    document.getElementById('loan-sim-principal').textContent = `$${json.principalUsd.toFixed(2)}`;
+                    document.getElementById('loan-sim-apr').textContent = `${json.aprPct.toFixed(2)}%`;
+                    document.getElementById('loan-sim-days').textContent = json.daysElapsed.toFixed(2);
+                    document.getElementById('loan-sim-interest').textContent = `$${json.accruedInterestUsd.toFixed(4)}`;
+                    document.getElementById('loan-sim-fees').textContent = `$${json.realFeesEarnedSinceStartUsd.toFixed(4)}`;
+                    document.getElementById('loan-sim-collateral').textContent = `$${json.currentCollateralUsd.toFixed(2)}`;
+                    document.getElementById('loan-sim-ltv').textContent =
+                        `${json.currentLtvPct.toFixed(2)}% (liquidates at ${json.liquidationLtvPct.toFixed(1)}%)`;
+
+                    const coveringEl = document.getElementById('loan-sim-covering');
+                    const coveringItem = document.getElementById('loan-sim-covering-item');
+                    coveringEl.textContent = json.feesCoveringInterest
+                        ? `✅ YES (+$${json.feeCoverageSurplusUsd.toFixed(4)})`
+                        : `No ($${json.feeCoverageSurplusUsd.toFixed(4)})`;
+                    coveringEl.style.color = json.feesCoveringInterest ? '#00ff88' : '#ffaa00';
+                    coveringItem.style.background = json.feesCoveringInterest ? 'rgba(0,255,136,0.15)' : 'transparent';
+
+                    const healthEl = document.getElementById('loan-sim-health');
+                    const healthItem = document.getElementById('loan-sim-health-item');
+                    const isSafe = !json.liquidationRisk;
+                    healthEl.textContent = isFinite(json.healthFactor) ? json.healthFactor.toFixed(3) : '∞';
+                    healthEl.style.color = isSafe ? '#00ff88' : '#ff4444';
+                    healthItem.style.background = isSafe ? 'rgba(0,255,136,0.1)' : 'rgba(255,68,68,0.15)';
+                } else {
+                    emptyEl.style.display = 'block';
+                    contentEl.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Loan simulation error:', error);
+                document.getElementById('loan-sim-principal').textContent = 'Error loading';
+            }
+        }
+
+        // Reads the Reserve's own Bot record out of the full, unfiltered fetch
+        // (allBots itself has the Reserve filtered out — see loadBots).
+        // positionValue is precomputed server-side (marked to live price),
+        // same field the fleet grid uses.
+        function renderReservePanel(allBotsIncludingReserve) {
+            const emptyEl = document.getElementById('reserve-empty');
+            const contentEl = document.getElementById('reserve-content');
+            const reserve = allBotsIncludingReserve.find(b => b.name === 'liquidity-reserve');
+
+            if (!reserve) {
+                emptyEl.style.display = 'block';
+                contentEl.style.display = 'none';
+                return;
+            }
+            emptyEl.style.display = 'none';
+            contentEl.style.display = 'block';
+
+            const holdingsValue = reserve.positionValue || 0;
+            const totalValue = reserve.usdcBalance + holdingsValue;
+
+            document.getElementById('reserve-cash').textContent = `$${reserve.usdcBalance.toFixed(2)}`;
+            document.getElementById('reserve-holdings-value').textContent = `$${holdingsValue.toFixed(2)}`;
+            document.getElementById('reserve-total').textContent = `$${totalValue.toFixed(2)}`;
+            document.getElementById('reserve-trades').textContent = `${reserve.totalTrades} (${reserve.totalBuys} / ${reserve.totalSells})`;
+            document.getElementById('reserve-fees').textContent = `$${reserve.totalFeesPaid.toFixed(2)}`;
+
+            const pnlEl = document.getElementById('reserve-pnl');
+            const pnlItem = document.getElementById('reserve-pnl-item');
+            pnlEl.textContent = `${reserve.profitLoss >= 0 ? '+' : ''}$${reserve.profitLoss.toFixed(2)}`;
+            pnlEl.style.color = reserve.profitLoss >= 0 ? '#00ff88' : '#ff4444';
+            pnlItem.style.background = reserve.profitLoss >= 0 ? 'rgba(0,255,136,0.1)' : 'rgba(255,68,68,0.1)';
+
+            const holdingsListEl = document.getElementById('reserve-holdings-list');
+            const holdings = reserve.holdings || [];
+            holdingsListEl.innerHTML = holdings.length === 0
+                ? '<div style="color: rgba(255,255,255,0.4);">No current holdings.</div>'
+                : holdings.map(h => `
+                    <div style="display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <span>Token ${h.tokenId} — qty ${h.quantity.toFixed(4)}</span>
+                        <span>avg $${h.averagePrice.toFixed(2)}</span>
+                    </div>
+                `).join('');
+
+            const tradesListEl = document.getElementById('reserve-trades-list');
+            const trades = (reserve.trades || []).slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 5);
+            tradesListEl.innerHTML = trades.length === 0
+                ? '<div style="color: rgba(255,255,255,0.4);">No trades yet.</div>'
+                : trades.map(t => `
+                    <div style="display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <span style="color: ${t.type === 'BUY' ? '#0096ff' : '#00ff88'};">${t.type} token ${t.tokenId}</span>
+                        <span>$${t.totalAmount.toFixed(2)} @ $${t.pricePerToken.toFixed(2)}</span>
+                    </div>
+                `).join('');
+        }
+
+        // Fund every bot currently below the gas threshold. Real testnet
+        // transactions, one per bot needing it (skips already-funded ones) —
+        // with 100+ bots this can take a few minutes since each top-up is a
+        // sequential on-chain call.
+        async function fundLowGasBots() {
+            const btn = document.getElementById('fund-bots-btn');
+            const statusEl = document.getElementById('fund-bots-status');
+
+            btn.disabled = true;
+            btn.textContent = '⏳ Funding bots... (this can take a few minutes)';
+            statusEl.textContent = 'Sending ETH to each bot below the gas threshold — please wait.';
+
+            try {
+                const response = await adminFetch(`${API_BASE}/bots/fund-all`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({}), // backend default: 0.001 ETH/bot (gas only — bots trade against the Treasury pool, not a personal USDC balance)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const result = await response.json();
+                statusEl.textContent =
+                    `✅ Done: ${result.funded} funded, ${result.skipped} already had enough gas, ${result.failed} failed (of ${result.total} bots).`;
+                showToast(`⛽ Funded ${result.funded} bot(s)`, result.failed > 0 ? 'error' : 'success');
+
+                await loadBlockchainInfo(); // refresh the gas-status panel
+            } catch (error) {
+                console.error('Fund bots error:', error);
+                statusEl.textContent = `❌ Failed: ${error.message}`;
+                showToast('❌ Bot funding failed — see console', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '⛽ Fund All Low-Gas Bots';
             }
         }
 
@@ -4103,58 +4347,22 @@
             }
         }
 
-        async function fundAllBots() {
-            const btn = document.getElementById('fund-all-btn');
-            btn.disabled = true;
-            btn.textContent = '⏳ Funding bots...';
-
-            try {
-                showToast('⏳ Funding all bots with ETH + USDC. This may take a minute...');
-
-                const response = await adminFetch(`${API_BASE}/bots/fund-all`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        ethAmount: 0.005,
-                        usdcAmount: 5000
-                    })
-                });
-
-                const result = await response.json();
-
-                if (result.funded > 0) {
-                    showToast(`✅ Funded ${result.funded}/${result.total} bots with ETH + USDC!`);
-                } else {
-                    showToast('⚠️ No bots were funded. Check console for errors.', 'error');
-                    console.log('Fund all result:', result);
-                }
-
-                loadDashboard();
-            } catch (error) {
-                console.error('Fund all error:', error);
-                showToast('❌ Failed to fund bots. Is the API running?', 'error');
-            } finally {
-                btn.disabled = false;
-                btn.textContent = '⛽ Fund All Bots (ETH + USDC)';
-            }
-        }
-
         async function createSeasonRun() {
             try {
-                const response = await adminFetch(`${API_BASE}/simulation/season/create`, {
+                const response = await adminFetch(`${API_BASE}/treasury-manager/season/create`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({})
                 });
                 const payload = await response.json();
 
-                if (!payload.run || !payload.run.runId) {
-                    throw new Error(payload.message || 'Failed to create season run');
+                if (!payload.success || !payload.runId) {
+                    throw new Error(payload.error || payload.message || 'Failed to create season run');
                 }
 
-                setActiveSeasonRunId(payload.run.runId);
+                setActiveSeasonRunId(payload.runId);
                 showToast(`✅ Season run created (${activeSeasonRunId.slice(0, 8)}...)`);
-                updateSeasonStatusText(`Run created: ${activeSeasonRunId} | Matchday 0/${payload.run.totalMatchdays}`);
+                updateSeasonStatusText(`Run created: ${activeSeasonRunId} | Matchday 0/${payload.totalMatchdays}`);
                 await loadDashboard();
             } catch (error) {
                 showToast(`❌ ${error.message}`, 'error');
@@ -4171,23 +4379,48 @@
                     return;
                 }
 
-                const response = await adminFetch(`${API_BASE}/simulation/season/${activeSeasonRunId}/step`, {
+                const response = await adminFetch(`${API_BASE}/treasury-manager/season/${activeSeasonRunId}/step`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ runBots: true, runPersonas: true })
+                    headers: { 'Content-Type': 'application/json' }
                 });
                 const payload = await response.json();
 
-                if (!payload.result) {
-                    throw new Error(payload.message || 'Could not advance matchday');
+                if (!payload.success || !payload.status) {
+                    throw new Error(payload.error || 'Could not advance matchday');
                 }
 
-                const result = payload.result;
+                const status = payload.status;
                 updateSeasonStatusText(
-                    `Run: ${result.runId} | Matchday ${result.currentMatchday}/${result.totalMatchdays} | ` +
-                    `Fees: $${(result.weeklyFees || 0).toFixed(2)} | Volume: $${(result.weeklyVolume || 0).toFixed(2)}`
+                    `Run: ${status.runId} | Matchday ${status.currentMatchday}/${status.totalMatchdays} | ` +
+                    `Fees today: $${(status.feesToday || 0).toFixed(2)} | NAV: $${(status.nav || 0).toFixed(2)}`
                 );
-                showToast(`⏭️ Advanced to matchday ${result.currentMatchday}`);
+                showToast(`⏭️ Advanced to matchday ${status.currentMatchday}`);
+                await loadDashboard();
+            } catch (error) {
+                showToast(`❌ ${error.message}`, 'error');
+            }
+        }
+
+        async function runSeasonToEnd() {
+            try {
+                showToast('⏩ Running full season — this may take a moment...');
+                const response = await adminFetch(`${API_BASE}/treasury-manager/season/run-to-end`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({})
+                });
+                const payload = await response.json();
+
+                if (!payload.success || !payload.status) {
+                    throw new Error(payload.error || 'Could not run season to completion');
+                }
+
+                const status = payload.status;
+                setActiveSeasonRunId(status.runId);
+                updateSeasonStatusText(
+                    `Run: ${status.runId} | Matchday ${status.currentMatchday}/${status.totalMatchdays} | Completed | NAV: $${status.nav.toFixed(2)}`
+                );
+                showToast(`✅ Full season complete — final NAV $${status.nav.toFixed(2)}`, 'success');
                 await loadDashboard();
             } catch (error) {
                 showToast(`❌ ${error.message}`, 'error');
@@ -4196,7 +4429,7 @@
 
         async function loadSeasonRunStatus() {
             try {
-                const runsResponse = await fetch(`${API_BASE}/simulation/season/runs`);
+                const runsResponse = await fetch(`${API_BASE}/treasury-manager/season/runs`);
                 if (!runsResponse.ok) {
                     return;
                 }
@@ -4204,8 +4437,7 @@
                 const runs = runsPayload.runs || [];
 
                 if (!activeSeasonRunId && runs.length > 0) {
-                    const latest = [...runs].sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))[0];
-                    setActiveSeasonRunId(latest.runId);
+                    setActiveSeasonRunId(runs[runs.length - 1].runId);
                 }
 
                 if (!activeSeasonRunId) {
@@ -4213,7 +4445,7 @@
                     return;
                 }
 
-                const statusResponse = await fetch(`${API_BASE}/simulation/season/${activeSeasonRunId}/status`);
+                const statusResponse = await fetch(`${API_BASE}/treasury-manager/season/${activeSeasonRunId}/status`);
                 const statusPayload = await statusResponse.json();
 
                 if (!statusPayload.found) {
@@ -4225,7 +4457,7 @@
                 const status = statusPayload.status;
                 updateSeasonStatusText(
                     `Run: ${status.runId} | Matchday ${status.currentMatchday}/${status.totalMatchdays} | ` +
-                    `${status.completed ? 'Completed' : 'In Progress'} | Snapshots: ${status.snapshots}`
+                    `${status.completed ? 'Completed' : 'In Progress'} | NAV: $${status.nav.toFixed(2)}`
                 );
             } catch (error) {
                 console.error('Season status load error:', error);
@@ -4239,13 +4471,13 @@
                     return;
                 }
 
-                const response = await adminFetch(`${API_BASE}/simulation/season/${activeSeasonRunId}/reset`, {
+                const response = await adminFetch(`${API_BASE}/treasury-manager/season/${activeSeasonRunId}/reset`, {
                     method: 'POST'
                 });
                 const payload = await response.json();
 
-                if (!payload.message || payload.message.includes('not found')) {
-                    throw new Error(payload.message || 'Could not reset season run');
+                if (!payload.success) {
+                    throw new Error(payload.error || 'Could not reset season run');
                 }
 
                 showToast('♻️ Season run reset');
@@ -4261,6 +4493,183 @@
             document.querySelectorAll('[data-season-status]').forEach((el) => {
                 el.textContent = message;
             });
+        }
+
+        // ── Practice Mode — replays real historical PL fixtures through the
+        // real pricing pipeline (see api/src/practice-mode/). Real data, real
+        // on-chain prices, permanent (no revert) — distinct from the offline
+        // Season Controls simulation above.
+        let activePracticeRunId = null;
+
+        function setActivePracticeRunId(runId) {
+            activePracticeRunId = runId || null;
+        }
+
+        function updatePracticeStatusText(message) {
+            document.querySelectorAll('[data-practice-status]').forEach((el) => {
+                el.textContent = message;
+            });
+        }
+
+        function renderPracticeRecentChanges(recent) {
+            const container = document.getElementById('practice-recent-changes');
+            if (!container) return;
+            if (!recent || recent.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+
+            container.innerHTML = recent.slice().reverse().map((entry) => {
+                const changes = (entry.priceChanges || []).slice(0, 8).map((c) => {
+                    const up = c.newPrice >= c.oldPrice;
+                    return `<div style="display:flex; justify-content:space-between; padding:2px 0;"><span>${c.name}</span><span style="color:${up ? '#00ff88' : '#ff6666'};">$${c.oldPrice.toFixed(2)} → $${c.newPrice.toFixed(2)}</span></div>`;
+                }).join('');
+                const overflow = entry.priceChanges.length > 8
+                    ? `<div style="opacity:0.6; margin-top:4px;">+${entry.priceChanges.length - 8} more</div>`
+                    : '';
+                return `
+                    <div style="margin-bottom:8px; padding:8px; background:rgba(255,255,255,0.04); border-radius:6px;">
+                        <div style="font-weight:700; margin-bottom:4px;">${entry.homeTeam} vs ${entry.awayTeam}</div>
+                        ${changes}
+                        ${overflow}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function createPracticeRun() {
+            try {
+                const response = await adminFetch(`${API_BASE}/practice-mode/start`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({})
+                });
+                const payload = await response.json();
+
+                if (!payload.success || !payload.runId) {
+                    throw new Error(payload.error || 'Failed to start practice mode run');
+                }
+
+                setActivePracticeRunId(payload.runId);
+                showToast(`✅ Practice run started (${payload.totalFixtures} fixtures queued)`);
+                updatePracticeStatusText(`Run: ${activePracticeRunId} | Fixture 0/${payload.totalFixtures}`);
+            } catch (error) {
+                showToast(`❌ ${error.message}`, 'error');
+            }
+        }
+
+        async function stepPracticeRun() {
+            try {
+                if (!activePracticeRunId) {
+                    await loadPracticeRunStatus();
+                }
+                if (!activePracticeRunId) {
+                    showToast('⚠️ Start a practice run first', 'error');
+                    return;
+                }
+
+                const response = await adminFetch(`${API_BASE}/practice-mode/${activePracticeRunId}/step`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const payload = await response.json();
+
+                if (!payload.success || !payload.status) {
+                    throw new Error(payload.error || 'Could not advance fixture');
+                }
+
+                const status = payload.status;
+                updatePracticeStatusText(
+                    `Run: ${status.runId} | Fixture ${status.cursor}/${status.totalFixtures} | ${status.status}`
+                );
+                renderPracticeRecentChanges(status.recent);
+                showToast(`⏭️ Applied fixture ${status.cursor}/${status.totalFixtures}`);
+            } catch (error) {
+                showToast(`❌ ${error.message}`, 'error');
+            }
+        }
+
+        async function runPracticeToEnd() {
+            try {
+                showToast('⏩ Running all practice fixtures — this may take a minute...');
+                const response = await adminFetch(`${API_BASE}/practice-mode/run-to-end`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const payload = await response.json();
+
+                if (!payload.success || !payload.status) {
+                    throw new Error(payload.error || 'Could not run practice mode to completion');
+                }
+
+                const status = payload.status;
+                setActivePracticeRunId(payload.runId);
+                updatePracticeStatusText(
+                    `Run: ${status.runId} | Fixture ${status.cursor}/${status.totalFixtures} | ${status.status}`
+                );
+                renderPracticeRecentChanges(status.recent);
+                showToast(`✅ Practice run complete — ${status.totalFixtures} fixtures applied`, 'success');
+            } catch (error) {
+                showToast(`❌ ${error.message}`, 'error');
+            }
+        }
+
+        async function loadPracticeRunStatus() {
+            try {
+                const runsResponse = await fetch(`${API_BASE}/practice-mode/runs`);
+                if (!runsResponse.ok) return;
+                const runsPayload = await runsResponse.json();
+                const runs = runsPayload.runs || [];
+
+                if (!activePracticeRunId && runs.length > 0) {
+                    setActivePracticeRunId(runs[0].id); // most recent first (createdAt desc)
+                }
+
+                if (!activePracticeRunId) {
+                    updatePracticeStatusText('No practice run active');
+                    return;
+                }
+
+                const statusResponse = await fetch(`${API_BASE}/practice-mode/${activePracticeRunId}/status`);
+                const statusPayload = await statusResponse.json();
+
+                if (!statusPayload.found) {
+                    setActivePracticeRunId(null);
+                    updatePracticeStatusText('No practice run active');
+                    return;
+                }
+
+                const status = statusPayload.status;
+                updatePracticeStatusText(
+                    `Run: ${status.runId} | Fixture ${status.cursor}/${status.totalFixtures} | ${status.status}`
+                );
+                renderPracticeRecentChanges(status.recent);
+            } catch (error) {
+                console.error('Practice mode status load error:', error);
+            }
+        }
+
+        async function stopPracticeRun() {
+            try {
+                if (!activePracticeRunId) {
+                    showToast('⚠️ No active practice run to stop', 'error');
+                    return;
+                }
+
+                const response = await adminFetch(`${API_BASE}/practice-mode/${activePracticeRunId}/stop`, {
+                    method: 'POST'
+                });
+                const payload = await response.json();
+
+                if (!payload.success) {
+                    throw new Error(payload.error || 'Could not stop practice run');
+                }
+
+                showToast('⏹️ Practice run stopped');
+                await loadPracticeRunStatus();
+            } catch (error) {
+                showToast(`❌ ${error.message}`, 'error');
+            }
         }
 
         function refreshAll() {
@@ -4311,228 +4720,6 @@
             setTimeout(() => toast.remove(), 3000);
         }
 
-        // ====================================================================
-        // WC 2026 REPORTS (Phase 4.3)
-        // ====================================================================
-
-        async function runWcReport() {
-            const homeTeam = document.getElementById('wc-home-team').value.trim();
-            const awayTeam = document.getElementById('wc-away-team').value.trim();
-            const round = document.getElementById('wc-round').value;
-
-            if (!homeTeam || !awayTeam) {
-                showToast('⚽ Enter both team names', 'error');
-                return;
-            }
-
-            document.getElementById('wc-report-loading').style.display = 'block';
-            document.getElementById('wc-report-results').style.display = 'none';
-            document.getElementById('wc-report-error').style.display = 'none';
-
-            try {
-                const res = await fetch(`${API_BASE}/simulation/wc-report`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        fixtureId: 0,
-                        homeTeam,
-                        awayTeam,
-                        homeTeamId: 0,
-                        awayTeamId: 0,
-                        round,
-                        includeH2H: true,
-                    }),
-                });
-
-                if (!res.ok) {
-                    const err = await res.text();
-                    throw new Error(`API ${res.status}: ${err}`);
-                }
-
-                const report = await res.json();
-                lastWcReport = report;
-                renderWcReport(report, homeTeam, awayTeam);
-            } catch (err) {
-                const errEl = document.getElementById('wc-report-error');
-                errEl.textContent = `❌ ${err.message}`;
-                errEl.style.display = 'block';
-                showToast('❌ Simulation failed: ' + err.message, 'error');
-            } finally {
-                document.getElementById('wc-report-loading').style.display = 'none';
-            }
-        }
-
-        function renderWcReport(report, homeTeam, awayTeam) {
-            const sim = report.simulation || {};
-            const goals = sim.expectedGoals || {};
-
-            document.getElementById('wc-home-name').textContent = homeTeam;
-            document.getElementById('wc-away-name').textContent = awayTeam;
-            document.getElementById('wc-home-pct').textContent = ((sim.homeWinPct || 0) * 100).toFixed(1) + '%';
-            document.getElementById('wc-draw-pct').textContent = ((sim.drawPct || 0) * 100).toFixed(1) + '%';
-            document.getElementById('wc-away-pct').textContent = ((sim.awayWinPct || 0) * 100).toFixed(1) + '%';
-            document.getElementById('wc-score').textContent = `${(goals.home || 0).toFixed(1)} : ${(goals.away || 0).toFixed(1)}`;
-            document.getElementById('wc-analyst-note').textContent = sim.analystNote || '—';
-            document.getElementById('wc-score-pct').textContent = '';
-
-            // Player impact table
-            const tbody = document.getElementById('wc-impact-tbody');
-            const impacts = report.playerImpact || [];
-            if (impacts.length > 0) {
-                tbody.innerHTML = impacts.map((p) => {
-                    const scoreColor = p.priceIfScores > p.currentPrice ? '#00ff88' : '#ff6666';
-                    const elimColor = '#ff6666';
-                    return `<tr>
-                        <td>${p.playerName}</td>
-                        <td style="color:rgba(255,255,255,0.6);">${p.teamName}</td>
-                        <td>$${(p.currentPrice || 0).toFixed(2)}</td>
-                        <td style="color:${scoreColor};">$${(p.priceIfScores || 0).toFixed(2)}</td>
-                        <td>$${(p.priceIfAssists || 0).toFixed(2)}</td>
-                        <td style="color:${elimColor};">$${(p.priceIfEliminated || 0).toFixed(2)}</td>
-                    </tr>`;
-                }).join('');
-            } else {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:rgba(255,255,255,0.4);">No players found for these teams</td></tr>';
-            }
-
-            document.getElementById('wc-report-results').style.display = 'block';
-        }
-
-        function exportWcReport() {
-            if (!lastWcReport) {
-                showToast('Run a simulation first', 'error');
-                return;
-            }
-            const blob = new Blob([JSON.stringify(lastWcReport, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `wc-report-${Date.now()}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        // ======================================================================
-        // LIVE MATCH DAY DEMO
-        // ======================================================================
-
-        // All 48 WC 2026 nations as flat list (same as WC_2026_NATIONS groups)
-        const LIVE_DEMO_NATIONS = [
-            'Mexico','South Korea','Czech Republic','South Africa',
-            'Canada','Qatar','Switzerland','Bosnia & Herzegovina',
-            'USA','Paraguay','Australia','Türkiye',
-            'Brazil','Morocco','Haiti','Scotland',
-            'Germany','Ivory Coast','Ecuador','Curaçao',
-            'Netherlands','Japan','Sweden','Tunisia',
-            'Spain','Saudi Arabia','Uruguay','Cape Verde Islands',
-            'Belgium','Egypt','Iran','New Zealand',
-            'France','Senegal','Iraq','Norway',
-            'Argentina','Algeria','Austria','Jordan',
-            'Portugal','Congo DR','Uzbekistan','Colombia',
-            'England','Croatia','Ghana','Panama',
-        ].sort();
-
-        const LIVE_DEMO_ROUNDS = ['group','r32','r16','qf','sf','final'];
-        const MAX_FIXTURES = 4;
-
-        function buildNationOptions(selectedValue) {
-            return LIVE_DEMO_NATIONS.map(n =>
-                `<option value="${n}" ${n === selectedValue ? 'selected' : ''}>${n}</option>`
-            ).join('');
-        }
-
-        function buildRoundOptions(selectedValue) {
-            return LIVE_DEMO_ROUNDS.map(r =>
-                `<option value="${r}" ${r === selectedValue ? 'selected' : ''}>${r.toUpperCase()}</option>`
-            ).join('');
-        }
-
-        function initDemoFixtures() {
-            const count = parseInt(document.getElementById('demo-match-count')?.value || '4', 10);
-            const defaults = [
-                { home: 'Argentina', away: 'Brazil', round: 'sf' },
-                { home: 'France', away: 'England', round: 'qf' },
-                { home: 'Germany', away: 'Spain', round: 'r16' },
-                { home: 'USA', away: 'Mexico', round: 'group' },
-            ];
-            const container = document.getElementById('demo-fixtures');
-            if (!container) return;
-            // Set grid columns to match count
-            container.style.gridTemplateColumns = Array(count).fill('1fr').join(' ');
-            container.innerHTML = defaults.slice(0, count).map((d, i) => `
-                <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:10px; padding:12px;">
-                    <div style="font-size:11px; color:rgba(255,255,255,0.4); margin-bottom:8px;">Fixture ${i + 1}</div>
-                    <select id="demo-home-${i}" style="width:100%; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:6px; padding:5px 8px; font-size:12px; margin-bottom:6px;">
-                        ${buildNationOptions(d.home)}
-                    </select>
-                    <div style="text-align:center; font-size:11px; color:rgba(255,255,255,0.4); margin:2px 0;">vs</div>
-                    <select id="demo-away-${i}" style="width:100%; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:6px; padding:5px 8px; font-size:12px; margin-bottom:6px;">
-                        ${buildNationOptions(d.away)}
-                    </select>
-                    <select id="demo-round-${i}" style="width:100%; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:6px; padding:5px 8px; font-size:12px;">
-                        ${buildRoundOptions(d.round)}
-                    </select>
-                </div>
-            `).join('');
-        }
-
-
-
-        async function startLiveDemo() {
-            const speed = document.getElementById('demo-speed')?.value || 'normal';
-            const count = parseInt(document.getElementById('demo-match-count')?.value || '4', 10);
-            const fixtures = [];
-            for (let i = 0; i < count; i++) {
-                const home = document.getElementById(`demo-home-${i}`)?.value;
-                const away = document.getElementById(`demo-away-${i}`)?.value;
-                const round = document.getElementById(`demo-round-${i}`)?.value;
-                if (home && away) fixtures.push({ homeTeam: home, awayTeam: away, round, speed });
-            }
-            if (!fixtures.length) { showToast('Add at least one fixture', 'error'); return; }
-
-            // Reset price feed
-            const feed = document.getElementById('demo-price-feed');
-            if (feed) feed.innerHTML = '<div style="color:rgba(255,255,255,0.35);">Waiting for goals...</div>';
-
-            try {
-                const response = await adminFetch(`${API_BASE}/demo/live/start`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ fixtures })
-                });
-                if (!response.ok) {
-                    const err = await response.json().catch(() => ({}));
-                    showToast(err.message || `Server error ${response.status}`, 'error');
-                    return;
-                }
-                const result = await response.json();
-                if (result.success) {
-                    showToast(`Started ${result.started?.length ?? 0} match(es)`, 'success');
-                    if (result.errors?.length) showToast(`${result.errors.length} fixture(s) failed`, 'warning');
-                } else {
-                    showToast(result.error || 'Failed to start demo', 'error');
-                }
-            } catch (e) {
-                showToast('Error starting live demo: ' + e.message, 'error');
-            }
-        }
-
-        async function stopLiveDemo() {
-            try {
-                const response = await adminFetch(`${API_BASE}/demo/live/stop`, { method: 'POST', body: '{}' });
-                const result = await response.json().catch(() => ({}));
-                showToast(`Stopped ${result.stopped ?? 0} match(es)`, 'success');
-            } catch (e) {
-                showToast('Error stopping demo: ' + e.message, 'error');
-            }
-        }
-
-        // Init fixture rows on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            initDemoFixtures();
-        });
-        // Also init immediately if DOM is already ready
-        if (document.readyState !== 'loading') initDemoFixtures();
     </script>
 
     <!-- Mode Switcher & Economics Engine -->

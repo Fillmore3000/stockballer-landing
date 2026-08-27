@@ -12,10 +12,10 @@ let CURRENT_MODE = 'LIVE'; // 'LIVE' or 'SIMULATION'
 
 function switchMode(newMode) {
     if (newMode !== 'LIVE' && newMode !== 'SIMULATION') return;
-    
+
     CURRENT_MODE = newMode;
     localStorage.setItem('stockballer_admin_mode', newMode);
-    
+
     // Update UI toggle buttons
     document.querySelectorAll('[data-mode-toggle]').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.mode === newMode);
@@ -178,139 +178,13 @@ async function loadLiveData() {
             fetchGameFlowHealth(),
         ]);
 
-        updateWCTournamentStatus(tokens);
         updateLiveMatchContext(matches);
         updateLiveTokenBoard(tokens);
         updateLiveActivityPanel(activity);
         updateLiveGameFlowPanel(gameFlow);
-
-        // For Live economics: get bot stats from existing admin.html data
-        if (window.lastStats) {
-            updateLiveEconomics(window.lastStats, tokens);
-        }
     } catch (error) {
         console.error('[LiveMode] Load error:', error);
     }
-}
-
-// WC 2026 specific stage labels
-const WC_STAGE_LABELS = {
-    group: { label: 'Group Stage', color: '#64748b' },
-    r32: { label: 'Round of 32', color: '#3b82f6' },
-    r16: { label: 'Round of 16', color: '#8b5cf6' },
-    qf: { label: 'Quarter-Finals', color: '#f59e0b' },
-    sf: { label: 'Semi-Finals', color: '#f97316' },
-    final: { label: 'Final', color: '#ef4444' },
-};
-
-const QF_FIXTURES = [
-    { home: 'Morocco', away: 'France' },
-    { home: 'Norway', away: 'England' },
-    { home: 'Spain', away: 'Belgium' },
-    { home: 'Argentina', away: 'Switzerland' },
-];
-
-function updateWCTournamentStatus(tokens) {
-    const panel = document.getElementById('wc-tournament-status');
-    if (!panel) return;
-
-    if (!Array.isArray(tokens) || tokens.length === 0) {
-        panel.innerHTML = '<div style="padding:16px;color:rgba(255,255,255,0.5);">Loading tournament data...</div>';
-        return;
-    }
-
-    // Group players by stage
-    const stageCounts = {};
-    const teamStages = {};
-    let totalMarketCap = 0;
-    let qfMarketCap = 0;
-    let eliminatedCount = 0;
-
-    for (const t of tokens) {
-        if (!t.wcRound) continue;
-        const stage = t.wcEliminated ? 'eliminated' : t.wcRound;
-        if (t.wcEliminated) {
-            eliminatedCount++;
-        } else {
-            stageCounts[t.wcRound] = (stageCounts[t.wcRound] || 0) + 1;
-            const price = Number(t.currentPrice || 0);
-            totalMarketCap += price;
-            if (t.wcRound === 'qf') {
-                qfMarketCap += price;
-                // Track QF teams
-                if (t.team) teamStages[t.team] = true;
-            }
-        }
-    }
-
-    const qfTeams = Object.keys(teamStages).sort();
-    const qfCount = stageCounts['qf'] || 0;
-    const activePlayers = Object.values(stageCounts).reduce((a, b) => a + b, 0);
-
-    // Top 5 QF players by price
-    const top5 = tokens
-        .filter(t => t.wcRound === 'qf' && !t.wcEliminated)
-        .sort((a, b) => Number(b.currentPrice) - Number(a.currentPrice))
-        .slice(0, 5);
-
-    const stageHTML = ['qf', 'r16', 'r32'].map(stage => {
-        const count = stageCounts[stage] || 0;
-        if (count === 0) return '';
-        const meta = WC_STAGE_LABELS[stage] || { label: stage.toUpperCase(), color: '#fff' };
-        return `<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:10px;text-align:center;">
-            <div style="font-size:11px;color:${meta.color};text-transform:uppercase;font-weight:600;margin-bottom:4px;">${meta.label}</div>
-            <div style="font-size:20px;font-weight:700;color:#fff;">${count}</div>
-            <div style="font-size:10px;color:rgba(255,255,255,0.4);">players</div>
-        </div>`;
-    }).join('');
-
-    const top5HTML = top5.map((t, i) => {
-        const change = Number(t.changePct || 0);
-        const col = change >= 0 ? '#00ff88' : '#ff4d4d';
-        return `<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
-            <div style="display:flex;align-items:center;gap:8px;">
-                <span style="font-size:11px;color:rgba(255,255,255,0.3);width:14px;">${i + 1}</span>
-                <div>
-                    <div style="font-size:12px;color:#fff;font-weight:600;">${t.name}</div>
-                    <div style="font-size:10px;color:rgba(255,255,255,0.4);">${t.team || ''}</div>
-                </div>
-            </div>
-            <div style="text-align:right;">
-                <div style="font-size:13px;font-weight:700;color:#fff;">$${Number(t.currentPrice || 0).toFixed(2)}</div>
-                <div style="font-size:10px;color:${col};">${change >= 0 ? '+' : ''}${change.toFixed(1)}%</div>
-            </div>
-        </div>`;
-    }).join('');
-
-    const fixturesHTML = QF_FIXTURES.map(f =>
-        `<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;background:rgba(255,170,0,0.06);border-radius:6px;margin-bottom:4px;">
-            <span style="font-size:12px;color:#fff;font-weight:600;">${f.home}</span>
-            <span style="font-size:10px;color:#f59e0b;font-weight:700;">QF</span>
-            <span style="font-size:12px;color:#fff;font-weight:600;">${f.away}</span>
-        </div>`
-    ).join('');
-
-    panel.innerHTML = `
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
-            ${stageHTML}
-            <div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-radius:8px;padding:10px;text-align:center;">
-                <div style="font-size:11px;color:#ef4444;text-transform:uppercase;font-weight:600;margin-bottom:4px;">Eliminated</div>
-                <div style="font-size:20px;font-weight:700;color:#fff;">${eliminatedCount}</div>
-                <div style="font-size:10px;color:rgba(255,255,255,0.4);">players</div>
-            </div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-            <div>
-                <div style="font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;margin-bottom:8px;">⚽ QF Fixtures</div>
-                ${fixturesHTML}
-                <div style="margin-top:8px;font-size:10px;color:rgba(255,255,255,0.3);">QF Market Cap: $${qfMarketCap.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</div>
-            </div>
-            <div>
-                <div style="font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;margin-bottom:8px;">🏆 Top QF Players</div>
-                ${top5HTML}
-            </div>
-        </div>
-    `;
 }
 
 async function fetchLiveMatches() {
@@ -683,67 +557,6 @@ function updateLiveGameFlowPanel(gameFlow) {
     `;
 }
 
-
-
-function updateLiveEconomics(stats, tokens) {
-    const panel = document.getElementById('live-economics');
-    if (!panel) return;
-
-    const totalFees = stats?.totalFeesPaid || 0;
-    const totalTrades = stats?.totalTrades || 0;
-    const activeBots = stats?.activeBots || 0;
-    const monthlyOpEx = typeof EconomicsCalculator !== 'undefined' ? EconomicsCalculator.getTotalMonthlyOpEx() : 450;
-    const netDaily = (totalFees > 0) ? (totalFees / 30) - (monthlyOpEx / 30) : 0;
-    const netColor = netDaily >= 0 ? '#00ff88' : '#ff6666';
-
-    // Compute WC market cap from tokens (only active, non-eliminated QF players)
-    const wcTokens = Array.isArray(tokens) ? tokens : [];
-    const totalWCMarketCap = wcTokens
-        .filter(t => t.wcRound && !t.wcEliminated)
-        .reduce((sum, t) => sum + Number(t.currentPrice || 0), 0);
-    const qfMarketCap = wcTokens
-        .filter(t => t.wcRound === 'qf' && !t.wcEliminated)
-        .reduce((sum, t) => sum + Number(t.currentPrice || 0), 0);
-
-    const fmt = (n) => n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-    const html = `
-        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 12px;">
-            <div style="background: rgba(0,255,136,0.1); padding: 12px; border-radius: 8px; border: 1px solid rgba(0,255,136,0.2);">
-                <div style="font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase; margin-bottom: 4px;">WC Fees Collected</div>
-                <div style="font-size: 18px; font-weight: 700; color: #00ff88;">$${totalFees.toFixed(2)}</div>
-                <div style="font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 4px;">1% per bot trade</div>
-            </div>
-            <div style="background: rgba(0,170,255,0.1); padding: 12px; border-radius: 8px; border: 1px solid rgba(0,170,255,0.2);">
-                <div style="font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase; margin-bottom: 4px;">WC Bot Trades</div>
-                <div style="font-size: 18px; font-weight: 700; color: #7dd3fc;">${totalTrades.toLocaleString()}</div>
-                <div style="font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 4px;">${activeBots} active bots</div>
-            </div>
-            <div style="background: rgba(245,158,11,0.1); padding: 12px; border-radius: 8px; border: 1px solid rgba(245,158,11,0.2);">
-                <div style="font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase; margin-bottom: 4px;">Active Market Cap</div>
-                <div style="font-size: 18px; font-weight: 700; color: #fbbf24;">$${fmt(totalWCMarketCap)}</div>
-                <div style="font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 4px;">non-eliminated players</div>
-            </div>
-            <div style="background: rgba(239,68,68,0.1); padding: 12px; border-radius: 8px; border: 1px solid rgba(239,68,68,0.2);">
-                <div style="font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase; margin-bottom: 4px;">QF Market Cap</div>
-                <div style="font-size: 18px; font-weight: 700; color: #f87171;">$${fmt(qfMarketCap)}</div>
-                <div style="font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 4px;">8 QF teams × 2.0× boost</div>
-            </div>
-        </div>
-        <div style="background: rgba(0,200,255,0.1); padding: 12px; border-radius: 8px; border: 1px solid rgba(0,200,255,0.2);">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <div style="font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase;">Estimated Daily Run-Rate vs OpEx ($${(monthlyOpEx/30).toFixed(0)}/day)</div>
-                    <div style="font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 2px;">WC 2026 Season — Jun 11 → Jul 19</div>
-                </div>
-                <div style="font-size: 16px; font-weight: 700; color: ${netColor};">${netDaily >= 0 ? '+' : ''}$${netDaily.toFixed(2)}/day</div>
-            </div>
-        </div>
-    `;
-
-    panel.innerHTML = html;
-}
-
 // ============================================================================
 // SIMULATION MODE DATA FETCHING
 // ============================================================================
@@ -751,35 +564,17 @@ function updateLiveEconomics(stats, tokens) {
 async function loadSimulationData() {
     try {
         if (getActiveSeasonRunId()) {
-            const [status, tokenMeta] = await Promise.all([
-                fetchSeasonStatus(),
-                fetchTokenMetadata(),
-            ]);
+            const status = await fetchSeasonStatus();
             if (status) {
-                updateSimulationModeUI(status, tokenMeta);
+                updateSimulationModeUI(status);
             }
         } else {
-            updateSimulatedTokenPath(null, new Map());
-            updateSimulationBotPortfolio(null);
-            updateSimulationLeaderboards(null, new Map());
+            updatePopularTokens(null);
+            updateSimulationLeaderboards(null);
             updateSimulationEconomics(null);
         }
     } catch (error) {
         console.error('[SimulationMode] Load error:', error);
-    }
-}
-
-async function fetchTokenMetadata() {
-    try {
-        const response = await fetch(`${getApiBase()}/market/players`);
-        if (!response.ok) return new Map();
-
-        const payload = await response.json();
-        const rows = Array.isArray(payload) ? payload : (Array.isArray(payload?.data) ? payload.data : []);
-        return new Map(rows.map((row) => [Number(row.tokenId), row]));
-    } catch (error) {
-        console.error('[SimulationTokens] Metadata fetch error:', error);
-        return new Map();
     }
 }
 
@@ -791,9 +586,9 @@ async function fetchSeasonStatus() {
         }
 
         const apiBase = window.API_BASE || 'https://stockballer-api-production.up.railway.app/api';
-        const response = await fetch(`${apiBase}/simulation/season/${runId}/status`);
+        const response = await fetch(`${apiBase}/treasury-manager/season/${runId}/status`);
         if (!response.ok) return null;
-        
+
         const data = await response.json();
         return data.found ? (data.status || null) : null;
     } catch (e) {
@@ -802,12 +597,11 @@ async function fetchSeasonStatus() {
     }
 }
 
-function updateSimulationModeUI(status, tokenMeta = new Map()) {
+function updateSimulationModeUI(status) {
     // Update season controls display
     updateMatchdaySnapshot(status);
-    updateSimulatedTokenPath(status, tokenMeta);
-    updateSimulationBotPortfolio(status);
-    updateSimulationLeaderboards(status, tokenMeta);
+    updatePopularTokens(status);
+    updateSimulationLeaderboards(status);
     updateSimulationEconomics(status);
 }
 
@@ -825,7 +619,7 @@ function updateMatchdaySnapshot(status) {
             <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
                 <div style="width: ${progress}%; height: 100%; background: linear-gradient(90deg, #00aaff 0%, #00ff88 100%); transition: width 0.3s ease;"></div>
             </div>
-            <div style="font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 6px;">${progress}% complete</div>
+            <div style="font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 6px;">${progress}% complete${status.date ? ` • ${status.date}` : ''}</div>
         </div>
         <div style="background: rgba(0,0,0,0.2); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
@@ -834,150 +628,110 @@ function updateMatchdaySnapshot(status) {
                     <div style="color: #fff; font-weight: 600;">${status.completed ? '✅ Completed' : '⏳ In Progress'}</div>
                 </div>
                 <div>
-                    <div style="font-size: 11px; color: rgba(255,255,255,0.5); margin-bottom: 4px;">Snapshots</div>
-                    <div style="color: #fff; font-weight: 600;">${status.snapshots} saved</div>
+                    <div style="font-size: 11px; color: rgba(255,255,255,0.5); margin-bottom: 4px;">NAV</div>
+                    <div style="color: #00ff88; font-weight: 600;">$${Number(status.nav || 0).toFixed(2)}</div>
+                </div>
+                <div>
+                    <div style="font-size: 11px; color: rgba(255,255,255,0.5); margin-bottom: 4px;">Cash / Positions</div>
+                    <div style="color: #fff; font-weight: 600;">$${Number(status.cash || 0).toFixed(2)} / $${Number(status.positionsValue || 0).toFixed(2)}</div>
+                </div>
+                <div>
+                    <div style="font-size: 11px; color: rgba(255,255,255,0.5); margin-bottom: 4px;">Reserve Tier / Top N</div>
+                    <div style="color: #fff; font-weight: 600;">$${Number(status.tier || 0).toLocaleString()} / ${status.topN}</div>
+                </div>
+                <div>
+                    <div style="font-size: 11px; color: rgba(255,255,255,0.5); margin-bottom: 4px;">Real Reserve %</div>
+                    <div style="color: #fff; font-weight: 600;">${Number(status.reservePct || 0).toFixed(2)}%</div>
+                </div>
+                <div>
+                    <div style="font-size: 11px; color: rgba(255,255,255,0.5); margin-bottom: 4px;">Trades Today</div>
+                    <div style="color: #fff; font-weight: 600;">${status.tradesToday || 0}</div>
                 </div>
             </div>
         </div>
+        ${status.recentDoublings && status.recentDoublings.length ? `
+        <div style="font-size: 11px; color: rgba(255,255,255,0.5); margin-bottom: 4px;">Recent Reserve-Mint Events</div>
+        <div style="font-size: 11px; color: rgba(255,255,255,0.7); line-height: 1.6; margin-bottom: 8px;">
+            ${status.recentDoublings.map((d) => `${d.date}: $${d.from.toLocaleString()} → $${d.to.toLocaleString()} (Top ${d.newTopN})`).join('<br>')}
+        </div>` : ''}
     `;
     panel.innerHTML = html;
 }
 
-function updateSimulatedTokenPath(status, tokenMeta = new Map()) {
+function updatePopularTokens(status) {
     const panel = document.getElementById('simulation-token-path');
     if (!panel) return;
 
-    const latest = status?.latestSnapshot;
-    const prices = Array.isArray(latest?.tokenPrices) ? latest.tokenPrices : [];
+    const tokens = Array.isArray(status?.popularTokens) ? status.popularTokens : [];
 
-    if (!prices.length) {
+    if (!tokens.length) {
         panel.innerHTML = `
             <div style="text-align: center; padding: 20px; color: rgba(255,255,255,0.5);">
-                <div>📊 Token Price Evolution</div>
-                <div style="font-size: 12px; margin-top: 8px;">Run simulation to generate token snapshots</div>
+                <div>📊 Popular Tokens</div>
+                <div style="font-size: 12px; margin-top: 8px;">Step the season forward to accumulate purchase data</div>
             </div>
         `;
         return;
     }
 
-    const cards = prices
-        .slice()
-        .sort((a, b) => Math.abs((b.change || 0)) - Math.abs((a.change || 0)))
-        .slice(0, 10)
-        .map((p) => {
-            const meta = tokenMeta.get(Number(p.tokenId));
-            const name = meta?.name || `Token #${p.tokenId}`;
-            const team = meta?.team || 'Simulation Market';
-            const change = Number(p.change || 0);
-            const up = change >= 0;
-            return `
-                <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09); border-radius: 10px; padding: 12px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
-                        <div>
-                            <div style="font-size: 13px; color: #fff; font-weight: 700;">${name}</div>
-                            <div style="font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 2px;">${team}</div>
-                        </div>
-                        <div style="text-align: right;">
-                            <div style="font-size: 13px; color: rgba(255,255,255,0.9);">$${Number(p.price || 0).toFixed(2)}</div>
-                            <div style="font-size: 12px; font-weight: 700; color: ${up ? '#00ff88' : '#ff6666'};">${up ? '+' : ''}${change.toFixed(2)}%</div>
-                        </div>
+    const cards = tokens
+        .map((t) => `
+            <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09); border-radius: 10px; padding: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+                    <div>
+                        <div style="font-size: 13px; color: #fff; font-weight: 700;">${t.name}</div>
+                        <div style="font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 2px;">${t.purchases} purchases</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 13px; color: rgba(255,255,255,0.9);">$${Number(t.lastPrice || 0).toFixed(2)}</div>
+                        <div style="font-size: 11px; color: rgba(255,255,255,0.55);">Position: $${Number(t.positionValue || 0).toFixed(2)}</div>
                     </div>
                 </div>
-            `;
-        })
+            </div>
+        `)
         .join('');
 
     panel.innerHTML = `
-        <div style="margin-bottom: 10px; font-size: 11px; color: rgba(255,255,255,0.55);">Live simulation token cards (updated each matchday). Current: MD ${status.currentMatchday}</div>
+        <div style="margin-bottom: 10px; font-size: 11px; color: rgba(255,255,255,0.55);">Top ${tokens.length} tokens by purchase count (cumulative, current: MD ${status.currentMatchday})</div>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px;">
             ${cards}
         </div>
     `;
 }
 
-function updateSimulationBotPortfolio(status) {
-    const panel = document.getElementById('simulation-bot-portfolio');
-    if (!panel) return;
-
-    const latest = status?.latestSnapshot;
-    const perf = Array.isArray(latest?.agentPerformance) ? latest.agentPerformance : [];
-    if (!status || !latest || !perf.length) {
-        panel.innerHTML = '<div style="padding: 16px; color: rgba(255,255,255,0.5);">No simulated bot portfolio data yet</div>';
-        return;
-    }
-
-    const rows = perf
-        .slice()
-        .sort((a, b) => Number(b.avgPnL || 0) - Number(a.avgPnL || 0))
-        .map((bucket) => {
-            const pnl = Number(bucket.avgPnL || 0);
-            const profitable = Number(bucket.profitableCount || 0);
-            const total = Number(bucket.totalCount || 0);
-            return `
-                <div style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; gap: 10px;">
-                    <div>
-                        <div style="font-size: 12px; color: #fff; font-weight: 700; text-transform: capitalize;">${String(bucket.type || 'Unknown')} strategy</div>
-                        <div style="font-size: 11px; color: rgba(255,255,255,0.55);">${profitable}/${total} profitable bots</div>
-                    </div>
-                    <div style="text-align: right; font-size: 12px; font-weight: 700; color: ${pnl >= 0 ? '#00ff88' : '#ff6666'};">
-                        ${pnl >= 0 ? '+' : ''}${pnl.toFixed(2)} avg P/L
-                    </div>
-                </div>
-            `;
-        })
-        .join('');
-
-    panel.innerHTML = `
-        <div style="font-size: 11px; color: rgba(255,255,255,0.55); margin-bottom: 10px;">Simulation-only portfolio rebalance view (MD ${status.currentMatchday})</div>
-        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; overflow: hidden;">
-            ${rows}
-        </div>
-    `;
-}
-
-function updateSimulationLeaderboards(status, tokenMeta = new Map()) {
+function updateSimulationLeaderboards(status) {
     const panel = document.getElementById('simulation-leaderboards');
     if (!panel) return;
 
-    const latest = status?.latestSnapshot;
-    const prices = Array.isArray(latest?.tokenPrices) ? latest.tokenPrices : [];
-    const perf = Array.isArray(latest?.agentPerformance) ? latest.agentPerformance : [];
-
-    if (!status || !latest || (!prices.length && !perf.length)) {
+    const tokens = Array.isArray(status?.popularTokens) ? status.popularTokens : [];
+    if (!status || !tokens.length) {
         panel.innerHTML = '<div style="padding: 16px; color: rgba(255,255,255,0.5);">No leaderboard data yet</div>';
         return;
     }
 
-    const topTokens = prices
+    const topByPosition = tokens
         .slice()
-        .sort((a, b) => Number(b.change || 0) - Number(a.change || 0))
+        .sort((a, b) => Number(b.positionValue || 0) - Number(a.positionValue || 0))
         .slice(0, 5)
-        .map((p, idx) => {
-            const meta = tokenMeta.get(Number(p.tokenId));
-            const name = meta?.name || `Token #${p.tokenId}`;
-            return `<div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:12px;"><span>${idx + 1}. ${name}</span><span style="color:#00ff88; font-weight:700;">+${Number(p.change || 0).toFixed(2)}%</span></div>`;
-        })
+        .map((t, idx) => `<div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:12px;"><span>${idx + 1}. ${t.name}</span><span style="color:#00ff88; font-weight:700;">$${Number(t.positionValue || 0).toFixed(2)}</span></div>`)
         .join('');
 
-    const topBots = perf
+    const topByPurchases = tokens
         .slice()
-        .sort((a, b) => Number(b.avgPnL || 0) - Number(a.avgPnL || 0))
+        .sort((a, b) => Number(b.purchases || 0) - Number(a.purchases || 0))
         .slice(0, 5)
-        .map((b, idx) => {
-            const pnl = Number(b.avgPnL || 0);
-            return `<div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:12px;"><span>${idx + 1}. ${String(b.type || 'Unknown')} bot</span><span style="color:${pnl >= 0 ? '#00ff88' : '#ff6666'}; font-weight:700;">${pnl >= 0 ? '+' : ''}${pnl.toFixed(2)}</span></div>`;
-        })
+        .map((t, idx) => `<div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:12px;"><span>${idx + 1}. ${t.name}</span><span style="color:#82d4ff; font-weight:700;">${t.purchases}x</span></div>`)
         .join('');
 
     panel.innerHTML = `
         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px;">
             <div style="background: rgba(0,255,136,0.08); border:1px solid rgba(0,255,136,0.2); border-radius:10px; padding:12px;">
-                <div style="font-size:12px; color:#8effc6; font-weight:700; margin-bottom:8px;">Best Performing Player Tokens</div>
-                ${topTokens || '<div style="font-size:12px; color:rgba(255,255,255,0.5);">No token data yet</div>'}
+                <div style="font-size:12px; color:#8effc6; font-weight:700; margin-bottom:8px;">Largest Treasury Positions</div>
+                ${topByPosition || '<div style="font-size:12px; color:rgba(255,255,255,0.5);">No position data yet</div>'}
             </div>
             <div style="background: rgba(0,170,255,0.08); border:1px solid rgba(0,170,255,0.2); border-radius:10px; padding:12px;">
-                <div style="font-size:12px; color:#82d4ff; font-weight:700; margin-bottom:8px;">Best Performing Bots</div>
-                ${topBots || '<div style="font-size:12px; color:rgba(255,255,255,0.5);">No bot data yet</div>'}
+                <div style="font-size:12px; color:#82d4ff; font-weight:700; margin-bottom:8px;">Most Purchased Tokens</div>
+                ${topByPurchases || '<div style="font-size:12px; color:rgba(255,255,255,0.5);">No purchase data yet</div>'}
             </div>
         </div>
     `;
@@ -992,14 +746,12 @@ function updateSimulationEconomics(status) {
         return;
     }
 
-    // Calculate simulated economics from season status payload
-    const latest = status.latestSnapshot || {};
-    const weeklyFees = Number(latest.feesCollected || 0);
-    const weeklyVolume = Number(latest.tradingVolume || 0);
-    const cumulativeFees = Number(status.platformFeesCollected || 0);
-    const cumulativeVolume = Number(status.totalTradingVolume || 0);
+    const feesToday = Number(status.feesToday || 0);
+    const cumulativeFees = Number(status.cumulativeFees || 0);
+    const cumulativeVolume = Number(status.cumulativeVolume || 0);
+    const feesRetained = Number(status.feesRetainedForOperations || 0);
     const monthlyOpEx = EconomicsCalculator.getTotalMonthlyOpEx();
-    const weeksActive = Math.ceil(status.currentMatchday / 9.5);
+    const weeksActive = Math.max(1, Math.ceil(status.currentMatchday / 9.5));
     const proportionalOpEx = (monthlyOpEx / 4.33) * weeksActive;
     const netValue = cumulativeFees - proportionalOpEx;
 
@@ -1008,7 +760,7 @@ function updateSimulationEconomics(status) {
             <div style="background: rgba(0,255,136,0.1); padding: 12px; border-radius: 8px; border: 1px solid rgba(0,255,136,0.2);">
                 <div style="font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase; margin-bottom: 4px;">Cumulative Fees</div>
                 <div style="font-size: 18px; font-weight: 700; color: #00ff88;">$${cumulativeFees.toFixed(2)}</div>
-                <div style="font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 4px;">Weekly: $${weeklyFees.toFixed(2)}</div>
+                <div style="font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 4px;">Today: $${feesToday.toFixed(2)}</div>
             </div>
             <div style="background: rgba(255,170,0,0.1); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,170,0,0.2);">
                 <div style="font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase; margin-bottom: 4px;">Proportional OpEx</div>
@@ -1017,7 +769,7 @@ function updateSimulationEconomics(status) {
             </div>
         </div>
         <div style="background: rgba(0,200,255,0.1); padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(0,200,255,0.2); margin-bottom: 12px; font-size: 12px; color: rgba(255,255,255,0.8);">
-            Volume this week: $${weeklyVolume.toFixed(2)} • Cumulative volume: $${cumulativeVolume.toFixed(2)}
+            Cumulative treasury volume: $${cumulativeVolume.toFixed(2)} • Fees retained for operations: $${feesRetained.toFixed(2)}
         </div>
         <div style="background: ${netValue >= 0 ? 'rgba(0,255,136,0.1)' : 'rgba(255,68,68,0.1)'}; padding: 12px; border-radius: 8px; border: 1px solid ${netValue >= 0 ? 'rgba(0,255,136,0.2)' : 'rgba(255,68,68,0.2)'};">
             <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -1071,241 +823,3 @@ if (document.readyState === 'loading') {
 setInterval(() => {
     loadModeData();
 }, 30000);
-
-// ============================================================================
-// WC 2026 TOURNAMENT SIMULATOR
-// ============================================================================
-
-const WC_2026_NATIONS = {
-    A: ['Mexico', 'South Korea', 'Czech Republic', 'South Africa'],
-    B: ['Canada', 'Qatar', 'Switzerland', 'Bosnia & Herzegovina'],
-    C: ['USA', 'Paraguay', 'Australia', 'Türkiye'],
-    D: ['Brazil', 'Morocco', 'Haiti', 'Scotland'],
-    E: ['Germany', 'Ivory Coast', 'Ecuador', 'Curaçao'],
-    F: ['Netherlands', 'Japan', 'Sweden', 'Tunisia'],
-    G: ['Spain', 'Saudi Arabia', 'Uruguay', 'Cape Verde Islands'],
-    H: ['Belgium', 'Egypt', 'Iran', 'New Zealand'],
-    I: ['France', 'Senegal', 'Iraq', 'Norway'],
-    J: ['Argentina', 'Algeria', 'Austria', 'Jordan'],
-    K: ['Portugal', 'Congo DR', 'Uzbekistan', 'Colombia'],
-    L: ['England', 'Croatia', 'Ghana', 'Panama'],
-};
-
-let tsCurrentMode = 'team';
-
-function tsSelectMode(mode) {
-    tsCurrentMode = mode;
-    const isTeam = mode === 'team';
-    document.getElementById('ts-panel-team').style.display = isTeam ? 'block' : 'none';
-    document.getElementById('ts-panel-predict').style.display = isTeam ? 'none' : 'block';
-
-    const teamBtn = document.getElementById('ts-tab-team');
-    const predictBtn = document.getElementById('ts-tab-predict');
-    if (isTeam) {
-        teamBtn.style.border = '1px solid #00ff88';
-        teamBtn.style.background = 'rgba(0,255,136,0.15)';
-        teamBtn.style.color = '#00ff88';
-        predictBtn.style.border = '1px solid rgba(255,255,255,0.2)';
-        predictBtn.style.background = 'rgba(255,255,255,0.05)';
-        predictBtn.style.color = 'rgba(255,255,255,0.6)';
-    } else {
-        predictBtn.style.border = '1px solid #ffaa00';
-        predictBtn.style.background = 'rgba(255,170,0,0.15)';
-        predictBtn.style.color = '#ffaa00';
-        teamBtn.style.border = '1px solid rgba(255,255,255,0.2)';
-        teamBtn.style.background = 'rgba(255,255,255,0.05)';
-        teamBtn.style.color = 'rgba(255,255,255,0.6)';
-    }
-}
-
-function initTournamentSimPanel() {
-    const sel = document.getElementById('ts-team-select');
-    if (!sel) return;
-    for (const [group, teams] of Object.entries(WC_2026_NATIONS)) {
-        const og = document.createElement('optgroup');
-        og.label = `Group ${group}`;
-        teams.forEach(t => {
-            const opt = document.createElement('option');
-            opt.value = t;
-            opt.textContent = t;
-            og.appendChild(opt);
-        });
-        sel.appendChild(og);
-    }
-}
-
-async function runTeamSimulation() {
-    const team = document.getElementById('ts-team-select').value;
-    if (!team) { if (window.showToast) showToast('Select a team first', 'error'); return; }
-
-    document.getElementById('ts-team-loading').style.display = 'block';
-    document.getElementById('ts-team-results').style.display = 'none';
-    document.getElementById('ts-team-error').style.display = 'none';
-
-    try {
-        const res = await fetch(`${API_BASE}/simulation/wc-tournament/team`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ team, iterations: 20 }),
-        });
-        if (!res.ok) throw new Error(`API ${res.status}: ${await res.text()}`);
-        const data = await res.json();
-        renderTeamResult(data);
-    } catch (err) {
-        document.getElementById('ts-team-error').textContent = `Error: ${err.message}`;
-        document.getElementById('ts-team-error').style.display = 'block';
-    } finally {
-        document.getElementById('ts-team-loading').style.display = 'none';
-    }
-}
-
-function renderTeamResult(data) {
-    const roundsEl = document.getElementById('ts-team-rounds');
-    roundsEl.innerHTML = data.rounds.map(r => `
-        <div style="margin-bottom:12px;">
-            <div style="font-size:11px; font-weight:700; color:rgba(255,255,255,0.5); text-transform:uppercase; margin-bottom:6px; letter-spacing:1px;">${r.name}</div>
-            ${r.matches.map(m => renderMatchCard(m, data.team)).join('')}
-        </div>
-    `).join('');
-
-    const banner = document.getElementById('ts-team-banner');
-    if (data.champion) {
-        banner.innerHTML = `<div style="padding:20px; text-align:center; background:linear-gradient(135deg,rgba(255,215,0,0.2),rgba(255,165,0,0.1)); border:1px solid gold; border-radius:12px;">
-            <div style="font-size:32px;">🏆</div>
-            <div style="font-size:20px; font-weight:700; color:gold; margin-top:4px;">${data.team} are World Champions!</div>
-        </div>`;
-    } else {
-        const lastRound = data.rounds[data.rounds.length - 1];
-        banner.innerHTML = `<div style="padding:16px; text-align:center; background:rgba(255,0,0,0.08); border:1px solid rgba(255,77,77,0.4); border-radius:12px;">
-            <div style="font-size:24px;">❌</div>
-            <div style="color:#ff6b6b; font-weight:600; margin-top:4px;">${data.team} eliminated in ${lastRound?.name ?? 'the tournament'}${data.eliminatedBy ? ` by ${data.eliminatedBy}` : ''}</div>
-        </div>`;
-    }
-
-    if (data.revenueProjection) {
-        document.getElementById('ts-team-revenue').innerHTML = renderRevenueCard(data.revenueProjection);
-    }
-
-    document.getElementById('ts-team-results').style.display = 'block';
-}
-
-function renderMatchCard(match, highlightTeam) {
-    const winnerColor = (team) => team === match.winner ? '#00ff88' : 'rgba(255,255,255,0.4)';
-    const homeColor = winnerColor(match.homeTeam);
-    const awayColor = winnerColor(match.awayTeam);
-    const roundLabel = match.isKnockout && match.simulatedHome === match.simulatedAway
-        ? ` <span style="font-size:10px; color:#ffaa00;">(pens)</span>` : '';
-    return `<div style="display:flex; align-items:center; justify-content:space-between; padding:10px 14px; background:rgba(255,255,255,0.04); border-radius:8px; margin-bottom:4px; border:1px solid rgba(255,255,255,0.08);">
-        <span style="flex:2; color:${homeColor}; font-weight:${match.homeTeam === highlightTeam ? '700' : '400'};">${match.homeTeam}</span>
-        <span style="flex:1; text-align:center; font-size:18px; font-weight:700; color:#fff;">${match.simulatedHome} – ${match.simulatedAway}${roundLabel}</span>
-        <span style="flex:2; text-align:right; color:${awayColor}; font-weight:${match.awayTeam === highlightTeam ? '700' : '400'};">${match.awayTeam}</span>
-    </div>`;
-}
-
-async function runFullPredictionMode() {
-    document.getElementById('ts-predict-loading').style.display = 'block';
-    document.getElementById('ts-predict-results').style.display = 'none';
-    document.getElementById('ts-predict-error').style.display = 'none';
-
-    try {
-        const res = await fetch(`${API_BASE}/simulation/wc-tournament/predict`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ iterations: 20 }),
-        });
-        if (!res.ok) throw new Error(`API ${res.status}: ${await res.text()}`);
-        const data = await res.json();
-        renderPredictionResult(data);
-    } catch (err) {
-        document.getElementById('ts-predict-error').textContent = `Error: ${err.message}`;
-        document.getElementById('ts-predict-error').style.display = 'block';
-    } finally {
-        document.getElementById('ts-predict-loading').style.display = 'none';
-    }
-}
-
-function renderPredictionResult(data) {
-    document.getElementById('ts-predict-champion').innerHTML = `
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-            <div style="padding:20px; text-align:center; background:linear-gradient(135deg,rgba(255,215,0,0.2),rgba(255,165,0,0.1)); border:1px solid gold; border-radius:12px;">
-                <div style="font-size:28px;">🏆</div>
-                <div style="font-size:11px; color:rgba(255,255,255,0.5); text-transform:uppercase; margin:4px 0;">Predicted Champion</div>
-                <div style="font-size:20px; font-weight:700; color:gold;">${data.predictedChampion}</div>
-            </div>
-            <div style="padding:20px; text-align:center; background:rgba(192,192,192,0.1); border:1px solid rgba(192,192,192,0.4); border-radius:12px;">
-                <div style="font-size:28px;">🥈</div>
-                <div style="font-size:11px; color:rgba(255,255,255,0.5); text-transform:uppercase; margin:4px 0;">Runner-Up</div>
-                <div style="font-size:18px; font-weight:700; color:silver;">${data.runnerUp}</div>
-            </div>
-        </div>`;
-
-    if (data.topPerformers && data.topPerformers.length) {
-        document.getElementById('ts-predict-performers').innerHTML = renderTopPerformers(data.topPerformers);
-    }
-
-    if (data.analystNote) {
-        document.getElementById('ts-predict-note').innerHTML = `
-            <div style="padding:16px; background:rgba(0,200,255,0.06); border:1px solid rgba(0,200,255,0.2); border-radius:10px;">
-                <div style="font-size:11px; font-weight:700; color:rgba(0,200,255,0.8); text-transform:uppercase; margin-bottom:8px; letter-spacing:1px;">🤖 AI Analyst Note</div>
-                <p style="color:rgba(255,255,255,0.8); font-size:13px; line-height:1.6; margin:0;">${data.analystNote}</p>
-            </div>`;
-    }
-
-    if (data.revenueProjection) {
-        document.getElementById('ts-predict-revenue').innerHTML = renderRevenueCard(data.revenueProjection);
-    }
-
-    document.getElementById('ts-predict-results').style.display = 'block';
-}
-
-function renderTopPerformers(performers) {
-    const cards = performers.map(p => `
-        <div style="padding:12px; background:rgba(0,255,136,0.05); border:1px solid rgba(0,255,136,0.2); border-radius:8px;">
-            <div style="font-weight:700; color:#00ff88; font-size:14px;">${p.name}</div>
-            <div style="font-size:11px; color:rgba(255,255,255,0.5); margin:2px 0;">${p.team}</div>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
-                <span style="font-size:12px; color:rgba(255,255,255,0.6);">$${p.currentPrice.toFixed(2)} → $${p.projectedPrice.toFixed(2)}</span>
-                <span style="font-weight:700; color:#00ff88;">+${p.deltaPct.toFixed(1)}%</span>
-            </div>
-            <div style="font-size:10px; color:rgba(255,255,255,0.4); margin-top:4px;">${p.reason}</div>
-        </div>`).join('');
-    return `<div>
-        <div style="font-size:11px; font-weight:700; color:rgba(255,255,255,0.5); text-transform:uppercase; margin-bottom:8px; letter-spacing:1px;">🚀 Top 5 Token Value Movers</div>
-        <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:10px;">${cards}</div>
-    </div>`;
-}
-
-function renderRevenueCard(rev) {
-    const rows = rev.byRound.map(r =>
-        `<tr><td style="padding:4px 8px; color:rgba(255,255,255,0.7);">${r.round}</td>
-         <td style="padding:4px 8px; text-align:center; color:rgba(255,255,255,0.5);">${r.matches}</td>
-         <td style="padding:4px 8px; text-align:right; color:#00ff88;">$${r.volume.toFixed(2)}</td>
-         <td style="padding:4px 8px; text-align:right; color:#ffaa00;">$${r.fees.toFixed(2)}</td></tr>`
-    ).join('');
-    return `<div style="padding:14px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); border-radius:10px;">
-        <div style="font-size:11px; font-weight:700; color:rgba(255,255,255,0.5); text-transform:uppercase; margin-bottom:10px; letter-spacing:1px;">💰 Revenue Projection (115 agents)</div>
-        <table style="width:100%; border-collapse:collapse; font-size:12px;">
-            <thead><tr style="border-bottom:1px solid rgba(255,255,255,0.1);">
-                <th style="padding:4px 8px; text-align:left; color:rgba(255,255,255,0.4); font-weight:400;">Round</th>
-                <th style="padding:4px 8px; text-align:center; color:rgba(255,255,255,0.4); font-weight:400;">Matches</th>
-                <th style="padding:4px 8px; text-align:right; color:rgba(255,255,255,0.4); font-weight:400;">Volume</th>
-                <th style="padding:4px 8px; text-align:right; color:rgba(255,255,255,0.4); font-weight:400;">Fees</th>
-            </tr></thead>
-            <tbody>${rows}</tbody>
-        </table>
-        <div style="display:flex; justify-content:space-between; margin-top:10px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.1);">
-            <span style="font-size:12px; color:rgba(255,255,255,0.5);">Total volume: <strong style="color:#00ff88;">$${rev.totalVolume.toFixed(2)}</strong></span>
-            <span style="font-size:12px; color:rgba(255,255,255,0.5);">Total fees: <strong style="color:#ffaa00;">$${rev.totalFees.toFixed(2)}</strong></span>
-            <span style="font-size:12px; color:rgba(255,255,255,0.5);">Break-even: <strong style="color:#00c8ff;">${rev.breakEvenDays} days</strong></span>
-        </div>
-    </div>`;
-}
-
-// Initialise tournament panel when DOM is ready
-(function initTsPanel() {
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initTournamentSimPanel);
-    } else {
-        initTournamentSimPanel();
-    }
-})();
