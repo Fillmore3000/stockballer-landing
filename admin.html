@@ -1417,6 +1417,26 @@
                         <div style="padding: 20px; text-align: center; color: rgba(255,255,255,0.5);">Loading...</div>
                     </div>
                 </div>
+
+                <!-- Simulated Managers — per-agent roster.
+                     Runtime status and Start/Stop/Manual Tick live in the
+                     existing "Frontend-Agent Runtime Health" card further down;
+                     deliberately not repeated here. This panel answers the
+                     question that card cannot: what is each individual agent
+                     actually doing. -->
+                <div class="live-panel" style="grid-column: 1 / -1;">
+                    <div class="live-panel-title">
+                        🎭 Simulated Managers
+                        <span class="data-badge" id="agent-roster-count">—</span>
+                        <button class="action-btn"
+                            style="height:26px; padding:0 10px; font-size:11px; margin-left:auto;"
+                            onclick="loadAgents()">🔄 Refresh</button>
+                    </div>
+
+                    <div id="agent-roster" style="max-height: 420px; overflow-y: auto;">
+                        <div style="padding: 20px; text-align: center; color: rgba(255,255,255,0.5);">Loading…</div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -2338,19 +2358,13 @@
             window.activeSeasonRunId = activeSeasonRunId;
         }
 
-        // Resolve API base dynamically for local development.
-        function getApiCandidates() {
-            const host = window.location.hostname || 'localhost';
-            const protocol = window.location.protocol === 'https:' ? 'https' : 'http';
+        // The deployed backend. Anything not served from localhost talks to this.
+        const PRODUCTION_API_BASE = 'https://stockballer-api-production.up.railway.app/api';
 
-            return [
-                'http://localhost:3001/api',
-                'http://127.0.0.1:3001/api',
-                `${protocol}://${host}:3001/api`,
-                `${protocol}://${host}:8080/api`,
-                'https://stockballer-api-production.up.railway.app/api',
-            ];
-        }
+        // getApiCandidates() lived here. It returned a probe list starting with
+        // localhost, and is gone with the probing itself: the dashboard now
+        // resolves to localhost when served locally and to production
+        // otherwise, with ?api= as the deliberate override. Nothing guesses.
 
         async function resolveApiBase() {
             const params = new URLSearchParams(window.location.search);
@@ -2380,7 +2394,17 @@
                 return;
             }
 
-            // Deployed dashboard: use stored override if present, otherwise probe candidates.
+            // Deployed dashboard: production, directly.
+            //
+            // This used to probe getApiCandidates() in order, which starts with
+            // http://localhost:3001. So an operator with a local API running
+            // could have the LIVE dashboard silently attach to their laptop —
+            // and it was then written to localStorage, so it stuck. Reading
+            // production numbers is the whole point of the deployed dashboard;
+            // it should never guess.
+            //
+            // A stored override still wins, so ?api= remains usable for
+            // pointing the deployed page at something else deliberately.
             const apiFromStorage = localStorage.getItem('stockballer_admin_api_base');
             if (apiFromStorage) {
                 setApiBase(apiFromStorage);
@@ -2388,23 +2412,8 @@
                 return;
             }
 
-            const candidates = getApiCandidates();
-            for (const candidate of candidates) {
-                try {
-                    const res = await fetch(`${candidate}/health`, { method: 'GET' });
-                    if (res.ok) {
-                        setApiBase(candidate);
-                        console.log('[Admin] API base auto-selected:', API_BASE);
-                        return;
-                    }
-                } catch (err) {
-                    // Try next candidate.
-                }
-            }
-
-            // Final fallback.
-            setApiBase('https://stockballer-api-production.up.railway.app/api');
-            console.warn('[Admin] Could not verify API candidate. Falling back to', API_BASE);
+            setApiBase(PRODUCTION_API_BASE);
+            console.log('[Admin] Deployed dashboard — API base set to production');
         }
 
         // Check login status on load
@@ -2652,7 +2661,8 @@
                     loadUserActionMonitoring(),
                     typeof loadAuditTrail === 'function' ? loadAuditTrail() : Promise.resolve(),
                     loadSeasonRunStatus(),
-                    loadPracticeRunStatus()
+                    loadPracticeRunStatus(),
+                    loadAgents()
                 ]);
                 updateApiStatus(true);
 
@@ -4675,6 +4685,95 @@
         function refreshAll() {
             showToast('🔄 Refreshing...');
             loadDashboard();
+        }
+
+        // ===================== SIMULATED MANAGERS (AGENTS) =====================
+
+        // Agent display names are operator-editable, so they are untrusted input
+        // by the time they reach innerHTML.
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        // Agents are real User accounts flagged isAgent, driven through the
+        // app's own endpoints. Players cannot distinguish them; this panel is
+        // the only place they are identified as simulated.
+
+        async function loadAgents() {
+            const roster = document.getElementById('agent-roster');
+            const countBadge = document.getElementById('agent-roster-count');
+            if (!roster) return;
+
+            try {
+                const rosterRes = await adminFetch(`${API_BASE}/frontend-agents/roster`);
+                if (!rosterRes.ok) throw new Error(`roster HTTP ${rosterRes.status}`);
+                const data = await rosterRes.json();
+
+                if (countBadge) {
+                    const active = (data.agents || []).filter((a) => a.actions24h > 0).length;
+                    countBadge.textContent = `${data.total} seeded · ${active} active 24h`;
+                    countBadge.className = data.runtimeEnabled ? 'data-badge live' : 'data-badge';
+                }
+
+                if (!data.agents || data.agents.length === 0) {
+                    roster.innerHTML =
+                        '<div style="padding:20px;text-align:center;color:rgba(255,255,255,0.5);">' +
+                        'No agents seeded. Run <code>npx ts-node scripts/seed-agents.ts</code>' +
+                        '</div>';
+                    return;
+                }
+
+                const rows = data.agents.map((a) => {
+                    const pnl = Number(a.totalPnL || 0);
+                    const pnlColor = pnl > 0 ? '#00ff88' : pnl < 0 ? '#ff5470' : 'rgba(255,255,255,0.5)';
+                    const idle = !a.lastActionAt;
+                    return `
+                    <tr>
+                        <td style="padding:8px 10px;">
+                            <div style="font-weight:600;">${escapeHtml(a.displayName || '—')}</div>
+                            <div style="font-size:11px;color:rgba(255,255,255,0.4);">${truncateAddress(a.walletAddress)}</div>
+                        </td>
+                        <td style="padding:8px 10px;"><span class="data-badge">${escapeHtml(a.persona || '—')}</span></td>
+                        <td style="padding:8px 10px;text-align:right;">${Math.round(a.balance).toLocaleString()}</td>
+                        <td style="padding:8px 10px;text-align:right;">${a.holdings}</td>
+                        <td style="padding:8px 10px;text-align:right;">${a.trades}</td>
+                        <td style="padding:8px 10px;text-align:right;color:${pnlColor};">
+                            ${pnl > 0 ? '+' : ''}${Math.round(pnl).toLocaleString()}
+                        </td>
+                        <td style="padding:8px 10px;text-align:right;">${a.actions24h}</td>
+                        <td style="padding:8px 10px;color:${idle ? 'rgba(255,255,255,0.35)' : 'inherit'};">
+                            ${idle ? 'never' : formatTime(a.lastActionAt)}
+                        </td>
+                    </tr>`;
+                }).join('');
+
+                roster.innerHTML = `
+                    <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                        <thead>
+                            <tr style="color:rgba(255,255,255,0.5);font-size:11px;text-transform:uppercase;">
+                                <th style="padding:8px 10px;text-align:left;">Manager</th>
+                                <th style="padding:8px 10px;text-align:left;">Persona</th>
+                                <th style="padding:8px 10px;text-align:right;">Coins</th>
+                                <th style="padding:8px 10px;text-align:right;">Holdings</th>
+                                <th style="padding:8px 10px;text-align:right;">Trades</th>
+                                <th style="padding:8px 10px;text-align:right;">P&amp;L</th>
+                                <th style="padding:8px 10px;text-align:right;">24h actions</th>
+                                <th style="padding:8px 10px;text-align:left;">Last action</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rows}</tbody>
+                    </table>`;
+            } catch (error) {
+                console.error('Agent roster load failed:', error);
+                roster.innerHTML =
+                    `<div style="padding:20px;text-align:center;color:#ff5470;">Could not load agents: ${escapeHtml(String(error.message || error))}</div>`;
+                if (countBadge) { countBadge.textContent = 'ERROR'; countBadge.className = 'data-badge'; }
+            }
         }
 
         // Helpers
