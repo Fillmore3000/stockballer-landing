@@ -3748,7 +3748,12 @@
         }
 
         async function fetchFrontendAgentRuntimeStatus() {
-            const response = await fetch(`${API_BASE}/frontend-agents/status`);
+            // adminFetch, not fetch: /frontend-agents/status became AdminGuard-
+            // protected on 2026-09-01. It was previously open — anonymously
+            // readable from production — and this caller was written against
+            // that. Gating the route without updating it 401'd the runtime
+            // health card.
+            const response = await adminFetch(`${API_BASE}/frontend-agents/status`);
             if (!response.ok) {
                 throw new Error(`frontend-agents/status HTTP ${response.status}`);
             }
