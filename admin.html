@@ -2329,10 +2329,11 @@
         // The admin key is TYPED AT LOGIN, never stored in this file.
         //
         // It used to be three hardcoded constants — password, API key and WS key,
-        // all 'stockballer2026' — served publicly at stockballer.app/admin. Anyone
-        // could read them with view-source. The only thing keeping production
-        // admin closed was that Railway's real key happened to differ, which is
-        // accident rather than design.
+        // all sharing one literal — served publicly on this page, readable with
+        // view-source. The only thing keeping production admin closed was that
+        // Railway's real key happened to differ, which is accident rather than
+        // design. The old value is deliberately not repeated here: a public file
+        // is no place for a credential, including a retired one.
         //
         // sessionStorage, not localStorage: the key should not outlive the tab.
         const ADMIN_KEY_STORAGE = 'stockballer_admin_key';
