@@ -47,7 +47,7 @@
     src="https://www.facebook.net/tr?id=951628244105805&ev=PageView&noscript=1"/></noscript>
     <!-- End Meta Pixel Code -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StockBaller - The Stock Market for Professional Football</title>
+    <title>StockBaller - Fantasy Football with a Live Player Market</title>
 
     <!-- SEO Meta Tags -->
     <meta name="description"
@@ -61,7 +61,7 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://stockballer.app/">
-    <meta property="og:title" content="StockBaller - The Stock Market for Professional Football">
+    <meta property="og:title" content="StockBaller - Fantasy Football with a Live Player Market">
     <meta property="og:description"
         content="Fantasy football with a live player market. Hold Premier League stars season after season as their value rises and falls with real performances, predict matchdays, and challenge other managers. Free to play, in-game coins only.">
     <meta property="og:image" content="https://stockballer.app/NewLogo.png">
@@ -71,7 +71,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@StockBallerApp">
     <meta name="twitter:creator" content="@StockBallerApp">
-    <meta name="twitter:title" content="StockBaller - The Stock Market for Professional Football">
+    <meta name="twitter:title" content="StockBaller - Fantasy Football with a Live Player Market">
     <meta name="twitter:description"
         content="Fantasy football with a live player market. Hold Premier League stars season after season as their value rises and falls with real performances, predict matchdays, and challenge other managers. Free to play, in-game coins only.">
     <meta name="twitter:image" content="https://stockballer.app/NewLogo.png">
@@ -1046,7 +1046,7 @@
             text-transform: uppercase;
         }
 
-        /* Investment Calculator */
+        /* Squad Value Calculator */
 
         .calculator-container {
             display: grid;
@@ -2393,7 +2393,6 @@
                 <span class="nav-link" onclick="scrollToSection('performers')">Results</span>
                 <span class="nav-link" onclick="scrollToSection('faq')">FAQ</span>
                 <a href="blog.html" class="nav-link">Insights</a>
-                <a href="/investors" class="nav-link">Investors</a>
             </div>
             <a href="/app" class="nav-cta" style="text-decoration: none;">Launch App</a>
         </div>
@@ -2417,8 +2416,8 @@
 
                     <div class="hero-stats">
                         <div class="hero-stat">
-                            <div class="hero-stat-value" id="hero-volume">$3.1M</div>
-                            <div class="hero-stat-label">Back-Tested Volume</div>
+                            <div class="hero-stat-value" id="hero-volume">3.1M</div>
+                            <div class="hero-stat-label">Coins Traded (Back-Test)</div>
                         </div>
                         <div class="hero-stat">
                             <div class="hero-stat-value" id="hero-return">+137%</div>
@@ -2447,9 +2446,9 @@
                     <div style="margin-top: 20px; margin-bottom: 4px;">
                         <p style="font-size: 0.82rem; color: rgba(255,255,255,0.45); margin-bottom: 10px;">How do you follow football?</p>
                         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                            <button class="btn-secondary" onclick="trackPersona('bettor')" style="font-size: 0.82rem; padding: 9px 14px;">I bet on matches</button>
+                            <button class="btn-secondary" onclick="trackPersona('bettor')" style="font-size: 0.82rem; padding: 9px 14px;">I follow the odds</button>
                             <button class="btn-secondary" onclick="trackPersona('fantasy')" style="font-size: 0.82rem; padding: 9px 14px;">I play fantasy</button>
-                            <button class="btn-secondary" onclick="trackPersona('investor')" style="font-size: 0.82rem; padding: 9px 14px;">Investor brief</button>
+                            <button class="btn-secondary" onclick="trackPersona('stats')" style="font-size: 0.82rem; padding: 9px 14px;">I follow the stats</button>
                         </div>
                     </div>
 
@@ -2481,8 +2480,8 @@
 
                         <div class="athlete-price">
                             <div>
-                                <div style="color: #888; font-size: 0.85rem;">Current Price</div>
-                                <div class="price-current" id="preview-price">$376.00</div>
+                                <div style="color: #888; font-size: 0.85rem;">Current Value</div>
+                                <div class="price-current" id="preview-price">376 coins</div>
                             </div>
                             <div class="price-change" id="preview-change">
                                 <span>↑</span>
@@ -2618,8 +2617,8 @@
 
             <div class="steps-grid">
                 <div class="step-card">
-                    <h3>10,000 Starting Coins</h3>
-                    <p>Get a massive, simulated balance to build your opening player portfolio completely free.</p>
+                    <h3>1,000 Starting Coins</h3>
+                    <p>Every new manager gets a free coin balance to build an opening squad. No payment required.</p>
                 </div>
                 <div class="step-card">
                     <h3>Weekly Matchday Prizes</h3>
@@ -2714,7 +2713,7 @@
         </div>
     </section>
 
-    <!-- Investment Calculator -->
+    <!-- Squad Value Calculator -->
     <section class="section calculator-section" id="calculator">
         <div class="container">
             <div class="calculator-container">
@@ -2807,17 +2806,17 @@
                 <div class="trust-card">
                     <div class="trust-value" id="trust-investors">1,000</div>
                     <div class="trust-label">Simulated Managers</div>
-                    <div class="trust-desc">4 different trading strategies tested</div>
+                    <div class="trust-desc">4 different squad strategies tested</div>
                 </div>
                 <div class="trust-card">
-                    <div class="trust-value" id="trust-volume">$3.1M</div>
-                    <div class="trust-label">Trading Volume</div>
-                    <div class="trust-desc">Total simulated transaction value</div>
+                    <div class="trust-value" id="trust-volume">3.1M</div>
+                    <div class="trust-label">Coins Traded</div>
+                    <div class="trust-desc">Total simulated in-game coin volume</div>
                 </div>
                 <div class="trust-card">
-                    <div class="trust-value" id="trust-fees">$22.4K</div>
-                    <div class="trust-label">Platform Fees</div>
-                    <div class="trust-desc">0.5% per trade—we earn when you trade</div>
+                    <div class="trust-value" id="trust-fees">22.4K</div>
+                    <div class="trust-label">In-Game Fees</div>
+                    <div class="trust-desc">0.5% of each trade, charged in coins</div>
                 </div>
             </div>
         </div>
@@ -2828,15 +2827,15 @@
         <div class="container">
             <div class="risk-container">
                 <div class="risk-content">
-                    <h3>We're Honest About Risk</h3>
-                    <p>Not every pick works out. Our simulation found both big winners and losers—just like real
-                        markets.</p>
+                    <h3>Not Every Pick Works Out</h3>
+                    <p>Our simulation found both big winners and big fallers—just like a real season of
+                        football form.</p>
 
                     <div class="risk-item">
                         <div class="risk-icon success">✓</div>
                         <div class="risk-text">
                             <strong id="risk-top">Top Performer: Erling Haaland +261.5%</strong>
-                            <span id="risk-top-desc">38 goals across all competitions drove premium gains</span>
+                            <span id="risk-top-desc">38 goals across all competitions drove a big rise in value</span>
                         </div>
                     </div>
 
@@ -2844,23 +2843,23 @@
                         <div class="risk-icon warning">!</div>
                         <div class="risk-text">
                             <strong id="risk-worst">Worst Performer: Ruben Dias -39.3%</strong>
-                            <span id="risk-worst-desc">Injuries and poor form caused significant losses</span>
+                            <span id="risk-worst-desc">Injuries and poor form caused a steep fall in value</span>
                         </div>
                     </div>
 
                     <div class="risk-item">
                         <div class="risk-icon info">i</div>
                         <div class="risk-text">
-                            <strong id="risk-drawdown">Max Drawdown: 46.4%</strong>
-                            <span>The worst peak-to-trough decline in our simulation</span>
+                            <strong id="risk-drawdown">Biggest Drop: 46.4%</strong>
+                            <span>The steepest fall in a player's value in our simulation</span>
                         </div>
                     </div>
 
                     <div class="risk-item">
                         <div class="risk-icon success">✓</div>
                         <div class="risk-text">
-                            <strong id="risk-volatility">Average Volatility: 3.3%</strong>
-                            <span>Weekly price movements—expect ups and downs</span>
+                            <strong id="risk-volatility">Average Weekly Swing: 3.3%</strong>
+                            <span>How much a player's value moves week to week</span>
                         </div>
                     </div>
                 </div>
@@ -2920,8 +2919,8 @@
                     </div>
                     <div class="faq-answer">
                         <div class="faq-answer-content">
-                            Nothing — StockBaller is completely free to play. Sign up and get 10,000 simulated coins
-                            to start building your portfolio immediately, no payment or card details required.
+                            Nothing — StockBaller is completely free to play. Sign up and get 1,000 in-game coins
+                            to start building your squad immediately, no payment or card details required.
                         </div>
                     </div>
                 </div>
@@ -3135,14 +3134,14 @@
 
             // Hero stats - live market cap across all current tokens
             const totalMarketCap = tokenResults.reduce((sum, t) => sum + t.endPrice * (t.totalSupply || 0), 0);
-            document.getElementById('hero-volume').textContent = formatCurrency(totalMarketCap);
+            document.getElementById('hero-volume').textContent = formatCoins(totalMarketCap);
 
             // Average return across all live tokens
             const avgReturn = tokenResults.reduce((sum, t) => sum + t.totalReturn, 0) / tokenResults.length;
             document.getElementById('hero-return').textContent = '+' + avgReturn.toFixed(1) + '%';
 
             // Trust section
-            document.getElementById('trust-volume').textContent = formatCurrency(totalMarketCap);
+            document.getElementById('trust-volume').textContent = formatCoins(totalMarketCap);
 
             // Render performers
             renderPerformers(tokenResults);
@@ -3219,16 +3218,16 @@
                     </div>
                     <div class="performer-details">
                         <div class="performer-stat">
-                            <div class="performer-stat-value">$${token.startPrice?.toFixed(0) || 100}</div>
-                            <div class="performer-stat-label">Start</div>
+                            <div class="performer-stat-value">${token.startPrice?.toFixed(0) || 100}</div>
+                            <div class="performer-stat-label">Start (coins)</div>
                         </div>
                         <div class="performer-stat">
-                            <div class="performer-stat-value">$${token.endPrice?.toFixed(0) || 200}</div>
-                            <div class="performer-stat-label">End</div>
+                            <div class="performer-stat-value">${token.endPrice?.toFixed(0) || 200}</div>
+                            <div class="performer-stat-label">End (coins)</div>
                         </div>
                         <div class="performer-stat">
                             <div class="performer-stat-value">${token.volatility?.toFixed(1) || 3}%</div>
-                            <div class="performer-stat-label">Volatility</div>
+                            <div class="performer-stat-label">Weekly Swing</div>
                         </div>
                         <div class="performer-stat">
                             <div class="performer-stat-value">${token.maxDrawdown?.toFixed(1) || 10}%</div>
@@ -3335,7 +3334,7 @@
         function updatePreviewCard(token) {
             document.getElementById('preview-name').textContent = token.name;
             document.getElementById('preview-team').textContent = token.team || getPlayerTeam(token.name);
-            document.getElementById('preview-price').textContent = '$' + (token.endPrice?.toFixed(2) || '200.00');
+            document.getElementById('preview-price').textContent = (token.endPrice?.toFixed(0) || '200') + ' coins';
 
             // Update avatar image
             const avatarEl = document.getElementById('preview-avatar');
@@ -3388,7 +3387,7 @@
                 const sign = topPerformer.totalReturn >= 0 ? '+' : '';
                 topEl.textContent = `Top Performer: ${topPerformer.name} ${sign}${topPerformer.totalReturn.toFixed(1)}%`;
                 if (topDescEl) {
-                    topDescEl.textContent = 'Consistent goals and assists drove massive gains';
+                    topDescEl.textContent = 'Consistent goals and assists drove a big rise in value';
                 }
             }
 
@@ -3399,19 +3398,19 @@
                 worstEl.textContent = `Worst Performer: ${worstPerformer.name} ${sign}${worstPerformer.totalReturn.toFixed(1)}%`;
                 if (worstDescEl) {
                     worstDescEl.textContent = worstPerformer.totalReturn < 0
-                        ? 'Injuries and poor form caused significant losses'
-                        : 'Lower performance compared to other athletes';
+                        ? 'Injuries and poor form caused a steep fall in value'
+                        : 'Lower performance compared to other players';
                 }
             }
 
             const drawdownEl = document.getElementById('risk-drawdown');
             if (drawdownEl) {
-                drawdownEl.textContent = `Max Drawdown: ${maxDrawdown.toFixed(1)}%`;
+                drawdownEl.textContent = `Biggest Drop: ${maxDrawdown.toFixed(1)}%`;
             }
 
             const volatilityEl = document.getElementById('risk-volatility');
             if (volatilityEl) {
-                volatilityEl.textContent = `Average Volatility: ${avgVolatility.toFixed(1)}%`;
+                volatilityEl.textContent = `Average Weekly Swing: ${avgVolatility.toFixed(1)}%`;
             }
         }
 
@@ -3446,7 +3445,7 @@
 
             // Update price
             const priceEl = document.getElementById('preview-price');
-            if (priceEl) priceEl.textContent = '$' + (token.endPrice || 0).toFixed(2);
+            if (priceEl) priceEl.textContent = (token.endPrice || 0).toFixed(0) + ' coins';
 
             // Update return percentage
             const changeEl = document.getElementById('preview-change');
@@ -3524,7 +3523,7 @@
         function initPreviewChart() {
             const ctx = document.getElementById('preview-chart').getContext('2d');
 
-            // Simulated price progression for Haaland (starting ~$104, ending $376)
+            // Simulated value progression for Haaland, in coins (104 → 376)
             const prices = [104, 118, 135, 155, 175, 200, 220, 245, 265, 290, 315, 340, 360, 376];
 
             new Chart(ctx, {
@@ -3735,10 +3734,13 @@
         }
 
         // Utility functions
-        function formatCurrency(value) {
-            if (value >= 1000000) return '$' + (value / 1000000).toFixed(1) + 'M';
-            if (value >= 1000) return '$' + (value / 1000).toFixed(1) + 'K';
-            return '$' + value.toFixed(2);
+        // Coins, not currency. These figures are simulated in-game coin volume;
+        // a '$' in front of them describes a financial product we do not offer
+        // and cannot legally imply.
+        function formatCoins(value) {
+            if (value >= 1000000) return (value / 1000000).toFixed(1) + 'M';
+            if (value >= 1000) return (value / 1000).toFixed(1) + 'K';
+            return value.toFixed(0);
         }
 
         function scrollToSection(id) {
@@ -4043,7 +4045,10 @@
             if (typeof gtag === 'function') {
                 gtag('event', 'persona_selected', { event_category: 'engagement', event_label: persona });
             }
-            if (persona === 'investor') {
+            // Renamed from 'investor' 2026-09-02 along with the button label.
+            // The branch has to move with it or the button silently stops
+            // scrolling — the only thing it did beyond tracking.
+            if (persona === 'stats') {
                 document.querySelector('#cta').scrollIntoView({ behavior: 'smooth' });
             }
         };
