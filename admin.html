@@ -3649,7 +3649,15 @@
             const activeAgents = Number(runtime.activeAgents || 0);
             const reviewMode = Boolean(runtime.reviewMode);
             const tickCount = Number(runtime.tickCount || 0);
-            const tickIntervalMs = Number(runtime.tickIntervalMs || 30000);
+            // effectiveTickIntervalMs is what the runtime will actually wait:
+            // it gates on match phase, so a quiet day ticks every five minutes
+            // rather than the configured thirty seconds. Judging staleness by
+            // the configured value flagged a perfectly healthy off-day runtime
+            // as stale every single time. Falls back for an API that predates
+            // the field.
+            const tickIntervalMs = Number(
+                runtime.effectiveTickIntervalMs || runtime.tickIntervalMs || 30000,
+            );
             const lastTickAtMs = runtime.lastTickAt ? new Date(runtime.lastTickAt).getTime() : 0;
             const staleThresholdMs = Math.max(tickIntervalMs * 2, 90000);
             const tickAgeMs = lastTickAtMs > 0 ? Date.now() - lastTickAtMs : Number.POSITIVE_INFINITY;
