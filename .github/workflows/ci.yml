@@ -1,0 +1,97 @@
+name: CI
+
+# Guards the two failures that have actually shipped from this repo.
+#
+# There is nothing to compile here — it is a static site plus a committed Expo
+# web export — so a conventional build/test pipeline would have nothing to say.
+# What HAS broken, repeatedly, is the export step in context/DEPLOY.md §3. Both
+# checks below were written there as MANUAL verification steps, and a manual
+# step is one a tired operator skips at 23:00.
+#
+#   2026-08-03  Wiping app/* deleted all 19 icon fonts. vercel.json rewrites
+#               icon requests to /app/fonts/ and `expo export` does not produce
+#               that folder, so every icon on the live site 404'd. Worked around
+#               by hand on 08-12 and 08-14, then repeated on 09-13.
+#
+#   2026-09-13  Metro served a cached bundle, byte-identical to the previous
+#               one, still carrying pk_test_ while .env held pk_live_. It
+#               deployed green and fixed nothing. Found by grepping the built
+#               file by hand.
+#
+# Vercel deploys on push regardless of this workflow, so this cannot block a
+# bad deploy — it makes one visible within a minute instead of whenever someone
+# notices the icons are missing.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify-export:
+    name: Verify the web export
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # The 2026-08-03 outage, three times over.
+      - name: All 19 icon fonts are present
+        run: |
+          if [ ! -d app/fonts ]; then
+            echo "::error::app/fonts/ is missing entirely. vercel.json rewrites"
+            echo "::error::icon requests there, so every icon on the live site"
+            echo "::error::will 404. See DEPLOY.md §3 step 3 — the fonts are"
+            echo "::error::restored from the .ttf files the export writes under"
+            echo "::error::app/assets/node_modules/@expo/vector-icons/."
+            exit 1
+          fi
+          count=$(find app/fonts -name '*.ttf' | wc -l)
+          echo "found $count .ttf files in app/fonts/"
+          if [ "$count" -ne 19 ]; then
+            echo "::error::Expected 19 icon fonts, found $count."
+            echo "::error::Wiping app/* and copying dist/* over it loses them."
+            exit 1
+          fi
+
+      # The 2026-09-13 cached-bundle deploy.
+      - name: Bundle carries a live publishable key, not a test one
+        run: |
+          bundle_dir=app/_expo/static/js/web
+          if [ ! -d "$bundle_dir" ]; then
+            echo "::error::$bundle_dir is missing — the export did not land."
+            exit 1
+          fi
+
+          # Publishable keys are compiled in at export time from the local .env,
+          # so the bundle is the only place that records which one shipped.
+          if grep -rohq 'pk_test_' "$bundle_dir" 2>/dev/null; then
+            echo "::error::The published bundle contains a pk_test_ key."
+            echo "::error::Either .env held the test key at export time, or"
+            echo "::error::Metro served a cached bundle — run the export with"
+            echo "::error::--clear (DEPLOY.md §3 step 1). A cached export is"
+            echo "::error::byte-identical to the last one: it deploys green and"
+            echo "::error::changes nothing."
+            exit 1
+          fi
+
+          if ! grep -rohq 'pk_live_' "$bundle_dir" 2>/dev/null; then
+            echo "::error::No pk_live_ key found in the bundle. Openfort auth"
+            echo "::error::will not work for any user on the web app."
+            exit 1
+          fi
+
+          echo "bundle contains a pk_live_ key and no pk_test_ key"
+
+      - name: Routed pages exist
+        run: |
+          # vercel.json maps these paths; a rename here is a 404 in production.
+          missing=0
+          for f in index.html admin.html blog.html privacy.html terms.html team.html app/index.html; do
+            if [ ! -f "$f" ]; then
+              echo "::error::$f is missing but vercel.json routes to it."
+              missing=1
+            fi
+          done
+          exit $missing
