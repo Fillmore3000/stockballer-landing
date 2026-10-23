@@ -3195,7 +3195,7 @@
 
             // Average return across all live tokens
             const avgReturn = tokenResults.reduce((sum, t) => sum + t.totalReturn, 0) / tokenResults.length;
-            document.getElementById('hero-return').textContent = '+' + avgReturn.toFixed(1) + '%';
+            document.getElementById('hero-return').textContent = signed(avgReturn) + '%';
 
             // Trust section
             document.getElementById('trust-volume').textContent = formatCurrency(totalMarketCap);
@@ -3618,15 +3618,15 @@
             select.innerHTML = `
                 <div class="athlete-option selected" data-return="${top3[0].totalReturn}" data-name="${top3[0].name.split(' ').pop()}">
                     <div class="athlete-option-name">${top3[0].name.split(' ').pop()}</div>
-                    <div class="athlete-option-return">+${top3[0].totalReturn.toFixed(1)}%</div>
+                    <div class="athlete-option-return">${signed(top3[0].totalReturn)}%</div>
                 </div>
                 <div class="athlete-option" data-return="${top3[1].totalReturn}" data-name="${top3[1].name.split(' ').pop()}">
                     <div class="athlete-option-name">${top3[1].name.split(' ').pop()}</div>
-                    <div class="athlete-option-return">+${top3[1].totalReturn.toFixed(1)}%</div>
+                    <div class="athlete-option-return">${signed(top3[1].totalReturn)}%</div>
                 </div>
                 <div class="athlete-option" data-return="${avg.toFixed(1)}" data-name="Average">
                     <div class="athlete-option-name">Average</div>
-                    <div class="athlete-option-return">+${avg.toFixed(1)}%</div>
+                    <div class="athlete-option-return">${signed(avg)}%</div>
                 </div>
             `;
 
@@ -3648,7 +3648,7 @@
                 const profit = finalValue - amount; // gain in in-game coins, never money
 
                 document.getElementById('calc-result').textContent = finalValue.toFixed(0) + ' coins';
-                document.getElementById('calc-detail').textContent = `+${profit.toFixed(0)} coins (+${returnPct.toFixed(1)}%)`;
+                document.getElementById('calc-detail').textContent = `${signed(profit, 0)} coins (${signed(returnPct)}%)`;
 
                 // Update dynamic summary
                 const summaryEl = document.getElementById('calc-summary');
@@ -3800,6 +3800,15 @@
             if (value >= 1000000) return '$' + (value / 1000000).toFixed(1) + 'M';
             if (value >= 1000) return '$' + (value / 1000).toFixed(1) + 'K';
             return '$' + value.toFixed(2);
+        }
+
+        // A number with its sign: "+12.3" when up, "-7.4" when down, "0.0" when
+        // flat. The stats used to prepend "+" unconditionally, so a fall
+        // rendered as "+-7.4%" on the live site (operator, 2026-10-23).
+        function signed(value, digits = 1) {
+            const n = Number(value.toFixed(digits));
+            if (n === 0) return (0).toFixed(digits);
+            return (n > 0 ? '+' : '') + n.toFixed(digits);
         }
 
         function scrollToSection(id) {
