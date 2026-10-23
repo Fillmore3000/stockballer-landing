@@ -382,6 +382,47 @@
             gap: 16px;
         }
 
+        /* Google's badge image carries its own transparent margin, so it is
+           pulled left to line up with the form above it. */
+        .play-badge {
+            display: inline-block;
+            margin: 10px 0 0 -11px;
+            transition: transform 0.3s;
+        }
+
+        .play-badge img {
+            display: block;
+            height: 70px;
+            width: auto;
+        }
+
+        .play-badge:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Nav: badge and Launch App kept together as the third item of the
+           nav's space-between row. */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .play-badge--nav {
+            margin: 0;
+        }
+
+        .play-badge--nav img {
+            height: 48px;
+        }
+
+        /* On the narrowest phones the nav keeps only Launch App; the hero
+           badge is still on screen just below. */
+        @media (max-width: 480px) {
+            .play-badge--nav {
+                display: none;
+            }
+        }
+
         .btn-primary {
             padding: 16px 32px;
             background: #F5CB3F;
@@ -2394,7 +2435,15 @@
                 <span class="nav-link" onclick="scrollToSection('faq')">FAQ</span>
                 <a href="blog.html" class="nav-link">Insights</a>
             </div>
-            <a href="/app" class="nav-cta" style="text-decoration: none;">Launch App</a>
+            <div class="nav-actions">
+                <a href="https://play.google.com/store/apps/details?id=com.stockballer.app"
+                    class="play-badge play-badge--nav" target="_blank" rel="noopener"
+                    onclick="typeof gtag === 'function' && gtag('event', 'play_store_click', { event_category: 'engagement', event_label: 'nav' });">
+                    <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+                        alt="Get it on Google Play" width="646" height="250">
+                </a>
+                <a href="/app" class="nav-cta" style="text-decoration: none;">Launch App</a>
+            </div>
         </div>
     </nav>
 
@@ -2435,6 +2484,14 @@
                             <button type="submit" class="btn-primary">Get Started Free →</button>
                         </form>
                     </div>
+                    <!-- Straight to the Play Store listing (operator, 2026-10-23). Google's
+                         official badge, which its brand rules allow when it links to the listing. -->
+                    <a href="https://play.google.com/store/apps/details?id=com.stockballer.app"
+                        class="play-badge" target="_blank" rel="noopener"
+                        onclick="typeof gtag === 'function' && gtag('event', 'play_store_click', { event_category: 'engagement', event_label: 'hero' });">
+                        <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+                            alt="Get it on Google Play" width="646" height="250">
+                    </a>
                     <p style="font-size: 0.95rem; color: rgba(255,255,255,0.7); margin-top: 20px; line-height: 1.7; max-width: 480px;">Instead of your team getting wiped out every single summer, StockBaller lets you scout, hold and sell real players as their value rises and falls on real-world pitch performance. Start your manager journey today with 1,000 free coins!</p>
 
                     <ul style="list-style: none; margin-top: 16px; margin-bottom: 4px; display: flex; flex-direction: column; gap: 9px;">
@@ -2532,11 +2589,11 @@
     <section class="video-section">
         <div class="container">
             <div class="video-section-header">
-                <h2>See How StockBaller Works</h2>
-                <p>Watch our quick demo and see how to build a squad of your favourite players</p>
+                <h2>This Is StockBaller</h2>
+                <p>Real players. Real matchdays. Your squad, built to last beyond one season.</p>
             </div>
             <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/oiqSUFHp6dY" title="StockBaller Demo Video"
+                <iframe src="https://www.youtube.com/embed/t_RSsvYsKhg" title="StockBaller commercial"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowfullscreen>
                 </iframe>
