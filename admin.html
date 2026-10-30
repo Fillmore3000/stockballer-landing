@@ -2801,7 +2801,7 @@
         // Load bot list with new grid UI
         async function loadBots() {
             try {
-                const response = await fetch(`${API_BASE}/bots`);
+                const response = await adminFetch(`${API_BASE}/bots`);
                 const fetchedBots = await response.json();
 
                 // The Reserve is a real Bot record (findBuyerForToken needs it
@@ -3836,7 +3836,7 @@
         }
 
         async function fetchLegacyActivityFeed() {
-            const response = await fetch(`${API_BASE}/bots`);
+            const response = await adminFetch(`${API_BASE}/bots`);
             if (!response.ok) {
                 throw new Error(`Legacy feed unavailable (HTTP ${response.status})`);
             }
@@ -4392,7 +4392,7 @@
 
         async function triggerTrades() {
             try {
-                const response = await fetch(`${API_BASE}/bots`);
+                const response = await adminFetch(`${API_BASE}/bots`);
                 const bots = await response.json();
                 const activeBots = bots.filter(b => b.isActive).slice(0, 5);
 
@@ -4410,7 +4410,7 @@
 
         async function triggerPredictionBets() {
             try {
-                const response = await fetch(`${API_BASE}/bots`);
+                const response = await adminFetch(`${API_BASE}/bots`);
                 const bots = await response.json();
                 const activeBots = bots.filter(b => b.isActive).slice(0, 5);
 
